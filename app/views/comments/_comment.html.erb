@@ -1,0 +1,23 @@
+<div align="left" class="comments">
+    <% if user_signed_in? %>
+        <h4>Post a Comment</h4>
+    <%= render 'comments/form' %>
+        <hr>
+    <% end %>
+
+    <small><b>This post has <%= pluralize(@comments.count, "Comment")%></b></small>
+    <% @comments.each do |comment| %>
+    <div class="post-metadata">
+            	<%= image_tag comment.user.avatar.url(:thumb), class: 'avatar'%>
+            <div class="post-info">
+            <div class="post-title">
+            	<span>
+            	<%= link_to comment.user.username, user_path(comment.user.username) %>
+                </span>
+            </div>
+            	<small><%= comment.body %></small>
+            </div>
+            
+            </div>
+    <% end %>
+    </div><br>
