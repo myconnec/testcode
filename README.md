@@ -10,7 +10,7 @@ Connechub
     ./bin/rails server -e development
 ```
 
-docker build --compress -t connecbub
+docker build -t connechub .
 docker run -it -p 3000:3000 --rm  --name ConnecHub --mount type=bind,source="$(pwd)"/,target=/app connechub
 
 # Test
