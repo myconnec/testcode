@@ -1,0 +1,15 @@
+current directory: /media/pheagey/f7e5435a-cbb0-43a7-8aad-152438f6f974/Projects/dje/ConnecHub/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+/usr/share/rvm/rubies/ruby-2.3.7/bin/ruby -r ./siteconf20181212-32049-1sm5zzs.rb extconf.rb
+creating Makefile
+
+current directory: /media/pheagey/f7e5435a-cbb0-43a7-8aad-152438f6f974/Projects/dje/ConnecHub/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" clean
+
+current directory: /media/pheagey/f7e5435a-cbb0-43a7-8aad-152438f6f974/Projects/dje/ConnecHub/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR="
+compiling debug_inspector.c
+linking shared-object debug_inspector.so
+
+current directory: /media/pheagey/f7e5435a-cbb0-43a7-8aad-152438f6f974/Projects/dje/ConnecHub/vendor/bundle/ruby/2.3.0/gems/debug_inspector-0.0.3/ext/debug_inspector
+make "DESTDIR=" install
+/usr/bin/install -m 0755 debug_inspector.so ./.gem.20181212-32049-1x1b05l
