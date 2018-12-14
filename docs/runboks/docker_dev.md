@@ -27,8 +27,7 @@
 
 ```
     aws ecr get-login --profile connechub --region us-east-1 --no-include-email
-    aws ecr get-login --profile connechub --region us-east-1 --no-include-email
-    docker login -u AWS -p eyJwYXlsXXXXXXXXXXX== https://345292015349.dkr.ecr.us-east-1.amazonaws.com
-    docker tag eaed5c2a90a1 345292015349.dkr.ecr.us-east-1.amazonaws.com/connechub
-    docker push 345292015349.dkr.ecr.us-east-1.amazonaws.com/connechub
+    docker login -u AWS -p {provided password} https://{aws account id}.dkr.ecr.us-east-1.amazonaws.com
+    docker tag {docker image id} {aws account id}.dkr.ecr.us-east-1.amazonaws.com/connechub
+    docker push {docker image id}.dkr.ecr.us-east-1.amazonaws.com/connechub
 ```
