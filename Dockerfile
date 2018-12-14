@@ -1,20 +1,16 @@
-FROM ruby:2.3.8-slim-stretch
+FROM ruby:2.3.8-alpine3.8
+LABEL Author  David J Eddy <me@davidjeddy.com?
 
-# throw errors if Gemfile has been modified since Gemfile.lock
-RUN apt-get update -y && apt-get install -y \
-    build-essential \
-    curl \
-    libsqlite3-dev \
-    nodejs \
-    sqlite3
-
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - && apt-get install -y nodejs
+RUN apk add --update build-base sqlite-dev sqlite nodejs tzdata
+RUN echo "UTC" >  /etc/timezone
 
 RUN mkdir /app
-COPY ./ /app
 WORKDIR /app
-RUN  gem install bundler
+COPY ./ /app
+
+RUN  gem install bundle
 RUN bundle install
 RUN rake db:migrate
+
 EXPOSE 3000
-CMD ["rails", "server", "-e", "development", "--binding", "0.0.0.0"]
+ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
