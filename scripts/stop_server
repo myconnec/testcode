@@ -1,0 +1,5 @@
+#!/bin/bash
+isExistApp=`pgrep rails`
+if [[ -n  $isExistApp ]]; then
+    killall -9 rails         
+fi
