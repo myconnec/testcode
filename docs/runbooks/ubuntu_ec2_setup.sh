@@ -28,3 +28,15 @@ node  --version
 rbenv --version
 ruby --version
 sqlite3 --version
+
+
+echo "Git configuration"
+sudo apt-get purge -y aws
+sudo apt-get install -y python-pip
+sudo pip install awscli
+git config --global credential.helper '!aws codecommit credential-helper $@'
+git config --global credential.UseHttpPath true
+git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
+cd ConnecHub
+
+./bin/rails server --bind 172.31.33.169 --environment development
