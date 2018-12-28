@@ -3,8 +3,6 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -35,7 +33,7 @@ gem 'mail_form', '~> 1.6'
 gem 'video-js-rails'
 gem 'delayed_paperclip'
 gem 'impressionist', '~> 1.6'
-
+gem 'mysql2', '~>0.5.2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -55,16 +53,16 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-group :development, :test do
+group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-end
-
-group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # guard0livereloads enabled loading of ruby source code w/o restarting the web server application
+  gem 'guard-livereload'
+  # Allows guard-livereload w/o browser plugin and WITH SSL
+  gem "rack-livereload"
 end
 
