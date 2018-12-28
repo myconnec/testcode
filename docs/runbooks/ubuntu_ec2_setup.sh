@@ -39,4 +39,11 @@ git config --global credential.UseHttpPath true
 git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
 cd ConnecHub
 
-./bin/rails server --bind 172.31.33.169 --environment development
+
+echo "Migrating DB"
+./bin/rake db:migrate
+./bin/rake db:setup
+
+
+echo "Starting server applications"
+./bin/rails server --bind 172.31.33.169 --environment production

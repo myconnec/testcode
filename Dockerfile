@@ -11,6 +11,7 @@ COPY ./ /app
 RUN  gem install bundle
 RUN bundle install
 RUN rake db:migrate
+RUN rake db:setup
 
 EXPOSE 3000
 ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
