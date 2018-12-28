@@ -1,7 +1,7 @@
 FROM ruby:2.3.8-alpine3.8
 LABEL Author  David J Eddy <me@davidjeddy.com?
 
-RUN apk add --update build-base sqlite-dev sqlite nodejs tzdata
+RUN apk add --update build-base  mariadb-dev nodejs tzdata 
 RUN echo "UTC" >  /etc/timezone
 
 RUN mkdir /app
