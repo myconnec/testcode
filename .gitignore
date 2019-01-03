@@ -21,7 +21,8 @@ pickle-email-*.html
 /db/schema.rb
 
 # Configs
-/config/database.yml
+# actually, we want to track this one. Credentials will be available via ENV VARS or other mechanisms.
+#/config/database.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*.log

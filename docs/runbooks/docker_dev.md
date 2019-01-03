@@ -1,5 +1,12 @@
 # Docker commands
 
+
+## build
+
+```bash
+    docker build -t connechub .
+```
+
 ## dev
 
 ```bash
