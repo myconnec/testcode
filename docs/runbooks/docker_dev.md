@@ -1,21 +1,28 @@
 # Docker commands
 
 # Ruby on Rails Web App
+
+## build
+
+```bash
+    docker build -f ./docker/rubyonrails/Dockerfile . -t connechub:latest
+```
+
 ## dev
 
 ```bash
-    docker run -it -p 3000:3000 --entrypoint "rails" --name connechub_rubyonrails -d connechub server -e development --binding 0.0.0.0
+    docker run -it -p 3000:3000 --entrypoint "rails" --mount type=bind,source="$(pwd)",target=/app --name web_app --net connechub -d connechub:latest server -e development --binding 0.0.0.0
 ```
-## perf
+## test
 
 ```bash
-    docker run -it -p 3000:3000 --entrypoint "rails" connechub server  --binding 0.0.0.0
+    docker run -p 3000:3000 --entrypoint "rails" --name web_app --rm -d connechub:latest server -e test --binding 0.0.0.0
 ```
 
 ## pro
 
 ```bash
-    docker run  -p 3000:3000 connechub
+    docker run connechub
 ```
 
 ## Stop RoR
@@ -24,11 +31,15 @@
     docker stop
 ```
 
-## Restart Ror
+## Restart RoR
 
 ```bash
     docker start connechub_rubyonrails
 ```
+
+# AWS Services Integrations
+
+## Push code to AWS CodeCommit
 
 ## Push image to AWS ECR
 
@@ -45,5 +56,5 @@
 Connection data: 127.0.0.1:3306 root / password
 
 ```bash
-    docker run --name connechub_mariadb -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=user -d -p 3306:3306 mariadb:latest
+    docker run --name mariadb --net connechub -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=user -d -p 3306:3306 mariadb:latest
 ```
