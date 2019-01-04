@@ -40,6 +40,22 @@ git clone https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
 cd ConnecHub
 
 
+echo "Install ImageMagick"
+# source https://linuxconfig.org/how-to-install-imagemagick-7-on-ubuntu-18-04-linux
+cd ~/
+sudo apt update -y
+sudo apt build-dep imagemagick
+wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+tar xf ImageMagick.tar.gz
+cd ImageMagick-7*
+./configure
+make
+make install
+ldconfig /usr/local/lib
+identify -version
+make check
+
+
 echo "Migrating DB"
 ./bin/rake db:migrate
 ./bin/rake db:setup
@@ -47,3 +63,5 @@ echo "Migrating DB"
 
 echo "Starting server applications"
 ./bin/rails server --bind 172.31.33.169 --environment production
+
+
