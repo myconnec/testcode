@@ -3,6 +3,10 @@ $(document).ready(function(){
     var $subcategories = $('#listing_subcategory_id');
     $($subcategories).empty();
     
+    if (!category_id) {
+      return true;
+    }
+
     $.post('/subcategories/find_by_category', { category_id: category_id }, function(data){
       $.each(data.subcategories, function(index, subcategory){
         var option = $('<option />');
