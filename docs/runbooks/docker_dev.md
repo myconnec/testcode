@@ -5,7 +5,6 @@
 ## build
 ```bash
     docker build -f ./docker/rubyonrails/Dockerfile . -t connechub:latest
-
 ```
 
 ## dev
