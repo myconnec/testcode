@@ -18,3 +18,10 @@ docker stop connec
 ```bash
 
 ```
+
+## Versions
+Ruby
+
+Rails
+
+ImageMagick
