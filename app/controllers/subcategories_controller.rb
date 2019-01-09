@@ -5,12 +5,8 @@ class SubcategoriesController < ApplicationController
     @category = Category.find(params[:category_id])
     @subcategory = Subcategory.find(params[:id])
     end
-  
-    
+      
     def find_by_category
-    if params[:category_id] == null
-        render
-    end
     category = Category.find(params[:category_id])
     subcategories = category.subcategories.find_all
     render json: { subcategories: subcategories }
