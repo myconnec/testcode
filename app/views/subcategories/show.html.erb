@@ -47,7 +47,9 @@ ul {
     <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
     <div class="space"><%= text_field_tag :search, nil, placeholder: 'search', class: "form-control", style: 'width: 150px; height: 30px' %></div>
   
-    <div class="space"><%= text_field_tag :location, nil, placeholder: 'near', class: "form-control" , style: 'width: 150px; height: 30px' %></div>
+    <div class="space"><%=
+    # text_field_tag :location, nil, placeholder: 'near', class: "form-control" , style: 'width: 150px; height: 30px'
+    %></div>
   
 	  <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
 	 
