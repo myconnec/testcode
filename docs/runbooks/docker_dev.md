@@ -12,6 +12,8 @@
 ```bash
     docker run -it -p 3000:3000 --mount type=bind,source="$(pwd)"/,target=/app --entrypoint "rails" connechub server -e development --binding 0.0.0.0
 ```
+docker run -it -p 3000:3000  --entrypoint "rails" connechub server -e development --binding 0.0.0.0
+
 
 ## perf
 
