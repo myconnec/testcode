@@ -33,6 +33,13 @@ docker run -it -p 3000:3000  --entrypoint "rails" connechub server -e developmen
     docker stop
 ```
 
+Clean up untagged images and stopped containers
+
+```bash
+    docker rm $(docker ps -a -q)
+    docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+```
+
 ## Push image to AWS ECR
 
 ```bash
