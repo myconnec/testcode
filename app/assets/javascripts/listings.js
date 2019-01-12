@@ -1,31 +1,23 @@
 var getSubcategories = function(category_id){
   var $subcategories = $('#listing_subcategory_id');
-  $($subcategories).empty();
   
-  if (!category_id) {
-    return true;
-  }
-
-  $.post('/subcategories/find_by_category', { category_id: category_id }, function(data){
+  $.get('/subcategories/find_by_category', { category_id: category_id }, function(data){
+    $subcategories.empty();
     $.each(data.subcategories, function(index, subcategory){
       var option = $('<option />');
       option.attr('value', subcategory.id);
       option.text(subcategory.name);
-      option.appendTo($subcategories);
-    });
+      $subcategories.append(option)
+    });   
   })
 };
 
-var getSelectedCategory = function(){
-  return $('#listing_category_id').val();
-};
+// on change of Category DDL, trigger Sub-category population
+$('#listing_category_id').on('change', function(){
+  getSubcategories($('#listing_category_id').val());
+});
 
 $(document).ready(function(){
- 
-  $('#listing_category_id').change(function(){
-    var category_id = getSelectedCategory();
-    getSubcategories(category_id);
-  });
-  
-  getSubcategories(getSelectedCategory());
+ // get list for initiallty  selected Category item
+ getSubcategories(1);
 });
