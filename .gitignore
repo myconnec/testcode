@@ -38,3 +38,6 @@ bower.json
 
 # ignore logs for repo
 **/*.log
+
+# Cypress node_modules
+/spec/node_modules/*
