@@ -39,5 +39,7 @@ bower.json
 # ignore logs for repo
 **/*.log
 
-# Cypress node_modules
+# Cypress ignores
 /spec/node_modules/*
+/spec/cypress/screenshots/*
+/spec/cypress/videos/*
