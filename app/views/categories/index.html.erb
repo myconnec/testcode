@@ -72,27 +72,20 @@
             <% end %>
 </div>
 <div style="height: 15px; width: 100%;"></div>
-<div class="catg_title"><i class = "glyphicon glyphicon-cog"></i> <strong><%= link_to 'Services', category_path(@services) %></strong></div>
-<div class="category_title">
-            <% @services.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@services, subcategory) %></li>
-            </ul>
-            <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
 </div>
 
 <div class="col span_1_of_4">
-<div class="catg_title"><i class = "glyphicon glyphicon-heart"></i> <strong><%= link_to 'Personals', category_path(@personals) %></strong></div>
+<%#
+<div class="catg_title"><i class = "glyphicon glyphicon-heart"></i> <strong><%= link_to 'Personals', category_path(@personals) </strong></div>
 <div class="category_title"> 
-            <% @personals.subcategories.each do |subcategory| %>
+            <%# <% @personals.subcategories.each do |subcategory| 
             <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@personals, subcategory) %></li>
+              <li><%# <%= link_to subcategory.name, category_subcategory_path(@personals, subcategory) </li>
             </ul>
-            <% end %>
+            <%# <% end 
 </div>
 <div style="height: 15px; width: 100%;"></div>
+%>
 <div class="catg_title"><i class = "glyphicon glyphicon-globe"></i> <strong><%= link_to 'Community', category_path(@community) %></strong></div>
 <div class="category_title">
   
@@ -103,15 +96,26 @@
             <% end %>
 </div>
 <div style="height: 15px; width: 100%;"></div>
-<div class="catg_title"><i class = "glyphicon glyphicon-user"></i> <strong><%= link_to 'Talent', category_path(@talent) %></strong></div>
+<div class="catg_title"><i class = "glyphicon glyphicon-cog"></i> <strong><%= link_to 'Services', category_path(@services) %></strong></div>
 <div class="category_title">
-           <% @talent.subcategories.each do |subcategory| %>
+            <% @services.subcategories.each do |subcategory| %>
             <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@talent, subcategory) %></li>
+              <li><%= link_to subcategory.name, category_subcategory_path(@services, subcategory) %></li>
             </ul>
             <% end %>
 </div>
 <div style="height: 15px; width: 100%;"></div>
+<%#
+<div class="catg_title"><i class = "glyphicon glyphicon-user"></i> <strong><%= link_to 'Talent', category_path(@talent) </strong></div>
+<div class="category_title">
+           <% @talent.subcategories.each do |subcategory| 
+            <ul>
+              <li><%= link_to subcategory.name, category_subcategory_path(@talent, subcategory) </li>
+            </ul>
+            <% end 
+</div>
+<div style="height: 15px; width: 100%;"></div>
+%>
 </div>
 
 <div class="col span_1_of_4">

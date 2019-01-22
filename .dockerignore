@@ -1,5 +1,8 @@
 .git
+.dockerignore
+Gemfile.lock
 Dockerfile*
 **/*.md
 **/*.log
 /docs/**
+

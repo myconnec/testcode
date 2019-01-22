@@ -7,7 +7,11 @@ RUN mkdir /app
 WORKDIR /app
 COPY ./ /app
 
-RUN  gem install bundle && bundle install
+# Rails installation and update
+RUN  gem install bundler && bundler install
+RUN bundle config --delete bin && rake rails:update:bin 
+
+# DB install and migrations
 RUN rake db:migrate && rake db:setup
 
 RUN apt-get clean

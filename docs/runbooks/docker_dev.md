@@ -4,13 +4,13 @@
 ## build
 
 ```bash
-    docker build -t connechub --file ./docker/Dockerfile .
+docker build -t connechub --file ./docker/Dockerfile .
 ```
 
 ## dev
 
 ```bash
-    docker run -it -p 3000:3000 --mount type=bind,source="$(pwd)"/,target=/app --entrypoint "rails" connechub server -e development --binding 0.0.0.0
+docker run -it -p 3000:3000 --mount type=bind,source="$(pwd)"/,target=/app --entrypoint "rails" connechub server -e development --binding 0.0.0.0
 ```
 docker run -it -p 3000:3000  --entrypoint "rails" connechub server -e development --binding 0.0.0.0
 
@@ -18,33 +18,33 @@ docker run -it -p 3000:3000  --entrypoint "rails" connechub server -e developmen
 ## perf
 
 ```bash
-    docker run -it -p 3000:3000  --entrypoint "rails" connechub server -binding 0.0.0.0
+docker run -it -p 3000:3000  --entrypoint "rails" connechub server -binding 0.0.0.0
 ```
 
 ## pro
 
 ```bash
-    docker run -it -p 3000:3000  connechub
+docker run -it -p 3000:3000  connechub
 ```
 
 ## Stop RoR
 
 ```bash
-    docker stop
+docker stop
 ```
 
 Clean up untagged images and stopped containers
 
 ```bash
-    docker rm $(docker ps -a -q)
-    docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+docker rm $(docker ps -a -q)
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
 ```
 
 ## Push image to AWS ECR
 
 ```bash
-    aws ecr get-login --profile connechub --region us-east-1 --no-include-email
-    docker login -u AWS -p {provided password} https://{aws account id}.dkr.ecr.us-east-1.amazonaws.com
-    docker tag {docker image id} {aws account id}.dkr.ecr.us-east-1.amazonaws.com/connechub
-    docker push {docker image id}.dkr.ecr.us-east-1.amazonaws.com/connechub
+aws ecr get-login --profile connechub --region us-east-1 --no-include-email
+docker login -u AWS -p {provided password} https://{aws account id}.dkr.ecr.us-east-1.amazonaws.com
+docker tag {docker image id} {aws account id}.dkr.ecr.us-east-1.amazonaws.com/connechub
+docker push {docker image id}.dkr.ecr.us-east-1.amazonaws.com/connechub
 ```
