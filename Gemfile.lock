@@ -74,6 +74,10 @@ GEM
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
+    dotenv (2.6.0)
+    dotenv-rails (2.6.0)
+      dotenv (= 2.6.0)
+      railties (>= 3.2, < 6.0)
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.25)
@@ -237,6 +241,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   delayed_paperclip
   devise (~> 4.2)
+  dotenv-rails
   font-awesome-sass (~> 4.7)
   geocoder (~> 1.4, >= 1.4.1)
   handbrake (~> 0.4.0)

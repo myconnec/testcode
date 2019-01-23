@@ -16,8 +16,9 @@ docker stop connec
 # Test
 
 ```bash
-
+vim .env
 ```
+Populate the .env with the expected values for the given enviroment.
 
 ## Versions
 Ruby

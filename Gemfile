@@ -35,7 +35,7 @@ gem 'mail_form', '~> 1.6'
 gem 'video-js-rails'
 gem 'delayed_paperclip'
 gem 'impressionist', '~> 1.6'
-
+gem 'dotenv-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

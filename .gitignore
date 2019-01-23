@@ -38,3 +38,6 @@ bower.json
 
 # ignore logs for repo
 **/*.log
+
+# ignore ENV file
+.env
