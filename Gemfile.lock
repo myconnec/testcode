@@ -74,6 +74,7 @@ GEM
       railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
+    dotenv (2.6.0)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -263,6 +264,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   delayed_paperclip
   devise (~> 4.2)
+  dotenv (~> 2.6.0)
   font-awesome-sass (~> 4.7)
   geocoder (~> 1.4, >= 1.4.1)
   guard-livereload

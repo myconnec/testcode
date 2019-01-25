@@ -16,8 +16,6 @@ pickle-email-*.html
 /.bundle
 
 # Ignore the default SQLite database and schema.
-/db/*.sqlite3
-/db/*.sqlite3-journal
 /db/schema.rb
 
 # Configs
@@ -38,3 +36,6 @@ bower.json
 
 # ignore logs for repo
 **/*.log
+
+# ENV
+.env

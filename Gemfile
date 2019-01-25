@@ -27,11 +27,12 @@ gem 'masonry-rails', '~> 0.2.4'
 gem 'rvideo', '~> 0.9.3'
 gem 'mini_magick', '~> 4.6'
 gem 'handbrake', '~> 0.4.0'
-gem 'mail_form', '~> 1.6'
 gem 'video-js-rails'
 gem 'delayed_paperclip'
 gem 'impressionist', '~> 1.6'
+gem 'mail_form', '~> 1.6'
 gem 'mysql2', '~> 0.4.0'
+gem 'dotenv', '~> 2.6.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -54,4 +55,3 @@ group :development do
   # Allows guard-livereload w/o browser plugin and WITH SSL
   gem "rack-livereload"
 end
-

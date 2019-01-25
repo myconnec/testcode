@@ -1,5 +1,10 @@
-.git
-.Dockerfile
-**/*.md
+**/*.keep
 **/*.log
+**/*.md
+
+.Dockerfile
+.git/**
+.gitignore
+
 /docs/**
+/docker/**
