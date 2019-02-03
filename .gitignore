@@ -32,7 +32,7 @@ pickle-email-*.html
 .rvmrc
 
 # If using bower-rails ignore default bower_components path bower.json file
-/vendor/*
+/vendor
 *.bowerrc
 bower.json
 
