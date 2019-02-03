@@ -5,4 +5,4 @@ Dockerfile*
 **/*.md
 **/*.log
 /docs/**
-
+/tmp/**
