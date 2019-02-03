@@ -3,18 +3,21 @@ LABEL author="David J Eddy <me@davidjeddy.com>"
 
 RUN apt-get update -y
 RUN apt-get update -y && apt-get install -y apt-transport-https libsqlite3-dev build-essential nodejs imagemagick
+RUN apt-get clean
+
+# cache gem installs
+COPY Gemfile* /tmp/
+WORKDIR /tmp
+RUN bundle install
+
+# install app files
 RUN mkdir /app
 WORKDIR /app
 COPY ./ /app
 
-# Rails installation and update
-RUN  gem install bundler && bundler install
-RUN bundle config --delete bin && rake rails:update:bin 
-
 # DB install and migrations
+RUN bundle config --delete bin && rake rails:update:bin 
 RUN rake db:migrate && rake db:setup
-
-RUN apt-get clean
 
 EXPOSE 3000
 ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]

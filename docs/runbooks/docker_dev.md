@@ -12,7 +12,12 @@ docker build -t connechub --file ./docker/rubyonrails/Dockerfile .
 ### dev
 
 ```bash
-docker run -it -p 3000:3000 --mount type=bind,source="$(pwd)"/,target=/app --entrypoint "rails" connechub server -e development --binding 0.0.0.0
+docker run -d -it -p 3000:3000 \
+--mount type=bind,source="$(pwd)"/,target=/app \
+--name web_app \
+--net connechub \
+--entrypoint "rails" connechub:latest server -e development \
+--binding 0.0.0.0
 ```
 
 ### test
@@ -31,6 +36,12 @@ docker run -it -p 3000:3000  --entrypoint "rails" connechub server -binding 0.0.
 
 ```bash
 docker run -it -p 3000:3000  connechub
+```
+
+## Other Commands
+
+```bash
+
 ```
 
 ## Stop
