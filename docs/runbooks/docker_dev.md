@@ -4,18 +4,24 @@
 ## build
 
 ```bash
-docker build -t connechub --file ./docker/Dockerfile .
+docker build -t connechub --file ./docker/rubyonrails/Dockerfile .
 ```
 
-## dev
+## Container Start
+
+### dev
 
 ```bash
 docker run -it -p 3000:3000 --mount type=bind,source="$(pwd)"/,target=/app --entrypoint "rails" connechub server -e development --binding 0.0.0.0
 ```
+
+### test
+
+```bash
 docker run -it -p 3000:3000  --entrypoint "rails" connechub server -e development --binding 0.0.0.0
+```
 
-
-## perf
+### perf
 
 ```bash
 docker run -it -p 3000:3000  --entrypoint "rails" connechub server -binding 0.0.0.0
@@ -27,7 +33,9 @@ docker run -it -p 3000:3000  --entrypoint "rails" connechub server -binding 0.0.
 docker run -it -p 3000:3000  connechub
 ```
 
-## Stop RoR
+## Stop
+
+### Ruby on Rails
 
 ```bash
 docker stop
@@ -36,11 +44,15 @@ docker stop
 Clean up untagged images and stopped containers
 
 ```bash
-docker rm $(docker ps -a -q)
-docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
+docker rm $(docker ps -a -q) # remove stopped containers
+docker rmi $(docker images | grep "^<none>" | awk "{print $3}") # remove untagged images
+# OR
+docker container prune # remove stopped containers
 ```
 
-## Push image to AWS ECR
+## Push Image
+
+### AWS ECR
 
 ```bash
 aws ecr get-login --profile connechub --region us-east-1 --no-include-email
