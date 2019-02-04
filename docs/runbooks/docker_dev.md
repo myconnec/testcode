@@ -18,6 +18,7 @@ docker build -t connechub_webapp --file ./docker/rubyonrails/Dockerfile .
 ```bash
 # MariaDB
 docker run -d -p 3306:3306 \
+--mount type=bind,source="$(pwd)"/docker/mariadb/data_dir,target=/var/lib/mysql \
 --name mariadb \
 --net connechub \
 -e MYSQL_ROOT_PASSWORD=password \

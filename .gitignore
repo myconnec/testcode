@@ -38,4 +38,5 @@ bower.json
 .env
 
 # *SQL
-./docker/mariadb/data.sql
+/docker/mariadb/data.sql
+/docker/mariadb/data_dir/

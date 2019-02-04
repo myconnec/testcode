@@ -17,7 +17,6 @@ COPY ./ /app
 
 # DB install and migrations
 RUN bundle config --delete bin && rake rails:update:bin 
-# RUN rake db:migrate && rake db:setup
 
 EXPOSE 3000
 ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
