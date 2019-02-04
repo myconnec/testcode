@@ -15,11 +15,6 @@ pickle-email-*.html
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database and schema.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-/db/schema.rb
-
 # Configs
 # actually, we want to track this one. Credentials will be available via ENV VARS or other mechanisms.
 #/config/database.yml
@@ -41,3 +36,6 @@ bower.json
 
 # ignore ENV file
 .env
+
+# *SQL
+./docker/mariadb/data.sql
