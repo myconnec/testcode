@@ -1,22 +1,35 @@
 # Docker commands
 
 
-## build
+## Build
 
 ```bash
-docker build -t connechub --file ./docker/rubyonrails/Dockerfile .
+# MariaDB
+docker build -t connechub_mariadb --file ./docker/mariadb/Dockerfile .
+
+# RoR
+docker build -t connechub_webapp --file ./docker/rubyonrails/Dockerfile .
 ```
 
-## Container Start
+##  Start
 
 ### dev
 
 ```bash
+# MariaDB
+docker run -d -p 3306:3306 \
+--name mariadb \
+--net connechub \
+-e MYSQL_ROOT_PASSWORD=password \
+-e MYSQL_DATABASE=connechub_dev \
+connechub_mariadb:latest
+
+# RoR
 docker run -d -it -p 3000:3000 \
 --mount type=bind,source="$(pwd)"/,target=/app \
 --name web_app \
 --net connechub \
---entrypoint "rails" connechub:latest server -e development \
+--entrypoint "rails" connechub_webapp:latest server -e development \
 --binding 0.0.0.0
 ```
 
@@ -40,8 +53,10 @@ docker run -it -p 3000:3000  connechub
 
 ## Other Commands
 
-```bash
+### Run Rake commands on RoR
 
+```bash
+docker exec -it web_app rake db:migrate && rake db:setup
 ```
 
 ## Stop
@@ -49,7 +64,7 @@ docker run -it -p 3000:3000  connechub
 ### Ruby on Rails
 
 ```bash
-docker stop
+docker stop web_app
 ```
 
 Clean up untagged images and stopped containers

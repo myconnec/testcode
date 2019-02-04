@@ -2,7 +2,7 @@ FROM ruby:2.3.8-slim-stretch
 LABEL author="David J Eddy <me@davidjeddy.com>"
 
 RUN apt-get update -y
-RUN apt-get update -y && apt-get install -y apt-transport-https libsqlite3-dev build-essential nodejs imagemagick
+RUN apt-get update -y && apt-get install -y apt-transport-https build-essential nodejs imagemagick mysql-client default-libmysqlclient-dev
 RUN apt-get clean
 
 # cache gem installs
@@ -17,7 +17,7 @@ COPY ./ /app
 
 # DB install and migrations
 RUN bundle config --delete bin && rake rails:update:bin 
-RUN rake db:migrate && rake db:setup
+# RUN rake db:migrate && rake db:setup
 
 EXPOSE 3000
 ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
