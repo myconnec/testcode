@@ -1,19 +1,9 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
-#
-# default: &default
-#   adapter: sqlite3
-#   pool: 5
-#   timeout: 5000
-
 default: &default
   adapter: mysql2
-  host: mariadb
-  username: root
-  password: password
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
+  username: <%= ENV['DB_USER'] %>
+  password: <%= ENV['DB_PASS'] %>
   encoding: utf8
   pool: 5
   reconnect: true
@@ -23,12 +13,12 @@ default: &default
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: connechub_test
+  database: <%= ENV['DB_TST_SCHE'] %>
 
 development:
   <<: *default
-  database: connechub_dev
+  database: <%= ENV['DB_DEV_SCHE'] %>
   
 production:
   <<: *default
-  database: connechub
+  database: <%= ENV['DB_PRD_SCHE'] %>
