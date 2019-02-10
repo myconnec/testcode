@@ -6,7 +6,7 @@ export RAILS_ENV='development'
 # mariaDB
 docker build -t connechub_mariadb --file ./docker/mariadb/Dockerfile .
 # ror
-docker build -t connechub_webapp --file ./docker/rubyonrails/Dockerfile .
+docker build -t 345292015349.dkr.ecr.us-east-1.amazonaws.com/connechub_webapp:{X.Y.Z Version} --file ./docker/rubyonrails/Dockerfile .
 
 # ENV config
 if [ ! -f .env ]; then
@@ -38,9 +38,12 @@ docker run -d -it -p 3000:3000 \
 --mount type=bind,source="$(pwd)"/,target=/app \
 --name web_app \
 --net connechub \
---entrypoint "rails" connechub_webapp:latest server -e development \
+--entrypoint "rails" 345292015349.dkr.ecr.us-east-1.amazonaws.com/connechub_webapp:latest server -e development \
 --binding 0.0.0.0
 
 # Run install DB migrations
 docker exec web_app ./bin/rake db:setup RAILS_ENV=${RAILS_ENV}
 docker exec web_app ./bin/rake db:migrate RAILS_ENV=${RAILS_ENV}
+
+# generate docs
+docker exec web_app sdoc /app -o /app/docs/api

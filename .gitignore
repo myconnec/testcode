@@ -41,3 +41,6 @@ bower.json
 /docker/mariadb/data.sql
 /docker/mariadb/data_dir/
 /docs/runbooks/sqlite3_to_mariadb10/**/*.sql
+
+# Ignore generated docs
+/docs/api/*
