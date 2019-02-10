@@ -8,7 +8,7 @@ RUN apt-get clean
 # cache gem installs
 COPY Gemfile* /tmp/
 WORKDIR /tmp
-RUN bundle install
+RUN gem install bundler -v 1.3.5 && bundle install
 
 # install app files
 RUN mkdir /app
@@ -18,5 +18,5 @@ COPY ./ /app
 # DB install and migrations
 RUN bundle config --delete bin && rake rails:update:bin 
 
-EXPOSE 3000
+# EXPOSE 3000
 ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
