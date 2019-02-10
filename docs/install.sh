@@ -21,7 +21,7 @@ if [ -z ${RAILS_ENV} ]; then
 fi
 
 # create network
-docker network create connechub
+docker network create connechub || true
 
 # start services in DEV config
 # mariadb
