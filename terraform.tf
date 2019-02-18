@@ -58,7 +58,12 @@ resource "aws_instance" "web" {
 
   # provisioner "local-exec" {
   #   command = "sleep 120; ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ubuntu --private-key ${var.AWS_PEM_KEY_PAIR} -i '${aws_eip.eip.id},' ./docs/ansible/ror.yml"
+  # ansible-playbook -i '18.217.45.69,' -u ubuntu --private-key ~/.ssh/aws-connechub-test-dje.pem ./docs/ansible/ror.yml
   # }
+
+  provisioner "local-exec" {
+      command = "sleep 120; ANSIBLE_DEBUG=1 ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${self.public_ip},' -u ubuntu --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
+  }
 
   tags = {
     App     = "ConnecHub"
@@ -80,7 +85,6 @@ resource "aws_eip_association" "eip_assoc" {
   instance_id   = "${aws_instance.web.id}"
   allocation_id = "${aws_eip.eip.id}"
 }
-
 resource "aws_security_group" "ec2_security_group_http" {
   name = "http"
 
