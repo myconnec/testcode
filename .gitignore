@@ -50,3 +50,4 @@ bower.json
 *.tfvars
 *.tfstate
 *.tfstate.*
+*.plan
