@@ -45,7 +45,10 @@ bower.json
 # Ignore generated docs
 /docs/api/*
 
-#Ignore Terraform meta-data dir
+# Ansible retry
+/**/*.retry
+
+# Terraform meta-data dir
 .terraform
 *.tfvars
 *.tfstate
