@@ -9,6 +9,5 @@ terraform {
     bucket = "terraform-remote-state-connechub-test"
     encrypt = true
     key = "terraform.tfstate"
-    region = "us-east-2"
   }
 }
