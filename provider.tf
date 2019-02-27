@@ -3,3 +3,12 @@ provider "aws" {
   access_key = "${var.AWS_ACCESS_KEY}"
   secret_key = "${var.AWS_SECRET_KEY}"
 }
+
+terraform {
+  backend "s3" {
+    bucket = "terraform-remote-state-connechub-test"
+    encrypt = true
+    key = "terraform.tfstate"
+    region = "us-east-2"
+  }
+}
