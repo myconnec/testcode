@@ -12,98 +12,15 @@ resource "aws_db_instance" "rds" {
   skip_final_snapshot  = false
 
   tags = {
-    App     = "ConnecHub"
-    ENV     = "PROD"
-    Owner   = "admin@connechub.com"
-    Service = "RDS"
-    Tech    = "MariaDB"
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "RDS"
+    tech    = "MariaDB"
   }
 }
 
 # S3
-resource "aws_s3_bucket" "private_source_media" {
-  bucket = "private_source_media"
-  acl    = "no-public-read"
-
-  cors_rule {
-    allowed_headers = ["*"]
-    allowed_methods = ["PUT", "POST"]
-    allowed_origins = ["*"]
-    expose_headers  = ["ETag"]
-    max_age_seconds = 3000
-  }
-
-  policy = <<EOF
-{
-    "Version": "2008-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadForGetBucketObjects",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "*"
-            },
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::pre_processed/*"
-        },
-        {
-            "Sid": "",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "${aws_iam_user.prod_user.arn}"
-            },
-            "Action": "s3:*",
-            "Resource": [
-                "arn:aws:s3:::pre_processed",
-                "arn:aws:s3:::pre_processed/*"
-            ]
-        }
-    ]
-}
-EOF
-}
-
-resource "aws_s3_bucket" "public_result_media" {
-  bucket = "public_result_media"
-  acl    = "public-read"
-
-  cors_rule {
-    allowed_headers = ["*"]
-    allowed_methods = ["HEAD", "GET"]
-    allowed_origins = ["*"]
-    expose_headers  = ["ETag"]
-    max_age_seconds = 3000
-  }
-
-  policy = <<EOF
-{
-    "Version": "2008-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadForGetBucketObjects",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "*"
-            },
-            "Action": "s3:GetObject",
-            "Resource": "arn:aws:s3:::pre_processed/*"
-        },
-        {
-            "Sid": "",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "${aws_iam_user.prod_user.arn}"
-            },
-            "Action": "s3:*",
-            "Resource": [
-                "arn:aws:s3:::pre_processed",
-                "arn:aws:s3:::pre_processed/*"
-            ]
-        }
-    ]
-}
-EOF
-}
 
 # EC2
 data "aws_ami" "ubuntu" {
@@ -126,11 +43,11 @@ resource "aws_eip" "eip" {
   vpc = true
 
   tags = {
-    App     = "ConnecHub"
-    ENV     = "PROD"
-    Owner   = "admin@connechub.com"
-    Service = "EIP"
-    Tech    = "Networking"
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EIP"
+    tech    = "Networking"
   }
 }
 
@@ -144,15 +61,16 @@ resource "aws_instance" "web" {
   # ansible-playbook -i '18.217.45.69,' -u ubuntu --private-key ~/.ssh/aws-connechub-test-dje.pem ./docs/ansible/ror.yml
   # }
 
-  provisioner "local-exec" {
-    command = "sleep 120; ANSIBLE_DEBUG=1 ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${self.public_ip},' -u ubuntu --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
-  }
+  # provisioner "local-exec" {
+  #   command = "sleep 120; ANSIBLE_DEBUG=1 ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${self.public_ip},' -u ubuntu --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
+  # }
+
   tags = {
-    App     = "ConnecHub"
-    ENV     = "PROD"
-    Owner   = "admin@connechub.com"
-    Service = "EC2"
-    Tech    = "Ruby on Rails"
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "Ruby on Rails"
   }
   security_groups = [
     "${aws_security_group.ec2_security_group_http.name}",
@@ -186,11 +104,11 @@ resource "aws_security_group" "ec2_security_group_http" {
   }
 
   tags = {
-    App     = "ConnecHub"
-    ENV     = "PROD"
-    Owner   = "admin@connechub.com"
-    Service = "EC2"
-    Tech    = "Networking"
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "Networking"
   }
 }
 
@@ -213,11 +131,11 @@ resource "aws_security_group" "ec2_security_group_https" {
   }
 
   tags = {
-    App     = "ConnecHub"
-    ENV     = "PROD"
-    Owner   = "admin@connechub.com"
-    Service = "EC2"
-    Tech    = "Networking"
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "Networking"
   }
 }
 
@@ -227,11 +145,11 @@ resource "aws_security_group" "ec2_security_group_ssh" {
 
 
   tags = {
-    App     = "ConnecHub"
-    ENV     = "PROD"
-    Owner   = "admin@connechub.com"
-    Service = "EC2"
-    Tech    = "Networking"
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "Networking"
   }
 }
 
@@ -247,32 +165,17 @@ resource "aws_security_group" "ec2_security_group_ror" {
   }
 
   tags = {
-    App     = "ConnecHub"
-    ENV     = "PROD"
-    Owner   = "admin@connechub.com"
-    Service = "EC2"
-    Tech    = "Networking"
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "Networking"
   }
 }
 
 # ECS
 
 # Transcoder
-resource "aws_elastictranscoder_pipeline" "transcoder" {
-  input_bucket = "${aws_s3_bucket.input_bucket.pre_processed}"
-  name         = "aws_elastictranscoder_pipeline_tf_test_"
-  role         = "${aws_iam_role.test_role.arn}"
-
-  content_config {
-    bucket        = "${aws_s3_bucket.content_bucket.bucket}"
-    storage_class = "Standard"
-  }
-
-  thumbnail_config {
-    bucket        = "${aws_s3_bucket.thumb_bucket.bucket}"
-    storage_class = "Standard"
-  }
-}
 
 # Route53
 resource "aws_route53_record" "test_domain" {
