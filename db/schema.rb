@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190122015640) do
+ActiveRecord::Schema.define(version: 20190228140108) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 255
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20190122015640) do
     t.text     "description",            limit: 65535
     t.string   "city",                   limit: 255
     t.string   "state",                  limit: 255
-    t.string   "zipcode",                limit: 255
+    t.integer  "zipcode",                limit: 4
     t.string   "price",                  limit: 255
     t.string   "address1",               limit: 255
     t.string   "address2",               limit: 255
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20190122015640) do
     t.string   "pin_image_content_type", limit: 255
     t.integer  "pin_image_file_size",    limit: 4
     t.datetime "pin_image_updated_at"
+    t.string   "integer",                limit: 255
   end
 
   add_index "listings", ["user_id"], name: "index_listings_on_user_id", using: :btree
