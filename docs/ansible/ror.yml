@@ -1,6 +1,7 @@
 # Source: https://semaphoreci.com/community/tutorials/how-to-deploy-rails-applications-with-ansible-capistrano-and-semaphore
 ---
 - hosts: all
+  strategy: free
   gather_facts: yes
   become: yes
   tasks:
@@ -8,52 +9,53 @@
       apt:
         upgrade: yes
         update_cache: yes
-    # - name: Install NodeJs
+    - name: Configure the Yarn APT key
+      apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
+    - name: Install NodeJs
+      shell: |
+        apt remove --purge nodejs npm
+        apt clean
+        apt autoclean
+        apt install -f
+        apt autoremove
+
+        apt install -y nodejs
+        apt install -y npm
+
+        nodejs -v
+        npm -v
+    - name: install python 2
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+    - name: Update all packages to the latest version
+      apt:
+        update_cache: yes
+        upgrade: dist
+    - name: Install system dependencies
+      apt: name={{ item }} state=present
+      with_items:
+        - git-core
+        - curl
+        - zlib1g-dev
+        - build-essential
+        - libssl-dev
+        - libreadline-dev
+        - libyaml-dev
+        - libsqlite3-dev
+        - libxml2-dev
+        - libxslt1-dev
+        - libcurl4-openssl-dev
+        - software-properties-common
+        - libffi-dev
+    - name: Download & rbenv
+      git:
+        repo: https://github.com/rbenv/rbenv.git
+        version: master
+        dest: ~/.rbenv
+    # - name: Install rbenv
     #   shell: |
-    #     apt install nodejs
-    #     apt install npm
-    #     nodejs -v
-    #     npm -v
-    # - name: Configure the Yarn APT key
-    #   apt_key: url=https://dl.yarnpkg.com/debian/pubkey.gpg
-    # - name: install python 2
-    #   raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-  # - name: Update all packages to the latest version
-  #   apt:
-  #     update_cache: yes
-  #     upgrade: dist
-  # - name: Install system dependencies
-  #   apt:
-  #     name: "{{ item }}"
-  #     with_items:
-  #       git-core
-  #       curl
-  #       zlib1g-dev
-  #       build-essential
-  #       libssl-dev
-  #       libreadline-dev
-  #       libyaml-dev
-  #       libsqlite3-dev
-  #       sqlite3
-  #       libxml2-dev
-  #       libxslt1-dev
-  #       libcurl4-openssl-dev
-  #       software-properties-common
-  #       libffi-dev
-  #       nodejs
-  #       yarn
-  # - name: Download & rbenv
-  #   git:
-  #     repo: https://github.com/rbenv/rbenv.git
-  #     version: master
-  #     dest: ~/.rbenv
-  #     accept_hostkey: yes
-  #   become: no
-  # - name: Install rbenv
-  #   shell: |
-  #     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-  #     echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-  #     exec $SHELL
+    #     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+    #     echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+    #     exec $SHELL
   # - name: Download Ruby
   #   git:
   #     repo: https://github.com/rbenv/ruby-build.git

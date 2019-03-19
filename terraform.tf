@@ -1,6 +1,7 @@
 # RDS
 resource "aws_db_instance" "rds" {
   allocated_storage    = 10
+  copy_tags_to_snapshot= true
   storage_type         = "gp2"
   engine               = "mariadb"
   engine_version       = "10.3"
@@ -9,7 +10,7 @@ resource "aws_db_instance" "rds" {
   username             = "${var.DB_USER}"
   password             = "${var.DB_PASS}"
   parameter_group_name = "default.mariadb10.3"
-  skip_final_snapshot  = false
+  skip_final_snapshot  = true
 
   tags = {
     app     = "ConnecHub"
@@ -62,7 +63,7 @@ resource "aws_instance" "web" {
   # }
 
   # provisioner "local-exec" {
-  #   command = "sleep 120; ANSIBLE_DEBUG=1 ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${self.public_ip},' -u ubuntu --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
+  #   command = "sleep 120; ANSIBLE_DEBUG=1 ANSIBLE_COWSAY=0 ANSIBLE_STDOUT_CALLBACK=debug ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${self.public_ip},' -u ubuntu --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
   # }
 
   tags = {
