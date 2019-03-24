@@ -1,44 +1,47 @@
 # RDS
-resource "aws_db_instance" "rds" {
-  allocated_storage    = 10
-  copy_tags_to_snapshot= true
-  storage_type         = "gp2"
-  engine               = "mariadb"
-  engine_version       = "10.3"
-  instance_class       = "db.t2.micro"
-  name                 = "connechub"
-  username             = "${var.DB_USER}"
-  password             = "${var.DB_PASS}"
-  parameter_group_name = "default.mariadb10.3"
-  skip_final_snapshot  = true
+# resource "aws_db_instance" "rds" {
+#   allocated_storage    = 10
+#   copy_tags_to_snapshot= true
+#   storage_type         = "gp2"
+#   engine               = "mariadb"
+#   engine_version       = "10.3"
+#   instance_class       = "db.t2.micro"
+#   name                 = "connechub"
+#   username             = "${var.DB_USER}"
+#   password             = "${var.DB_PASS}"
+#   parameter_group_name = "default.mariadb10.3"
+#   skip_final_snapshot  = true
 
-  tags = {
-    app     = "ConnecHub"
-    env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "RDS"
-    tech    = "MariaDB"
-  }
-}
+#   tags = {
+#     app     = "ConnecHub"
+#     env     = "${var.APP_ENV}"
+#     owner   = "admin@connechub.com"
+#     service = "RDS"
+#     tech    = "MariaDB"
+#   }
+# }
 
 # S3
 
 # EC2
-data "aws_ami" "ubuntu" {
-  most_recent = true
+## Policies
+# data "aws_iam_policy" "AWSCodeCommitReadOnly" {
+#   arn = "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"
+# }
 
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
-  }
+# ## Roles
+# resource "aws_iam_role" "EC2CodeCommitReadOnlyRole" {
+#   name               = "CodeCommitReadOnlyRole"
+#   assume_role_policy = "${aws_iam_policy.AWSCodeCommitReadOnly.name}"
+# }
 
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
+# ## Attachments
 
-  owners = ["099720109477"] # Canonical
-}
+# resource "aws_iam_policy_attachment" "test-attach" {
+#   name       = "test-attachment"
+#   roles      = ["${aws_iam_role.ec2_s3_access_role.name}"]
+#   policy_arn = "${aws_iam_policy.policy.arn}"
+# }
 
 resource "aws_eip" "eip" {
   vpc = true
@@ -53,8 +56,8 @@ resource "aws_eip" "eip" {
 }
 
 resource "aws_instance" "web" {
-  ami           = "${data.aws_ami.ubuntu.id}"
   instance_type = "t2.micro"
+  ami = "ami-0c8b8e32659017cc5"
   key_name      = "${var.AWS_PEM_KEY_PAIR}"
 
   # provisioner "local-exec" {
@@ -179,10 +182,10 @@ resource "aws_security_group" "ec2_security_group_ror" {
 # Transcoder
 
 # Route53
-resource "aws_route53_record" "test_domain" {
-  zone_id = "Z343LWN1DJ92M1"
-  name    = "test"
-  type    = "A"
-  ttl     = "15"
-  records = ["${aws_eip.eip.public_ip}"]
-}
+# resource "aws_route53_record" "test_domain" {
+#   zone_id = "Z343LWN1DJ92M1"
+#   name    = "test"
+#   type    = "A"
+#   ttl     = "15"
+#   records = ["${aws_eip.eip.public_ip}"]
+# }
