@@ -24,28 +24,7 @@
 # S3
 
 # EC2
-## Policies
-# data "aws_iam_policy" "AWSCodeCommitReadOnly" {
-#   arn = "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"
-# }
-
-# ## Roles
-# resource "aws_iam_role" "EC2CodeCommitReadOnlyRole" {
-#   name               = "CodeCommitReadOnlyRole"
-#   assume_role_policy = "${aws_iam_policy.AWSCodeCommitReadOnly.name}"
-# }
-
-# ## Attachments
-
-# resource "aws_iam_policy_attachment" "test-attach" {
-#   name       = "test-attachment"
-#   roles      = ["${aws_iam_role.ec2_s3_access_role.name}"]
-#   policy_arn = "${aws_iam_policy.policy.arn}"
-# }
-
 resource "aws_eip" "eip" {
-  vpc = true
-
   tags = {
     app     = "ConnecHub"
     env     = "${var.APP_ENV}"
@@ -53,9 +32,11 @@ resource "aws_eip" "eip" {
     service = "EIP"
     tech    = "Networking"
   }
+  vpc = true
 }
 
 resource "aws_instance" "web" {
+  iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.name}"
   instance_type = "t2.micro"
   ami = "ami-0c8b8e32659017cc5"
   key_name      = "${var.AWS_PEM_KEY_PAIR}"
@@ -82,6 +63,21 @@ resource "aws_instance" "web" {
     "${aws_security_group.ec2_security_group_ssh.name}",
     "${aws_security_group.ec2_security_group_ror.name}",
   ]
+}
+
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name  = "ec2_web_instance_profile"
+  role = "${aws_iam_role.ec2_web_server_role.name}"
+}
+
+resource "aws_iam_role" "ec2_web_server_role" {
+  assume_role_policy = "${file("./assumerolepolicy.json")}"
+  name               = "CHServiceRoleForEC2WithCodeCommitReadOnlyPermission"
+}
+
+resource "aws_iam_role_policy_attachment" "code_commit_read_only" {
+  policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"
+  role      = "${aws_iam_role.ec2_web_server_role.name}"
 }
 
 resource "aws_eip_association" "eip_assoc" {
@@ -147,6 +143,14 @@ resource "aws_security_group" "ec2_security_group_ssh" {
   name        = "ssh"
   description = "Allow SSH inbound traffic"
 
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    self        = true
+  }
 
   tags = {
     app     = "ConnecHub"
