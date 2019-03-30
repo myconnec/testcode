@@ -1,16 +1,16 @@
 Connechub
 
-# Setup
 
-```bash
-./docs/setup.sh
-```
+# Infrasstrucuture Configuration
 
-# Test
+Phase 1:
 
-## Versions
-Ruby
+Make it work
 
-Rails
+Phase 2:
 
-ImageMagick
+Make it right
+
+Phase 3:
+
+Make it fast

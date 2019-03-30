@@ -1,4 +1,5 @@
 # RDS
+# source https://medium.com/@vankhoa011/how-i-use-terraform-to-restore-the-latest-snapshot-from-productions-db-to-staging-s-db-aws-rds-6ad4f6620df2
 # resource "aws_db_instance" "rds" {
 #   allocated_storage    = 10
 #   copy_tags_to_snapshot= true
@@ -10,7 +11,9 @@
 #   username             = "${var.DB_USER}"
 #   password             = "${var.DB_PASS}"
 #   parameter_group_name = "default.mariadb10.3"
-#   skip_final_snapshot  = true
+#   skip_final_snapshot  = false # if prod false, else true
+
+# ident = connechub
 
 #   tags = {
 #     app     = "ConnecHub"

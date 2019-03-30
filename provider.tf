@@ -4,10 +4,10 @@ provider "aws" {
   profile                 = "connechub"
 }
 
-terraform {
-  backend "s3" {
-    bucket = "terraform-remote-state-connechub-test"
-    encrypt = true
-    key = "terraform.tfstate"
-  }
-}
+# terraform {
+#   backend "s3" {
+#     bucket = "terraform-remote-state-connechub-test"
+#     encrypt = true
+#     key = "terraform.tfstate"
+#   }
+# }
