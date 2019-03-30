@@ -27,3 +27,7 @@ terraform apply -lock=true ./out.plan
 ```bash
 terraform destroy -var-file=.env ./
 ```
+
+### Common Errors
+
+'Instance profile already exists': https://github.com/hashicorp/terraform/issues/3749
