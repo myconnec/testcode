@@ -130,6 +130,13 @@
       shell: |
         cd /home/ubuntu/ConnecHub && gem install bundler -v 1.3.5 && ./bin/bundle install
 
+    - name: Simple GET operation
+      aws_s3:
+        bucket: connechub-configs
+        object: /test/.env
+        dest: /home/ubuntu/ConnecHub/.env
+        mode: get
+
     - name: Change ownership of web app dir
       file:
         path: /home/ubuntu/ConnecHub
