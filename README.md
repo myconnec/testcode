@@ -21,9 +21,23 @@ Make it fast
 ## Up
 
 ### Dev
+
 ```bash
 terraform plan --out ./out.plan -var-file=.env
 terraform apply -lock=true ./out.plan
-terraform output EC2_web_host_ip
-ansible-playbook -i 'PUT_IP_HERE,' -u ubuntu --private-key ~/.ssh/aws-connechub-test-dje2.pem ./docs/ansible/ror.yml
+ansible-playbook \
+    -i ''$(terraform output EC2_web_host_ip)',' \
+    -u ubuntu \
+    --extra-vars='{"rd_dns": "'$(terraform output SQL_host_dns_addr)'"}' \
+    --private-key ~/.ssh/aws-connechub-test-dje2.pem \
+    ./docs/ansible/ror.yml
+```
+
+
+## Down
+
+### Dev
+
+```bash
+terraform destroy -var-file=.env ./
 ```

@@ -1,5 +1,7 @@
 ---
 - hosts: all
+  vars:
+    rd_dns: mariadb
   become: true
   gather_facts: false
 
@@ -118,12 +120,6 @@
         name: credential.UseHttpPath
         value: true
 
-    # Just in case, reset --hard to origin/master
-
-    - command: git reset --hard origin/master
-      args:
-        chdir: /home/ubuntu/ConnecHub
-
     - git:
         accept_hostkey: yes
         remote: origin
@@ -131,6 +127,7 @@
         dest: /home/ubuntu/ConnecHub
         repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
         version: master
+        force: true
 
     # TODO would like to use the bundler module
 
@@ -142,8 +139,11 @@
       command: > 
         aws s3 cp s3://connechub-configs/test/.env /home/ubuntu/ConnecHub/.env
 
-    # - name: Update RDS DNS address 
-    #   command: > sed 's///g' -i .env
+    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+
+    - name: Update RDS DNS address 
+      command: >
+        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ rd_dns }}"/g' /home/ubuntu/ConnecHub/.env
 
     - name: Change ownership of web app dir
       file:
@@ -152,10 +152,10 @@
         owner: ubuntu
         recurse: true
 
-    - name: Stop Ruby (Rails) if running
-      command: >
-        pkill -f ruby
-      ignore_errors: true
+    - name: Start Rails server
+      become: ubuntu
+      shell: |
+        cd /home/ubuntu/ConnecHub && ./bin/rake db:setup && ./bin/rake db:migrate
 
     - name: Start Rails server
       become: ubuntu

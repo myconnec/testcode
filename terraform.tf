@@ -1,4 +1,5 @@
 # RDS
+
 resource "aws_db_instance" "rds" {
   allocated_storage     = 10
   copy_tags_to_snapshot = true
@@ -12,8 +13,12 @@ resource "aws_db_instance" "rds" {
   password              = "${var.DB_PASS}"
   parameter_group_name  = "default.mariadb10.3"
 
+  vpc_security_group_ids = [
+    "${aws_security_group.rds_security_group_mysql.id}",
+  ]
+
   # if prod false, else true
-  skip_final_snapshot    = true
+  skip_final_snapshot = true
 
   # Use most recent prod snapshot
   # source https://medium.com/@vankhoa011/how-i-use-terraform-to-restore-the-latest-snapshot-from-productions-db-to-staging-s-db-aws-rds-6ad4f6620df2
@@ -31,6 +36,7 @@ resource "aws_db_instance" "rds" {
 # S3 - Buckets to hold raw and processed media in. Do not delete on destroy if ENV = PRD.
 
 # EC2
+
 resource "aws_eip" "eip" {
   tags = {
     app     = "ConnecHub"
@@ -63,6 +69,7 @@ resource "aws_instance" "web" {
   security_groups = [
     "${aws_security_group.ec2_security_group_http.name}",
     "${aws_security_group.ec2_security_group_https.name}",
+    "${aws_security_group.rds_security_group_mysql.name}",
     "${aws_security_group.ec2_security_group_ssh.name}",
   ]
 }
@@ -93,6 +100,8 @@ resource "aws_eip_association" "eip_assoc" {
   instance_id   = "${aws_instance.web.id}"
   allocation_id = "${aws_eip.eip.id}"
 }
+
+# Security Groups
 
 resource "aws_security_group" "ec2_security_group_http" {
   name = "http"
@@ -170,6 +179,33 @@ resource "aws_security_group" "ec2_security_group_ssh" {
   }
 }
 
+resource "aws_security_group" "rds_security_group_mysql" {
+  name        = "mysql"
+  description = "Allow SSH inbound traffic"
+
+  ingress {
+    from_port = 3306
+    to_port   = 3306
+    protocol  = "tcp"
+    self      = true
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "tcp"
+    self      = true
+  }
+
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "RDS"
+    tech    = "Networking"
+  }
+}
+
 # ECS
 
 
@@ -177,6 +213,8 @@ resource "aws_security_group" "ec2_security_group_ssh" {
 
 
 # Route53
+
+
 # resource "aws_route53_record" "test_domain" {
 #   zone_id = "Z343LWN1DJ92M1"
 #   name    = "test"
