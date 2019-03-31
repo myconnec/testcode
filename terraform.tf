@@ -78,6 +78,13 @@ resource "aws_iam_role" "ec2_web_server_role" {
   name               = "CHServiceRoleForEC2WithCodeCommitReadOnlyPermission"
 }
 
+# S3 read only
+resource "aws_iam_role_policy_attachment" "s3_read_only" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  role      = "${aws_iam_role.ec2_web_server_role.name}"
+}
+
+# Code Commit read only
 resource "aws_iam_role_policy_attachment" "code_commit_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"
   role      = "${aws_iam_role.ec2_web_server_role.name}"
