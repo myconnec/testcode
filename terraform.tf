@@ -1,30 +1,34 @@
 # RDS
-# source https://medium.com/@vankhoa011/how-i-use-terraform-to-restore-the-latest-snapshot-from-productions-db-to-staging-s-db-aws-rds-6ad4f6620df2
-# resource "aws_db_instance" "rds" {
-#   allocated_storage    = 10
-#   copy_tags_to_snapshot= true
-#   storage_type         = "gp2"
-#   engine               = "mariadb"
-#   engine_version       = "10.3"
-#   instance_class       = "db.t2.micro"
-#   name                 = "connechub"
-#   username             = "${var.DB_USER}"
-#   password             = "${var.DB_PASS}"
-#   parameter_group_name = "default.mariadb10.3"
-#   skip_final_snapshot  = false # if prod false, else true
+resource "aws_db_instance" "rds" {
+  allocated_storage     = 10
+  copy_tags_to_snapshot = true
+  storage_type          = "gp2"
+  engine                = "mariadb"
+  engine_version        = "10.3"
+  instance_class        = "db.t2.micro"
+  name                  = "connechub"
+  identifier            = "connechub-tst"
+  username              = "${var.DB_USER}"
+  password              = "${var.DB_PASS}"
+  parameter_group_name  = "default.mariadb10.3"
 
-# ident = connechub
+  # if prod false, else true
+  skip_final_snapshot    = true
 
-#   tags = {
-#     app     = "ConnecHub"
-#     env     = "${var.APP_ENV}"
-#     owner   = "admin@connechub.com"
-#     service = "RDS"
-#     tech    = "MariaDB"
-#   }
-# }
+  # Use most recent prod snapshot
+  # source https://medium.com/@vankhoa011/how-i-use-terraform-to-restore-the-latest-snapshot-from-productions-db-to-staging-s-db-aws-rds-6ad4f6620df2
+  # ident = connechub
 
-# S3
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "RDS"
+    tech    = "MariaDB"
+  }
+}
+
+# S3 - Buckets to hold raw and processed media in. Do not delete on destroy if ENV = PRD.
 
 # EC2
 resource "aws_eip" "eip" {
@@ -35,18 +39,19 @@ resource "aws_eip" "eip" {
     service = "EIP"
     tech    = "Networking"
   }
+
   vpc = true
 }
 
 resource "aws_instance" "web" {
   iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.name}"
-  instance_type = "t2.micro"
-  ami = "ami-0c8b8e32659017cc5"
-  key_name      = "${var.AWS_PEM_KEY_PAIR}"
+  instance_type        = "t2.micro"
+  ami                  = "ami-0c8b8e32659017cc5"
+  key_name             = "${var.AWS_PEM_KEY_PAIR}"
 
-  provisioner "local-exec" {
-    command = "sleep 120; ANSIBLE_NOCOWS=1 ANSIBLE_DEBUG=0 ANSIBLE_HOST_KEY_CHECKING=0 ansible-playbook -i '${self.public_ip},' -u ubuntu --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
-  }
+  # provisioner "local-exec" {
+  #   command = "sleep 120; ANSIBLE_NOCOWS=1 ANSIBLE_DEBUG=0 ANSIBLE_HOST_KEY_CHECKING=0 ANSIBLE_STDOUT_CALLBACK=minimal ansible-playbook -i '${aws_eip.eip.public_ip},' -u ubuntu --extra-vars='{\"db_host_dns\": ${aws_db_instance.rds.address}}' --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
+  # }
 
   tags = {
     app     = "ConnecHub"
@@ -59,12 +64,11 @@ resource "aws_instance" "web" {
     "${aws_security_group.ec2_security_group_http.name}",
     "${aws_security_group.ec2_security_group_https.name}",
     "${aws_security_group.ec2_security_group_ssh.name}",
-    "${aws_security_group.ec2_security_group_ror.name}",
   ]
 }
 
 resource "aws_iam_instance_profile" "ec2_profile" {
-  name  = "ec2_web_instance_profile"
+  name = "ec2_web_instance_profile"
   role = "${aws_iam_role.ec2_web_server_role.name}"
 }
 
@@ -76,13 +80,13 @@ resource "aws_iam_role" "ec2_web_server_role" {
 # S3 read only
 resource "aws_iam_role_policy_attachment" "s3_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
-  role      = "${aws_iam_role.ec2_web_server_role.name}"
+  role       = "${aws_iam_role.ec2_web_server_role.name}"
 }
 
 # Code Commit read only
 resource "aws_iam_role_policy_attachment" "code_commit_read_only" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeCommitReadOnly"
-  role      = "${aws_iam_role.ec2_web_server_role.name}"
+  role       = "${aws_iam_role.ec2_web_server_role.name}"
 }
 
 resource "aws_eip_association" "eip_assoc" {
@@ -166,29 +170,11 @@ resource "aws_security_group" "ec2_security_group_ssh" {
   }
 }
 
-resource "aws_security_group" "ec2_security_group_ror" {
-  name        = "ror"
-  description = "Allow RoR inbound traffic"
-
-  ingress {
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = {
-    app     = "ConnecHub"
-    env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "Networking"
-  }
-}
-
 # ECS
 
+
 # Transcoder
+
 
 # Route53
 # resource "aws_route53_record" "test_domain" {
@@ -198,3 +184,4 @@ resource "aws_security_group" "ec2_security_group_ror" {
 #   ttl     = "15"
 #   records = ["${aws_eip.eip.public_ip}"]
 # }
+

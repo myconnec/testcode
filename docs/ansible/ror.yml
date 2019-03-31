@@ -12,47 +12,46 @@
 
   tasks:
     - name: Install system dependencies
-      apt: name={{ item }} state=present
-      with_items:
-        - git
-        - curl
-        - zlib1g-dev
-        - libreadline-dev
-        - libcurl4-openssl-dev
-        - libffi-dev
-        - libreadline6-dev
-        - curl
-        - zlib1g
-        - zlib1g-dev
-        - zlib1g-dev 
+      apt:
+        pkg:
+          - git
+          - curl
+          - libcurl4-openssl-dev
+          - libffi-dev
+          - libreadline6-dev
+          - zlib1g
+          - zlib1g-dev
+        state: present
 
     - name: Install NodeJs and NPM
-      apt: name={{ item }} state=present
-      with_items:
-        - nodejs 
-        - nodejs-dev 
-        - node-gyp 
-        - npm
+      apt:
+        pkg:
+          - nodejs 
+          - nodejs-dev 
+          - node-gyp 
+          - npm
+        state: present
 
     # Source: https://github.com/wakproductions/ansible-examples/blob/master/roles/install-ruby241/tasks/main.yml
     
     - name: Install dependencies specificly for Ruby 2.3.8
-      apt: name={{ item }} state=present
-      with_items:
-        - libyaml-dev
-        - libxml2-dev
-        - libxslt-dev
-        - libsqlite3-dev
-        - autoconf
-        - libc6-dev
-        - ncurses-dev
-        - automake
-        - libtool
-        - bison
-        - subversion
-        - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
-        - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
-        - libssl-dev
+      apt:
+        pkg:
+          - libyaml-dev
+          - libxml2-dev
+          - libxslt-dev
+          - libsqlite3-dev
+          - autoconf
+          - libc6-dev
+          - ncurses-dev
+          - automake
+          - libtool
+          - bison
+          - subversion
+          - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
+          - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
+          - libssl-dev
+        state: present
 
     # Ruby source, build, install, clean up
 
@@ -105,10 +104,11 @@
     # # MySQL client
 
     - name: Install system dependencies
-      apt: name={{ item }} state=present
-      with_items:
-        - mysql-client
-        - libmysqlclient-dev
+      apt:
+        pkg:
+          - mysql-client
+          - libmysqlclient-dev
+        state: present
 
     - git_config:
         name: credential.helper
@@ -118,6 +118,12 @@
         name: credential.UseHttpPath
         value: true
 
+    # Just in case, reset --hard to origin/master
+
+    - command: git reset --hard origin/master
+      args:
+        chdir: /home/ubuntu/ConnecHub
+
     - git:
         accept_hostkey: yes
         remote: origin
@@ -126,16 +132,18 @@
         repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
         version: master
 
+    # TODO would like to use the bundler module
+
     - name: Install bunbler and gems
       shell: |
         cd /home/ubuntu/ConnecHub && gem install bundler -v 1.3.5 && ./bin/bundle install
 
     - name: Simple GET operation
-      aws_s3:
-        bucket: connechub-configs
-        object: /test/.env
-        dest: /home/ubuntu/ConnecHub/.env
-        mode: get
+      command: > 
+        aws s3 cp s3://connechub-configs/test/.env /home/ubuntu/ConnecHub/.env
+
+    # - name: Update RDS DNS address 
+    #   command: > sed 's///g' -i .env
 
     - name: Change ownership of web app dir
       file:
@@ -144,7 +152,12 @@
         owner: ubuntu
         recurse: true
 
+    - name: Stop Ruby (Rails) if running
+      command: >
+        pkill -f ruby
+      ignore_errors: true
+
     - name: Start Rails server
       become: ubuntu
       shell: |
-        cd /home/ubuntu/ConnecHub && rails server -d --binding 0.0.0.0
+        cd /home/ubuntu/ConnecHub && rails server -d --binding 0.0.0.0 --port 80
