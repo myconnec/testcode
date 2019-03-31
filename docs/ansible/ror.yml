@@ -105,7 +105,7 @@
 
     # # MySQL client
 
-    - name: Install system dependencies
+    - name: Install mysql-client and dependencies
       apt:
         pkg:
           - mysql-client
@@ -158,6 +158,5 @@
         cd /home/ubuntu/ConnecHub && ./bin/rake db:setup && ./bin/rake db:migrate
 
     - name: Start Rails server
-      become: ubuntu
       shell: |
         cd /home/ubuntu/ConnecHub && rails server -d --binding 0.0.0.0 --port 80
