@@ -4,11 +4,11 @@ provider "aws" {
   secret_key = "${var.AWS_SECRET_KEY}"
 }
 
-# terraform {
-#   backend "s3" {
-#     bucket = "terraform-remote-state-connechub-test"
-#     encrypt = true
-#     key = "terraform.tfstate"
-#   }
-# }
+terraform {
+  backend "s3" {
+    bucket = "connechub-terraform-remote-state"
+    encrypt = true
+    key = "terraform.tfstate"
+  }
+}
 
