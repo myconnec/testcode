@@ -137,7 +137,7 @@
 
     - name: Simple GET operation
       command: > 
-        aws s3 cp s3://connechub-configs/test/.env /home/ubuntu/ConnecHub/.env
+        aws s3 cp s3://connechub-configs/prd/.env /home/ubuntu/ConnecHub/.env
 
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
@@ -152,10 +152,10 @@
         owner: ubuntu
         recurse: true
 
-    - name: Start Rails server
-      become: ubuntu
-      shell: |
-        cd /home/ubuntu/ConnecHub && ./bin/rake db:setup && ./bin/rake db:migrate
+    # - name: Install and Migrate database
+    #   become: ubuntu
+    #   shell: |
+    #     cd /home/ubuntu/ConnecHub && ./bin/rake db:setup && ./bin/rake db:migrate
 
     - name: Start Rails server
       shell: |
