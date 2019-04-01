@@ -54,11 +54,9 @@ resource "aws_instance" "web" {
   instance_type        = "t2.micro"
   ami                  = "ami-0c8b8e32659017cc5"
   key_name             = "${var.AWS_PEM_KEY_PAIR}"
-
-  # provisioner "local-exec" {
-  #   command = "sleep 120; ANSIBLE_NOCOWS=1 ANSIBLE_DEBUG=0 ANSIBLE_HOST_KEY_CHECKING=0 ANSIBLE_STDOUT_CALLBACK=minimal ansible-playbook -i '${aws_eip.eip.public_ip},' -u ubuntu --extra-vars='{\"db_host_dns\": ${aws_db_instance.rds.address}}' --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
-  # }
-
+  provisioner "local-exec" {
+    command = "sleep 120; ANSIBLE_NOCOWS=1 ANSIBLE_DEBUG=0 ANSIBLE_HOST_KEY_CHECKING=0 ANSIBLE_STDOUT_CALLBACK=minimal ansible-playbook -i '${aws_eip.eip.public_ip},' -u ubuntu --extra-vars='{\"db_host_dns\": ${aws_db_instance.rds.address}}' --private-key ${var.AWS_PEM_KEY_PAIR} ./docs/ansible/ror.yml"
+  }
   tags = {
     app     = "ConnecHub"
     env     = "${var.APP_ENV}"
@@ -80,7 +78,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 }
 
 resource "aws_iam_role" "ec2_web_server_role" {
-  assume_role_policy = "${file("./assumerolepolicy.json")}"
+  assume_role_policy = "${file("./policies/assumerolepolicy.json")}"
   name               = "CHServiceRoleForEC2WithCodeCommitReadOnlyPermission"
 }
 
