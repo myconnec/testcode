@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # RDS
 
 resource "aws_db_instance" "rds" {
@@ -162,6 +161,12 @@ resource "aws_security_group" "ec2_security_group_ssh" {
   name        = "ssh"
   description = "Allow SSH inbound traffic"
 
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port   = 0
@@ -178,20 +183,49 @@ resource "aws_security_group" "ec2_security_group_ssh" {
     service = "EC2"
     tech    = "Networking"
   }
-=======
-module "web-app" {
-  source = "./terraform/webapp"
-  version = "0.0.1"
-
-  # variables
-  "APP_ENV" = ""
-  "APP_NAME" = ""
-  "AWS_REGION" = ""
-  "AWS_ACCESS_KEY" = ""
-  "AWS_SECRET_KEY" = ""
-  "AWS_PEM_KEY_PAIR" = ""
-  "DB_USER" = ""
-  "DB_PASS" = ""
->>>>>>> MOVED TF logic under ./terraform. MOVED Ansible logic under ./ansible. DELETE ./docs incl the runbooks as they are no longer needed.
 }
+
+resource "aws_security_group" "rds_security_group_mysql" {
+  name        = "mysql"
+  description = "Allow SSH inbound traffic"
+
+  ingress {
+    from_port = 3306
+    to_port   = 3306
+    protocol  = "tcp"
+    self      = true
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "tcp"
+    self      = true
+  }
+
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "RDS"
+    tech    = "Networking"
+  }
+}
+
+# ECS
+
+
+# Transcoder
+
+
+# Route53
+
+
+# resource "aws_route53_record" "test_domain" {
+#   zone_id = "Z343LWN1DJ92M1"
+#   name    = "test"
+#   type    = "A"
+#   ttl     = "15"
+#   records = ["${aws_eip.eip.public_ip}"]
+# }
 

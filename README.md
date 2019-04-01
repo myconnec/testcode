@@ -30,7 +30,7 @@ ansible-playbook \
     -u ubuntu \
     --extra-vars='{"rd_dns": "'$(terraform output SQL_host_dns_addr)'"}' \
     --private-key ~/.ssh/aws-connechub-test-dje2.pem \
-    ./docs/ansible/ror.yml
+    ./docs/ansible/connechub.yml
 ```
 
 
