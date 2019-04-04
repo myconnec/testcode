@@ -1,5 +1,7 @@
 # Notes this is currently only a proof of concept.
 # CH will require 2 Transcoders: free and paid
+# TODO: S3 -> Lambda - > Transcoder event chain
+# Source: https://read.acloud.guru/easy-video-transcoding-in-aws-7a0abaaab7b8
 # data
 
 # IAM Policy
