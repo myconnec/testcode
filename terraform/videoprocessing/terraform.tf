@@ -6,6 +6,10 @@
 data "aws_iam_policy" "transcoder_full_access_policy" {
   arn = "arn:aws:iam::aws:policy/AmazonElasticTranscoder_FullAccess"
 }
+data "aws_iam_policy" "s3_full_access_policy" {
+  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
 
 # resources
 
@@ -14,7 +18,7 @@ resource "aws_s3_bucket" "raw_media" {
   acl = "private"
 
   bucket        = "raw-media-${lower(var.APP_ENV)}"
-  force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
+  # force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
   region        = "${var.AWS_REGION}"
 
   server_side_encryption_configuration {
@@ -49,7 +53,7 @@ resource "aws_s3_bucket_public_access_block" "raw_media_settings" {
 resource "aws_s3_bucket" "processed_media" {
   acl           = "private"
   bucket        = "processed-media-${lower(var.APP_ENV)}"
-  force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
+  # force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
   region        = "${var.AWS_REGION}"
 
   server_side_encryption_configuration {
@@ -110,10 +114,9 @@ resource "aws_iam_role" "transcoder_role" {
     {
       "Action": "sts:AssumeRole",
       "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "Service": "elastictranscoder.amazonaws.com"
       },
-      "Effect": "Allow",
-      "Sid": ""
+      "Effect": "Allow"
     }
   ]
 }
@@ -124,6 +127,11 @@ EOF
 resource "aws_iam_role_policy_attachment" "transcoder_role_policy_attachment" {
   role       = "${aws_iam_role.transcoder_role.name}"
   policy_arn = "${data.aws_iam_policy.transcoder_full_access_policy.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "transcoder_role_policy_attachment_2" {
+  role       = "${aws_iam_role.transcoder_role.name}"
+  policy_arn = "${data.aws_iam_policy.s3_full_access_policy.arn}"
 }
 
 # Transcoder Preset
