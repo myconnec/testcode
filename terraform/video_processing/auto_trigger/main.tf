@@ -38,10 +38,10 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_lambda_function" "s3lambda" {
-  filename      = "./terraform/video_processing/auto_trigger/lambda_source/video-transcode-staging.zip"
-  function_name = "video-transcode-staging"
+  filename      = "./terraform/video_processing/auto_trigger/lambda_source/handler.zip"
+  function_name = "s3lambda"
   role          = "${aws_iam_role.lambda_role.arn}"
-  handler       = "video-transcode-staging.lambda_handler"
+  handler       = "index.handler"
   runtime       = "nodejs8.10"
 }
 
@@ -62,6 +62,31 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
   }
 }
 
-output "bucket_name" {
-  value = "${var.SOURCE_BUCKET_NAME}"
+# logging
+resource "aws_iam_policy" "lambda_logging" {
+  name = "lambda_logging"
+  path = "/"
+  description = "IAM policy for logging from a lambda"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:*",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_logs" {
+  role = "${aws_iam_role.lambda_role.name}"
+  policy_arn = "${aws_iam_policy.lambda_logging.arn}"
 }

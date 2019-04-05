@@ -54,3 +54,8 @@ bower.json
 *.tfstate
 *.tfstate.*
 *.plan
+
+# ignore archive files
+**/*.zip
+**/*.rar
+**.*gz
