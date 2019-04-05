@@ -15,7 +15,7 @@
 
 # Video asset processing
 module "video-processing" {
-  source = "./terraform/videoprocessing"
+  source = "./terraform/video_processing"
   version = "0.0.1"
 
   # variables
