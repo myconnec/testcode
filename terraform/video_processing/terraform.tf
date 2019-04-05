@@ -7,11 +7,8 @@ module "s3_lambda_transcoder_event" {
   version = "0.0.1"
 
   # variables
-  APP_ENV = "${var.APP_ENV}"
-  APP_NAME = "${var.APP_NAME}"
-  AWS_REGION = "${var.AWS_REGION}"
-  SOURCE_BUCKET = "${aws_s3_bucket.raw_media.id}"
-  TRANSCODER = "${aws_elastictranscoder_pipeline.transcoder_pipeline.id}"
+  SOURCE_BUCKET_ARN = "${aws_s3_bucket.raw_media.arn}"
+  SOURCE_BUCKET_NAME = "${aws_s3_bucket.raw_media.bucket}"
 }
 
 # IAM Policy
@@ -30,6 +27,7 @@ resource "aws_s3_bucket" "raw_media" {
   acl = "private"
 
   bucket        = "raw-media-${lower(var.APP_ENV)}"
+
   # force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
   region        = "${var.AWS_REGION}"
 

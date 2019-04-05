@@ -12,7 +12,7 @@ exports.handler = function(event, context) {
  var bucket = event.Records[0].s3.bucket.name;
  var key = event.Records[0].s3.object.key;
  var pipelineId = ‘112321321343–2abcc1’;
- if (bucket !== ‘acloud-video-input’) {
+ if (bucket !== ‘raw-media-tst’) {
   context.fail(‘Incorrect Video Input Bucket’);
   return;
  }
