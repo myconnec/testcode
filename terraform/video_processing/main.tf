@@ -9,6 +9,7 @@ module "s3_lambda_transcoder_event" {
   # variables
   SOURCE_BUCKET_ARN = "${aws_s3_bucket.raw_media.arn}"
   SOURCE_BUCKET_NAME = "${aws_s3_bucket.raw_media.bucket}"
+  APP_ENV = "${var.APP_ENV}"
 }
 
 # IAM Policy
@@ -26,9 +27,9 @@ data "aws_iam_policy" "s3_full_access_policy" {
 resource "aws_s3_bucket" "raw_media" {
   acl = "private"
 
-  bucket        = "raw-media-${lower(var.APP_ENV)}"
+  bucket        = "raw-media-${var.APP_ENV}"
 
-  # force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
+  force_destroy = false #"${var.APP_ENV != "PRD" ? true : false}"
   region        = "${var.AWS_REGION}"
 
   server_side_encryption_configuration {
@@ -62,8 +63,8 @@ resource "aws_s3_bucket_public_access_block" "raw_media_settings" {
 # S3 bucket for processed video
 resource "aws_s3_bucket" "processed_media" {
   acl           = "private"
-  bucket        = "processed-media-${lower(var.APP_ENV)}"
-  # force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
+  bucket        = "processed-media-${var.APP_ENV}"
+  force_destroy = false #"${var.APP_ENV != "PRD" ? true : false}"
   region        = "${var.AWS_REGION}"
 
   server_side_encryption_configuration {
