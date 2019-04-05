@@ -5,3 +5,4 @@ variable "SOURCE_BUCKET_ARN" {}
 
 variable "SOURCE_BUCKET_NAME" {}
 
+variable "APP_ENV" {}
