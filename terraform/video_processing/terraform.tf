@@ -1,8 +1,18 @@
 # Notes this is currently only a proof of concept.
 # CH will require 2 Transcoders: free and paid
-# TODO: S3 -> Lambda - > Transcoder event chain
-# Source: https://read.acloud.guru/easy-video-transcoding-in-aws-7a0abaaab7b8
 # data
+
+module "s3_lambda_transcoder_event" {
+  source = "./auto_trigger/"
+  version = "0.0.1"
+
+  # variables
+  APP_ENV = "${var.APP_ENV}"
+  APP_NAME = "${var.APP_NAME}"
+  AWS_REGION = "${var.AWS_REGION}"
+  SOURCE_BUCKET = "${aws_s3_bucket.raw_media.id}"
+  TRANSCODER = "${aws_elastictranscoder_pipeline.transcoder_pipeline.id}"
+}
 
 # IAM Policy
 data "aws_iam_policy" "transcoder_full_access_policy" {
