@@ -1,17 +1,17 @@
 'use strict';
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3({
- apiVersion: '2012–09–25'
+ apiVersion: '2012-09-25'
 });
 var eltr = new AWS.ElasticTranscoder({
- apiVersion: '2012–09–25',
- region: 'us-east-1'
+ apiVersion: '2012-09-25',
+ region: 'us-west-1'
 });
 exports.handler = function(event, context) {
  console.log('Executing Elastic Transcoder Orchestrator');
  var bucket = event.Records[0].s3.bucket.name;
  var key = event.Records[0].s3.object.key;
- var pipelineId = '	1554504030826-j1631m';
+ var pipelineId = '1554504030826-j1631m';
  if (bucket !== 'raw-media-tst') {
   context.fail('Incorrect Video Input Bucket');
   return;
@@ -31,29 +31,31 @@ exports.handler = function(event, context) {
   },
   Outputs: [{
    Key: 'mp4-' + newKey + '.mp4',
-   ThumbnailPattern: 'thumbs-' + newKey + '-{count}',
-   PresetId: '1351620000001–000010', //Generic 720p
-   Watermarks: [{
-    InputKey: 'watermarks/logo-horiz-large.png',
-    PresetWatermarkId: 'BottomRight'
-   }],
-  },{
-   Key: 'webm-' + newKey + '.webm',
-   ThumbnailPattern: '',
-   PresetId: '1351620000001–100240', //Webm 720p
-   Watermarks: [{
-    InputKey: 'watermarks/logo-horiz-large.png',
-    PresetWatermarkId: 'BottomRight'
-   }],
-  },{
-   Key: 'hls-' + newKey + '.ts',
-   ThumbnailPattern: '',
-   PresetId: '1351620000001–200010', //HLS v3 2mb/s
-   Watermarks: [{
-    InputKey: 'watermarks/logo-horiz-large.png',
-    PresetWatermarkId: 'BottomRight'
-   }],
-  }]
+//   ThumbnailPattern: 'thumbs-' + newKey + '-{count}',
+   PresetId: '1351620000001-000010', //Generic 720p
+//    Watermarks: [{
+//     InputKey: 'watermarks/logo-horiz-large.png',
+//     PresetWatermarkId: 'BottomRight'
+//    }],
+  }
+//   ,{
+//    Key: 'webm-' + newKey + '.webm',
+//    ThumbnailPattern: '',
+//    PresetId: '1351620000001-100240', //Webm 720p
+//    Watermarks: [{
+//     InputKey: 'watermarks/logo-horiz-large.png',
+//     PresetWatermarkId: 'BottomRight'
+//    }],
+//   },{
+//    Key: 'hls-' + newKey + '.ts',
+//    ThumbnailPattern: '',
+//    PresetId: '1351620000001-200010', //HLS v3 2mb/s
+//    Watermarks: [{
+//     InputKey: 'watermarks/logo-horiz-large.png',
+//     PresetWatermarkId: 'BottomRight'
+//    }],
+//   }
+]
  };
  console.log('Starting Job');
  eltr.createJob(params, function(err, data){
