@@ -28,25 +28,25 @@ connechub_mariadb:latest
 # RoR
 docker run -d -it -p 3000:3000 \
 --mount type=bind,source="$(pwd)"/,target=/app \
---name web_app \
+--name connechub_web_app \
 --net connechub \
 --entrypoint "rails" connechub_webapp:latest server -e development \
 --binding 0.0.0.0
 ```
 
-### test
+### tst
 
 ```bash
 docker run -it -p 3000:3000  --entrypoint "rails" connechub server -e development --binding 0.0.0.0
 ```
 
-### perf
+### prf
 
 ```bash
 docker run -it -p 3000:3000  --entrypoint "rails" connechub server -binding 0.0.0.0
 ```
 
-## pro
+## prd
 
 ```bash
 docker run -it -p 3000:3000  connechub
