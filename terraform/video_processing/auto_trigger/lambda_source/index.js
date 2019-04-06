@@ -20,7 +20,7 @@ exports.handler = function(event, context) {
  var newKey = key.split('.')[0];
  var params = {
   PipelineId: pipelineId,
-  OutputKeyPrefix: newKey + '/',
+  OutputKeyPrefix: 'testing/',
   Input: {
    Key: srcKey,
    FrameRate: 'auto',
@@ -30,32 +30,16 @@ exports.handler = function(event, context) {
    Container: 'auto'
   },
   Outputs: [{
-   Key: 'mp4-' + newKey + '.mp4',
+   Key: newKey + '.mp4',
+   // Generic 720p in mp4: 1351620000001-000010
+   // Generic 1080p in mp4: 11351620000001-000001
+   PresetId: '1351620000001-000001', //
 //   ThumbnailPattern: 'thumbs-' + newKey + '-{count}',
-   PresetId: '1351620000001-000010', //Generic 720p
 //    Watermarks: [{
 //     InputKey: 'watermarks/logo-horiz-large.png',
 //     PresetWatermarkId: 'BottomRight'
 //    }],
-  }
-//   ,{
-//    Key: 'webm-' + newKey + '.webm',
-//    ThumbnailPattern: '',
-//    PresetId: '1351620000001-100240', //Webm 720p
-//    Watermarks: [{
-//     InputKey: 'watermarks/logo-horiz-large.png',
-//     PresetWatermarkId: 'BottomRight'
-//    }],
-//   },{
-//    Key: 'hls-' + newKey + '.ts',
-//    ThumbnailPattern: '',
-//    PresetId: '1351620000001-200010', //HLS v3 2mb/s
-//    Watermarks: [{
-//     InputKey: 'watermarks/logo-horiz-large.png',
-//     PresetWatermarkId: 'BottomRight'
-//    }],
-//   }
-]
+  }]
  };
  console.log('Starting Job');
  eltr.createJob(params, function(err, data){
