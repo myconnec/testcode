@@ -1,6 +1,7 @@
 # TODO: S3 -> Lambda - > Transcoder event chain
 # Source: https://read.acloud.guru/easy-video-transcoding-in-aws-7a0abaaab7b8
 # Source: https://www.justdocloud.com/2018/10/02/event-notification-s3-bucket/
+# Source: https://docs.aws.amazon.com/elastictranscoder/latest/developerguide/access-control.html
 
 # data
 data "aws_iam_policy_document" "iam_assume_role_policy" {
@@ -17,17 +18,7 @@ data "aws_iam_policy_document" "iam_assume_role_policy" {
   }
 }
 
-# resource
 
-## S3 trigger
-
-## lambda
-
-## transcoder
-
-# output
-
-# example
 resource "aws_iam_role" "lambda_role" {
   name               = "CHS3EventTriggerFormTranscoder"
   assume_role_policy = "${data.aws_iam_policy_document.iam_assume_role_policy.json}"
