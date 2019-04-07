@@ -1,6 +1,5 @@
 Connechub
 
-
 # Infrasstrucuture Configuration
 
 Phase 1:
@@ -14,7 +13,6 @@ Make it right
 Phase 3:
 
 Make it fast
-
 
 # Usage
 
@@ -32,7 +30,6 @@ ansible-playbook \
     --private-key ~/.ssh/aws-connechub-test-dje2.pem \
     ./docs/ansible/connechub.yml
 ```
-
 
 ## Down
 
