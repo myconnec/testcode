@@ -1,5 +1,8 @@
 ---
 - hosts: all
+  vars:
+    AWS_ACCESS_KEY: ""
+    AWS_SECRET_KEY: ""
   become: true
   gather_facts: false
 
@@ -46,6 +49,11 @@
       version: master
       force: true
 
+    - name: Set API credentials fo S3FS can access S3 service from EC2.
+      command: > 
+        touch /etc/passwd-s3fs
+        echo "{{AWS_ACCESS_KEY}}:{{AWS_SECRET_KEY}}" > /etc/passwd-s3fs
+
     - name: Simple GET operation
       command: > 
         cd s3fs-fuse
@@ -56,7 +64,7 @@
         which s3fs
         cd ../
         mkdir ./testing
-        s3fs poc-media-tst-d6b6b20d-1ea6-5411-23d0-1fd6f5ef89aa -o use_cache=/tmp -o allow_other -o uid=1001 -o mp_umask=002 -o multireq_max=5 ./testing
+        s3fs poc-media-tst-1a39d059-0107-0ad7-1383-74c2b6bcd513 -o use_cache=/tmp -o allow_other -o uid=1001 -o mp_umask=002 -o multireq_max=5 ./testing
 
     # - name: Install NodeJs and NPM
     #   apt:

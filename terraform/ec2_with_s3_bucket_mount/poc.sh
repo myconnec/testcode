@@ -11,9 +11,12 @@ export ANSIBLE_STDOUT_CALLBACK=minimal
 
 echo 'Executing Ansible playbook...'
 ansible-playbook \
+    --extra-vars='{
+        "AWS_ACCESS_KEY": "'$(terraform output AWS_ACCESS_KEY)'",
+        "AWS_SECRET_KEY": "'$(terraform output AWS_SECRET_KEY)'"
+    }' \
     -i ''$(terraform output EC2_web_host_ip)',' \
     -u ubuntu \
-    --extra-vars='{"rd_dns": "'$(terraform output SQL_host_dns_addr)'"}' \
     --private-key ~/.ssh/aws-connechub-test-dje2.pem \
     ./terraform/ec2_with_s3_bucket_mount/poc.yml
 
