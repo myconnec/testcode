@@ -1,7 +1,7 @@
 #!/bin/bash +xe
 
-echo 'Giving the compute instance a chance to start up...'
-sleep 120;
+# echo 'Giving the compute instance a chance to start up...'
+# sleep 120;
 
 echo 'Exporting Ansible settings...'
 export ANSIBLE_NOCOWS=1
@@ -15,7 +15,7 @@ ansible-playbook \
         "AWS_ACCESS_KEY": "'$(terraform output AWS_ACCESS_KEY)'",
         "AWS_SECRET_KEY": "'$(terraform output AWS_SECRET_KEY)'"
     }' \
-    -i ''$(terraform output EC2_web_host_ip)',' \
+    -i ''$(terraform output IP)',' \
     -u ubuntu \
     --private-key ~/.ssh/aws-connechub-test-dje2.pem \
     ./terraform/ec2_with_s3_bucket_mount/poc.yml
