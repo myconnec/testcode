@@ -73,7 +73,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 }
 
 resource "aws_iam_role" "ec2_web_server_role" {
-  assume_role_policy = "${file("./policies/assumerolepolicy.json")}"
+  assume_role_policy = "${file("./terraform/webapp/policies/assumerolepolicy.json")}"
   name               = "CHServiceRoleForEC2WithCodeCommitReadOnlyPermission"
 }
 

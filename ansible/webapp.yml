@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    rd_dns: mariadb
+    rd_dns: rd_dns
   become: true
   gather_facts: false
 
@@ -152,10 +152,10 @@
         owner: ubuntu
         recurse: true
 
-    # - name: Install and Migrate database
-    #   become: ubuntu
-    #   shell: |
-    #     cd /home/ubuntu/ConnecHub && ./bin/rake db:setup && ./bin/rake db:migrate
+    - name: Install and Migrate database
+      become: ubuntu
+      shell: |
+        cd /home/ubuntu/ConnecHub && ./bin/rake db:setup && ./bin/rake db:migrate
 
     - name: Start Rails server
       shell: |

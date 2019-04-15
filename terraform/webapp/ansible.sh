@@ -1,7 +1,7 @@
-#!/bin.bash +xe
+#!/bin/bash +xe
 
 echo 'Giving the compute instance a chance to start up...'
-sleep 120;
+#sleep 60;
 
 echo 'Exporting Ansible settings...'
 export ANSIBLE_NOCOWS=1
@@ -14,7 +14,8 @@ ansible-playbook \
     -i ''$(terraform output EC2_web_host_ip)',' \
     -u ubuntu \
     --extra-vars='{"rd_dns": "'$(terraform output SQL_host_dns_addr)'"}' \
-    --private-key ~/.ssh/aws-connechub-test-dje2.pem \
-    ./docs/ansible/connechub.yml
+    --private-key ~/.ssh/aws-connechub-test-dje.pem \
+    ./ansible/webapp.yml
+
 
 echo '...done.'

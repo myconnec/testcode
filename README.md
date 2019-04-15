@@ -29,10 +29,9 @@ ansible-playbook \
     -i ''$(terraform output EC2_web_host_ip)',' \
     -u ubuntu \
     --extra-vars='{"rd_dns": "'$(terraform output SQL_host_dns_addr)'"}' \
-    --private-key ~/.ssh/aws-connechub-test-dje2.pem \
-    ./docs/ansible/connechub.yml
+    --private-key ~/.ssh/aws-connechub-test-dje.pem \
+    ./ansible/webapp.yml
 ```
-
 
 ## Down
 
