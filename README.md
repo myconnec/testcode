@@ -29,10 +29,9 @@ ansible-playbook \
     -i ''$(terraform output EC2_web_host_ip)',' \
     -u ubuntu \
     --extra-vars='{"rd_dns": "'$(terraform output SQL_host_dns_addr)'"}' \
-    --private-key ~/.ssh/aws-connechub-test-dje2.pem \
-    ./docs/ansible/connechub.yml
+    --private-key ~/.ssh/aws-connechub-test-dje.pem \
+    ./ansible/webapp.yml
 ```
-
 
 ## Down
 
@@ -41,3 +40,13 @@ ansible-playbook \
 ```bash
 terraform destroy -var-file=.env ./
 ```
+
+
+
+# S3 Integration
+
+## Writing
+Web-App writes raw file to S3 raw-media bucket.
+
+## Reading
+Using the posts ID, get the file name. Generate signed URL for media, request media in web view.

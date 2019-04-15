@@ -9,15 +9,16 @@ data "aws_iam_policy_document" "iam_assume_role_policy" {
     actions = [
       "sts:AssumeRole",
     ]
+
     principals {
       type = "Service"
+
       identifiers = [
         "lambda.amazonaws.com",
       ]
     }
   }
 }
-
 
 resource "aws_iam_role" "lambda_role" {
   name               = "CHS3EventTriggerFormTranscoder"
@@ -51,8 +52,8 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 
 # logging
 resource "aws_iam_policy" "lambda_logging" {
-  name = "lambda_logging"
-  path = "/"
+  name        = "lambda_logging"
+  path        = "/"
   description = "IAM policy for logging from a lambda"
 
   policy = <<EOF
@@ -120,6 +121,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role = "${aws_iam_role.lambda_role.name}"
+  role       = "${aws_iam_role.lambda_role.name}"
   policy_arn = "${aws_iam_policy.lambda_logging.arn}"
 }

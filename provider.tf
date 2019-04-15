@@ -6,9 +6,8 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "connechub-terraform-remote-state"
+    bucket  = "connechub-terraform-remote-state"
     encrypt = true
-    key = "terraform.tfstate"
+    key     = "terraform.tfstate"
   }
 }
-
