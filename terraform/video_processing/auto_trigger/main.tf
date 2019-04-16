@@ -26,7 +26,7 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 resource "aws_lambda_function" "s3lambda" {
-  filename      = "./terraform/video_processing/auto_trigger/lambda_source/handler.zip"
+  filename      = "./terraform/video_processing/auto_trigger/lambda_source/index.zip"
   function_name = "s3lambda"
   role          = "${aws_iam_role.lambda_role.arn}"
   handler       = "index.handler"

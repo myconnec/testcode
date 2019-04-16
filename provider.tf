@@ -5,9 +5,11 @@ provider "aws" {
 }
 
 terraform {
-  backend "s3" {
-    bucket  = "connechub-terraform-remote-state"
-    encrypt = true
-    key     = "terraform.tfstate"
+  backend "remote" {
+    organization = "ConnecHub"
+
+    workspaces {
+      name = "dev"
+    }
   }
 }

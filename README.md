@@ -41,12 +41,9 @@ ansible-playbook \
 terraform destroy -var-file=.env ./
 ```
 
+## Toolchain
 
-
-# S3 Integration
-
-## Writing
-Web-App writes raw file to S3 raw-media bucket.
-
-## Reading
-Using the posts ID, get the file name. Generate signed URL for media, request media in web view.
+- [Ansible](https://www.ansible.com/)
+- [AWS CLI](https://aws.amazon.com)
+- [Terraform](https://app.terraform.io/app/ConnecHub/workspaces)
+- [Ruby on Rails](https://rubyonrails.org/)
