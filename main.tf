@@ -23,3 +23,15 @@
 #   APP_NAME   = "${var.APP_NAME}"
 #   AWS_REGION = "${var.AWS_REGION}"
 # }
+
+# S3 Bucket Mounting
+module "s3_mount" {
+  source = "./terraform/s3_mount"
+  version = "0.0.1"
+
+  # variables
+  APP_ENV = "${var.APP_ENV}"
+  APP_NAME = "${var.APP_NAME}"
+  AWS_REGION = "${var.AWS_REGION}"
+  AWS_PEM_KEY_PAIR = "${var.AWS_PEM_KEY_PAIR}"
+}
