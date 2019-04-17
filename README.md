@@ -23,6 +23,7 @@ Make it fast
 ### Dev
 
 ```bash
+terraform init
 terraform plan --out ./out.plan -var-file=.env
 terraform apply -lock=true ./out.plan
 ansible-playbook \

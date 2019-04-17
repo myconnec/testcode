@@ -23,15 +23,16 @@ Make it fast
 ### Dev
 
 ```bash
+terraform init
 terraform plan --out ./out.plan -var-file=.env
 terraform apply -lock=true ./out.plan
-ansible-playbook \
-    -i '3.14.11.54,' \
-    -u ubuntu \
-    --private-key ~/.ssh/aws-connechub-test-dje.pem \
-    ./ansible/s3_mount.yml
 ```
 
+This is the shell command the main.tf local_exec evaluates to
+
+```bash
+./terraform/s3_mount/s3_mount.sh tst media-source media-display
+```
 
 ## Down
 

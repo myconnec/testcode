@@ -1,13 +1,16 @@
 ---
 - hosts: all
   vars:
-    rd_dns: mariadb
+    APP_ENV:  APP_ENV
+    AWS_S3_MEDIA_SOURCE_BUCKET:  AWS_S3_MEDIA_SOURCE_BUCKET
+    AWS_S3_MEDIA_DISPLAY_BUCKET:  AWS_S3_MEDIA_DISPLAY_BUCKET
+    LOCAL_USER: ubuntu
   become: true
   gather_facts: false
 
   pre_tasks:
     - name: Update dependencies via apt-get
-      raw: sudo apt-get clean && apt-get autoclean && sudo apt autoremove -y && sudo apt-get update -y
+      raw: sudo apt-get clean && sudo apt-get autoclean && sudo apt autoremove -y && sudo apt-get update -y
 
     - name: Installing awscli, https transport, build-essential, Python & PIP
       raw: sudo apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
@@ -25,6 +28,29 @@
           - zlib1g
           - zlib1g-dev
         state: present
-    - name: Mount S3 Bucket
-        command: >
-          s3fs mybucket /path/to/mountpoint -o passwd_file=${HOME}/.passwd-s3fs
+    # Ansible copy module https://docs.ansible.com/ansible/latest/modules/copy_module.html
+    - name: Copy API keys for S3 mounting into EC2 instance
+      copy:
+        src: ../.passwd-s3f
+        dest: /home/{{ LOCAL_USER }}/.passwd-s3fs
+        owner: ubuntu
+        group: ubuntu
+        mode: 0400
+    - file:
+        state: directory
+        path: /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+    - name: Mount source S3 Bucket
+      shell: |
+        s3fs {{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}  /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }} -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs
+    - file:
+        state: directory
+        path: /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}
+        owner: ubuntu
+        group: ubuntu
+        mode: 0644
+    - name: Mount source S3 Bucket
+      shell: |
+        s3fs {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}  /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs
