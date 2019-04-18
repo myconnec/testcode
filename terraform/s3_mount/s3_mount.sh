@@ -1,7 +1,7 @@
 #!/bin/bash +xe
 
 echo 'Giving the compute instance a chance to start up...'
-#sleep 30;
+sleep 60;
 
 echo 'Exporting Ansible settings...'
 export ANSIBLE_NOCOWS=1
@@ -11,9 +11,9 @@ export ANSIBLE_STDOUT_CALLBACK=minimal
 
 echo 'Executing Ansible playbook...'
 ansible-playbook \
-    -i ''$(terraform output EC2_web_host_ip)',' \
+    -i ''$1','  \
     -u ubuntu \
-    --extra-vars='{"APP_ENV": "'$1'", "AWS_S3_MEDIA_SOURCE_BUCKET": "'$2'", "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$3'"}' \
+    --extra-vars='{"APP_ENV": "'$2'", "AWS_S3_MEDIA_SOURCE_BUCKET": "'$3'", "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$4'"}' \
     --private-key ~/.ssh/aws-connechub-test-dje.pem \
     ./terraform/s3_mount/s3_mount.yml
 
