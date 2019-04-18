@@ -1,15 +1,15 @@
 #!/bin/bash +xe
 
-echo 'Giving the compute instance a chance to start up...'
+printf 'Giving the compute instance a chance to start up...'
 sleep 60;
 
-echo 'Exporting Ansible settings...'
+printf 'Exporting Ansible settings...'
 export ANSIBLE_NOCOWS=1
 export ANSIBLE_DEBUG=0
 export ANSIBLE_HOST_KEY_CHECKING=0
 export ANSIBLE_STDOUT_CALLBACK=minimal
 
-echo 'Executing Ansible playbook...'
+printf "Executing Ansible playbook with the following variables: $1 $2 $3 $4"
 ansible-playbook \
     -i ''$1','  \
     -u ubuntu \
@@ -17,4 +17,4 @@ ansible-playbook \
     --private-key ~/.ssh/aws-connechub-test-dje.pem \
     ./terraform/s3_mount/s3_mount.yml
 
-echo '...done.'
+printf '...done.'
