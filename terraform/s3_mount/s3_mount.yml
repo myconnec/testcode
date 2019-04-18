@@ -21,7 +21,6 @@
         pkg:
           - s3fs
         state: present
-    # Ansible copy module https://docs.ansible.com/ansible/latest/modules/copy_module.html
     - name: Copy API keys for S3 mounting into EC2 instance
       copy:
         src: "../../.passwd-s3fs"
@@ -35,6 +34,15 @@
         owner: "{{ LOCAL_USER }}"
         group: "{{ LOCAL_USER }}"
         mode: 0775
-    - name: Mount source S3 Bucket
+    - name: Mount SOURCE S3 Bucket
       become_user: ubuntu
       command: "s3fs {{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}"
+    - file:
+        state: directory
+        path: "/home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}"
+        owner: "{{ LOCAL_USER }}"
+        group: "{{ LOCAL_USER }}"
+        mode: 0775
+    - name: Mount DISPLAY S3 Bucket
+      become_user: ubuntu
+      command: "s3fs {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}"
