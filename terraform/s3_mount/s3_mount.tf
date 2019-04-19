@@ -1,4 +1,7 @@
-# EC2
+
+# Resources
+
+## EC2
 resource "aws_instance" "web" {
   instance_type = "t2.micro"
 
@@ -8,9 +11,8 @@ resource "aws_instance" "web" {
 
   key_name = "${var.AWS_PEM_KEY_PAIR}"
 
-  # want this
-  provisioner "local-exec" {
-    command = "./terraform/s3_mount/s3_mount.sh ${aws_instance.web.public_ip} ${var.APP_ENV} ${var.AWS_S3_MEDIA_SOURCE_BUCKET} ${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
+    provisioner "local-exec" {
+    command = "./terraform/s3_mount/s3_mount.sh ${aws_instance.web.public_ip} ${var.APP_ENV} ${var.AWS_S3_MEDIA_DISPLAY_BUCKET} ${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
   }
 
   tags = {
@@ -27,7 +29,7 @@ resource "aws_instance" "web" {
   ]
 }
 
-# Security Groups
+## Security Groups
 
 resource "aws_security_group" "ec2_security_group_https" {
   name = "https"
@@ -86,13 +88,14 @@ resource "aws_security_group" "ec2_security_group_ssh" {
 
 # S3 Buckets
 
-resource "aws_s3_bucket" "media_source_bucket" {
+## Buckets
+resource "aws_s3_bucket" "media_display_bucket" {
   acl = "private"
 
-  bucket = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}-${var.APP_ENV}"
+  bucket = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
 
   force_destroy = "${var.APP_ENV != "prd" ? true : false}"
-  region        = "us-east-1" #"${var.AWS_REGION}"
+  region        = "us-east-1" # Must be us-east-1 to mount as a file system dir.
 
   server_side_encryption_configuration {
     rule {
@@ -111,13 +114,12 @@ resource "aws_s3_bucket" "media_source_bucket" {
   }
 }
 
-resource "aws_s3_bucket" "media_display_bucket" {
-  acl = "private"
-
-  bucket = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
+resource "aws_s3_bucket" "media_source_bucket" {
+  acl    = "private"
+  bucket = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}-${var.APP_ENV}"
 
   force_destroy = "${var.APP_ENV != "prd" ? true : false}"
-  region        = "us-east-1" #"${var.AWS_REGION}"
+  region        = "us-east-1"
 
   server_side_encryption_configuration {
     rule {
@@ -134,4 +136,24 @@ resource "aws_s3_bucket" "media_display_bucket" {
     service = "S3"
     tech    = "Storage"
   }
+}
+
+## Bucket ACLs
+
+resource "aws_s3_bucket_public_access_block" "media_display_bucket" {
+  bucket = "${aws_s3_bucket.media_display_bucket.id}"
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_public_access_block" "media_source_bucket" {
+  bucket = "${aws_s3_bucket.media_source_bucket.id}"
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
