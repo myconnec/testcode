@@ -20,9 +20,11 @@ resource "aws_instance" "web" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Ruby on Rails"
+    Name    = "RoR web server"
   }
 
-  vpc_security_group_ids = [
+  security_groups = [
+    "${aws_default_security_group.default.name}",
     "${aws_security_group.ec2_security_group_https.name}",
     "${aws_security_group.ec2_security_group_ssh.name}",
   ]
