@@ -19,13 +19,7 @@ module "video-processing" {
   version = "0.0.1"
 
   # variables
-  "APP_ENV" = ""
-  "APP_NAME" = ""
-  "AWS_REGION" = ""
-  "AWS_ACCESS_KEY" = ""
-  "AWS_SECRET_KEY" = ""
-  "AWS_PEM_KEY_PAIR" = ""
-  "DB_USER" = ""
-  "DB_PASS" = ""
+  APP_ENV = "${var.APP_ENV}"
+  APP_NAME = "${var.APP_NAME}"
+  AWS_REGION = "${var.AWS_REGION}"
 }
-

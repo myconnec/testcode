@@ -12,7 +12,8 @@ resource "aws_db_instance" "rds" {
   username              = "${var.DB_USER}"
   password              = "${var.DB_PASS}"
   parameter_group_name  = "default.mariadb10.3"
-    skip_final_snapshot = true
+  skip_final_snapshot   = true
+
   tags = {
     app     = "ConnecHub"
     env     = "${var.APP_ENV}"
@@ -46,7 +47,7 @@ resource "aws_instance" "web" {
   key_name             = "${var.AWS_PEM_KEY_PAIR}"
 
   provisioner "local-exec" {
-    command = "./ansible.sh"
+    command = "./terraform/webapp/ansible.sh"
   }
 
   tags = {
