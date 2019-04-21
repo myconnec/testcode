@@ -47,7 +47,7 @@ resource "aws_instance" "web" {
   key_name             = "${var.AWS_PEM_KEY_PAIR}"
 
   provisioner "local-exec" {
-    command = "./terraform/webapp/ansible.sh"
+    command = "./terraform/web_app/ansible.sh"
   }
 
   tags = {
@@ -72,7 +72,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 }
 
 resource "aws_iam_role" "ec2_web_server_role" {
-  assume_role_policy = "${file("./policies/assumerolepolicy.json")}"
+  assume_role_policy = "${file("./terraform/web_app/policies/assumerolepolicy.json")}"
   name               = "CHServiceRoleForEC2WithCodeCommitReadOnlyPermission"
 }
 

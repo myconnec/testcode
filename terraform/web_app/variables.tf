@@ -4,10 +4,4 @@
 variable "APP_ENV" {}
 variable "APP_NAME" {}
 variable "AWS_REGION" {}
-variable "AWS_ACCESS_KEY" {}
-variable "AWS_SECRET_KEY" {}
 variable "AWS_PEM_KEY_PAIR" {}
-variable "DB_USER" {}
-variable "DB_PASS" {}
-variable "AWS_S3_MEDIA_DISPLAY_BUCKET" {}
-variable "AWS_S3_MEDIA_SOURCE_BUCKET" {}
