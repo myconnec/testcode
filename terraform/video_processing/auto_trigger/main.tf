@@ -9,8 +9,10 @@ data "aws_iam_policy_document" "iam_assume_role_policy" {
     actions = [
       "sts:AssumeRole",
     ]
+
     principals {
       type = "Service"
+
       identifiers = [
         "lambda.amazonaws.com",
       ]
@@ -18,14 +20,13 @@ data "aws_iam_policy_document" "iam_assume_role_policy" {
   }
 }
 
-
 resource "aws_iam_role" "lambda_role" {
   name               = "CHS3EventTriggerFormTranscoder"
   assume_role_policy = "${data.aws_iam_policy_document.iam_assume_role_policy.json}"
 }
 
 resource "aws_lambda_function" "s3lambda" {
-  filename      = "./terraform/video_processing/auto_trigger/lambda_source/handler.zip"
+  filename      = "./terraform/video_processing/auto_trigger/lambda_source/index.zip"
   function_name = "s3lambda"
   role          = "${aws_iam_role.lambda_role.arn}"
   handler       = "index.handler"
@@ -51,8 +52,8 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
 
 # logging
 resource "aws_iam_policy" "lambda_logging" {
-  name = "lambda_logging"
-  path = "/"
+  name        = "lambda_logging"
+  path        = "/"
   description = "IAM policy for logging from a lambda"
 
   policy = <<EOF
@@ -120,6 +121,6 @@ EOF
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  role = "${aws_iam_role.lambda_role.name}"
+  role       = "${aws_iam_role.lambda_role.name}"
   policy_arn = "${aws_iam_policy.lambda_logging.arn}"
 }

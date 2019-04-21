@@ -15,11 +15,11 @@
 
 # Video asset processing
 module "video-processing" {
-  source = "./terraform/video_processing"
+  source  = "./terraform/video_processing"
   version = "0.0.1"
 
   # variables
-  APP_ENV = "${var.APP_ENV}"
-  APP_NAME = "${var.APP_NAME}"
+  APP_ENV    = "${var.APP_ENV}"
+  APP_NAME   = "${var.APP_NAME}"
   AWS_REGION = "${var.AWS_REGION}"
 }
