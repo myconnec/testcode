@@ -11,7 +11,7 @@ resource "aws_instance" "web" {
   key_name = "${var.AWS_PEM_KEY_PAIR}"
 
     provisioner "local-exec" {
-    command = "./terraform/s3_mount/s3_mount.sh ${aws_instance.web.public_ip} ${var.APP_ENV} ${var.AWS_S3_MEDIA_DISPLAY_BUCKET} ${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
+    command = "./terraform/s3_mount/s3_mount.sh ${aws_instance.web.public_ip} ${var.APP_ENV} ${var.AWS_PEM_KEY_PAIR} ${var.AWS_REGION} ${var.AWS_S3_MEDIA_DISPLAY_BUCKET} ${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
   }
 
   tags = {
