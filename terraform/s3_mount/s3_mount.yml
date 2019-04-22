@@ -1,0 +1,49 @@
+---
+- hosts: all
+  vars:
+    APP_ENV:  APP_ENV
+    AWS_S3_MEDIA_DISPLAY_BUCKET:  AWS_S3_MEDIA_DISPLAY_BUCKET
+    AWS_S3_MEDIA_SOURCE_BUCKET:  AWS_S3_MEDIA_SOURCE_BUCKET
+    LOCAL_USER: ubuntu
+  become: true
+  gather_facts: false
+
+  pre_tasks:
+    - name: Update dependencies via apt-get
+      raw: sudo apt-get clean && sudo apt-get autoclean && sudo apt autoremove -y && sudo apt-get update -y
+
+    - name: Installing awscli, https transport, build-essential, Python & PIP
+      raw: sudo apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
+
+  tasks:
+    - name: Install system dependencies
+      apt:
+        pkg:
+          - s3fs
+        state: present
+    - name: Copy API keys for S3 mounting into EC2 instance
+      copy:
+        src: "../../.passwd-s3fs"
+        dest: "/home/{{ LOCAL_USER }}/.passwd-s3fs"
+        owner: "{{ LOCAL_USER }}"
+        group: "{{ LOCAL_USER }}"
+        mode: 0600
+    - file:
+        state: directory
+        path: "/home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}"
+        owner: "{{ LOCAL_USER }}"
+        group: "{{ LOCAL_USER }}"
+        mode: 0775
+    - name: Mount DISPLAY S3 Bucket
+      become_user: ubuntu
+      command: "s3fs {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}"
+    - file:
+        state: directory
+        path: "/home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}"
+        owner: "{{ LOCAL_USER }}"
+        group: "{{ LOCAL_USER }}"
+        mode: 0775
+    - name: Mount SOURCE S3 Bucket
+      become_user: ubuntu
+      command: "s3fs {{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}"
+

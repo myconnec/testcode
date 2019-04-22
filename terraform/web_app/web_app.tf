@@ -1,5 +1,6 @@
 # RDS
 
+<<<<<<< HEAD:terraform/webapp/main.tf
 resource "aws_db_instance" "rds" {
   allocated_storage     = 10
   copy_tags_to_snapshot = true
@@ -25,6 +26,34 @@ resource "aws_db_instance" "rds" {
     "${aws_security_group.rds_security_group_mysql.id}",
   ]
 }
+=======
+# resource "aws_db_instance" "rds" {
+#   allocated_storage     = 10
+#   copy_tags_to_snapshot = true
+#   storage_type          = "gp2"
+#   engine                = "mariadb"
+#   engine_version        = "10.3"
+#   instance_class        = "db.t2.micro"
+#   name                  = "connechub"
+#   identifier            = "connechub-tst"
+#   username              = "${var.DB_USER}"
+#   password              = "${var.DB_PASS}"
+#   parameter_group_name  = "default.mariadb10.3"
+#   skip_final_snapshot   = true
+
+#   tags = {
+#     app     = "ConnecHub"
+#     env     = "${var.APP_ENV}"
+#     owner   = "admin@connechub.com"
+#     service = "RDS"
+#     tech    = "MariaDB"
+#   }
+
+#   vpc_security_group_ids = [
+#     "${aws_security_group.rds_security_group_mysql.id}",
+#   ]
+# }
+>>>>>>> feature/s3_user_media_storage:terraform/web_app/web_app.tf
 
 # EC2
 
@@ -47,7 +76,7 @@ resource "aws_instance" "web" {
   key_name             = "${var.AWS_PEM_KEY_PAIR}"
 
   provisioner "local-exec" {
-    command = "./terraform/webapp/ansible.sh"
+    command = "./terraform/web_app/ansible.sh"
   }
 
   tags = {
@@ -72,7 +101,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 }
 
 resource "aws_iam_role" "ec2_web_server_role" {
-  assume_role_policy = "${file("./policies/assumerolepolicy.json")}"
+  assume_role_policy = "${file("./terraform/web_app/policies/assumerolepolicy.json")}"
   name               = "CHServiceRoleForEC2WithCodeCommitReadOnlyPermission"
 }
 
