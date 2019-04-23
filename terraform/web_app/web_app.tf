@@ -1,6 +1,5 @@
 # RDS
 
-<<<<<<< HEAD:terraform/webapp/main.tf
 resource "aws_db_instance" "rds" {
   allocated_storage     = 10
   copy_tags_to_snapshot = true
@@ -26,34 +25,6 @@ resource "aws_db_instance" "rds" {
     "${aws_security_group.rds_security_group_mysql.id}",
   ]
 }
-=======
-# resource "aws_db_instance" "rds" {
-#   allocated_storage     = 10
-#   copy_tags_to_snapshot = true
-#   storage_type          = "gp2"
-#   engine                = "mariadb"
-#   engine_version        = "10.3"
-#   instance_class        = "db.t2.micro"
-#   name                  = "connechub"
-#   identifier            = "connechub-tst"
-#   username              = "${var.DB_USER}"
-#   password              = "${var.DB_PASS}"
-#   parameter_group_name  = "default.mariadb10.3"
-#   skip_final_snapshot   = true
-
-#   tags = {
-#     app     = "ConnecHub"
-#     env     = "${var.APP_ENV}"
-#     owner   = "admin@connechub.com"
-#     service = "RDS"
-#     tech    = "MariaDB"
-#   }
-
-#   vpc_security_group_ids = [
-#     "${aws_security_group.rds_security_group_mysql.id}",
-#   ]
-# }
->>>>>>> feature/s3_user_media_storage:terraform/web_app/web_app.tf
 
 # EC2
 
