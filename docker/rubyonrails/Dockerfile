@@ -18,5 +18,10 @@ COPY ./ /app
 # DB install and migrations
 RUN bundle config --delete bin && rake rails:update:bin 
 
+# Mount S3 buckets into Docker image to
+COPY ./.passwd-s3fs ~/.passwd-s3fs
+RUN s3fs -d media-display-dev -o use_cache=/tmp -o multireq_max=5 -o passwd_file=~/.passwd-s3fs /app/system/public/media-display-dev
+RUN s3fs -d media-source-dev -o use_cache=/tmp -o multireq_max=5 -o passwd_file=~/.passwd-s3fs /media-source-dev
+
 # EXPOSE 3000
 ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
