@@ -37,7 +37,7 @@
         mode: 0775
     - name: Mount DISPLAY S3 Bucket
       become_user: ubuntu
-      command: "s3fs {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}"
+      command: "s3fs -d {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }}"
     - file:
         state: directory
         path: "/home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}"
@@ -46,4 +46,4 @@
         mode: 0775
     - name: Mount SOURCE S3 Bucket
       become_user: ubuntu
-      command: "s3fs {{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs -o url=https://s3.{{ AWS_REGION }}.amazonaws.com /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}"
+      command: "s3fs -d {{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs -o url=https://s3.{{ AWS_REGION }}.amazonaws.com /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}"
