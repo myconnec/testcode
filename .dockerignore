@@ -1,7 +1,22 @@
-.git
-.dockerignore
+# File and file types to ignore
+.*
+.git*
+.docker*
 Dockerfile*
-**/*.md
 **/*.log
-/docs/**
-/tmp/**
+**/*.md
+**/*.plan
+**/*.retry
+**/*.tf
+
+# DIR to ignore
+.git
+docker
+docs
+spec
+terraform
+tmp
+
+# exceptions to ignore rules
+!.env
+!.passwd-s3fs
