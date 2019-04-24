@@ -1,79 +1,91 @@
-<br>
 <div class="col-md-8 col-md-offset-2">
-  <div class="row">
-  <div class="panel panel-default">
-  <div class="panel-heading">
-    <h2>Post Your New Ad</h2>
-  </div>
-      
-  <div class="panel-body">
-  <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %>
-	<div class = "small-heading", style="color:red">* Note! to place an ad you must complete all fields!</div>
-	<br />
-	<div class="input-group">
-  <span class="input-group-addon">$</span>
-  <%= f.text_field :price, autofocus: true, class:"form-control", style: 'width: 200px' %>
-	</div>
-		<hr>
-		<div class = "small-heading">Choose the best Category/Subcategory to place your ad</div>
-	<div class="input-group">
-  	<div class="input-group-addon", style= "color: red">Category</div>
-  	<div class="form-control", style= "width: 120px">
-		<%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}  %></div>
-	</div>
-	
-	<div class="input-group">
-  	<div class="input-group-addon", style= "color: red">Sub-category</div>
-  	<div class="form-control", style= "width: 220px">
-			<%= f.select :subcategory_id, Subcategory.all.map {|f| [f.name, f.id]} %>
-		</div>
-	</div>
+    <div class="row">
+        <div class="panel panel-default">
 
-	<hr>
-	<div class="input-group">
-  	<span class="input-group-addon" id="basic-addon2">Ad Title</span>
-  	<%= f.email_field :title, class: "form-control" %> 
-	</div>
-		<br />
-		<div class="input-group">
-  	<span class="input-group-addon" id="basic-addon2">Your Website</span>
-  	<%= f.email_field :ademail, class: "form-control" %> 
-	</div>
-		<br />
-	<div class="input-group">
-	 	<span class="input-group-addon" id="basic-addon2">My City</span>
-		<%= f.text_field :city, class: "form-control" %>
-	  </div>
-		<br />
-	<div class="input-group">
-	 	<span class="input-group-addon" id="basic-addon2">My State</span>
-		<%= f.text_field :state, class: "form-control" %>
-	</div>
-		<br />
-	<div class="input-group">
-	 	<span class="input-group-addon" id="basic-addon2">My Zipcode</span>
-		<%= f.text_field :zipcode, class: "form-control", style: 'width: 100px', maxlength: "5" %>
-	</div>
-		<br />
-	<div class="input-group">
-	 	<span class="input-group-addon" id="basic-addon2">My Video Ad</span>
-		<%= f.file_field :pin_image, class: "form-control", style: "width: 220px"%>
-	</div>
-		<br />
-	<div class="input-group">
-	 	<span class="input-group-addon" id="basic-addon2">Description</span>
-		<%= f.text_area :description, class: "form-control" %>
-	</div>
-		<br />
-	<div class="input-group">			  	
-	<div class="actions">  
-    <%= f.submit "Post Your Ad", class: "btn btn-success" %>
-	</div>
-  </div>	
-  <% end %>
-  </div>
-  </div>
-  </div>
+             <div class="panel-heading">
+                <h2>Post Your New Ad</h2>
+                <div class = "small-heading", style="color:red">(All fields required.)</div>
+            </div>
+      
+                <div class="panel-body">
+                    <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %>
+                    
+                    <div class="input-group">
+                        <div class="input-group-addon">$</div>
+                        <%= f.text_field :price, autofocus: true, class:"form-control" %>
+                    </div>
+                    <br>
+                   
+                    <div class="input-group">
+                        <div class="input-group-addon">Main Category</div>
+                        <div class="form-control">
+                            <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}  %>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Sub Category</div>
+                        <div class="form-control">
+                            <%= f.select :subcategory_id, Subcategory.all.map {|f| [f.name, f.id]} %>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Posting Title</div>
+                        <%= f.email_field :title, class: "form-control" %> 
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Email</div>
+                        <%= f.email_field :ademail, class: "form-control" %> 
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">City</div>
+                        <%= f.text_field :city, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">State</div>
+                        <%= f.text_field :state, class: "form-control" %>
+                    </div>
+                    <br>
+    
+                    <div class="input-group">
+                        <div class="input-group-addon">Zip</div>
+                        <%= f.text_field :zipcode, class: "form-control", maxlength: "5" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Video</div>
+                        <%= f.file_field :pin_image, class: "form-control" %>
+                    </div>
+                    <br>
+    
+                    <div class="input-group">
+                        <div class="input-group-addon">Description</div>
+                        <%= f.text_area :description, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group float-right">			  	
+                        <div class="actions">  
+                            <%= f.submit "Post Your Post", class: "btn btn-success" %>
+                        </div>
+
+                    </div>	
+
+                    <% end %>
+
+            </div>
+        </div>
+    </div>
 </div>
-<br>  <br>
+
 <%= javascript_include_tag 'listings.js' %>
