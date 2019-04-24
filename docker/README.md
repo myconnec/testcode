@@ -4,11 +4,17 @@
 ## Build
 
 ```bash
+# export current ENV, should be the same from .env file
+export ENV=dev
+docker network create connechub
+```
+
+```bash
 # MariaDB
 docker build -t connechub_mariadb --file ./docker/mariadb/Dockerfile .
 
 # RoR
-docker build -t connechub_webapp --file ./docker/rubyonrails/Dockerfile .
+docker build -t  connechub_webapp --build-arg ENV=dev --file ./docker/rubyonrails/Dockerfile . 
 ```
 
 ##  Start
@@ -16,8 +22,11 @@ docker build -t connechub_webapp --file ./docker/rubyonrails/Dockerfile .
 ### dev
 
 ```bash
-# MariaDB
+
+# MariaDB, limit hardwar to simulate a small cloud instance
 docker run -d -p 3306:3306 \
+--cpus=1 \
+--memory=512M \
 --mount type=bind,source="$(pwd)"/docker/mariadb/data_dir,target=/var/lib/mysql \
 --name mariadb \
 --net connechub \
@@ -25,13 +34,22 @@ docker run -d -p 3306:3306 \
 -e MYSQL_DATABASE=connechub_dev \
 connechub_mariadb:latest
 
-# RoR
+# RoR, limit hardwar to simulate a small cloud instance
 docker run -d -it -p 3000:3000 \
+--cap-add SYS_ADMIN \
+--cpus=1 \
+--device /dev/fuse \
+--memory=512M \
 --mount type=bind,source="$(pwd)"/,target=/app \
 --name web_app \
 --net connechub \
 --entrypoint "rails" connechub_webapp:latest server -e development \
 --binding 0.0.0.0
+
+# Create local DIR and mount S3 Buckets in running container
+docker exec web_app mkdir ./public/media-display-${ENV} && mkdir ./public/media-source-${ENV}
+docker exec web_app s3fs -d media-display-${ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/media-display-${ENV}
+docker exec web_app s3fs -d media-source-${ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/media-source-${ENV}
 ```
 
 ### test

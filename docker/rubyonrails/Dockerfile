@@ -1,8 +1,12 @@
 FROM ruby:2.3.8-slim-stretch
 LABEL author="David J Eddy <me@davidjeddy.com>"
 
+ARG ENV
+
 RUN apt-get update -y
-RUN apt-get update -y && apt-get install -y apt-transport-https build-essential nodejs imagemagick mysql-client default-libmysqlclient-dev
+RUN apt-get clean && apt-get autoclean && apt-get autoremove -y && apt-get update -y
+RUN apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
+RUN apt-get install -y nodejs imagemagick mysql-client default-libmysqlclient-dev s3fs
 RUN apt-get clean
 
 # cache gem installs
@@ -14,6 +18,7 @@ RUN gem install bundler -v 1.17.2 && bundle install
 RUN mkdir /app
 WORKDIR /app
 COPY ./ /app
+RUN chmod 0600 /app/.passwd-s3fs
 
 # DB install and migrations
 RUN bundle config --delete bin && rake rails:update:bin 
