@@ -22,7 +22,6 @@ docker build -t  connechub_webapp --build-arg ENV=${APP_ENV} --file ./docker/rub
 ### dev
 
 ```bash
-
 # MariaDB, limit hardwar to simulate a small cloud instance
 docker run -d -p 3306:3306 \
 --cpus=1 \

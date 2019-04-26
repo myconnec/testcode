@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190425235344) do
+ActiveRecord::Schema.define(version: 20190426021145) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 255
@@ -43,26 +43,26 @@ ActiveRecord::Schema.define(version: 20190425235344) do
   end
 
   create_table "listings", force: :cascade do |t|
-    t.string   "title",                  limit: 128
-    t.text     "description",            limit: 65535
-    t.string   "city",                   limit: 32
-    t.string   "state",                  limit: 32
-    t.string   "zipcode",                limit: 32
-    t.string   "price",                  limit: 32
-    t.string   "address1",               limit: 32
-    t.string   "address2",               limit: 32
-    t.string   "ademail",                limit: 32
+    t.string   "title",              limit: 128
+    t.text     "description",        limit: 65535
+    t.string   "city",               limit: 32
+    t.string   "state",              limit: 32
+    t.string   "zipcode",            limit: 32
+    t.string   "price",              limit: 32
+    t.string   "address1",           limit: 32
+    t.string   "address2",           limit: 32
+    t.string   "ademail",            limit: 32
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "category_id",            limit: 4
-    t.integer  "subcategory_id",         limit: 4
-    t.float    "latitude",               limit: 24
-    t.float    "longitude",              limit: 24
-    t.integer  "user_id",                limit: 4
-    t.string   "media_filename",         limit: 32
-    t.string   "pin_image_content_type", limit: 32
-    t.integer  "pin_image_file_size",    limit: 4
-    t.datetime "pin_image_updated_at"
+    t.integer  "category_id",        limit: 4
+    t.integer  "subcategory_id",     limit: 4
+    t.float    "latitude",           limit: 24
+    t.float    "longitude",          limit: 24
+    t.integer  "user_id",            limit: 4
+    t.string   "media_filename",     limit: 32
+    t.string   "media_content_type", limit: 32
+    t.integer  "media_file_size",    limit: 4
+    t.datetime "media_updated_at"
   end
 
   create_table "models", force: :cascade do |t|
