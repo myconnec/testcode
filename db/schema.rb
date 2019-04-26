@@ -60,9 +60,9 @@ ActiveRecord::Schema.define(version: 20190425235344) do
     t.float    "longitude",              limit: 24
     t.integer  "user_id",                limit: 4
     t.string   "media_filename",         limit: 32
-    t.string   "pin_image_content_type", limit: 32
-    t.integer  "pin_image_file_size",    limit: 4
-    t.datetime "pin_image_updated_at"
+    t.string   "media_content_type", limit: 32
+    t.integer  "media_file_size",    limit: 4
+    t.datetime "media_updated_at"
   end
 
   create_table "models", force: :cascade do |t|

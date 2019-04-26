@@ -18,16 +18,16 @@ class Listing < ActiveRecord::Base
   validates_presence_of :city
   validates_presence_of :state
   validates_presence_of :zipcode
-  validates_presence_of :pin_image
+  validates_presence_of :media
   validates_presence_of :description   
  
   has_many :comments, dependent: :destroy
   # place the source media at this location
-  has_attached_file :pin_image, :path => ":rails_root/"+ENV["AWS_S3_MEDIA_SOURCE_BUCKET"]+"-"+ENV["APP_ENV"]+"/:class/:attachment/:id_partition/:filename"
+  has_attached_file :media, :path => ":rails_root/"+ENV["AWS_S3_MEDIA_SOURCE_BUCKET"]+"-"+ENV["APP_ENV"]+"/:class/:attachment/:id_partition/:filename"
 
-  # validates_attachment_size :pin_image, :less_than => 800.megabytes
-  validates_attachment_presence :pin_image
-  validates_attachment_content_type :pin_image, :content_type => [
+  # validates_attachment_size :media, :less_than => 800.megabytes
+  validates_attachment_presence :media
+  validates_attachment_content_type :media, :content_type => [
     "video/quicktime",
     "video/x-ms-wmv",
     "video/mp4",

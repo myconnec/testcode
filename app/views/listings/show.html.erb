@@ -6,12 +6,12 @@
     <div class="grid_6">
         <p>
             <div>
-            URL: <%= @listing.pin_image %>
+            URL: <%= @listing.media %>
                 <%= videojs_rails sources: {
-                    mov: @listing.pin_image.url,
-                    mp4: @listing.pin_image.url,
-                    webm: @listing.pin_image.url,
-                    ogg: @listing.pin_image.url
+                    mov: @listing.media.url,
+                    mp4: @listing.media.url,
+                    webm: @listing.media.url,
+                    ogg: @listing.media.url
                 },
                 controls: true,
                 autoplay: false,
