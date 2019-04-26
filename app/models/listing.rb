@@ -23,7 +23,7 @@ class Listing < ActiveRecord::Base
  
   has_many :comments, dependent: :destroy
   # place the source media at this location
-  has_attached_file :media, :path => ":rails_root/"+ENV["AWS_S3_MEDIA_SOURCE_BUCKET"]+"-"+ENV["APP_ENV"]+"/:class/:attachment/:id_partition/:filename"
+  has_attached_file :media, :path => ":rails_root/"+ENV["AWS_S3_MEDIA_SOURCE_BUCKET"]+"-"+ENV["APP_ENV"]+"/:class/:attachment/:id_partition/:style/:filename"
 
   # validates_attachment_size :media, :less_than => 800.megabytes
   validates_attachment_presence :media
