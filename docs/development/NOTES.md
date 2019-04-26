@@ -5,7 +5,6 @@
 
 ```bash
 # export current ENV, should be the same from .env file
-export ENV=dev
 docker network create connechub
 ```
 
@@ -47,9 +46,15 @@ docker run -d -it -p 3000:3000 \
 --binding 0.0.0.0
 
 # Create local DIR and mount S3 Buckets in running container
-docker exec web_app mkdir ./public/media-display-${ENV} && mkdir ./public/media-source-${ENV}
-docker exec web_app s3fs -d media-display-${ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/media-display-${ENV}
-docker exec web_app s3fs -d media-source-${ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/media-source-${ENV}
+export APP_ENV=dev
+
+# source
+docker exec web_app mkdir /app/media-source-${APP_ENV}
+docker exec web_app s3fs -d media-source-${APP_ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/media-source-${APP_ENV}
+
+# display
+docker exec web_app mkdir /app/public/media-display-${APP_ENV}
+docker exec web_app s3fs -d media-display-${APP_ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/media-display-${APP_ENV}
 ```
 
 ### test

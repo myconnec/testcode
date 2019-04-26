@@ -89,3 +89,17 @@
 </div>
 
 <%= javascript_include_tag 'listings.js' %>
+
+<% if ENV["APP_ENV"] == 'dev' %>
+<script>
+window.onload = function() {
+    document.getElementById('listing_price').value = '1.23';
+    document.getElementById('listing_title').value = 'Test Title';
+    document.getElementById('listing_ademail').value = 'test@email.com';
+    document.getElementById('listing_city').value = 'Tampa';
+    document.getElementById('listing_state').value = 'Florida';
+    document.getElementById('listing_zipcode').value = '33759';
+    document.getElementById('listing_description').value = 'Test Description';
+};
+</script>
+<% end %>
