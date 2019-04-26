@@ -6,6 +6,7 @@
     <div class="grid_6">
         <p>
             <div>
+            URL: <%= @listing.pin_image %>
                 <%= videojs_rails sources: {
                     mov: @listing.pin_image.url,
                     mp4: @listing.pin_image.url,
