@@ -15,6 +15,7 @@ docs
 spec
 terraform
 tmp
+media-source-dev
 
 # exceptions to ignore rules
 !.env
