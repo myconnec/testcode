@@ -51,8 +51,9 @@ docker exec web_app mkdir /app/media-source-${APP_ENV}
 docker exec web_app s3fs -d media-source-${APP_ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/media-source-${APP_ENV}
 
 # display
-docker exec web_app mkdir /app/public/media-display-${APP_ENV}
-docker exec web_app s3fs -d media-display-${APP_ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/media-display-${APP_ENV}
+docker exec web_app mv /app/public/system /app/public/system_old && mkdir /app/public/system
+# cp -a -r ./media-source-dev/. ./public/system/
+docker exec web_app s3fs -d media-display-${APP_ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/system
 ```
 
 ### test
