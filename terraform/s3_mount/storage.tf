@@ -6,8 +6,8 @@ resource "aws_s3_bucket" "media_display_bucket" {
 
   bucket = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
 
-
   force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+
   # https://github.com/hashicorp/terraform/issues/12512
   region = "us-east-1" # Must be us-east-1 to mount as a file system dir.
 
@@ -33,6 +33,7 @@ resource "aws_s3_bucket" "media_source_bucket" {
   bucket = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}-${var.APP_ENV}"
 
   force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+
   # https://github.com/hashicorp/terraform/issues/12512
   region = "us-east-1" # Must be us-east-1 to mount as a file system dir.
 

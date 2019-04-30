@@ -1,7 +1,7 @@
 ---
 - hosts: all
   vars:
-    rd_dns: mariadb
+    rds_dns: rds_dns
   become: true
   gather_facts: false
 
@@ -143,7 +143,7 @@
 
     - name: Update RDS DNS address 
       command: >
-        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ rd_dns }}"/g' /home/ubuntu/ConnecHub/.env
+        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ rds_dns }}"/g' /home/ubuntu/ConnecHub/.env
 
     - name: Change ownership of web app dir
       file:

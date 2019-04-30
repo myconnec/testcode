@@ -1,20 +1,12 @@
 Connechub
 
+# The Game Plan
 
-# Infrasstrucuture Configuration
+Phase 1: Make it work
 
-Phase 1:
+Phase 2: Make it right
 
-Make it work
-
-Phase 2:
-
-Make it right
-
-Phase 3:
-
-Make it fast
-
+Phase 3: Make it fast
 
 # Usage
 
