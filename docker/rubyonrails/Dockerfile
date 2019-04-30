@@ -8,7 +8,7 @@ RUN apt-get clean
 # cache gem installs
 COPY Gemfile* /tmp/
 WORKDIR /tmp
-RUN gem install bundler -v 1.3.5 && bundle install
+RUN gem install bundler -v 1.17.2 && bundle install
 
 # install app files
 RUN mkdir /app
