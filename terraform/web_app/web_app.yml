@@ -134,6 +134,8 @@
     - name: Install bunbler and gems
       shell: |
         cd /home/ubuntu/ConnecHub && gem install bundler -v 1.3.5 && ./bin/bundle install
+        # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
+        # after v 1.4.0: --jobs=5
 
     - name: Simple GET operation
       command: > 

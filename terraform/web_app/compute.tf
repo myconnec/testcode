@@ -9,9 +9,9 @@ resource "aws_instance" "web_app" {
 
   key_name = "${var.AWS_PEM_KEY_PAIR}"
 
-  provisioner "local-exec" {
-    command = "./terraform/web_app/ansible.sh"
-  }
+  # provisioner "local-exec" {
+  #   command = "./terraform/web_app/ansible.sh"
+  # }
 
   tags = {
     app     = "ConnecHub"
@@ -19,14 +19,13 @@ resource "aws_instance" "web_app" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Ruby on Rails"
-    testing = 2
   }
 
   vpc_security_group_ids = [
-    "${aws_security_group.ec2_security_group_http.name}",
-    "${aws_security_group.ec2_security_group_https.name}",
-    "${aws_security_group.rds_security_group_mysql.name}",
-    "${aws_security_group.ec2_security_group_ssh.name}",
+    "${aws_security_group.http.name}",
+    "${aws_security_group.https.name}",
+    "${aws_security_group.mysql.name}",
+    "${aws_security_group.ssh.name}",
   ]
 }
 

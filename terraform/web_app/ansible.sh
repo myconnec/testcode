@@ -14,7 +14,7 @@ ansible-playbook \
     -i ''"$(terraform output web_app_public_ip)"',' \
     -u ubuntu \
     --extra-vars='{"rds_dns": "'$(terraform output database_endpoint_dns)'"}' \
-    --private-key ~/.ssh/aws-connechub-test-dje.pem \
-    ./web_app.yml
+    --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
+    ./terraform/web_app/web_app.yml
 
 echo '...done.'

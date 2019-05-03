@@ -13,18 +13,18 @@ resource "aws_eip" "web_app" {
 
 # EIP Association
 
-resource "aws_eip_association" "eip_assoc" {
+resource "aws_eip_association" "web_app" {
   instance_id   = "${aws_instance.web_app.id}"
   allocation_id = "${aws_eip.web_app.id}"
 }
 
-# Security Groups
+# Security Group
 
 resource "aws_default_security_group" "default" {
   vpc_id = "${aws_default_vpc.default.id}"
 }
 
-resource "aws_security_group" "ec2_security_group_http" {
+resource "aws_security_group" "http" {
   description = "Allow http inbound traffic on port 80."
   name        = "http"
   description = "Allow http inbound traffic"
@@ -50,12 +50,13 @@ resource "aws_security_group" "ec2_security_group_http" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Networking"
+    Name = "http"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
 }
 
-resource "aws_security_group" "ec2_security_group_https" {
+resource "aws_security_group" "https" {
   description = "Allow https inbound traffic on port 442."
   name        = "https"
   description = "Allow https inbound traffic"
@@ -81,12 +82,13 @@ resource "aws_security_group" "ec2_security_group_https" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Networking"
+    Name = "https"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
 }
 
-resource "aws_security_group" "ec2_security_group_ssh" {
+resource "aws_security_group" "ssh" {
   description = "Allow ssh inbound traffic on port 22."
   name        = "ssh"
   description = "Allow ssh inbound traffic"
@@ -112,15 +114,16 @@ resource "aws_security_group" "ec2_security_group_ssh" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Networking"
+    Name = "ssh"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
 }
 
-resource "aws_security_group" "rds_security_group_mysql" {
-  description = "Allow SQL inbound traffic on port 3306."
-  name        = "sql"
-  description = "Allow sql inbound traffic"
+resource "aws_security_group" "mysql" {
+  description = "Allow mysql/mariadb inbound traffic on port 3306."
+  name        = "mysql"
+  description = "Allow mysql/mariadb inbound traffic"
 
   ingress {
     from_port = 3306
@@ -142,6 +145,7 @@ resource "aws_security_group" "rds_security_group_mysql" {
     owner   = "admin@connechub.com"
     service = "RDS"
     tech    = "Networking"
+    Name = "mysql"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
@@ -149,7 +153,7 @@ resource "aws_security_group" "rds_security_group_mysql" {
 
 # Route53
 
-resource "aws_route53_record" "test_domain" {
+resource "aws_route53_record" "test" {
   zone_id = "Z343LWN1DJ92M1"
   name    = "test"
   type    = "A"

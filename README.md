@@ -19,10 +19,10 @@ terraform init
 terraform plan --out ./out.plan -var-file=.env
 terraform apply -lock=true ./out.plan
 ansible-playbook \
-    -i ''$(terraform output EC2_web_host_ip)',' \
+    -i ''$(terraform output web_app_public_ip)',' \
     -u ubuntu \
-    --extra-vars='{"rd_dns": "'$(terraform output SQL_host_dns_addr)'"}' \
-    --private-key ~/.ssh/aws-connechub-test-dje.pem \
+    --extra-vars='{"rd_dns": "'$(terraform output database_endpoint_dns)'"}' \
+    --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
     ./terraform/web_app/web_app.yml
 ```
 
