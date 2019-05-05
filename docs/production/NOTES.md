@@ -5,7 +5,7 @@ iptables
 For routing TCP 80 to 3000
 
 ```bash
-sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080
+sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
 sudo iptables-save > ~/iptables.conf
 sudo iptables-restore < ~/iptables.conf
 ```

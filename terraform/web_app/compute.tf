@@ -20,8 +20,7 @@ resource "aws_instance" "web_app" {
     service = "EC2"
     tech    = "Ruby on Rails"
   }
-
-  vpc_security_group_ids = [
+  security_groups = [
     "${aws_security_group.http.name}",
     "${aws_security_group.https.name}",
     "${aws_security_group.mysql.name}",

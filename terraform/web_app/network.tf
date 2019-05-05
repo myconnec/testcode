@@ -50,7 +50,7 @@ resource "aws_security_group" "http" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Networking"
-    Name = "http"
+    Name    = "http"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
@@ -82,7 +82,7 @@ resource "aws_security_group" "https" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Networking"
-    Name = "https"
+    Name    = "https"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
@@ -114,7 +114,7 @@ resource "aws_security_group" "ssh" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "Networking"
-    Name = "ssh"
+    Name    = "ssh"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
@@ -145,7 +145,7 @@ resource "aws_security_group" "mysql" {
     owner   = "admin@connechub.com"
     service = "RDS"
     tech    = "Networking"
-    Name = "mysql"
+    Name    = "mysql"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
@@ -155,7 +155,7 @@ resource "aws_security_group" "mysql" {
 
 resource "aws_route53_record" "test" {
   zone_id = "Z343LWN1DJ92M1"
-  name    = "test"
+  name    = "tst"
   type    = "A"
   ttl     = "15"
   records = ["${aws_eip.web_app.public_ip}"]

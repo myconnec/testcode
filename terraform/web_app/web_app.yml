@@ -1,7 +1,8 @@
 ---
 - hosts: all
   vars:
-    rds_dns: rds_dns
+    database_endpoint_dns: database_endpoint_dns
+    app_env: app_env
   become: true
   gather_facts: false
 
@@ -103,7 +104,7 @@
         path:  /tmp/build_ruby
         state: absent
 
-    # # MySQL client
+    # MySQL client
 
     - name: Install mysql-client and dependencies
       apt:
@@ -139,13 +140,13 @@
 
     - name: Simple GET operation
       command: > 
-        aws s3 cp s3://connechub-configs/prd/.env /home/ubuntu/ConnecHub/.env
+        aws s3 cp s3://connechub-configs/{{ app_env }}/.env /home/ubuntu/ConnecHub/.env
 
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
     - name: Update RDS DNS address 
       command: >
-        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ rds_dns }}"/g' /home/ubuntu/ConnecHub/.env
+        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_endpoint_dns }}"/g' /home/ubuntu/ConnecHub/.env
 
     - name: Change ownership of web app dir
       file:
@@ -159,6 +160,13 @@
     #   shell: |
     #     cd /home/ubuntu/ConnecHub && ./bin/rake db:setup && ./bin/rake db:migrate
 
+    - name: iptables rules
+      shell: |
+        iptables -t nat -A PREROUTING -p tcp --dport 3000 -j REDIRECT --to-port 80
+        iptables-save > ~/iptables.conf
+        iptables-restore < ~/iptables.conf
+
     - name: Start Rails server
       shell: |
-        cd /home/ubuntu/ConnecHub && rails server -d --binding 0.0.0.0 --port 80
+        pkill ruby
+        cd /home/ubuntu/ConnecHub && rails server -d --binding 0.0.0.0
