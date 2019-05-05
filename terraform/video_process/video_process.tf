@@ -12,15 +12,6 @@ module "s3_lambda_transcoder_event" {
   APP_ENV            = "${var.APP_ENV}"
 }
 
-# IAM Policy
-data "aws_iam_policy" "transcoder_full_access_policy" {
-  arn = "arn:aws:iam::aws:policy/AmazonElasticTranscoder_FullAccess"
-}
-
-data "aws_iam_policy" "s3_full_access_policy" {
-  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-}
-
 # resources
 
 # S3 bucket for raw video

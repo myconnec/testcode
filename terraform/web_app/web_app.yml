@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     database_endpoint_dns: database_endpoint_dns
-    app_env: app_env
+    APP_ENV: APP_ENV
   become: true
   gather_facts: false
 
@@ -140,7 +140,7 @@
 
     - name: Simple GET operation
       command: > 
-        aws s3 cp s3://connechub-configs/{{ app_env }}/.env /home/ubuntu/ConnecHub/.env
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.env /home/ubuntu/ConnecHub/.env
 
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 

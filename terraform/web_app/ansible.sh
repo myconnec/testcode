@@ -14,10 +14,10 @@ ansible-playbook \
     -i ''"$(terraform output web_app_public_ip)"',' \
     -u ubuntu \
     --extra-vars='{
+        "app_env": "'$(terraform output APP_ENV)'",
         "database_endpoint_dns": "'$(terraform output database_endpoint_dns)'",
-        "app_env": "'$(terraform output web_app_app_env)'"
     }' \
-    --private-key ~/.ssh/$(terraform output web_app_key_name).pem \
+    --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
     ./terraform/web_app/web_app.yml
 
 echo '...done.'
