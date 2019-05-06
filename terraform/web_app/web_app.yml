@@ -226,8 +226,8 @@
     - name: Mount DISPLAY S3 Bucket
       become_user: "{{ LOCAL_USER }}"
       command: >
-        mv ./ConnecHub/public ./ConnecHub/public_old_$(date +%s)
-        mkdir ./ConnecHub/public
-        chmod 0775 ./ConnecHub/public
-        s3fs -d {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/ubuntu/.passwd-s3fs ./ConnecHub/public
+        mv /home/{{ LOCAL_USER }}/ConnecHub/public /home/{{ LOCAL_USER }}/public_old_$(date +%s)
+        mkdir /home/{{ LOCAL_USER }}/ConnecHub/public
+        chmod 0775 /home/{{ LOCAL_USER }}/ConnecHub/public
+        s3fs -d {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/ubuntu/.passwd-s3fs /home/{{ LOCAL_USER }}/ConnecHub/public
       #when: media_display_bucket_stats.stat.exists == false
