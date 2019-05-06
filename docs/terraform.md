@@ -3,7 +3,7 @@
 ## Prerequest
 - [Ansible]() >= 2.7
 - [AWS CLI]()
-- [Terraform]() >= 0.11.3
+- [Terraform](./terraform/install.sh) >= 0.11.11
 
 
 ## Init
@@ -28,10 +28,13 @@ ansible-playbook \
     -i ''"$(terraform output web_app_public_ip)"',' \
     -u ubuntu \
     --extra-vars='{
-        "app_env": "'$(terraform output app_env)'",
-        "database_endpoint_dns": "'$(terraform output database_endpoint_dns)'",
+        "APP_ENV": "'$(terraform output APP_ENV)'",
+        "AWS_REGION": "'$(terraform output APP_REGION)'",
+        "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$(terraform output AWS_S3_MEDIA_DISPLAY_BUCKET)'",
+        "AWS_S3_MEDIA_SOURCE_BUCKET": "'$(terraform output AWS_S3_MEDIA_SOURCE_BUCKET)'",
+        "database_address": "'$(terraform output database_address)'"
     }' \
-    --private-key ~/.ssh/$(terraform output web_app_key_name).pem \
+    --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
     ./terraform/web_app/web_app.yml
 ```
 

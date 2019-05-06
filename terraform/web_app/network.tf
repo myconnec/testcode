@@ -152,7 +152,7 @@ resource "aws_security_group" "mysql" {
 
 # Route53
 
-resource "aws_route53_record" "test" {
+resource "aws_route53_record" "tst" {
   zone_id = "Z343LWN1DJ92M1"
   name    = "tst"
   type    = "A"

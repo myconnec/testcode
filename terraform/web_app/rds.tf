@@ -7,12 +7,16 @@ resource "aws_db_instance" "rds" {
   engine                = "mariadb"
   engine_version        = "10.3"
   instance_class        = "db.t2.micro"
-  name                  = "connechub"
+  name                  = "connechub_${var.APP_ENV}"
   identifier            = "connechub-${var.APP_ENV}"
   username              = "${var.DB_USER}"
   password              = "${var.DB_PASS}"
   parameter_group_name  = "default.mariadb10.3"
   skip_final_snapshot   = true
+
+  # TODO:
+  # deletion_protection   = "${subnet = var.APP_ENV == 'prd' ? true : false}"
+  # skip_final_snapshot   = "${subnet = var.APP_ENV == 'prd' ? false : true}"
 
   tags = {
     app     = "ConnecHub"

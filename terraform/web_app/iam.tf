@@ -10,7 +10,7 @@ resource "aws_iam_role_policy_attachment" "code_commit_read_only" {
 # S3
 
 resource "aws_iam_role_policy_attachment" "s3_read_only" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
   role       = "${aws_iam_role.ec2_web_server_role.name}"
 }
 
