@@ -2,12 +2,12 @@
 
 # Bucket
 
-resource "aws_s3_bucket" "raw_media" {
+resource "aws_s3_bucket" "media_source" {
   acl = "private"
   bucket        = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}-${var.APP_ENV}"
 
-  force_destroy = false               #"${var.APP_ENV != "PRD" ? true : false}"
-  region        = "${var.AWS_REGION}"
+  force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
+  region        = "us-east-1"
 
   server_side_encryption_configuration {
     rule {
@@ -26,11 +26,11 @@ resource "aws_s3_bucket" "raw_media" {
   }
 }
 
-resource "aws_s3_bucket" "processed_media" {
+resource "aws_s3_bucket" "media_display" {
   acl           = "private"
   bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
-  force_destroy = false #"${var.APP_ENV != "PRD" ? true : false}"
-  region        = "${var.AWS_REGION}"
+  force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+  region        = "us-east-1"
 
   server_side_encryption_configuration {
     rule {
@@ -51,8 +51,8 @@ resource "aws_s3_bucket" "processed_media" {
 
 # ACLs
 
-resource "aws_s3_bucket_public_access_block" "raw_media_settings" {
-  bucket = "${aws_s3_bucket.raw_media.id}"
+resource "aws_s3_bucket_public_access_block" "media_source_settings" {
+  bucket = "${aws_s3_bucket.media_source.id}"
 
   block_public_acls   = true
   block_public_policy = true
@@ -61,8 +61,8 @@ resource "aws_s3_bucket_public_access_block" "raw_media_settings" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_public_access_block" "processed_media_settings" {
-  bucket = "${aws_s3_bucket.processed_media.id}"
+resource "aws_s3_bucket_public_access_block" "media_display_settings" {
+  bucket = "${aws_s3_bucket.media_display.id}"
 
   block_public_acls   = true
   block_public_policy = true

@@ -1,29 +1,19 @@
-# module "s3_lambda_transcoder_event" {
-#   source  = "../auto_trigger/"
-#   version = "0.0.1"
-
-#   # variables
-#   SOURCE_BUCKET_ARN  = "${aws_s3_bucket.raw_media.arn}"
-#   SOURCE_BUCKET_NAME = "${aws_s3_bucket.raw_media.bucket}"
-#   APP_ENV            = "${var.APP_ENV}"
-# }
-
 # Transcoder pipeline
 resource "aws_elastictranscoder_pipeline" "transcoder_pipeline" {
   # output bucket for video
   content_config {
-    bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
+    bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
     storage_class = "Standard"
   }
 
   # input source media
-  input_bucket = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
+  input_bucket = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}-${var.APP_ENV}"
   name         = "${var.APP_ENV}_transcoder_pipeline"
   role         = "${aws_iam_role.transcoder_role.arn}"
 
   # output bucket for thumbnails
   thumbnail_config {
-    bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
+    bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
     storage_class = "Standard"
   }
 }
