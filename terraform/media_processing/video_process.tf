@@ -29,7 +29,7 @@ resource "aws_elastictranscoder_preset" "transcodser_preset_free" {
     bit_rate           = 64
     channels           = 1
     codec              = "mp3"
-    sample_rate        = 22050 #44100
+    sample_rate        = 22050         #44100
   }
 
   # audio_codec_options {
@@ -49,7 +49,6 @@ resource "aws_elastictranscoder_preset" "transcodser_preset_free" {
     padding_policy       = "Pad"
     sizing_policy        = "Fit"
   }
-
   video_codec_options = {
     Profile                  = "main"
     Level                    = "2.2"

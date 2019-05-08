@@ -18,12 +18,3 @@ resource "aws_lambda_permission" "allow_bucket" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${var.video_process_media_source_bucket_arn}"
 }
-
-resource "aws_s3_bucket_notification" "bucket_notification" {
-  bucket = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
-
-  lambda_function {
-    lambda_function_arn = "${aws_lambda_function.s3lambda.arn}"
-    events              = ["s3:ObjectCreated:*"]
-  }
-}
