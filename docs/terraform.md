@@ -6,6 +6,10 @@
 - [Terraform](./terraform/install.sh) >= 0.11.11
 
 
+## Bug
+
+[Must export the AWS_REGION to the global variables before starting for S3 ACL bucket policies to work.](https://github.com/terraform-providers/terraform-provider-aws/issues/8560)
+
 ## Init
 
 Terraform remote state currentl has a bug where it only uses ~/.aws/credentials \[default\] credentials. Please ensure they are valid for the AWS account being used.

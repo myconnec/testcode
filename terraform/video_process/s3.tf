@@ -7,7 +7,8 @@ resource "aws_s3_bucket" "media_source" {
   bucket        = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}-${var.APP_ENV}"
 
   force_destroy = "${var.APP_ENV != "PRD" ? true : false}"
-  region        = "us-east-1"
+  provider      = "aws.us_east_1"
+  region        = "us-west-1"
 
   server_side_encryption_configuration {
     rule {
@@ -30,7 +31,8 @@ resource "aws_s3_bucket" "media_display" {
   acl           = "private"
   bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
   force_destroy = "${var.APP_ENV != "prd" ? true : false}"
-  region        = "us-east-1"
+  provider      = "aws.us_east_1"
+  region        = "us-west-1"
 
   server_side_encryption_configuration {
     rule {
