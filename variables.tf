@@ -7,6 +7,7 @@ variable "AWS_REGION" {}
 variable "AWS_ACCESS_KEY" {}
 variable "AWS_SECRET_KEY" {}
 variable "AWS_PEM_KEY_PAIR" {}
+variable "CONTACT_EMAIL" {}
 variable "DB_USER" {}
 variable "DB_PASS" {}
 variable "AWS_S3_MEDIA_DISPLAY_BUCKET" {}

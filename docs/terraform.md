@@ -16,6 +16,7 @@ Terraform remote state currentl has a bug where it only uses ~/.aws/credentials 
 
 ```bash
 terraform init
+export AWS_REGION=YOUR_REGION_HERE
 ```
 
 ## Plan
