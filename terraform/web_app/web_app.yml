@@ -200,7 +200,7 @@
         group: "{{ LOCAL_USER }}"
         mode: 0600
 
-    break these into roles
+    # break these into roles
 
     - name: Check if media_source_bucket path exists
       stat:

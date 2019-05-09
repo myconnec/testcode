@@ -43,6 +43,12 @@ ansible-playbook \
     ./terraform/web_app/web_app.yml
 ```
 
+## Re-create a resource
+
+```bash
+terraform taint -module=MOD_NAME resource.name
+```
+
 ## Destroy
 ```bash
 terraform destroy -var-file=.env ./
