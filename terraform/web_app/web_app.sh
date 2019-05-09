@@ -11,7 +11,7 @@ export ANSIBLE_STDOUT_CALLBACK=minimal
 
 echo 'Executing Ansible playbook...'
 ansible-playbook \
-    -i ''"$(terraform output web_app_public_ip)"',' \
+    -i '$(terraform output web_app_public_ip),' \
     -u ubuntu \
     --extra-vars='{
         "APP_ENV": "'$1'",

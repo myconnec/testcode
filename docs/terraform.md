@@ -1,10 +1,9 @@
 # Terraform
 
 ## Prerequest
-- [Ansible]() >= 2.7
-- [AWS CLI]()
+- [Ansible](https://www.ansible.com/) >= 2.7
+- [AWS CLI](https://aws.amazon.com/cli/) >= 1.16
 - [Terraform](./terraform/install.sh) >= 0.11.11
-
 
 ## Bug
 
@@ -29,24 +28,25 @@ terraform plan --out ./out.plan -var-file=.env
 
 ```bash
 terraform apply -lock=true ./out.plan
-ansible-playbook \
-    -i ''"$(terraform output web_app_public_ip)"',' \
-    -u ubuntu \
-    --extra-vars='{
-        "APP_ENV": "'$(terraform output APP_ENV)'",
-        "AWS_REGION": "'$(terraform output APP_REGION)'",
-        "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$(terraform output AWS_S3_MEDIA_DISPLAY_BUCKET)'",
-        "AWS_S3_MEDIA_SOURCE_BUCKET": "'$(terraform output AWS_S3_MEDIA_SOURCE_BUCKET)'",
-        "database_address": "'$(terraform output database_address)'"
-    }' \
-    --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
-    ./terraform/web_app/web_app.yml
+# ansible-playbook \
+#     -i ''"$(terraform output web_app_public_ip)"',' \
+#     -u ubuntu \
+#     --extra-vars='{
+#         "APP_ENV": "'$(terraform output APP_ENV)'",
+#         "AWS_REGION": "'$(terraform output APP_REGION)'",
+#         "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$(terraform output AWS_S3_MEDIA_DISPLAY_BUCKET)'",
+#         "AWS_S3_MEDIA_SOURCE_BUCKET": "'$(terraform output AWS_S3_MEDIA_SOURCE_BUCKET)'",
+#         "database_address": "'$(terraform output database_address)'"
+#     }' \
+#     --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
+#     ./terraform/web_app/web_app.yml
 ```
 
 ## Re-create a resource
 
 ```bash
-terraform taint -module=MOD_NAME resource.name
+terraform taint -module=web_app aws_instance.web_app
+terraform taint -module=web_app aws_eip.web_app
 ```
 
 ## Destroy
