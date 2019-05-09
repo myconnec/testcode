@@ -9,9 +9,9 @@ resource "aws_instance" "web_app" {
 
   key_name = "${var.AWS_PEM_KEY_PAIR}"
 
-  # provisioner "local-exec" {
-  #   command = "./terraform/web_app/ansible.sh"
-  # }
+  provisioner "local-exec" {
+    command = "./terraform/web_app/web_app.sh ${var.APP_ENV} ${var.AWS_REGION} ${var.media_display_bucket_id} ${var.media_source_bucket_id} ${var.AWS_PEM_KEY_PAIR}"
+  }
 
   tags = {
     app     = "ConnecHub"

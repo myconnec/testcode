@@ -5,18 +5,18 @@ var s3 = new AWS.S3({
 });
 var eltr = new AWS.ElasticTranscoder({
  apiVersion: '2012-09-25',
- region: 'us-west-1'
+ region: process.env.region
 });
 exports.handler = function(event, context) {
  console.log('Executing Elastic Transcoder Orchestrator');
  var bucket = event.Records[0].s3.bucket.name;
  var key = event.Records[0].s3.object.key;
- var pipelineId = '1554504030826-j1631m';
- if (bucket !== 'raw-media-tst') {
+ var pipelineId = process.env.transcoder_pipeline_id;
+ if (bucket !== process.env.media_source_bucket_id) {
   context.fail('Incorrect Video Input Bucket');
   return;
  }
- var srcKey =  decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " ")); //the object may have spaces  
+ var srcKey =  decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " ")); //the object may have spaces
  var newKey = key.split('.')[0];
  var params = {
   PipelineId: pipelineId,

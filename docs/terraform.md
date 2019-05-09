@@ -51,7 +51,3 @@ terraform destroy -var-file=.env ./
 ## Common Errors
 
 'Instance profile already exists': https://github.com/hashicorp/terraform/issues/3749
-
-## TODO
-
-Use most recent prod snapshot. source https://medium.com/@vankhoa011/how-i-use-terraform-to-restore-the-latest-snapshot-from-productions-db-to-staging-s-db-aws-rds-6ad4f6620df2

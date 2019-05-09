@@ -14,3 +14,6 @@ variable "COMPUTE_SIZE" {
   type    = "string"
   default = "t2.micro"
 }
+
+variable "media_display_bucket_id" {}
+variable "media_source_bucket_id" {}

@@ -14,13 +14,13 @@ ansible-playbook \
     -i ''"$(terraform output web_app_public_ip)"',' \
     -u ubuntu \
     --extra-vars='{
-        "APP_ENV": "'$(terraform output APP_ENV)'",
-        "AWS_REGION": "'$(terraform output AWS_REGION)'",
-        "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$(terraform output AWS_S3_MEDIA_DISPLAY_BUCKET)'",
-        "AWS_S3_MEDIA_SOURCE_BUCKET": "'$(terraform output AWS_S3_MEDIA_SOURCE_BUCKET)'",
+        "APP_ENV": "'$1'",
+        "AWS_REGION": "'$2'",
+        "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$3'",
+        "AWS_S3_MEDIA_SOURCE_BUCKET": "'$4'",
         "database_address": "'$(terraform output database_address)'"
     }' \
-    --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
+    --private-key ~/.ssh/$5 \
     ./terraform/web_app/web_app.yml
 
 echo '...done.'

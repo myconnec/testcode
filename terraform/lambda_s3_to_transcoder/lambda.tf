@@ -9,6 +9,14 @@ resource "aws_lambda_function" "s3lambda" {
   role          = "${aws_iam_role.lambda_role.arn}"
   handler       = "index.handler"
   runtime       = "nodejs8.10"
+
+  environment {
+    variables = {
+      region = "${var.AWS_REGION}"
+      transcoder_pipeline_id = "${var.transcoder_pipeline_id}"
+      media_source_bucket_id = "${var.media_source_bucket_id}"
+    }
+  }
 }
 
 resource "aws_lambda_permission" "allow_bucket" {
