@@ -55,7 +55,6 @@ bower.json
 *.tfstate
 *.tfstate.*
 *.plan
-outputs.tf
 
 # ignore archive files
 **/*.zip
