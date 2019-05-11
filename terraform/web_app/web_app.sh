@@ -1,26 +1,23 @@
 #!/bin/bash +xe
 
-echo 'Giving the compute and database instances a chance to start up...'
-sleep 120;
+# vars: ${var.APP_ENV} ${var.APP_NAME} ${var.AWS_REGION} ${var.media_display_bucket_id} ${var.media_source_bucket_id} $(terraform output database_address) ${var.AWS_PEM_KEY_PAIR}
+printf "Incominig variables: $1 $2 $3 $4 $5 $6 $7 $8\n"
+printf "Giving the compute and database instances a chance to start up...\n"
+#sleep 120;
 
-echo 'Exporting Ansible settings...'
-export ANSIBLE_NOCOWS=1
-export ANSIBLE_DEBUG=0
-export ANSIBLE_HOST_KEY_CHECKING=0
-export ANSIBLE_STDOUT_CALLBACK=minimal
-
-echo 'Executing Ansible playbook...'
+printf 'Executing Ansible playbook...'
 ansible-playbook \
-    -i '$(terraform output web_app_public_ip),' \
+    -i ''$1',' \
     -u ubuntu \
     --extra-vars='{
-        "APP_ENV": "'$1'",
-        "AWS_REGION": "'$2'",
-        "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$3'",
-        "AWS_S3_MEDIA_SOURCE_BUCKET": "'$4'",
-        "database_address": "'$(terraform output database_address)'"
+        "APP_ENV": "'$2'",
+        "APP_NAME": "'$3'",
+        "AWS_REGION": "'$4'",
+        "media_display_bucket_id": "'$5'",
+        "media_source_bucket_id": "'$6'",
+        "database_address": "'$7'"
     }' \
-    --private-key ~/.ssh/$5 \
+    --private-key ~/.ssh/$8.pem \
     ./terraform/web_app/web_app.yml
 
-echo '...done.'
+printf '...done.\n\n'

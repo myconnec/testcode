@@ -1,4 +1,5 @@
 variable "APP_ENV" {}
+variable "APP_NAME" {}
 variable "AWS_REGION" {}
 
 variable "media_source_bucket_id" {}

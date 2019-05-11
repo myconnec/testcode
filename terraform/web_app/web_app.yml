@@ -1,14 +1,14 @@
 ---
 - hosts: all
-  vars:
-    APP_ENV:  APP_ENV
+  vars: 
+    APP_ENV: APP_ENV
+    APP_NAME: APP_NAME
     AWS_REGION: AWS_REGION
-    AWS_S3_MEDIA_DISPLAY_BUCKET:  AWS_S3_MEDIA_DISPLAY_BUCKET
-    AWS_S3_MEDIA_SOURCE_BUCKET:  AWS_S3_MEDIA_SOURCE_BUCKET
-
-    LOCAL_USER: ubuntu
-
     database_address: database_address
+    local_user: ubuntu
+    media_display_bucket_id: media_display_bucket_id
+    media_source_bucket_id: media_source_bucket_id
+
   become: true
   gather_facts: false
 
@@ -161,10 +161,10 @@
         owner: ubuntu
         recurse: true
 
-    # - name: Setup database
-    #   become: ubuntu
-    #   shell: |
-    #     cd /home/ubuntu/ConnecHub && ./bin/rake db:setup
+    - name: Setup database
+      become: ubuntu
+      shell: |
+        cd /home/ubuntu/ConnecHub && ./bin/rake db:setup
 
     - name: Migrate database
       become: ubuntu
@@ -174,13 +174,14 @@
     - name: Start Rails server
       shell: |
         pkill ruby
-        cd /home/ubuntu/ConnecHub && rails server -d --binding 0.0.0.0
+        cd /home/ubuntu/ConnecHub
+        rails server -d --binding 0.0.0.0 --port 3000
 
     # Redirect requests from port 80 to 3000 (Ruby on Rails default server port)
 
     - name: iptables rules
       shell: |
-        iptables -t nat -A PREROUTING -p tcp --dport 3000 -j REDIRECT --to-port 80
+        iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
         iptables-save > ~/iptables.conf
         iptables-restore < ~/iptables.conf
 
@@ -195,39 +196,34 @@
     - name: Copy API keys for S3 mounting into EC2 instance
       copy:
         src: "../../.passwd-s3fs"
-        dest: "/home/{{ LOCAL_USER }}/.passwd-s3fs"
-        owner: "{{ LOCAL_USER }}"
-        group: "{{ LOCAL_USER }}"
+        dest: "/home/{{ local_user }}/.passwd-s3fs"
+        owner: "{{ local_user }}"
+        group: "{{ local_user }}"
         mode: 0600
-
-    # break these into roles
 
     - name: Check if media_source_bucket path exists
       stat:
-        path: /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}
+        path: /home/{{ local_user }}/{{ media_source_bucket_id }}
       register: media_source_bucket_stats
 
     - name: Create media_source_* directory if it does not exist
       file:
         state: directory
-        path: "/home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}"
-        owner: "{{ LOCAL_USER }}"
-        group: "{{ LOCAL_USER }}"
-        mode: 0775
+        path: /home/{{ local_user }}/{{ media_source_bucket_id }}
+        owner: "{{ local_user }}"
+        group: "{{ local_user }}"
+        mode: 0755
       when: media_source_bucket_stats.stat.exists == false
 
-    - name: Mount SOURCE S3 Bucket
-      become_user: "{{ LOCAL_USER }}"
-      # sudo MUST be used with umount
-      # s3fs -d media-source-dev -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/ubuntu/.passwd-s3fs -o url=https://s3.us-east-1.amazonaws.com /home/ubuntu/media-source-dev
+    - name: Mount media_source_bucket_id to local file system
+      become_user: "{{ local_user }}"
       command: >
-        s3fs -d {{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ LOCAL_USER }}/.passwd-s3fs -o url=https://s3.us-east-1.amazonaws.com /home/{{ LOCAL_USER }}/{{ AWS_S3_MEDIA_SOURCE_BUCKET }}-{{ APP_ENV }}
+        s3fs -d {{ media_source_bucket_id }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ local_user }}/.passwd-s3fs -o url=https://s3.{{ AWS_REGION }}.amazonaws.com /home/{{ local_user }}/{{ media_source_bucket_id }}
+      when: media_source_bucket_stats.stat.exists == false
 
-    - name: Mount DISPLAY S3 Bucket
-      become_user: "{{ LOCAL_USER }}"
-      command: >
-        mv /home/{{ LOCAL_USER }}/ConnecHub/public /home/{{ LOCAL_USER }}/public_old_$(date +%s)
-        mkdir /home/{{ LOCAL_USER }}/ConnecHub/public
-        chmod 0775 /home/{{ LOCAL_USER }}/ConnecHub/public
-        s3fs -d {{ AWS_S3_MEDIA_DISPLAY_BUCKET }}-{{ APP_ENV }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/ubuntu/.passwd-s3fs /home/{{ LOCAL_USER }}/ConnecHub/public
-      #when: media_display_bucket_stats.stat.exists == false
+    - name: Mount media_display_bucket_id to local file system
+      become_user: "{{ local_user }}"
+      shell: |
+        cp -rf ./ConnecHub/public ./public_backup
+        s3fs -d {{ media_display_bucket_id }} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/{{ local_user }}/.passwd-s3fs -o url=https://s3.{{ AWS_REGION }}.amazonaws.com /home/{{ local_user }}/ConnecHub/public
+        cp -rf /home/{{ local_user }}/public_backup/* /home/{{ local_user }}/ConnecHub/public

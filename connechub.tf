@@ -2,34 +2,33 @@ module "media_storage" {
   source  = "./terraform/media_storage"
   version = "0.0.1"
 
-  # variables
-  APP_ENV    = "${var.APP_ENV}"
-  APP_NAME   = "${var.APP_NAME}"
-  AWS_REGION = "${var.AWS_REGION}"
+  APP_ENV                     = "${var.APP_ENV}"
+  APP_NAME                    = "${var.APP_NAME}"
+  AWS_REGION                  = "${var.AWS_REGION}"
   AWS_S3_MEDIA_DISPLAY_BUCKET = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
-  AWS_S3_MEDIA_SOURCE_BUCKET = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
-  CONTACT_EMAIL = "${var.CONTACT_EMAIL}"
+  AWS_S3_MEDIA_SOURCE_BUCKET  = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
+  CONTACT_EMAIL               = "${var.CONTACT_EMAIL}"
 }
 
-# Video asset processing
 module "media_processing" {
   source  = "./terraform/media_processing"
   version = "0.0.1"
 
+
   # variables
   APP_ENV    = "${var.APP_ENV}"
   APP_NAME   = "${var.APP_NAME}"
   AWS_REGION = "${var.AWS_REGION}"
-  AWS_S3_MEDIA_DISPLAY_BUCKET = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
-  AWS_S3_MEDIA_SOURCE_BUCKET = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
-}
 
+  media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
+  media_source_bucket_id = "${module.media_storage.media_source_bucket_id}"
+}
 module "lambda_s3_to_transcoder" {
   source  = "./terraform/lambda_s3_to_transcoder/"
   version = "0.0.1"
 
-  # variables
   APP_ENV            = "${var.APP_ENV}"
+  APP_NAME            = "${var.APP_NAME}"
   AWS_REGION = "${var.AWS_REGION}"
 
   media_source_bucket_id = "${module.media_storage.media_source_bucket_id}"
@@ -41,7 +40,6 @@ module "web_app" {
   source  = "./terraform/web_app"
   version = "0.0.1"
 
-  # variables
   APP_ENV          = "${var.APP_ENV}"
   APP_NAME         = "${var.APP_NAME}"
   AWS_REGION       = "${var.AWS_REGION}"
@@ -52,3 +50,4 @@ module "web_app" {
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
   media_source_bucket_id = "${module.media_storage.media_source_bucket_id}"
 }
+

@@ -14,6 +14,9 @@
 Terraform remote state currentl has a bug where it only uses ~/.aws/credentials \[default\] credentials. Please ensure they are valid for the AWS account being used.
 
 ```bash
+cd ./terraform/lambda_s3_to_transcoder/lambda_source/
+zip index.js.zip index.js
+cd ../../../
 export AWS_REGION=YOUR_REGION_HERE
 terraform init
 ```
@@ -28,21 +31,17 @@ terraform plan --out ./out.plan -var-file=.env
 
 ```bash
 terraform apply -lock=true ./out.plan
-# ansible-playbook \
-#     -i ''"$(terraform output web_app_public_ip)"',' \
-#     -u ubuntu \
-#     --extra-vars='{
-#         "APP_ENV": "'$(terraform output APP_ENV)'",
-#         "AWS_REGION": "'$(terraform output APP_REGION)'",
-#         "AWS_S3_MEDIA_DISPLAY_BUCKET": "'$(terraform output AWS_S3_MEDIA_DISPLAY_BUCKET)'",
-#         "AWS_S3_MEDIA_SOURCE_BUCKET": "'$(terraform output AWS_S3_MEDIA_SOURCE_BUCKET)'",
-#         "database_address": "'$(terraform output database_address)'"
-#     }' \
-#     --private-key ~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem \
-#     ./terraform/web_app/web_app.yml
 ```
 
-## Re-create a resource
+Ansible command executed by ./terraform/web_app/compute.tf -> aws_instance.web_app
+
+( This is run automatically during initialization. )
+
+```bash
+./terraform/web_app/web_app.sh $(terraform output web_app_public_ip)  dev ConnecHub us-west-1 media-display-dev media-source-dev $(terraform output database_address) aws-connechub-dje-test
+``
+
+## Mark a resource for recreation
 
 ```bash
 terraform taint -module=web_app aws_instance.web_app

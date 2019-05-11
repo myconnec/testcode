@@ -20,7 +20,7 @@ exports.handler = function(event, context) {
  var newKey = key.split('.')[0];
  var params = {
   PipelineId: pipelineId,
-  OutputKeyPrefix: 'testing/',
+//  OutputKeyPrefix: '',
   Input: {
    Key: srcKey,
    FrameRate: 'auto',
