@@ -11,11 +11,11 @@ resource "aws_lambda_function" "s3_to_transcoder" {
     }
   }
 
-  filename      = "./terraform/lambda_s3_to_transcoder/lambda_source/index.js.zip"
-  function_name = "${var.APP_NAME}_s3_to_transcoder_${var.APP_ENV}"
-  handler       = "index.handler"
-  role          = "${aws_iam_role.lambda_role.arn}"
-  runtime       = "nodejs8.10"
+  filename         = "./terraform/lambda_s3_to_transcoder/lambda_source/index.js.zip"
+  function_name    = "${var.APP_NAME}_s3_to_transcoder_${var.APP_ENV}"
+  handler          = "index.handler"
+  role             = "${aws_iam_role.lambda_role.arn}"
+  runtime          = "nodejs8.10"
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
 }
 

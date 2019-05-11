@@ -14,26 +14,26 @@ module "media_processing" {
   source  = "./terraform/media_processing"
   version = "0.0.1"
 
-
   # variables
   APP_ENV    = "${var.APP_ENV}"
   APP_NAME   = "${var.APP_NAME}"
   AWS_REGION = "${var.AWS_REGION}"
 
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
-  media_source_bucket_id = "${module.media_storage.media_source_bucket_id}"
+  media_source_bucket_id  = "${module.media_storage.media_source_bucket_id}"
 }
+
 module "lambda_s3_to_transcoder" {
   source  = "./terraform/lambda_s3_to_transcoder/"
   version = "0.0.1"
 
-  APP_ENV            = "${var.APP_ENV}"
-  APP_NAME            = "${var.APP_NAME}"
+  APP_ENV    = "${var.APP_ENV}"
+  APP_NAME   = "${var.APP_NAME}"
   AWS_REGION = "${var.AWS_REGION}"
 
-  media_source_bucket_id = "${module.media_storage.media_source_bucket_id}"
-  transcoder_pipeline_id = "${module.media_processing.transcoder_pipeline_id}"
-  video_process_media_source_bucket_arn  = "${module.media_storage.media_source_bucket_arn}"
+  media_source_bucket_id                = "${module.media_storage.media_source_bucket_id}"
+  transcoder_pipeline_id                = "${module.media_processing.transcoder_pipeline_id}"
+  video_process_media_source_bucket_arn = "${module.media_storage.media_source_bucket_arn}"
 }
 
 module "web_app" {
@@ -48,6 +48,5 @@ module "web_app" {
   DB_PASS          = "${var.DB_PASS}"
 
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
-  media_source_bucket_id = "${module.media_storage.media_source_bucket_id}"
+  media_source_bucket_id  = "${module.media_storage.media_source_bucket_id}"
 }
-

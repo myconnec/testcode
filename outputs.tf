@@ -31,11 +31,11 @@ output "media_display_bucket_id" {
 }
 
 output "media_source_bucket_id" {
-    value = "${module.media_storage.media_source_bucket_id}"
+  value = "${module.media_storage.media_source_bucket_id}"
 }
 
 output "media_source_bucket_arn" {
-    value = "${module.media_storage.media_source_bucket_arn}"
+  value = "${module.media_storage.media_source_bucket_arn}"
 }
 
 output "lambda_s3_to_transcoder_s3_to_transcoder_function_name" {
