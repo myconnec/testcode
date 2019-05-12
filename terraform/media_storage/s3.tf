@@ -2,7 +2,8 @@
 resource "aws_s3_bucket" "media_display" {
   acl           = "private"
   bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}-${var.APP_ENV}"
-  force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+  # force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+  force_destroy = false
   provider      = "aws.us_west_1"
   region        = "${var.AWS_REGION}"
 
@@ -26,7 +27,8 @@ resource "aws_s3_bucket" "media_display" {
 resource "aws_s3_bucket" "media_source" {
   acl           = "private"
   bucket        = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}-${var.APP_ENV}"
-  force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+  # force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+  force_destroy = false
   provider      = "aws.us_west_1"
   region        = "${var.AWS_REGION}"
 
