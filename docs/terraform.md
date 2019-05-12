@@ -39,9 +39,12 @@ Ansible command executed by ./terraform/web_app/compute.tf -> aws_instance.web_a
 
 ```bash
 ./terraform/web_app/web_app.sh $(terraform output web_app_public_ip)  dev ConnecHub us-west-1 media-display-1-dev media-source-1-dev $(terraform output database_address) aws-connechub-dje-test
+```
 
-50.18.196.64 dev ConnecHub us-west-1 media-display-1-dev media-source-1-dev connechub-dev.co5vbbdxh3ig.us-west-1.rds.amazonaws.com aws-connechub-dje-test
+Example of what Ansible runs:
 
+```bash
+./terraform/web_app/web_app.sh 54.183.26.110 dev ConnecHub us-west-1 media-display-dev media-source-dev connechub-dev.co5vbbdxh3ig.us-west-1.rds.amazonaws.com aws-connechub-dje-test
 ```
 
 ## Mark a resource for recreation
