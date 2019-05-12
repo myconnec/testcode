@@ -44,14 +44,13 @@ Ansible command executed by ./terraform/web_app/compute.tf -> aws_instance.web_a
 Example of what Ansible runs:
 
 ```bash
-./terraform/web_app/web_app.sh 54.183.26.110 dev ConnecHub us-west-1 media-display-dev media-source-dev connechub-dev.co5vbbdxh3ig.us-west-1.rds.amazonaws.com aws-connechub-dje-test
+./terraform/web_app/web_app.sh 54.219.124.22 dev ConnecHub us-west-1 media-display-dev media-source-dev connechub-dev.co5vbbdxh3ig.us-west-1.rds.amazonaws.com aws-connechub-dje-test
 ```
 
 ## Mark a resource for recreation
 
 ```bash
-terraform taint -module=web_app aws_instance.web_app
-terraform taint -module=web_app aws_eip.web_app
+terraform taint -module=web_app aws_instance.web_app && terraform taint -module=web_app aws_eip.web_app
 ```
 
 ## Destroy

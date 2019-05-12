@@ -133,7 +133,7 @@
         depth: 1
         dest: /home/ubuntu/ConnecHub
         repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
-        version: master
+        version: develop
         force: true
 
     # TODO would like to use the bundler module
@@ -216,29 +216,34 @@
       when: media_source_bucket_stats.stat.exists == false
 
     - name: Mount media_source_bucket_id to local file system
-      become_user: "{{ local_user }}"
+      # become_user: "{{ local_user }}"
       command: >
-        s3fs -d {{ media_source_bucket_id }} \
+        s3fs \
+          -d \
+          {{ media_source_bucket_id }} \
+          /home/{{ local_user }}/{{ media_source_bucket_id }} \
           -o endpoint={{ AWS_REGION }} \
           -o use_cache=/tmp \
           -o multireq_max=5 \
           -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
           -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
           -o nonempty \
-          /home/{{ local_user }}/{{ media_source_bucket_id }}
-
+          -o allow_other 
       when: media_source_bucket_stats.stat.exists == false
 
     - name: Mount media_display_bucket_id to local file system
-      become_user: "{{ local_user }}"
+      # become_user: "{{ local_user }}"
       shell: |
         cp -rf ./ConnecHub/public ./public_backup
-        s3fs -d {{ media_display_bucket_id }} \
+        s3fs \
+          -d \
+          {{ media_display_bucket_id }} \
+          /home/{{ local_user }}/ConnecHub/public \
           -o endpoint={{ AWS_REGION }} \
           -o use_cache=/tmp \
           -o multireq_max=5 \
           -o passwd_file=/home/{{ local_user }}/.passwd-s3fs \
           -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
           -o nonempty \
-          /home/{{ local_user }}/ConnecHub/public
+          -o allow_other 
         cp -rf /home/{{ local_user }}/public_backup/* /home/{{ local_user }}/ConnecHub/public
