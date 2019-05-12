@@ -2,7 +2,7 @@
 
 ## The Game Plan
 
-Phase 1: Make it work
+Phase 1: Make it work <- we are here
 
 Phase 2: Make it right
 
@@ -18,4 +18,4 @@ Phase 3: Make it fast
 
 ## Usage
 
-- [Terraform](./docs/terraform.md)
+- [Install](./docs/INSTALL.md)

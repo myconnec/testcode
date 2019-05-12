@@ -9,9 +9,10 @@ resource "aws_instance" "web_app" {
 
   key_name = "${var.AWS_PEM_KEY_PAIR}"
 
-  provisioner "local-exec" {
-    command = "./terraform/web_app/web_app.sh $(terraform output web_app_public_ip) ${var.APP_ENV} ${var.APP_NAME} ${var.AWS_REGION} ${var.media_display_bucket_id} ${var.media_source_bucket_id} $(terraform output database_address) ${var.AWS_PEM_KEY_PAIR}"
-  }
+  # TODO: can not seem to get this to work correctly :S
+  # provisioner "local-exec" {
+  #   command = "./terraform/web_app/web_app.sh $(terraform output web_app_public_ip) ${var.APP_ENV} ${var.APP_NAME} ${var.AWS_REGION} ${var.media_display_bucket_id} ${var.media_source_bucket_id} $(terraform output database_address) ${var.AWS_PEM_KEY_PAIR}"
+  # }
 
   tags = {
     app     = "ConnecHub"

@@ -33,18 +33,18 @@ terraform plan --out ./out.plan -var-file=.env
 terraform apply -lock=true ./out.plan
 ```
 
-Ansible command executed by ./terraform/web_app/compute.tf -> aws_instance.web_app
-
-( This is run automatically during initialization. )
+Once finished execute the Ansible command to install web app:
 
 ```bash
-./terraform/web_app/web_app.sh $(terraform output web_app_public_ip)  dev ConnecHub us-west-1 media-display-1-dev media-source-1-dev $(terraform output database_address) aws-connechub-dje-test
-```
-
-Example of what Ansible runs:
-
-```bash
-./terraform/web_app/web_app.sh 54.219.124.22 dev ConnecHub us-west-1 media-display-dev media-source-dev connechub-dev.co5vbbdxh3ig.us-west-1.rds.amazonaws.com aws-connechub-dje-test
+./terraform/web_app/web_app.sh \
+    $(terraform output web_app_public_ip) \
+    $(terraform output APP_ENV) \
+    $(terraform output APP_NAME) \
+    $(terraform output AWS_REGION) \
+    $(terraform output media_display_bucket_id) \
+    $(terraform output media_source_bucket_id) \
+    $(terraform output database_address) \
+    $(terraform output AWS_PEM_KEY_PAIR)
 ```
 
 ## Mark a resource for recreation
@@ -54,6 +54,7 @@ terraform taint -module=web_app aws_instance.web_app && terraform taint -module=
 ```
 
 ## Destroy
+
 ```bash
 terraform destroy -var-file=.env ./
 ```
