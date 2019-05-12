@@ -38,15 +38,7 @@ Ansible command executed by ./terraform/web_app/compute.tf -> aws_instance.web_a
 ( This is run automatically during initialization. )
 
 ```bash
-./terraform/web_app/web_app.sh \
-    $(terraform output web_app_public_ip)  \
-    dev \
-    ConnecHub \
-    us-west-1 \
-    media-display-2-dev \
-    media-source-2-dev \
-    $(terraform output database_address) \
-    aws-connechub-dje-test
+./terraform/web_app/web_app.sh $(terraform output web_app_public_ip)  dev ConnecHub us-west-1 media-display-1-dev media-source-1-dev $(terraform output database_address) aws-connechub-dje-test
 
 50.18.196.64 dev ConnecHub us-west-1 media-display-1-dev media-source-1-dev connechub-dev.co5vbbdxh3ig.us-west-1.rds.amazonaws.com aws-connechub-dje-test
 

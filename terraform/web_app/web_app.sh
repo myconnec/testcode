@@ -1,7 +1,7 @@
 #!/bin/bash +xe
 
 printf "Giving the compute and database instances a chance to start up...\n"
-sleep 120;
+#sleep 120;
 
 # vars: ${var.APP_ENV} ${var.APP_NAME} ${var.AWS_REGION} ${var.media_display_bucket_id} ${var.media_source_bucket_id} $(terraform output database_address) ${var.AWS_PEM_KEY_PAIR}
 printf "Incominig variables: $1 $2 $3 $4 $5 $6 $7 $8\n"
