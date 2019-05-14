@@ -1,6 +1,5 @@
 # Docker commands
 
-
 ## Build
 
 ```bash
@@ -10,11 +9,14 @@ docker network create connechub
 ```
 
 ```bash
+# Stripe-Mock
+docker run --name stripe_mock --rm -d -p 12111-12112:12111-12112 stripe-mock
+
 # MariaDB
 docker build -t connechub_mariadb --file ./docker/mariadb/Dockerfile .
 
 # RoR
-docker build -t  connechub_webapp --build-arg ENV=${APP_ENV} --file ./docker/rubyonrails/Dockerfile . 
+docker build -t  connechub_webapp --file ./docker/rubyonrails/Dockerfile .
 ```
 
 ##  Start
@@ -47,13 +49,32 @@ docker run -d -it -p 3000:3000 \
 
 # Create local DIR and mount S3 Buckets in running container
 # source
-docker exec web_app mkdir /app/media-source-${APP_ENV}
-docker exec web_app s3fs -d media-source-${APP_ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/media-source-${APP_ENV}
+docker exec web_app mkdir /media-source-${APP_ENV}
+docker exec web_app s3fs \
+    -d \
+    media-source-${APP_ENV} \
+    /media-source-${APP_ENV} \
+    -o endpoint=us-east-1 \
+    -o use_cache=/tmp \
+    -o multireq_max=5 \
+    -o passwd_file=/app/.passwd-s3fs  \
+    -o url=https://s3.us-east-1.amazonaws.com \
+    -o nonempty \
+    -o allow_other
 
 # display
-docker exec web_app mv /app/public/system /app/public/system_old && mkdir /app/public/system
-# cp -a -r ./media-source-dev/. ./public/system/
-docker exec web_app s3fs -d media-display-${APP_ENV} -o use_cache=/tmp -o multireq_max=5 -o passwd_file=./.passwd-s3fs /app/public/system
+docker exec web_app mkdir /app/public/system
+docker exec web_app s3fs \
+    -d \
+    media-display-${APP_ENV} \
+    /app/public/system \
+    -o endpoint=us-east-1 \
+    -o use_cache=/tmp \
+    -o multireq_max=5 \
+    -o passwd_file=/app/.passwd-s3fs  \
+    -o url=https://s3.us-east-1.amazonaws.com \
+    -o nonempty \
+    -o allow_other
 ```
 
 ### test
@@ -79,7 +100,7 @@ docker run -it -p 3000:3000  connechub
 ### Run Rake commands on RoR
 
 ```bash
-docker exec -it web_app rake db:migrate && rake db:setup
+docker exec -it web_app rake db:setup
 ```
 
 ## Stop

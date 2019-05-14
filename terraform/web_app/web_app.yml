@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  vars: 
+  vars:
     APP_ENV: APP_ENV
     APP_NAME: APP_NAME
     AWS_REGION: AWS_REGION
@@ -12,180 +12,178 @@
   become: true
   gather_facts: false
 
-  # pre_tasks:
-  #   - name: Update dependencies via apt-get
-  #     raw: sudo apt-get clean && apt-get autoclean && sudo apt autoremove -y && sudo apt-get update -y
+  pre_tasks:
+    - name: Update dependencies via apt-get
+      raw: sudo apt-get clean && apt-get autoclean && sudo apt autoremove -y && sudo apt-get update -y
 
-  #   - name: Installing awscli, https transport, build-essential, Python & PIP
-  #     raw: sudo apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
+    - name: Installing awscli, https transport, build-essential, Python & PIP
+      raw: sudo apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
 
   tasks:
-    # - name: Install system dependencies
-    #   apt:
-    #     pkg:
-    #       - git
-    #       - curl
-    #       - libcurl4-openssl-dev
-    #       - libffi-dev
-    #       - libreadline6-dev
-    #       - zlib1g
-    #       - zlib1g-dev
-    #     state: present
+    - name: Install system dependencies
+      apt:
+        pkg:
+          - git
+          - curl
+          - libcurl4-openssl-dev
+          - libffi-dev
+          - libreadline6-dev
+          - zlib1g
+          - zlib1g-dev
+        state: present
 
-    # - name: Install NodeJs and NPM
-    #   apt:
-    #     pkg:
-    #       - nodejs
-    #       - nodejs-dev
-    #       - node-gyp
-    #       - npm
-    #     state: present
+    - name: Install NodeJs and NPM
+      apt:
+        pkg:
+          - nodejs
+          - nodejs-dev
+          - node-gyp
+          - npm
+        state: present
 
-    # # Source: https://github.com/wakproductions/ansible-examples/blob/master/roles/install-ruby241/tasks/main.yml
+    # Source: https://github.com/wakproductions/ansible-examples/blob/master/roles/install-ruby241/tasks/main.yml
 
-    # - name: Install dependencies specificly for Ruby 2.3.8
-    #   apt:
-    #     pkg:
-    #       - libyaml-dev
-    #       - libxml2-dev
-    #       - libxslt-dev
-    #       - libsqlite3-dev
-    #       - autoconf
-    #       - libc6-dev
-    #       - ncurses-dev
-    #       - automake
-    #       - libtool
-    #       - bison
-    #       - subversion
-    #       - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
-    #       - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
-    #       - libssl-dev
-    #     state: present
+    - name: Install dependencies specificly for Ruby 2.3.8
+      apt:
+        pkg:
+          - libyaml-dev
+          - libxml2-dev
+          - libxslt-dev
+          - libsqlite3-dev
+          - autoconf
+          - libc6-dev
+          - ncurses-dev
+          - automake
+          - libtool
+          - bison
+          - subversion
+          - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
+          - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
+          - libssl-dev
+        state: present
 
-    # # Ruby source, build, install, clean up
+    # Ruby source, build, install, clean up
 
-    # - name: Create a working directory
-    #   file:
-    #     path:  /tmp/build_ruby
-    #     state: directory
-    #     mode: 'u+rwx'
+    - name: Create a working directory
+      file:
+        path:  /tmp/build_ruby
+        state: directory
+        mode: 'u+rwx'
 
-    # - name: Download Ruby 2.3.8
-    #   get_url:
-    #     url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
-    #     dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
+    - name: Download Ruby 2.3.8
+      get_url:
+        url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
 
-    # - name: Unpack Ruby 2.3.8
-    #   unarchive:
-    #     src: /tmp/build_ruby/ruby-2.3.8.tar.gz
-    #     dest: /tmp/build_ruby/
-    #     remote_src: yes
+    - name: Unpack Ruby 2.3.8
+      unarchive:
+        src: /tmp/build_ruby/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/
+        remote_src: yes
 
-    # - name: Build ruby
-    #   command: >
-    #     {{ item }}
-    #     chdir=/tmp/build_ruby/ruby-2.3.8
-    #     creates=/usr/local/bin/ruby
-    #   with_items:
-    #     - ./configure --enable-shared
-    #     - make
-    #     - make install
+    - name: Build ruby
+      command: >
+        {{ item }}
+        chdir=/tmp/build_ruby/ruby-2.3.8
+        creates=/usr/local/bin/ruby
+      with_items:
+        - ./configure --enable-shared
+        - make
+        - make install
 
-    # - name: Add ruby symlinks
-    #   file:
-    #     src: "/usr/local/bin/{{ item }}"
-    #     dest: "/usr/bin/{{ item }}"
-    #     state: link
-    #     force: yes
-    #   with_items:
-    #     - erb
-    #     - gem
-    #     - irb
-    #     - rake
-    #     - rdoc
-    #     - ruby
+    - name: Add ruby symlinks
+      file:
+        src: "/usr/local/bin/{{ item }}"
+        dest: "/usr/bin/{{ item }}"
+        state: link
+        force: yes
+      with_items:
+        - erb
+        - gem
+        - irb
+        - rake
+        - rdoc
+        - ruby
 
-    # - name: Remove the working directory
-    #   file:
-    #     path:  /tmp/build_ruby
-    #     state: absent
+    - name: Remove the working directory
+      file:
+        path:  /tmp/build_ruby
+        state: absent
 
-    # # MySQL client
+    # MySQL client
 
-    # - name: Install mysql-client and dependencies
-    #   apt:
-    #     pkg:
-    #       - mysql-client
-    #       - libmysqlclient-dev
-    #     state: present
+    - name: Install mysql-client and dependencies
+      apt:
+        pkg:
+          - mysql-client
+          - libmysqlclient-dev
+        state: present
 
-    # - git_config:
-    #     name: credential.helper
-    #     value: '!aws codecommit credential-helper $@'
+    - git_config:
+        name: credential.helper
+        value: '!aws codecommit credential-helper $@'
 
-    # - git_config:
-    #     name: credential.UseHttpPath
-    #     value: true
+    - git_config:
+        name: credential.UseHttpPath
+        value: true
 
-    # - git:
-    #     accept_hostkey: yes
-    #     remote: origin
-    #     depth: 1
-    #     dest: /home/ubuntu/ConnecHub
-    #     repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
-    #     version: develop
-    #     force: true
+    - git:
+        accept_hostkey: yes
+        remote: origin
+        depth: 1
+        dest: /home/ubuntu/ConnecHub
+        repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
+        version: develop
+        force: true
 
-    # # TODO would like to use the bundler module
+    # TODO would like to use the bundler module
 
-    # - name: Install bunbler and gems
-    #   shell: |
-    #     cd /home/ubuntu/ConnecHub && gem install bundler -v 1.3.5 && ./bin/bundle install
-    #     # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
-    #     # after v 1.4.0: --jobs=5
+    - name: Install bunbler and gems
+      shell: |
+        cd /home/ubuntu/ConnecHub && gem install bundler -v 1.3.5 && ./bin/bundle install
+        # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
+        # after v 1.4.0: --jobs=5
 
-    # - name: Simple GET operation
-    #   command: >
-    #     aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.env /home/ubuntu/ConnecHub/.env
+    - name: Simple GET operation
+      command: >
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.env /home/ubuntu/ConnecHub/.env
 
-    # # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
-    # - name: Update RDS DNS address
-    #   command: >
-    #     sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_address }}"/g' /home/ubuntu/ConnecHub/.env
+    - name: Update RDS DNS address
+      command: >
+        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_address }}"/g' /home/ubuntu/ConnecHub/.env
 
-    # - name: Change ownership of web app dir
-    #   file:
-    #     path: /home/ubuntu/ConnecHub
-    #     group: ubuntu
-    #     owner: ubuntu
-    #     recurse: true
+    - name: Change ownership of web app dir
+      file:
+        path: /home/ubuntu/ConnecHub
+        group: ubuntu
+        owner: ubuntu
+        recurse: true
 
-    # - name: Setup database
-    #   become: ubuntu
-    #   shell: |
-    #     cd /home/ubuntu/ConnecHub && ./bin/rake db:setup
+    - name: Setup database
+      become: ubuntu
+      shell: |
+        cd /home/ubuntu/ConnecHub && ./bin/rake db:setup
 
-    # - name: Migrate database
-    #   become: ubuntu
-    #   shell: |
-    #     cd /home/ubuntu/ConnecHub && ./bin/rake db:migrate
+    - name: Migrate database
+      become: ubuntu
+      shell: |
+        cd /home/ubuntu/ConnecHub && ./bin/rake db:migrate
 
-    # - name: Start Rails server
-    #   shell: |
-    #     pkill ruby
-    #     cd /home/ubuntu/ConnecHub
-    #     rails server -d --binding 0.0.0.0 --port 3000
+    - name: Start Rails server
+      shell: |
+        pkill ruby
+        cd /home/ubuntu/ConnecHub
+        rails server -d --binding 0.0.0.0 --port 3000
 
-    # # Redirect requests from port 80 to 3000 (Ruby on Rails default server port)
+    # Redirect requests from port 80 to 3000 (Ruby on Rails default server port)
 
-    # - name: iptables rules
-    #   shell: |
-    #     iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
-    #     iptables-save > ~/iptables.conf
-    #     iptables-restore < ~/iptables.conf
-
-    # S3 Bucket mounting (source and display)
+    - name: iptables rules
+      shell: |
+        iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
+        iptables-save > ~/iptables.conf
+        iptables-restore < ~/iptables.conf
 
     - name: Install system dependencies
       apt:
@@ -229,7 +227,7 @@
           -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
           -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
           -o nonempty \
-          -o allow_other 
+          -o allow_other
       when: media_source_bucket_stats.stat.exists == false
 
     # Media Display bucket
