@@ -8,6 +8,7 @@
             </div>
 
             <div class="panel-body">
+
                 <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %>
 
                 <div class="input-group">
@@ -19,7 +20,7 @@
                 <div class="input-group">
                     <div class="input-group-addon">Main Category</div>
                     <div class="form-control">
-                        <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}  %>
+                        <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]} %>
                     </div>
                 </div>
                 <br>
@@ -74,11 +75,10 @@
                 </div>
                 <br>
 
-                <div class="input-group float-right">
+                <div class="input-group">
                     <div class="actions">
                         <%= f.submit "Post Your Post", class: "btn btn-success" %>
                     </div>
-
                 </div>
 
                 <% end %>

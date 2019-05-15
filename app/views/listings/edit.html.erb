@@ -1,25 +1,26 @@
 <div class="col-md-8 col-md-offset-2">
     <div class="row">
         <div class="panel panel-default">
-            
+
             <div class="panel-heading">
                 <h2>Edit Your Account</h2>
                 <div class = "small-heading", style="color:red">(All fields required.)</div>
             </div>
-            
+
             <div class="panel-body">
-                <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %> 
+
+                <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %>
 
                 <div class="input-group">
                     <div class="input-group-addon">$</div>
-                    <%= f.text_field :price, autofocus: true, class:"form-control"  %>
+                    <%= f.text_field :price, autofocus: true, class:"form-control" %>
                 </div>
                 <br>
 
                 <div class="input-group">
                     <div class="input-group-addon">Main Category</div>
                     <div class="form-control">
-                        <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}  %>
+                        <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]} %>
                     </div>
                 </div>
                 <br>
@@ -27,20 +28,20 @@
                 <div class="input-group">
                     <div class="input-group-addon">Sub Category</div>
                     <div class="form-control">
-                        <%= f.select :subcategory_id, Subcategory.all.map {|f| [f.name, f.id]}  %>
+                        <%= f.select :subcategory_id, Subcategory.all.map {|f| [f.name, f.id]} %>
                     </div>
                 </div>
                 <br>
 
-                <div class="input-group">  	
+                <div class="input-group">
                     <div class="input-group-addon">Posting Title</div>
-                    <%= f.email_field :title, class: "form-control" %> 
+                    <%= f.email_field :title, class: "form-control" %>
                 </div>
                 <br>
 
                 <div class="input-group">
                     <div class="input-group-addon">Email</div>
-                    <%= f.email_field :ademail, class: "form-control" %> 
+                    <%= f.email_field :ademail, class: "form-control" %>
                 </div>
                 <br>
 
@@ -63,27 +64,26 @@
                 <br>
 
                 <div class="input-group">
-                <div class="input-group-addon">Video</div>
-                <%= f.file_field :media, class: "form-control" %>
+                    <div class="input-group-addon">Video</div>
+                    <%= f.file_field :media, class: "form-control" %>
                 </div>
                 <br>
 
                 <div class="input-group">
                     <div class="input-group-addon">Description</div>
                     <%= f.text_area :description, class: "form-control" %>
-                    </div>
+                </div>
                 <br>
 
-                <div class="input-group">			  	
-                    <div class="actions">  
-                    <%= f.submit "Update My Post", class: "btn btn-success" %>
+                <div class="input-group">
+                    <div class="actions">
+                        <%= f.submit "Update My Post", class: "btn btn-success" %>
                     </div>
                 </div>
 
+                <% end %>
+
             </div>
-
-            <% end %>
-
         </div>
     </div>
 </div>
