@@ -28,7 +28,9 @@
                 <div class="input-group">
                     <div class="input-group-addon">Sub Category</div>
                     <div class="form-control">
-                        <%= f.select :subcategory_id, Subcategory.all.map {|f| [f.name, f.id]}, include_blank: true %>
+                        <select name="listing[subcategory_id]" id="listing_subcategory_id">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
                 <br>
