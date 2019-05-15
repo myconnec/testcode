@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <script src="https://unpkg.com/masonry-layout@4.1.1/dist/masonry.pkgd.min.js"></script>
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= render "partials/google_analytics" %>
 </head>
@@ -45,10 +46,10 @@
 <br>
 <br>
 <br>
-<div class = "container">   
+<div class = "container">
 <%= slide_down_alerts %>
     <%= yield %>
-</div> 
+</div>
 <br>
 <br>
 <br>
@@ -74,7 +75,7 @@
 				<li class="dropup">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Legal <i class="fa fa-sort"></i></span></a>
 					<ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-						<li><%= link_to 'Terms of Conditions', terms_path %></li>						
+						<li><%= link_to 'Terms of Conditions', terms_path %></li>
 						<li><%= link_to 'Privacy Policy', privacy_path %></li>
 						<li><%= link_to 'Posting Terms of Use', postterm_path %></li>
 					</ul>
@@ -88,8 +89,8 @@
 						<li><%= link_to 'Marketing', marketing_path %></li>
 						<li><%= link_to 'Mobile', mobile_path %></li>
 						<li><%= link_to 'Sales', sales_path %></li>
-						<li><%= link_to 'Technology', technology_path %></li>	
-						
+						<li><%= link_to 'Technology', technology_path %></li>
+
 					</ul>
 				</li>
 			   <li class="dropup">
@@ -102,13 +103,11 @@
           <li class="li_no_bg"><span class="ts-copy">© Connechub 2018</span></li>
                 </ul>
             </div>
-        </div>    
+        </div>
       </div>
 	</nav>
 	<script>
    $('.dropdown-toggle').dropdown()
   </script>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <% console %>
 </body>
 </html>
