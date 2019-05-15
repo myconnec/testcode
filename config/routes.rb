@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  
+
   devise_for :users
-  resources :categories do 
+
+  resources :categories do
   	resources :subcategories
-  end 
+  end
 
   resources :listings do
     resources :comments
@@ -15,22 +16,22 @@ Rails.application.routes.draw do
 	  end
 
   end
-  
-  
- 
-  
+
+  resources :charges, only: [:new, :create]
+
+
   root 'categories#index'
-  
+
   match '/about', to: 'pages#about', via: :get
   match '/contact', to: 'pages#contact', via: :get
-  match '/cookie', to: 'pages#cookie', via: :get    
-  match '/copyright', to: 'pages#copyright', via: :get  
-  match '/corporate', to: 'pages#corporate', via: :get  
+  match '/cookie', to: 'pages#cookie', via: :get
+  match '/copyright', to: 'pages#copyright', via: :get
+  match '/corporate', to: 'pages#corporate', via: :get
   match '/customersupport', to: 'pages#customersupport', via: :get
   match '/design', to: 'pages#design', via: :get
   match '/faq', to: 'pages#faq', via: :get
   match '/following', to: 'pages#following', via: :get
-  match '/help', to: 'pages#help', via: :get  
+  match '/help', to: 'pages#help', via: :get
   match '/marketing', to: 'pages#marketing', via: :get
   match '/membership', to: 'pages#membership', via: :get
   match '/mobile', to: 'pages#mobile', via: :get

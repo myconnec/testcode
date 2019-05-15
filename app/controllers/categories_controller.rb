@@ -12,12 +12,11 @@ class CategoriesController < ApplicationController
         @sale = @categories[6]
         @services = @categories[7]
         @unboxing = @categories[8]
-    end 
-    
+    end
+
     def show
     @listings = Listing.where(category_id: params[:id]).order("created_at DESC")
     @category = Category.find(params[:id])
     end
-
 
 end

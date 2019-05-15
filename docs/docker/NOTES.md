@@ -103,6 +103,10 @@ docker run -it -p 3000:3000  connechub
 docker exec -it web_app rake db:setup
 ```
 
+```bash
+docker exec -it web_app rake db:migrate
+```
+
 ## Stop
 
 ### Ruby on Rails
