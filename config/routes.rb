@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   match '/terms', to: 'pages#terms', via: :get
   match '/postterm', to: 'pages#postterm', via: :get
   match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
-
+  match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
 
  get ':username' => 'users#show', as: 'user'
 end

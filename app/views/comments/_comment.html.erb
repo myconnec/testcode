@@ -5,19 +5,19 @@
         <hr>
     <% end %>
 
-    <small><b>This post has <%= pluralize(@comments.count, "Comment")%></b></small>
+    <small><b>This post has <%= pluralize(@comments.count, "Comment") %></b></small>
     <% @comments.each do |comment| %>
     <div class="post-metadata">
-            	<%= image_tag comment.user.avatar.url(:thumb), class: 'avatar'%>
-            <div class="post-info">
+        <%= image_tag comment.user.avatar.url(:thumb), class: 'avatar' %>
+        <div class="post-info">
             <div class="post-title">
-            	<span>
-            	<%= link_to comment.user.username, user_path(comment.user.username) %>
+                <span>
+                <%= link_to comment.user.username, user_path(comment.user.username) %>
                 </span>
             </div>
-            	<small><%= comment.body %></small>
+                <small><%= comment.body %></small>
             </div>
-            
-            </div>
+        </div>
     <% end %>
-    </div><br>
+</div>
+<br>
