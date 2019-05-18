@@ -96,7 +96,7 @@
 
 <%= javascript_include_tag 'listings.js' %>
 
-<% if ENV["APP_ENV"] == 'dev' %>
+<% if ENV["APP_ENV"] == 'lcl' %>
 <script>
 window.onload = function() {
     document.getElementById('listing_price').value = '1.23';
