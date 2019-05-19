@@ -1,4 +1,5 @@
 class ListingsController < ApplicationController
+  around_filter :catch_not_found
   before_filter :authenticate_user!, only: [:new, :create]
   before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
   impressionist actions: [:show], unique: [:session_hash]
@@ -10,6 +11,8 @@ class ListingsController < ApplicationController
   def create
     @listing = Listing.new(listing_params)
     @listing.user = current_user
+    @listing.ademail = current_user.email
+
     if @listing.save
       redirect_to @listing
     else
@@ -62,4 +65,9 @@ class ListingsController < ApplicationController
     end
   end
 
+  def catch_not_found
+    yield
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
+  end
 end

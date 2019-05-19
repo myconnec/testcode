@@ -4,7 +4,7 @@
 
             <div class="panel-heading">
                 <h2>Post Your New Ad</h2>
-                <div class = "small-heading", style="color:red">(All fields required.)</div>
+                <div class = "small-heading", style="color:red">(All fields required.) </div>
             </div>
 
             <div class="panel-body">
@@ -88,18 +88,20 @@
     </div>
 </div>
 
-<%= javascript_include_tag 'listings.js' %>
+<%= javascript_include_tag "listings.js" %>
 
 <% if ENV["APP_ENV"] == 'lcl' %>
-<script>
-window.onload = function() {
-    document.getElementById('listing_price').value = '1.23';
-    document.getElementById('listing_title').value = 'Test Title';
-    document.getElementById('listing_ademail').value = 'test@email.com';
-    document.getElementById('listing_city').value = 'Tampa';
-    document.getElementById('listing_state').value = 'Florida';
-    document.getElementById('listing_zipcode').value = '33759';
-    document.getElementById('listing_description').value = 'Test Description';
-};
-</script>
+    <script>
+    $( document ).ready(function() {
+        $('#listing_price').val('1.23');
+        $('#listing_title').val('Test Title');
+        $('#listing_ademail').val('test@email.com');
+        $('#listing_city').val('Tampa');
+        $('#listing_state').val('Florida');
+        $('#listing_zipcode').val('33759');
+        $('#listing_description').val('Test Description');
+
+        //$('select#listing_category_id>option:eq(1)').attr('selected', true);
+    });
+    </script>
 <% end %>
