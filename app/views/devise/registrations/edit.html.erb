@@ -33,6 +33,12 @@
 		            <br>
 
                     <div class="input-group">
+                        <span class="input-group-addon">Bio</span>
+                        <%= f.text_area :bio, class: "form-control" %>
+	                </div>
+		            <br>
+
+                    <div class="input-group">
                         <span class="input-group-addon">Current Password</span>
                         <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
 	                </div>
@@ -56,9 +62,9 @@
                         <%= f.submit "Update", class: "btn btn-lg btn-success btn-block" %>
                     </div>
 
-                <% end %> 
+                <% end %>
 
         </div>
     </div>
 </div>
-<br> 
+<br>
