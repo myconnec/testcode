@@ -1,14 +1,10 @@
 
+<br>
+<br>
+<div class="container">
+  <div align="center" style="width: 100%;"> <%= image_tag("large_connechub.png", :alt => "logo") %></div>
   <br>
-  <br>   
- <div class="container">
-     
-<div align="center" style="width: 100%;"> <%= image_tag("largelogo.jpg", :alt => "logo") %> </div>
-
-<div class="bst" align="center" style="width: 100%;"> connecting local goods and services </div>
-
-<br>
-<br>
+  <br>
 
 <div align="center" style="width: 100%;">
 <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
@@ -29,7 +25,7 @@
     <%=
     # text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control" , style: 'width: 180px; height: 35px'
     %>
-    </div>    
+    </div>
     </div>
     </div>
 </div>
@@ -39,7 +35,7 @@
     <div class="form-inline">
     <div class="col-xs-2">
     <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 180px; height: 35px' %>
-    </div>    
+    </div>
     </div>
     </div>
 </div>
@@ -49,7 +45,7 @@
  <br>
 <% end %>
 </div>
- 
+
  <br>
 <br>
 <br>
@@ -77,18 +73,18 @@
 <div class="col span_1_of_4">
 <%#
 <div class="catg_title"><i class = "glyphicon glyphicon-heart"></i> <strong><%= link_to 'Personals', category_path(@personals) </strong></div>
-<div class="category_title"> 
-            <%# <% @personals.subcategories.each do |subcategory| 
+<div class="category_title">
+            <%# <% @personals.subcategories.each do |subcategory|
             <ul>
               <li><%# <%= link_to subcategory.name, category_subcategory_path(@personals, subcategory) </li>
             </ul>
-            <%# <% end 
+            <%# <% end
 </div>
 <div style="height: 15px; width: 100%;"></div>
 %>
 <div class="catg_title"><i class = "glyphicon glyphicon-globe"></i> <strong><%= link_to 'Community', category_path(@community) %></strong></div>
 <div class="category_title">
-  
+
             <% @community.subcategories.each do |subcategory| %>
             <ul>
               <li><%= link_to subcategory.name, category_subcategory_path(@community, subcategory) %></li>
@@ -108,11 +104,11 @@
 <%#
 <div class="catg_title"><i class = "glyphicon glyphicon-user"></i> <strong><%= link_to 'Talent', category_path(@talent) </strong></div>
 <div class="category_title">
-           <% @talent.subcategories.each do |subcategory| 
+           <% @talent.subcategories.each do |subcategory|
             <ul>
               <li><%= link_to subcategory.name, category_subcategory_path(@talent, subcategory) </li>
             </ul>
-            <% end 
+            <% end
 </div>
 <div style="height: 15px; width: 100%;"></div>
 %>
@@ -132,7 +128,7 @@
 
 <div class="col span_1_of_4">
 <div class="catg_title"><i class = "glyphicon glyphicon-home"></i> <strong><%= link_to 'Housing', category_path(@housing) %></strong></div>
-<div class="category_title"> 
+<div class="category_title">
             <% @housing.subcategories.each do |subcategory| %>
             <ul>
               <li><%= link_to subcategory.name, category_subcategory_path(@housing, subcategory) %></li>

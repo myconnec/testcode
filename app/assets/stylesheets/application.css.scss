@@ -18,7 +18,7 @@
 *= require 'masonry/infinitescroll'
 *= require 'masonry/right-to-left'
 *= require video-js
- 
+
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
@@ -181,7 +181,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 /*  REMOVE MARGINS AS ALL GO FULL WIDTH AT 480 PIXELS */
 
 @media only screen and (max-width: 480px) {
-	.col { 
+	.col {
 		margin: 1% 0 1% 0%;
 	}
 }
@@ -190,21 +190,21 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 
 /*  GRID OF FOUR   ============================================================================= */
 
-	
+
 .span_4_of_4 {
-	width: 180px; 
+	width: 180px;
 }
 
 .span_3_of_4 {
-	width: 180px; 
+	width: 180px;
 }
 
 .span_2_of_4 {
-	width: 180px; 
+	width: 180px;
 }
 
 .span_1_of_4 {
-	width: 180px; 
+	width: 180px;
 }
 
 
@@ -212,16 +212,16 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 
 @media only screen and (max-width: 480px) {
 	.span_4_of_4 {
-		width: 100%; 
+		width: 100%;
 	}
 	.span_3_of_4 {
-		width: 100%; 
+		width: 100%;
 	}
 	.span_2_of_4 {
-		width: 100%; 
+		width: 100%;
 	}
 	.span_1_of_4 {
-		width: 100%; 
+		width: 100%;
 	}
 }
 
@@ -231,9 +231,9 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 
 .catg_title{font-size:14px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#707070; padding:3px;}
 .category_title{font-size:11px; font-weight:normal;}
-.category_title ul li a:hover{ color: #FFF; /* white */ background-color: #5cb85c; /* green */  padding:5px;}
-.price{font:Verdana, Arial, Helvetica, sans-serif; color:#5cb85c; font-size:14px;}
-.price1{font:Verdana, Arial, Helvetica, sans-serif; color:#5cb85c; font-size:26px; padding:3px; width:150px;}
+.category_title ul li a:hover{ color: #FFF; /* white */ background-color: #3B7E3A; /* green */  padding:5px;}
+.price{font:Verdana, Arial, Helvetica, sans-serif; color:#3B7E3A; font-size:14px;}
+.price1{font:Verdana, Arial, Helvetica, sans-serif; color:#3B7E3A; font-size:26px; padding:3px; width:150px;}
 .topbar {
   background: #eee;
   margin-bottom: 20px;
@@ -261,7 +261,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   font-size: 11px;
   font-weight: bold;
   color: rgba(0, 0, 0, 0.8); }
-  
+
 .hero-description {
   width: 85%;
   font-size: 12px;
@@ -333,7 +333,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   border-radius: 5px;
   background-color:#F4F8FC;
   width:450px;
-  
+
 }
 .post-title {
   opacity: 1.4;
@@ -349,7 +349,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 
 
 
-  
+
 /*# sourceMappingURL=connechub.css.map */
 /*
   960 Grid System ~ Core CSS.
@@ -1021,13 +1021,13 @@ body {
   webkit-border-radius: 6px 6px 6px 6px;
 	moz-border-radius: 6px 6px 6px 6px;
 	border-radius: 6px 6px 6px 6px;
-} 
-  .rightbar-top{ 
+}
+  .rightbar-top{
     margin-top: 16px;
   }
   .space{
-     padding-bottom: 5px; 
-    
+     padding-bottom: 5px;
+
   }
 .rightbar1 {
   width: 180px;
@@ -1039,7 +1039,7 @@ body {
   webkit-border-radius: 6px 6px 6px 6px;
 	moz-border-radius: 6px 6px 6px 6px;
 	border-radius: 6px 6px 6px 6px;
-} 
+}
 .categories1 {
   width: 180px;
   border-left: 1px #ccc solid;
@@ -1052,7 +1052,7 @@ body {
 	border-radius: 6px 6px 6px 6px;
 	font-size:12px;
 
-} 
+}
 
 .leftbar {
   float: left;
@@ -1125,3 +1125,9 @@ body {
 .profile_info{padding:3px; list-style-type: none; }
 #pro_stuff1{padding: 5px 5px; font-family: verdana, sans-serif; font-weight:normal; font-size:11px; color: #ffffff;}
 .prophoto{ padding-left: 10px}
+
+
+.btn-success {
+  background-color: #3B7E3A;
+  border-color: #3B7E3A
+}
