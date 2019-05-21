@@ -46,7 +46,8 @@
         <small><%= "#{@listing.impressionist_count}" %> views</small>
         <small>&nbsp; &nbsp; &nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></small>
         <small><%= time_ago_in_words(@listing.created_at) %></small> @ <small><%= @listing.created_at.to_formatted_s(:short) %></small>
-        <small>
+        <% if params[:action] === 'show' %>
+        <small>&nbsp; &nbsp; &nbsp;
             <a
                 style="color:red"
                 href="mailto:admin@connechub.com?subject=Flagging%20Post%20<%= @listing.id %>&body=Flagging%20post%20<%= @listing.id %>"
@@ -55,6 +56,7 @@
                 <i class="fa fa-flag"></i>&nbsp;Report Post
             </a>
         </small>
+        <% end %>
     </div>
 
     <p>
