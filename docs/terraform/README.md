@@ -14,9 +14,7 @@
 Terraform remote state currentl has a bug where it only uses ~/.aws/credentials \[default\] credentials. Please ensure they are valid for the AWS account being used.
 
 ```bash
-cd ./terraform/lambda_s3_to_transcoder/lambda_source/
-zip index.js.zip index.js
-cd ../../../
+cd ./terraform/lambda_s3_to_transcoder/lambda_source/ && zip index.js.zip index.js && cd ../../../
 export AWS_REGION=YOUR_REGION_HERE
 terraform init
 ```

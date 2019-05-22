@@ -51,8 +51,8 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for safely handling passwords.
 gem 'bcrypt', '~> 3.1.12'
-
-
+# enable SSL on Rails < 3.1
+gem 'rack-ssl', require: 'rack/ssl'
 
 # Easy upload management for ActiveRecord
 gem 'paperclip', '~> 5.1'
