@@ -83,6 +83,6 @@ EOF
 ## Role
 
 resource "aws_iam_role" "lambda_role" {
-  name               = "CHS3EventTriggerFormTranscoder"
+  name               = "CHS3EventTriggerFormTranscoder-${var.APP_ENV}"
   assume_role_policy = "${data.aws_iam_policy_document.iam_assume_role_policy.json}"
 }

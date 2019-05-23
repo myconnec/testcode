@@ -9,7 +9,8 @@ terraform {
     organization = "ConnecHub"
 
     workspaces {
-      name = "dev"
+      name = "dev",
+      name = "prd"
     }
   }
 }

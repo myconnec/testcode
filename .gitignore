@@ -1,4 +1,4 @@
-# Rubymine project 
+# Rubymine project
 .idea/
 
 # Test and misc files
@@ -36,6 +36,7 @@ bower.json
 
 # ignore ENV file
 .env
+.*.env
 
 # *SQL
 /docker/mariadb/data.sql

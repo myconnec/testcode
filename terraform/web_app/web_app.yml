@@ -36,6 +36,7 @@
         pkg:
           - git
           - curl
+          - imagemagick
           - libcurl4-openssl-dev
           - libffi-dev
           - libreadline6-dev

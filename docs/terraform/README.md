@@ -51,6 +51,7 @@ Once finished execute the Ansible command to install web app:
 
 ```bash
 terraform taint -module=web_app aws_instance.web_app && terraform taint -module=web_app aws_eip.web_app
+terraform taint -module=lambda_s3_to_transcoder aws_lambda_function.s3_to_transcoder
 ```
 
 ## Destroy
