@@ -24,6 +24,7 @@ resource "aws_instance" "web_app" {
 
   security_groups = [
     "${aws_default_security_group.default.name}",
+    "${aws_security_group.http.name}",
     "${aws_security_group.https.name}",
     "${aws_security_group.mysql.name}",
     "${aws_security_group.ssh.name}",
