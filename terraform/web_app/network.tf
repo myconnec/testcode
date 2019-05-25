@@ -18,6 +18,42 @@ resource "aws_eip_association" "web_app" {
   allocation_id = "${aws_eip.web_app.id}"
 }
 
+# Load Balancer
+
+# Create a new load balancer
+resource "aws_lb" "web_app" {
+  name               = "${var.APP_NAME}-${var.APP_ENV}"
+  internal           = false
+  load_balancer_type = "application"
+
+  security_groups = [
+    "${aws_security_group.http.id}",
+    "${aws_security_group.https.id}",
+  ]
+
+  #subnets = ["${aws_subnet.public.*.id}"]
+  subnet_mapping {
+    subnet_id     = "${aws_subnet.default.id}"
+    allocation_id = "${aws_eip_association.web_app.id}"
+  }
+
+  enable_deletion_protection = false
+
+  access_logs {
+    bucket  = "log-${var.APP_ENV}"
+    prefix  = "log"
+    enabled = true
+  }
+
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "Ruby on Rails"
+  }
+}
+
 # Security Group
 
 resource "aws_default_security_group" "default" {
@@ -161,7 +197,6 @@ resource "aws_route53_record" "subdomain" {
 }
 
 # VPC
-
 resource "aws_default_vpc" "default" {
   tags = {
     Name = "Default VPC"
