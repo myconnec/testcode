@@ -21,7 +21,6 @@ resource "aws_instance" "web_app" {
     service = "EC2"
     tech    = "Ruby on Rails"
   }
-
   security_groups = [
     "${aws_default_security_group.default.name}",
     "${aws_security_group.http.name}",
