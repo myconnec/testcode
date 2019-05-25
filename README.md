@@ -19,3 +19,7 @@ Phase 3: Make it fast
 ## Usage
 
 - [Install](./docs/INSTALL.md)
+
+## SSL/TLS Implimentation
+
+Source: [https://www.botreetechnologies.com/blog/enable-ssl-for-rails-development-environment-two-minutes](https://www.botreetechnologies.com/blog/enable-ssl-for-rails-development-environment-two-minutes)

@@ -24,6 +24,8 @@ gem 'acts_as_votable', '~> 0.10.0'
 gem 'geocoder', '~> 1.4', '>= 1.4.1'
 # Twitter-styled notifications for Rails Asset Pipeline
 gem 'slide-down-alerts-rails', '~> 0.0.2'
+# SSL / TLS handling gem
+gem 'thin', '~> 1.7.0'
 
 # imagesLoaded.js Wrapper for Rails 3.1+ Asset Pipeline
 gem 'imagesLoaded_rails'

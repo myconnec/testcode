@@ -14,7 +14,7 @@ docker network create connechub
 docker build -t connechub_mariadb --file ./docker/mariadb/Dockerfile .
 
 # RoR
-docker build -t  connechub_webapp --build-arg ENV=${APP_ENV} --file ./docker/rubyonrails/Dockerfile . 
+docker build -t  connechub_webapp -t latest --file ./docker/rubyonrails/Dockerfile . 
 ```
 
 ##  Start
@@ -39,11 +39,12 @@ docker run -d -it -p 3000:3000 \
 --cpus=1 \
 --device /dev/fuse \
 --memory=512M \
---mount type=bind,source="$(pwd)"/,target=/app \
 --name web_app \
 --net connechub \
---entrypoint "rails" connechub_webapp:latest server -e development \
---binding 0.0.0.0
+--rm \
+connechub_webapp:latest
+
+# --mount type=bind,source="$(pwd)"/,target=/app
 
 # Create local DIR and mount S3 Buckets in running container
 # source

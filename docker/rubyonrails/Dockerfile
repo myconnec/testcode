@@ -20,8 +20,12 @@ WORKDIR /app
 COPY ./ /app
 RUN chmod 0600 /app/.passwd-s3fs
 
+# Create and install self signed SSL/TLS cert
+RUN mkdir /usr/.ssl
+RUN openssl req -nodes -new -newkey rsa:2048 -keyout /usr/.ssl/localhost.key -out /usr/.ssl/localhost.crt -sha256 -days 365 -x509  -subj "/C=US/ST=FL/L=Tampa/O=ConnecHub/OU=Engineering/CN=localhost"
+
 # DB install and migrations
 RUN bundle config --delete bin && rake rails:update:bin 
 
-# EXPOSE 3000
-ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
+EXPOSE 3000
+CMD ["thin -d --ssl --ssl-key-file /usr/.ssl/localhost.key --ssl-cert-file /usr/.ssl/localhost.crt start"]
