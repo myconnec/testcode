@@ -24,7 +24,6 @@ terraform init
 ## Plan
 
 ```bash
-terraform workspace select dev # lcl, dev, prd
 terraform plan --out ./out.plan -var-file=.env
 ```
 

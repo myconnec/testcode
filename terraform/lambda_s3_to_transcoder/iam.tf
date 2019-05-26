@@ -12,9 +12,9 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 ## Policy
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "lambda_logging"
+  name        = "${var.APP_NAME}_lambda_logging_${var.APP_ENV}"
   path        = "/"
-  description = "IAM policy for logging from a lambda"
+  description = "IAM policy for logging from a lambda."
 
   policy = <<EOF
 {
@@ -83,6 +83,6 @@ EOF
 ## Role
 
 resource "aws_iam_role" "lambda_role" {
-  name               = "CHS3EventTriggerFormTranscoder-${var.APP_ENV}"
+  name               = "${var.APP_NAME}_S3EventTriggerFormTranscoder_${var.APP_ENV}"
   assume_role_policy = "${data.aws_iam_policy_document.iam_assume_role_policy.json}"
 }

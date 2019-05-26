@@ -19,10 +19,10 @@ resource "aws_elastictranscoder_pipeline" "transcoder_pipeline" {
 }
 
 # Transcoder Preset
-resource "aws_elastictranscoder_preset" "transcodser_preset_free" {
+resource "aws_elastictranscoder_preset" "transcodser_preset_basic" {
   container   = "mp4"
-  description = "Transcoder preset to use for free accounts.."
-  name        = "Transcoder_Free"
+  description = "Transcoder preset to use for basic accounts."
+  name        = "${var.APP_NAME}_transcoder_preset_${var.APP_ENV}"
 
   audio {
     audio_packing_mode = "SingleTrack"
