@@ -19,6 +19,17 @@ resource "aws_eip_association" "web_app" {
   allocation_id = "${aws_eip.web_app.id}"
 }
 
+
+# Route53
+
+resource "aws_route53_record" "subdomain" {
+  zone_id = "Z343LWN1DJ92M1"
+  name    = "${var.APP_ENV != "prd" ? var.APP_ENV : "www"}"
+  type    = "A"
+  ttl     = "15"
+  records = ["${aws_eip.web_app.public_ip}"]
+}
+
 # Security Group
 
 resource "aws_default_security_group" "default" {
@@ -140,31 +151,26 @@ resource "aws_security_group" "mysql" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "RDS"
-    tech    = "Networking"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "ec2"
+    tech    = "networking"
     Name    = "mysql"
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
 }
 
-# Route53
-
-resource "aws_route53_record" "subdomain" {
-  zone_id = "Z343LWN1DJ92M1"
-  name    = "${var.APP_ENV != "prd" ? var.APP_ENV : "www"}"
-  type    = "A"
-  ttl     = "15"
-  records = ["${aws_eip.web_app.public_ip}"]
-}
-
 # VPC
 
 resource "aws_default_vpc" "default" {
   tags = {
+    app     = "${var.APP_NAME}"
+    env     = "${var.APP_ENV}"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "vpc"
+    tech    = "networking"
     Name = "Default VPC"
   }
 }
