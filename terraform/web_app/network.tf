@@ -1,4 +1,38 @@
+# ALB
+
+# resource "aws_lb" "web_app" {
+#   name               = "${var.APP_NAME}-${var.APP_ENV}"
+#   internal           = false
+#   load_balancer_type = "application"
+
+#   security_groups    = [
+#     "${aws_security_group.http.id}",
+#     "${aws_security_group.https.id}"
+#     ]
+
+#   subnets = [
+#     "${aws_subnet.public.*.id}"
+#   ]
+
+#   enable_deletion_protection = true
+
+#   access_logs {
+#     bucket  = "logs-${var.APP_NAME}-${var.APP_ENV}"
+#     prefix  = "test-lb"
+#     enabled = true
+#   }
+
+#   tags = {
+#     app     = "ConnecHub"
+#     env     = "${var.APP_ENV}"
+#     owner   = "admin@connechub.com"
+#     service = "ALB"
+#     tech    = "Load Balancer"
+#   }
+# }
+
 # EIP
+
 resource "aws_eip" "web_app" {
   tags = {
     app     = "ConnecHub"
