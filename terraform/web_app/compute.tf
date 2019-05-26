@@ -15,15 +15,14 @@ resource "aws_instance" "web_app" {
   # }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Ruby on Rails"
   }
 
   security_groups = [
-    "${aws_default_security_group.default.name}",
     "${aws_security_group.http.name}",
     "${aws_security_group.https.name}",
     "${aws_security_group.mysql.name}",

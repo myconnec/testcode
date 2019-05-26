@@ -2,9 +2,9 @@
 
 resource "aws_eip" "web_app" {
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EIP"
     tech    = "Networking"
   }
@@ -32,10 +32,6 @@ resource "aws_route53_record" "subdomain" {
 
 # Security Group
 
-resource "aws_default_security_group" "default" {
-  vpc_id = "${aws_default_vpc.default.id}"
-}
-
 resource "aws_security_group" "http" {
   description = "Allow http inbound traffic on port 80."
   name        = "http"
@@ -56,9 +52,9 @@ resource "aws_security_group" "http" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "http"
@@ -88,9 +84,9 @@ resource "aws_security_group" "https" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "https"
@@ -120,9 +116,9 @@ resource "aws_security_group" "ssh" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "ssh"
@@ -171,6 +167,6 @@ resource "aws_default_vpc" "default" {
     owner   = "${var.CONTACT_EMAIL}"
     service = "vpc"
     tech    = "networking"
-    Name = "Default VPC"
+    Name    = "Default VPC"
   }
 }
