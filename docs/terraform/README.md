@@ -18,6 +18,7 @@ cd ./terraform/lambda_s3_to_transcoder/lambda_source/
 zip index.js.zip index.js
 cd ../../../
 export AWS_REGION=YOUR_REGION_HERE
+echo $AWS_REGION
 terraform init
 ```
 
