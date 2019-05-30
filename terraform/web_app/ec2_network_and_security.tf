@@ -3,7 +3,7 @@
 ## EIP
 resource "aws_eip" "web_app" {
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EIP"
@@ -46,7 +46,7 @@ resource "aws_security_group" "http" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EC2"
@@ -78,7 +78,7 @@ resource "aws_security_group" "https" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EC2"
@@ -112,7 +112,7 @@ resource "aws_security_group" "ssh" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EC2"
@@ -143,7 +143,7 @@ resource "aws_security_group" "mysql" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "RDS"

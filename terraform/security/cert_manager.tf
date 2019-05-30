@@ -3,7 +3,7 @@ resource "aws_acm_certificate" "cert" {
   validation_method = "DNS"
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EC2"

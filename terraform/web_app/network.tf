@@ -12,7 +12,7 @@ resource "aws_route53_record" "subdomain" {
 resource "aws_default_vpc" "default" {
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EC2"
@@ -26,7 +26,7 @@ resource "aws_default_subnet" "default_az1" {
   availability_zone = "${var.AWS_REGION}"
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EC2"

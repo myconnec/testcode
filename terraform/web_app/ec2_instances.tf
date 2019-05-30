@@ -17,7 +17,7 @@ resource "aws_instance" "web_app" {
   # }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "EC2"

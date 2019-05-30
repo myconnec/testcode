@@ -22,7 +22,7 @@ resource "aws_lb" "web_app" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "ec2"

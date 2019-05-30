@@ -143,8 +143,8 @@
         accept_hostkey: yes
         remote: origin
         depth: 1
-        dest: /home/ubuntu/ConnecHub
-        repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/ConnecHub
+        dest: /home/ubuntu/connechub
+        repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/connechub
         version: develop
         force: true
 
@@ -152,23 +152,23 @@
 
     - name: Install bunbler and gems
       shell: |
-        cd /home/ubuntu/ConnecHub && gem install bundler -v 1.3.5 && ./bin/bundle install
+        cd /home/ubuntu/connechub && gem install bundler -v 1.3.5 && ./bin/bundle install
         # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
         # after v 1.4.0: --jobs=5
 
     - name: Simple GET operation
       command: >
-        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.env /home/ubuntu/ConnecHub/.env
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.env /home/ubuntu/connechub/.env
 
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
     - name: Update RDS DNS address
       command: >
-        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_address }}"/g' /home/ubuntu/ConnecHub/.env
+        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_address }}"/g' /home/ubuntu/connechub/.env
 
     - name: Change ownership of web app dir
       file:
-        path: /home/ubuntu/ConnecHub
+        path: /home/ubuntu/connechub
         group: ubuntu
         owner: ubuntu
         recurse: true
@@ -176,17 +176,17 @@
     - name: Setup database
       become: ubuntu
       shell: |
-        cd /home/ubuntu/ConnecHub && ./bin/rake db:setup
+        cd /home/ubuntu/connechub && ./bin/rake db:setup
 
     - name: Migrate database
       become: ubuntu
       shell: |
-        cd /home/ubuntu/ConnecHub && ./bin/rake db:migrate
+        cd /home/ubuntu/connechub && ./bin/rake db:migrate
 
     - name: Start Rails server
       shell: |
         pkill ruby
-        cd /home/ubuntu/ConnecHub
+        cd /home/ubuntu/connechub
         rails server -d --binding 0.0.0.0 --port 3000
 
     # Redirect requests from port 80 to 3000 (Ruby on Rails default server port)

@@ -19,7 +19,7 @@ resource "aws_db_instance" "rds" {
   # skip_final_snapshot   = "${subnet = var.APP_ENV == 'prd' ? false : true}"
 
   tags = {
-    app     = "ConnecHub"
+    app     = "connechub"
     env     = "${var.APP_ENV}"
     owner   = "admin@connechub.com"
     service = "RDS"
