@@ -4,22 +4,25 @@
 
 resource "aws_lb" "web_app" {
   # 'aws_elb` is the classic load balancer, do not use it.
-  name               = "${var.APP_NAME}-load-balancer-${var.APP_ENV}"
+  enable_http2 = true
   internal           = false
   load_balancer_type = "application"
-
-  security_groups = [
-    "${aws_security_group.http.id}",
-    "${aws_security_group.https.id}",
-  ]
-
-  subnets = ["${aws_default_subnet.default_az1.id}"]
+  name               = "${var.APP_NAME}-load-balancer-${var.APP_ENV}"
 
   access_logs {
     bucket  = "${var.APP_NAME}-log-${var.APP_ENV}"
     prefix  = "log"
     enabled = true
   }
+  
+  security_groups = [
+    "${aws_security_group.http.id}",
+    "${aws_security_group.https.id}",
+  ]
+
+  subnets = [
+    "${aws_default_subnet.default_az1.id}"
+  ]
 
   tags = {
     app     = "connechub"

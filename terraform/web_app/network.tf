@@ -23,7 +23,7 @@ resource "aws_default_vpc" "default" {
 
 # Subnets (default)
 resource "aws_default_subnet" "default_az1" {
-  availability_zone = "${var.AWS_REGION}"
+  availability_zone = "${var.AWS_REGION}a"
 
   tags = {
     app     = "connechub"
@@ -31,6 +31,19 @@ resource "aws_default_subnet" "default_az1" {
     owner   = "admin@connechub.com"
     service = "EC2"
     tech    = "network"
-    Name = "Default subnet for ${var.AWS_REGION}."
+    Name = "Default subnet for ${var.AWS_REGION}a."
+  }
+}
+
+resource "aws_default_subnet" "default_az2" {
+  availability_zone = "${var.AWS_REGION}b"
+
+  tags = {
+    app     = "connechub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "network"
+    Name = "Default subnet for ${var.AWS_REGION}b."
   }
 }
