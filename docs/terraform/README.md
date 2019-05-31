@@ -27,6 +27,14 @@ terraform init
 terraform plan --out ./out.plan -var-file=.env
 ```
 
+## Import Existing Resource
+
+```bash
+# tf import varfile location name/arn
+terraform import -var-file=.env module.media_storage.aws_s3_bucket.media_display media-display-dev
+terraform import -var-file=.env module.media_storage.aws_s3_bucket.media_source media-source-dev
+```
+
 ## Apply
 
 ```bash
