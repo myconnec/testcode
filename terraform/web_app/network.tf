@@ -65,6 +65,7 @@ resource "aws_lb_target_group" "alb_http_target_group" {
 }
 
 resource "aws_launch_configuration" "web_app" {
+  associate_public_ip_address = "${var.APP_ENV != "prd" ? true : false}"
   iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.name}"
   image_id = "${data.aws_ami.ubuntu.id}"
   instance_type = "${var.COMPUTE_SIZE}"
