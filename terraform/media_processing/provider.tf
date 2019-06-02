@@ -1,4 +1,4 @@
 provider "aws" {
-  alias  = "us_east_1"
+  alias  = "us_west_1"
   region = "${var.AWS_REGION}"
 }
