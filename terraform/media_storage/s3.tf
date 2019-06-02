@@ -18,8 +18,8 @@ resource "aws_s3_bucket" "media_display" {
     app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
-    service = "S3"
-    tech    = "Storage"
+    service = "s3"
+    tech    = "storage"
   }
 }
 
@@ -42,8 +42,8 @@ resource "aws_s3_bucket" "media_source" {
     app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
-    service = "S3"
-    tech    = "Storage"
+    service = "s3"
+    tech    = "storage"
   }
 }
 

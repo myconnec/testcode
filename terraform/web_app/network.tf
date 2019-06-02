@@ -11,16 +11,16 @@ resource "aws_lb" "web_app" {
   name                             = "${var.APP_NAME}-app-load-balancer-${var.APP_ENV}"
 
   access_logs {
-    bucket  = "${var.APP_NAME}-access-log-${var.APP_ENV}"
+    bucket  = "${var.APP_NAME}-access-log-${random_uuid.provider.result}-${var.APP_ENV}"
     enabled = true
     prefix  = "log"
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "ec2"
     tech    = "networking"
   }
 
@@ -36,7 +36,7 @@ resource "aws_lb" "web_app" {
 }
 
 resource "aws_lb_target_group" "alb_http_target_group" {
-  name     = "${var.APP_NAME}-aLB-target-group-${var.APP_ENV}"
+  name     = "${var.APP_NAME}-lb-target-group-${var.APP_ENV}"
   port     = "80"
   protocol = "HTTP"
   vpc_id   = "${aws_default_vpc.default.id}"
@@ -59,30 +59,11 @@ resource "aws_lb_target_group" "alb_http_target_group" {
   # }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "Ruby on Rails"
-  }
-}
-
-resource "aws_launch_configuration" "web_app" {
-  associate_public_ip_address = "${var.APP_ENV != "prd" ? true : false}"
-  iam_instance_profile        = "${aws_iam_instance_profile.ec2_profile.name}"
-  image_id                    = "${data.aws_ami.ubuntu.id}"
-  instance_type               = "${var.COMPUTE_SIZE}"
-  key_name                    = "${var.AWS_PEM_KEY_PAIR}"
-
-  security_groups = [
-    "${aws_security_group.http.name}",
-    "${aws_security_group.https.name}",
-    "${aws_security_group.mysql.name}",
-    "${aws_security_group.ssh.name}",
-  ]
-
-  lifecycle {
-    create_before_destroy = true
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "ec2"
+    tech    = "compute"
   }
 }
 
@@ -101,14 +82,33 @@ resource "aws_autoscaling_group" "autoscale_group" {
   ]
 
   tags = {
-    app                 = "ConnecHub"
+    app                 = "${var.APP_NAME}"
     env                 = "${var.APP_ENV}"
-    owner               = "admin@connechub.com"
-    service             = "EC2"
+    owner               = "${var.CONTACT_EMAIL}"
+    service             = "ec2"
     tech                = "networking"
     propagate_at_launch = true
     key                 = "Name"
     value               = "${var.APP_NAME}-${var.APP_ENV}"
+  }
+}
+
+resource "aws_launch_configuration" "web_app" {
+  associate_public_ip_address = "${var.APP_ENV == "prd" ? false : true}"
+  iam_instance_profile        = "${aws_iam_instance_profile.ec2_profile.name}"
+  image_id                    = "${data.aws_ami.ubuntu.id}"
+  instance_type               = "${var.COMPUTE_SIZE}"
+  key_name                    = "${var.AWS_PEM_KEY_PAIR}"
+
+  security_groups = [
+    "${aws_security_group.http.name}",
+    "${aws_security_group.https.name}",
+    "${aws_security_group.mysql.name}",
+    "${aws_security_group.ssh.name}",
+  ]
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
@@ -118,6 +118,11 @@ resource "aws_default_subnet" "default_az1" {
   availability_zone = "us-west-1b"
 
   tags = {
+    app     = "${var.APP_NAME}"
+    env     = "${var.APP_ENV}"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "vpc"
+    tech    = "networking"
     Name = "Default subnet for us-west-1b"
   }
 }
@@ -126,6 +131,11 @@ resource "aws_default_subnet" "default_az2" {
   availability_zone = "us-west-1c"
 
   tags = {
+    app     = "${var.APP_NAME}"
+    env     = "${var.APP_ENV}"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "vpc"
+    tech    = "networking"
     Name = "Default subnet for us-west-1c"
   }
 }
@@ -156,11 +166,11 @@ resource "aws_security_group" "http" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "Networking"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "ec2"
+    tech    = "networking"
     Name    = "http"
   }
 
@@ -188,11 +198,11 @@ resource "aws_security_group" "https" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "Networking"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "ec2"
+    tech    = "networking"
     Name    = "https"
   }
 
@@ -220,11 +230,11 @@ resource "aws_security_group" "ssh" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "Networking"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "ec2"
+    tech    = "networking"
     Name    = "ssh"
   }
 
@@ -251,11 +261,11 @@ resource "aws_security_group" "mysql" {
   }
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "RDS"
-    tech    = "Networking"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "rds"
+    tech    = "networking"
     Name    = "mysql"
   }
 
@@ -265,6 +275,11 @@ resource "aws_security_group" "mysql" {
 # VPC
 resource "aws_default_vpc" "default" {
   tags = {
+    app     = "${var.APP_NAME}"
+    env     = "${var.APP_ENV}"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "rds"
+    tech    = "networking"
     Name = "Default VPC"
   }
 }

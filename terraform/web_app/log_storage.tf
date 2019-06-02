@@ -18,9 +18,9 @@ resource "aws_s3_bucket" "log_storage" {
   tags = {
     app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "S3"
-    tech    = "Storage"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "s3"
+    tech    = "storage"
   }
 }
 

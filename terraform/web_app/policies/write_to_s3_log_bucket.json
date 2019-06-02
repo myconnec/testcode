@@ -7,8 +7,8 @@
       ],
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::connechub-access-log-dev",
-        "arn:aws:s3:::connechub-access-log-dev/*"
+        "arn:aws:s3:::connechub-access-log-${random_uuid.provider.result}-dev",
+        "arn:aws:s3:::connechub-access-log-${random_uuid.provider.result}-dev/*"
       ],
       "Principal": {
         "AWS": [

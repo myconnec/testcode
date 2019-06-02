@@ -15,11 +15,11 @@ resource "aws_db_instance" "rds" {
   skip_final_snapshot   = true
 
   tags = {
-    app     = "ConnecHub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "RDS"
-    tech    = "MariaDB"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "rds"
+    tech    = "mariadb"
   }
 
   vpc_security_group_ids = [
