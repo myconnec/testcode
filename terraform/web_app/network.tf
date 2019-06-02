@@ -1,31 +1,13 @@
-# EIP
-resource "aws_eip" "web_app" {
-  tags = {
-    app     = "ConnecHub"
-    env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EIP"
-    tech    = "Networking"
-  }
-
-  vpc = true
-}
-
-# EIP Association
-
-resource "aws_eip_association" "web_app" {
-  instance_id   = "${aws_instance.web_app.id}"
-  allocation_id = "${aws_eip.web_app.id}"
-}
-
 # Load Balancer
 
-# Create a new load balancer
 resource "aws_lb" "web_app" {
   enable_deletion_protection = false
   internal = false
   load_balancer_type = "application"
   name = "${var.APP_NAME}-app-load-balancer-${var.APP_ENV}"
+  enable_cross_zone_load_balancing   = "${var.APP_ENV != "prd" ? true : false}"
+  enable_http2 = true
+  idle_timeout = 300
 
   access_logs {
     bucket  = "log-${var.APP_ENV}"
@@ -51,6 +33,84 @@ resource "aws_lb" "web_app" {
     tech    = "networking"
   }
 }
+
+resource "aws_lb_target_group" "alb_http_target_group" {
+  name     = "${var.APP_NAME}-aLB-target_group-${var.APP_ENV}"
+  port     = "80"
+  protocol = "HTTP"
+  vpc_id   = "${aws_default_vpc.default.id}"
+
+  health_check {
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+    timeout             = 5
+    interval            = 10
+    path                = "/"
+    port                = 80
+  }
+
+  stickiness {
+    type            = "lb_cookie"
+    cookie_duration = 1800
+    enabled         = true
+  }
+
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "Ruby on Rails"
+  }
+}
+
+resource "aws_launch_configuration" "web_app" {
+  iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.name}"
+  image_id = "${data.aws_ami.ubuntu.id}"
+  instance_type = "${var.COMPUTE_SIZE}"
+  key_name = "${var.AWS_PEM_KEY_PAIR}"
+
+  security_groups = [
+    "${aws_security_group.http.name}",
+    "${aws_security_group.https.name}",
+    "${aws_security_group.mysql.name}",
+    "${aws_security_group.ssh.name}",
+  ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "compute"
+    propagate_at_launch = true
+  }
+}
+
+resource "aws_autoscaling_group" "autoscale_group" {
+  launch_configuration = "${aws_launch_configuration.web_app.id}"
+  max_size = 1
+  min_size = 1
+
+  target_group_arns = [
+    "${aws_lb_target_group.alb_http_target_group.name}"
+  ]
+
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "networking"
+    propagate_at_launch = true
+  }
+}
+
+# Subnets
 
 resource "aws_default_subnet" "default_az1" {
   availability_zone = "us-west-1b"
@@ -198,16 +258,6 @@ resource "aws_security_group" "mysql" {
   }
 
   vpc_id = "${aws_default_vpc.default.id}"
-}
-
-# Route53
-
-resource "aws_route53_record" "subdomain" {
-  zone_id = "Z343LWN1DJ92M1"
-  name    = "${var.APP_ENV != "prd" ? var.APP_ENV : "www"}"
-  type    = "A"
-  ttl     = "15"
-  records = ["${aws_eip.web_app.public_ip}"]
 }
 
 # VPC

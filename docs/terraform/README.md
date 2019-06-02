@@ -46,7 +46,6 @@ Once finished execute the Ansible command to install web app:
 
 ```bash
 ./terraform/web_app/web_app.sh \
-    $(terraform output web_app_public_ip) \
     $(terraform output APP_ENV) \
     $(terraform output APP_NAME) \
     $(terraform output AWS_REGION) \

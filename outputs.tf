@@ -22,10 +22,6 @@ output "AWS_S3_MEDIA_SOURCE_BUCKET" {
   value = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
 }
 
-output "web_app_public_ip" {
-  value = "${module.web_app.web_app_public_ip}"
-}
-
 output "database_address" {
   value = "${module.web_app.database_address}"
 }
