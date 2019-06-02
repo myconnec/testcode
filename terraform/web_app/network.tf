@@ -35,7 +35,7 @@ resource "aws_lb" "web_app" {
 }
 
 resource "aws_lb_target_group" "alb_http_target_group" {
-  name     = "${var.APP_NAME}-aLB-target_group-${var.APP_ENV}"
+  name     = "${var.APP_NAME}-aLB-target-group-${var.APP_ENV}"
   port     = "80"
   protocol = "HTTP"
   vpc_id   = "${aws_default_vpc.default.id}"
@@ -80,15 +80,6 @@ resource "aws_launch_configuration" "web_app" {
 
   lifecycle {
     create_before_destroy = true
-  }
-
-  tags = {
-    app     = "ConnecHub"
-    env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "compute"
-    propagate_at_launch = true
   }
 }
 

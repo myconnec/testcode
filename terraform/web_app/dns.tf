@@ -6,5 +6,5 @@ resource "aws_route53_record" "subdomain" {
   name    = "${var.APP_ENV != "prd" ? var.APP_ENV : "www"}"
   type    = "A"
   ttl     = "15"
-  records = ["${aws_lb.web_app.dns}"]
+  records = ["${aws_lb.web_app.dns_name}"]
 }
