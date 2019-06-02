@@ -19,3 +19,5 @@ data "aws_ami" "ubuntu" {
 
   owners = ["099720109477"] # Canonical
 }
+
+data "aws_elb_service_account" "main" {}

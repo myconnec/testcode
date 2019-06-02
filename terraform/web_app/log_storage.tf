@@ -1,9 +1,9 @@
-
 # Bucket
 resource "aws_s3_bucket" "log_storage" {
   acl           = "private"
-  bucket        = "log-storage-${random_uuid.provider.result}-${var.APP_ENV}"
+  bucket        = "${var.APP_NAME}-access-log-${var.APP_ENV}"
   force_destroy = "${var.APP_ENV != "prd" ? true : false}"
+  policy        = "${file("./terraform/web_app/policies/write_to_s3_log_bucket.json")}"
   provider      = "aws.us_west_1"
   region        = "${var.AWS_REGION}"
 

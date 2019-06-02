@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:PutObject"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::connechub-access-log-dev",
+        "arn:aws:s3:::connechub-access-log-dev/*"
+      ],
+      "Principal": {
+        "AWS": [
+          "027434742980"
+        ]
+      }
+    }
+  ]
+}

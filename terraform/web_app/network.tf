@@ -1,18 +1,27 @@
 # Load Balancer
 
 resource "aws_lb" "web_app" {
-  enable_deletion_protection = false
-  internal = false
-  load_balancer_type = "application"
-  name = "${var.APP_NAME}-app-load-balancer-${var.APP_ENV}"
-  enable_cross_zone_load_balancing   = "${var.APP_ENV != "prd" ? true : false}"
-  enable_http2 = true
-  idle_timeout = 300
+  depends_on                       = ["aws_s3_bucket.log_storage"]
+  enable_deletion_protection       = false
+  enable_cross_zone_load_balancing = "${var.APP_ENV != "prd" ? true : false}"
+  enable_http2                     = true
+  idle_timeout                     = 300
+  internal                         = false
+  load_balancer_type               = "application"
+  name                             = "${var.APP_NAME}-app-load-balancer-${var.APP_ENV}"
 
   access_logs {
-    bucket  = "log-${var.APP_ENV}"
-    prefix  = "log"
+    bucket  = "${var.APP_NAME}-access-log-${var.APP_ENV}"
     enabled = true
+    prefix  = "log"
+  }
+
+  tags = {
+    app     = "ConnecHub"
+    env     = "${var.APP_ENV}"
+    owner   = "admin@connechub.com"
+    service = "EC2"
+    tech    = "networking"
   }
 
   security_groups = [
@@ -24,14 +33,6 @@ resource "aws_lb" "web_app" {
     "${aws_default_subnet.default_az1.id}",
     "${aws_default_subnet.default_az2.id}",
   ]
-
-  tags = {
-    app     = "ConnecHub"
-    env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "networking"
-  }
 }
 
 resource "aws_lb_target_group" "alb_http_target_group" {
@@ -40,20 +41,22 @@ resource "aws_lb_target_group" "alb_http_target_group" {
   protocol = "HTTP"
   vpc_id   = "${aws_default_vpc.default.id}"
 
-  health_check {
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    timeout             = 5
-    interval            = 10
-    path                = "/"
-    port                = 80
-  }
+  # Enable this once we create a base EC2 instance
+  # health_check {
+  #   healthy_threshold   = 3
+  #   unhealthy_threshold = 3
+  #   timeout             = 5
+  #   interval            = 10
+  #   path                = "/"
+  #   port                = 80
+  # }
 
-  stickiness {
-    type            = "lb_cookie"
-    cookie_duration = 1800
-    enabled         = true
-  }
+  # is this a thing w/ ELB
+  # stickiness {
+  #   type            = "lb_cookie"
+  #   cookie_duration = 1800
+  #   enabled         = true
+  # }
 
   tags = {
     app     = "ConnecHub"
@@ -66,10 +69,10 @@ resource "aws_lb_target_group" "alb_http_target_group" {
 
 resource "aws_launch_configuration" "web_app" {
   associate_public_ip_address = "${var.APP_ENV != "prd" ? true : false}"
-  iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.name}"
-  image_id = "${data.aws_ami.ubuntu.id}"
-  instance_type = "${var.COMPUTE_SIZE}"
-  key_name = "${var.AWS_PEM_KEY_PAIR}"
+  iam_instance_profile        = "${aws_iam_instance_profile.ec2_profile.name}"
+  image_id                    = "${data.aws_ami.ubuntu.id}"
+  instance_type               = "${var.COMPUTE_SIZE}"
+  key_name                    = "${var.AWS_PEM_KEY_PAIR}"
 
   security_groups = [
     "${aws_security_group.http.name}",
@@ -85,20 +88,27 @@ resource "aws_launch_configuration" "web_app" {
 
 resource "aws_autoscaling_group" "autoscale_group" {
   launch_configuration = "${aws_launch_configuration.web_app.id}"
-  max_size = 1
-  min_size = 1
+  max_size             = 1
+  min_size             = 1
+
+  vpc_zone_identifier = [
+    "${aws_default_subnet.default_az1.id}",
+    "${aws_default_subnet.default_az2.id}",
+  ]
 
   target_group_arns = [
-    "${aws_lb_target_group.alb_http_target_group.name}"
+    "${aws_lb_target_group.alb_http_target_group.arn}",
   ]
 
   tags = {
-    app     = "ConnecHub"
-    env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EC2"
-    tech    = "networking"
+    app                 = "ConnecHub"
+    env                 = "${var.APP_ENV}"
+    owner               = "admin@connechub.com"
+    service             = "EC2"
+    tech                = "networking"
     propagate_at_launch = true
+    key                 = "Name"
+    value               = "${var.APP_NAME}-${var.APP_ENV}"
   }
 }
 
