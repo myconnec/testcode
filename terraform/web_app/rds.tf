@@ -14,10 +14,6 @@ resource "aws_db_instance" "rds" {
   parameter_group_name  = "default.mariadb10.3"
   skip_final_snapshot   = true
 
-  # TODO:
-  # deletion_protection   = "${subnet = var.APP_ENV == 'prd' ? true : false}"
-  # skip_final_snapshot   = "${subnet = var.APP_ENV == 'prd' ? false : true}"
-
   tags = {
     app     = "ConnecHub"
     env     = "${var.APP_ENV}"
