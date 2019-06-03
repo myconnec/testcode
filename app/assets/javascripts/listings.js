@@ -25,7 +25,6 @@ $('#listing_category_id').on('change', function(){
 
 // remove element on any change of the category DDL
 $('#listing_category_id, #listing_subcategory_id').on('change', function(){
-  console.log('changed0');
   $('#listing_price').val('').attr('disabled', false);
   $('#payment_form').addClass('hidden');
 
@@ -42,12 +41,10 @@ $('#listing_subcategory_id').on('change', function(){
   }
 
   if ($('#listing_subcategory_id').val() > 10) {
-    console.log('toggle1');
     $('#payment_form').removeClass('hidden');
   }
 
   if ($('#listing_subcategory_id').val() > 10) {
-    console.log('toggle1');
     $('#payment_form').removeClass('hidden');
   }
 });
