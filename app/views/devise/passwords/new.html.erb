@@ -24,8 +24,8 @@ color:#317EAC;
 #sign-icon{
 margin-right:5px;
 color:#317EAC;
-} 
-    
+}
+
 </style>
 
 
@@ -48,18 +48,18 @@ color:#317EAC;
 											<div class="input-group">
 												<span class="input-group-addon">
 													<i class="glyphicon glyphicon-envelope"></i>
-												</span> 
+												</span>
 												<%= f.email_field :email, placeholder:"Email", autofocus: true, class: "form-control" %>
 											</div>
 										</div>
 										<div class="form-group">
-										    <%= f.submit "Reset My Password", class: "btn btn-lg btn-success btn-block" %>
+										    <%= f.submit "Reset Your Password", class: "btn btn-lg btn-success btn-block" %>
 										</div>
 									</div>
 								</div>
 							</fieldset>
 					    <% end %>
-                        
+
 					</div>
 					<div class="panel-footer ">
 						Don't have an account! <%= render "devise/shared/links" %>
