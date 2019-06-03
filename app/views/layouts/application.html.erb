@@ -1,116 +1,124 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-  <script src="https://unpkg.com/masonry-layout@4.1.1/dist/masonry.pkgd.min.js"></script>
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= render "partials/google_analytics" %>
-</head>
-<body>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <% if request.fullpath != '/' %>
-          <%= link_to image_tag("connechub.svg", :alt => "ConnecHub", height: 'auto', width: '200%'), root_path %>
-        <% end %>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <% if user_signed_in? %>
-          <li><%= link_to 'POST A VIDEO AD', new_listing_path, class: "post" %></li>
-          <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
-             <ul class="dropdown-menu">
-             <li><%= link_to 'My Profile', user_path(current_user.username) %> </li>
-             <li><%= link_to 'Edit My Account', edit_user_registration_path %></li>
-             </ul>
-          </li>
-          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to 'Login', new_user_session_path %></li>
-          <li><%= link_to 'Sign Up', new_user_registration_path %></li>
-        <% end %>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div>
-</nav>
-
-<br>
-<br>
-<br>
-<div class = "container">
-<%= slide_down_alerts %>
-    <%= yield %>
-</div>
-<br>
-<br>
-<br>
-<br>
-<nav class="navbar navbar-default navbar-fixed-bottom">
-		<div class="container">
-		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-		  <div class="collapse navbar-collapse" id="myNavbar">
-            <div class="row1">
-                <ul class="nav navbar-nav">
-				<li class="dropup">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">About Us <i class="fa fa-sort"></i></span></a>
-					<ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-						<li><%= link_to 'Connechub', about_path %></li>
-						<li><%= link_to 'Contact Us', contact_path %></li>
-					</ul>
-				</li>
-				<li class="dropup">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Legal <i class="fa fa-sort"></i></span></a>
-					<ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-						<li><%= link_to 'Terms of Conditions', terms_path %></li>
-						<li><%= link_to 'Privacy Policy', privacy_path %></li>
-						<li><%= link_to 'Posting Terms of Use', postterm_path %></li>
-					</ul>
-				</li>
-				<li class="dropup">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Careers <i class="fa fa-sort"></i></span></a>
-					<ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-						<li><%= link_to 'Corporate', corporate_path %></a></li>
-						<li><%= link_to 'Cutomer Service', customersupport_path %></li>
-						<li><%= link_to 'Design', design_path %></li>
-						<li><%= link_to 'Marketing', marketing_path %></li>
-						<li><%= link_to 'Mobile', mobile_path %></li>
-						<li><%= link_to 'Sales', sales_path %></li>
-						<li><%= link_to 'Technology', technology_path %></li>
-
-					</ul>
-				</li>
-			   <li class="dropup">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Help <i class="fa fa-sort"></i></span></a>
-					<ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-						<li><%= link_to 'FAQs', faq_path %></li>
-						<li><%= link_to 'Safety Tips', safetytips_path %></li>
-					</ul>
-				</li>
-          <li class="li_no_bg"><span class="ts-copy">© Connechub 2018</span></li>
+  <head>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <script src="https://unpkg.com/masonry-layout@4.1.1/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <%= render "partials/google_analytics" %>
+  </head>
+  <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <% if request.fullpath != '/' %>
+              <%= link_to image_tag("connechub.svg", :alt => "ConnecHub", height: 'auto', width: '200%'), root_path %>
+            <% end %>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+              <li><%= link_to 'POST A VIDEO AD', new_listing_path, class: "post" %></li>
+              <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                <li><%= link_to 'My Profile', user_path(current_user.username) %> </li>
+                <li><%= link_to 'Edit My Account', edit_user_registration_path %></li>
                 </ul>
-            </div>
+              </li>
+              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to 'Login', new_user_session_path %></li>
+              <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+            <% end %>
+          </ul>
         </div>
       </div>
-	</nav>
-	<script>
-   $('.dropdown-toggle').dropdown()
-  </script>
-  <% console %>
-</body>
+    </nav>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <%= slide_down_alerts %>
+
+    <div class = "container">
+      <%= yield %>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="myNavbar">
+                <div class="row1">
+                    <ul class="nav navbar-nav">
+                      <li class="dropup">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">About Us <i class="fa fa-sort"></i></span></a>
+                        <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                          <li><%= link_to 'Connechub', about_path %></li>
+                          <li><%= link_to 'Contact Us', contact_path %></li>
+                        </ul>
+                      </li>
+                      <li class="dropup">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Legal <i class="fa fa-sort"></i></span></a>
+                        <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                          <li><%= link_to 'Terms of Conditions', terms_path %></li>
+                          <li><%= link_to 'Privacy Policy', privacy_path %></li>
+                          <li><%= link_to 'Posting Terms of Use', postterm_path %></li>
+                        </ul>
+                      </li>
+                      <li class="dropup">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Careers <i class="fa fa-sort"></i></span></a>
+                        <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                          <li><%= link_to 'Corporate', corporate_path %></a></li>
+                          <li><%= link_to 'Cutomer Service', customersupport_path %></li>
+                          <li><%= link_to 'Design', design_path %></li>
+                          <li><%= link_to 'Marketing', marketing_path %></li>
+                          <li><%= link_to 'Mobile', mobile_path %></li>
+                          <li><%= link_to 'Sales', sales_path %></li>
+                          <li><%= link_to 'Technology', technology_path %></li>
+
+                        </ul>
+                      </li>
+                      <li class="dropup">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Help <i class="fa fa-sort"></i></span></a>
+                        <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                          <li><%= link_to 'FAQs', faq_path %></li>
+                          <li><%= link_to 'Safety Tips', safetytips_path %></li>
+                        </ul>
+                      </li>
+                      <li class="li_no_bg">
+                        <span class="ts-copy">© Connechub 2019</span>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+      </nav>
+      <script>
+        $('.dropdown-toggle').dropdown();
+      </script>
+      <% console %>
+    </body>
 </html>

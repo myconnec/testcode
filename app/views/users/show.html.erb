@@ -13,15 +13,15 @@
 </div>
 </center>
 </div>
- 
+
   <div class="col-xs-6 col-md-10">
 
-    <div class="hero-wrapper"> 
-      <div align="left"> 
-  
+    <div class="hero-wrapper">
+      <div align="left">
+
             <div class="container_12">
             <div class = "small-heading"><b>Active Posts: <%= @user.listings.count %></b></div>
-              
+
             <hr>
             <div class = "grid transitions-enabled">
               <% if @user.listings.present? %>
@@ -30,13 +30,13 @@
                       <div class="panel-body">
                         <%= link_to (videojs_rails sources: {mov: listing.media.url, mp4: listing.media.url, webm: listing.media.url, ogg: listing.media.url},  controls: false, setup: "{}", class: 'img-responsive'), listing %>
                       </div>
-                        <div class="panel-footer pin-content"> 
+                        <div class="panel-footer pin-content">
                         <div class="price"><b>$<%= listing.price %></b></div>
                         <div class="name"><b><%= link_to listing.title, listing %></b></div>
                         <small class = "board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
                       <hr>
                         <% if listing.user == current_user %>
-                        <span class="description"><%= link_to 'Edit', edit_listing_path(listing) %></span> | 
+                        <span class="description"><%= link_to 'Edit', edit_listing_path(listing) %></span> |
                         <span class="description"><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></span>
                         <% end %>
                       </div>
@@ -51,5 +51,5 @@
           </div>
       </div>
   </div></div>
-  
+
 </div>

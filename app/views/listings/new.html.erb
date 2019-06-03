@@ -12,12 +12,6 @@
                 <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %>
 
                 <div class="input-group">
-                    <div class="input-group-addon">$</div>
-                    <%= f.text_field :price, autofocus: true, class:"form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
                     <div class="input-group-addon">Main Category</div>
                     <div class="form-control">
                         <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}, include_blank: true %>
@@ -32,6 +26,12 @@
                             <option value=""></option>
                         </select>
                     </div>
+                </div>
+                <br>
+
+                <div class="input-group">
+                    <div class="input-group-addon">$</div>
+                    <%= f.text_field :price, autofocus: true, class:"form-control" %>
                 </div>
                 <br>
 
@@ -102,6 +102,7 @@
         $('#listing_description').val('Test Description');
 
         //$('select#listing_category_id>option:eq(1)').attr('selected', true);
+
     });
     </script>
 <% end %>
