@@ -6,11 +6,11 @@ provider "aws" {
 
 terraform {
   backend "remote" {
+    hostname     = "app.terraform.io"
     organization = "ConnecHub"
 
     workspaces {
-      name = "dev",
-      name = "prd"
+      prefix = "connechub-"
     }
   }
 }
