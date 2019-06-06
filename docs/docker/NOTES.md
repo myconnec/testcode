@@ -4,7 +4,6 @@
 
 ```bash
 # export current APP_ENV, should be the same from .env file
-export APP_ENV=dev
 docker network create connechub
 ```
 
@@ -24,16 +23,19 @@ docker build -t  connechub_webapp --file ./docker/rubyonrails/Dockerfile .
 ### dev
 
 ```bash
-# MariaDB, limit hardwar to simulate a small cloud instance
+# MariaDB, limit hardware to simulate a small cloud instance
 docker run -d -p 3306:3306 \
 --cpus=1 \
+-e MYSQL_ROOT_PASSWORD=password \
 --memory=512M \
---mount type=bind,source="$(pwd)"/docker/mariadb/data_dir,target=/var/lib/mysql \
 --name mariadb \
 --net connechub \
--e MYSQL_ROOT_PASSWORD=password \
--e MYSQL_DATABASE=connechub_dev \
 connechub_mariadb:latest
+
+--mount type=bind,source="$(pwd)"/docker/mariadb/data_dir,target=/var/lib/mysql \
+--mount type=bind,source="$(pwd)"/docker/mariadb/my.cnf,target=/etc/mysql/my.cnf \
+
+-e MYSQL_DATABASE=connechub_dev \
 
 # RoR, limit hardwar to simulate a small cloud instance
 docker run -d -it -p 3000:3000 \
@@ -99,8 +101,14 @@ docker run -it -p 3000:3000  connechub
 
 ### Run Rake commands on RoR
 
+Load from blank:
+
 ```bash
 docker exec -it web_app rake db:setup
+```
+
+```bash
+docker exec -it web_app rake db:schema:load
 ```
 
 ```bash
