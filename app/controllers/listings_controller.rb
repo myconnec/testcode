@@ -10,8 +10,11 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listing_params)
-    @listing.user = current_user
+
     @listing.ademail = current_user.email
+    # TODO: phase 1: limit to 30 days. Phase 2: based on selected upgrades
+    @listing.ending_at = Time.now.to_i + 2592000
+    @listing.user = current_user
 
     if @listing.save
       redirect_to @listing
@@ -22,7 +25,7 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing = Listing.find(params[:id])
+    @listing = Listing.find(params[:id]).where(:ending_at < Time.now.to_i)
     @comments = Comment.where(listing_id: @listing).order("created_at DESC")
   end
 
@@ -40,7 +43,7 @@ class ListingsController < ApplicationController
   def destroy
     @listing = Listing.find(params[:id])
     @listing.destroy
-    redirect_to root_path
+    redirect_to @listing
   end
 
   def upvote
@@ -49,7 +52,9 @@ class ListingsController < ApplicationController
   end
 
   def search
-    @listings = Listing.search(params)
+    @listings = Listing.search(params).where(:ending_at > Time.now.to_i)
+    @listings = Listing
+
   end
 
   private
