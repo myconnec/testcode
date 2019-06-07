@@ -21,5 +21,8 @@ RUN chmod 0600 /app/.passwd-s3fs
 # DB install and migrations
 RUN bundle config --delete bin && rake rails:update:bin
 
+# LCL symlink 'cause videos are not processed locall'
+RUN ln -sfn /media-source-lcl ./system
+
 # EXPOSE 3000
 ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
