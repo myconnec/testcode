@@ -25,7 +25,10 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing = Listing.find(params[:id]).where(:ending_at < Time.now.to_i)
+    @listing = Listing
+      .where("id = '#{params[:id]}'")
+      .where("ending_at > '#{Time.now.to_i}'")
+      .first
     @comments = Comment.where(listing_id: @listing).order("created_at DESC")
   end
 
@@ -72,7 +75,8 @@ class ListingsController < ApplicationController
 
   def catch_not_found
     yield
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
+    # TODO maybe more specific errors here?
+    rescue
+      redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
   end
 end

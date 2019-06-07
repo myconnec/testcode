@@ -23,6 +23,7 @@ class Listing < ActiveRecord::Base
 
   has_many :comments, dependent: :destroy
   # place the source media at this location
+  # TODO: change based on ENV of lcl or other
   has_attached_file :media, :path => ":rails_root/../"+ENV["AWS_S3_MEDIA_SOURCE_BUCKET"]+"-"+ENV["APP_ENV"]+"/:class/:attachment/:id_partition/:style/:filename"
 
   # validates_attachment_size :media, :less_than => 800.megabytes
@@ -43,7 +44,7 @@ class Listing < ActiveRecord::Base
   end
 
   def self.search(params)
-    listings = Listing.where(category_id: params[:category].to_i)
+    listings = Listing.where(category_id: params[:category].to_i).where("ending_at < '#{Time.now.to_i}'")
     listings = listings.where("title LIKE ? or description LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     listings = listings.near(params[:location], 100) if params[:location].present?
     listings
