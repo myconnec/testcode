@@ -36,6 +36,17 @@ module "lambda_s3_to_transcoder" {
   video_process_media_source_bucket_arn = "${module.media_storage.media_source_bucket_arn}"
 }
 
+# module "security" {
+#   source  = "./terraform/security"
+#   version = "0.0.1"
+
+#   APP_ENV          = "${var.APP_ENV}"
+#   APP_NAME         = "${var.APP_NAME}"
+
+#   // this var doesn't do anything inside the module, but it does make this module wait for the DNS record is created BEFORE the TLS cert is created
+#   web_app_route_53_record = "${module.web_app.route53_record_subdomain_name}"
+# }
+
 module "web_app" {
   source  = "./terraform/web_app"
   version = "0.0.1"
@@ -49,15 +60,5 @@ module "web_app" {
 
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
   media_source_bucket_id  = "${module.media_storage.media_source_bucket_id}"
+  # domain_tls_arn= "${module.security.domain_tls_arn}"
 }
-
-# module "security" {
-#   source  = "./terraform/security"
-#   version = "0.0.1"
-
-#   APP_ENV          = "${var.APP_ENV}"
-#   APP_NAME         = "${var.APP_NAME}"
-
-#   // this var doesn't do anything inside the module, but it does make this module wait for the DNS record is created BEFORE the TLS cert is created
-#   web_app_route_53_record = "${module.web_app.route53_record_subdomain_name}"
-# }

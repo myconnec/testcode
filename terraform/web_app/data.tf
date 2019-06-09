@@ -23,3 +23,12 @@ data "aws_ami" "ubuntu" {
 data "http" "local_ip" {
   url = "http://ipv4.icanhazip.com"
 }
+
+data "aws_subnet_ids" "web_app" {
+  vpc_id = "${aws_default_vpc.default.id}"
+}
+
+data "aws_subnet" "web_app" {
+  count = "${length(data.aws_subnet_ids.web_app.ids)}"
+  id    = "${data.aws_subnet_ids.web_app.ids[count.index]}"
+}

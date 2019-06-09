@@ -34,8 +34,9 @@
     - name: Install system dependencies
       apt:
         pkg:
-          - git
           - curl
+          - git
+          - htop
           - imagemagick
           - libcurl4-openssl-dev
           - libffi-dev
