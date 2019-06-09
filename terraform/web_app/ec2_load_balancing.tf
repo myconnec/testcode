@@ -33,3 +33,33 @@ resource "aws_lb" "web_app" {
     "${data.aws_subnet.web_app.*.id}"
   ]
 }
+
+resource "aws_lb_listener" "web_app" {
+  load_balancer_arn = "${aws_lb.web_app.arn}"
+  # port              = "443"
+  # protocol          = "HTTPS"
+  # ssl_policy        = "ELBSecurityPolicy-2016-08"
+  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = "${aws_lb_target_group.web_app.arn}"
+  }
+}
+
+resource "aws_lb_target_group" "web_app" {
+  name     = "web-app-target-group"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = "${aws_default_vpc.default.id}"
+}
+
+resource "aws_lb_target_group_attachment" "web_app" {
+  target_group_arn = "${aws_lb_target_group.web_app.arn}"
+  target_id        = "${aws_instance.web_app.id}"
+  port             = 80
+}
+
