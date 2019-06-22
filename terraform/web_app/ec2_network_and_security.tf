@@ -60,7 +60,6 @@ resource "aws_security_group" "http" {
 resource "aws_security_group" "https" {
   description = "Allow https inbound traffic on port 442."
   name        = "https"
-  description = "Allow https inbound traffic"
 
   ingress {
     from_port   = 443
