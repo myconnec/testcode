@@ -25,7 +25,6 @@ resource "aws_db_instance" "rds" {
     service = "RDS"
     tech    = "MariaDB"
   }
-
   vpc_security_group_ids = [
     "${aws_security_group.mysql.id}",
   ]
