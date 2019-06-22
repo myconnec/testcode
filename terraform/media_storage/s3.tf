@@ -1,4 +1,3 @@
-
 # Bucket
 resource "aws_s3_bucket" "media_display" {
   acl           = "private"
@@ -74,5 +73,4 @@ resource "aws_s3_bucket_public_access_block" "media_source_settings" {
   restrict_public_buckets = true
 }
 
-
-resource "random_uuid" "provider" { }
+resource "random_uuid" "provider" {}

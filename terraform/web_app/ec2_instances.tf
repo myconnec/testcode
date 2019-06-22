@@ -3,9 +3,8 @@
 ## Instances
 
 resource "aws_instance" "web_app" {
-  ami                         = "${data.aws_ami.ubuntu.id}"
-  associate_public_ip_address = true
-  instance_type               = "${var.COMPUTE_SIZE}"
+  ami           = "${data.aws_ami.ubuntu.id}"
+  instance_type = "${var.COMPUTE_SIZE}"
 
   iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.name}"
 
@@ -13,7 +12,7 @@ resource "aws_instance" "web_app" {
 
   # TODO: can not seem to get this to work correctly :S
   # provisioner "local-exec" {
-  #   command = "./terraform/web_app/web_app.sh $(terraform output web_app_public_ip) ${var.APP_ENV} ${var.APP_NAME} ${var.AWS_REGION} ${var.media_display_bucket_id} ${var.media_source_bucket_id} $(terraform output database_address) ${var.AWS_PEM_KEY_PAIR}"
+  #   command = "./terraform/web_app/web_app.sh ${var.APP_ENV} ${var.APP_NAME} ${var.AWS_REGION} ${var.media_display_bucket_id} ${var.media_source_bucket_id} $(terraform output database_address) ${var.AWS_PEM_KEY_PAIR}"
   # }
 
   tags = {
@@ -23,7 +22,6 @@ resource "aws_instance" "web_app" {
     service = "EC2"
     tech    = "Ruby on Rails"
   }
-
   security_groups = [
     "${aws_default_security_group.default.name}",
     "${aws_security_group.http.name}",

@@ -212,6 +212,12 @@
         group: "{{ local_user }}"
         mode: 0600
 
+    # Configure fusermount to enable 'allow_other' s3fs mounting
+    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+    - name: Configure fusermount
+      command: >
+        sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf
+  
     # Media Source bucket
 
     - name: Check if media_source_bucket path exists
@@ -263,13 +269,13 @@
       shell: |
         s3fs \
           -d \
-          {{ media_display_bucket_id }} \
-          /home/{{ local_user }}/{{ APP_NAME}}/public/system \
+          media-display-84353407-c9be-f0a5-44c8-651f7942c60f-dev \
+          /home/{{ local_user }}/{{ APP_NAME }}/public/system \
           -o endpoint={{ AWS_REGION }} \
           -o use_cache=/tmp \
           -o multireq_max=5 \
           -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
           -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
           -o nonempty \
-          -o allow_other \
-          -o umask=0022,uid=$(id -u $(whoami))
+          -o allow_other
+      when: media_display_bucket_stats.stat.exists == false

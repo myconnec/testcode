@@ -1,25 +1,5 @@
 # EC2
 
-## EIP
-resource "aws_eip" "web_app" {
-  tags = {
-    app     = "connechub"
-    env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "EIP"
-    tech    = "Networking"
-  }
-
-  vpc = true
-}
-
-## EIP Association
-
-resource "aws_eip_association" "web_app" {
-  instance_id   = "${aws_instance.web_app.id}"
-  allocation_id = "${aws_eip.web_app.id}"
-}
-
 ## Security Group
 
 resource "aws_default_security_group" "default" {
@@ -28,7 +8,7 @@ resource "aws_default_security_group" "default" {
 
 resource "aws_security_group" "http" {
   description = "Allow http inbound traffic on port 80."
-  name        = "http"
+  name        = "http-${random_uuid.provider.result}"
 
   egress {
     from_port   = 0
@@ -45,6 +25,10 @@ resource "aws_security_group" "http" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
@@ -59,7 +43,15 @@ resource "aws_security_group" "http" {
 
 resource "aws_security_group" "https" {
   description = "Allow https inbound traffic on port 442."
-  name        = "https"
+  name        = "https-${random_uuid.provider.result}"
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    self        = true
+  }
 
   ingress {
     from_port   = 443
@@ -68,12 +60,8 @@ resource "aws_security_group" "https" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-    self        = true
+  lifecycle {
+    create_before_destroy = true
   }
 
   tags = {
@@ -90,17 +78,7 @@ resource "aws_security_group" "https" {
 
 resource "aws_security_group" "ssh" {
   description = "Allow ssh inbound traffic on port 22."
-  name = "ssh"
-  description = "Allow ssh inbound traffic"
-
-   ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [
-      "${chomp(data.http.local_ip.body)}/32",
-    ]
-  }
+  name        = "ssh"
 
   egress {
     from_port   = 0
@@ -108,6 +86,20 @@ resource "aws_security_group" "ssh" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
+  }
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "${chomp(data.http.local_ip.body)}/32",
+    ]
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 
   tags = {
@@ -125,7 +117,13 @@ resource "aws_security_group" "ssh" {
 resource "aws_security_group" "mysql" {
   description = "Allow mysql/mariadb inbound traffic on port 3306."
   name        = "mysql"
-  description = "Allow mysql/mariadb inbound traffic"
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "tcp"
+    self      = true
+  }
 
   ingress {
     from_port = 3306
@@ -134,11 +132,8 @@ resource "aws_security_group" "mysql" {
     self      = true
   }
 
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "tcp"
-    self      = true
+  lifecycle {
+    create_before_destroy = true
   }
 
   tags = {
