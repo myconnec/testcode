@@ -25,8 +25,7 @@ resource "aws_lb" "web_app" {
   }
 
   security_groups = [
-    "${aws_security_group.http.id}",
-    "${aws_security_group.https.id}",
+    "${aws_security_group.https.id}"
   ]
 
   subnets = [
@@ -34,32 +33,47 @@ resource "aws_lb" "web_app" {
   ]
 }
 
-resource "aws_lb_listener" "web_app" {
-  load_balancer_arn = "${aws_lb.web_app.arn}"
-  # port              = "443"
-  # protocol          = "HTTPS"
-  # ssl_policy        = "ELBSecurityPolicy-2016-08"
-  # certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+resource "aws_lb_target_group" "web_app" {
+  port     = 443
+  protocol = "HTTPS"
+  vpc_id   = "${aws_default_vpc.default.id}"
 
-  port              = 80
-  protocol          = "HTTP"
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    "aws_lb.web_app"
+  ]
+}
+
+resource "aws_lb_listener" "web_app" {
+  certificate_arn   = "${var.securit_tls_arn}"
+  load_balancer_arn = "${aws_lb.web_app.arn}"
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
 
   default_action {
     type             = "forward"
     target_group_arn = "${aws_lb_target_group.web_app.arn}"
   }
-}
 
-resource "aws_lb_target_group" "web_app" {
-  name     = "web-app-target-group"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = "${aws_default_vpc.default.id}"
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    "aws_lb_target_group.web_app"
+  ]
 }
 
 resource "aws_lb_target_group_attachment" "web_app" {
   target_group_arn = "${aws_lb_target_group.web_app.arn}"
   target_id        = "${aws_instance.web_app.id}"
   port             = 80
-}
 
+  depends_on = [
+    "aws_lb_listener.web_app"
+  ]
+}
