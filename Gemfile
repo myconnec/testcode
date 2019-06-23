@@ -69,6 +69,9 @@ gem 'video-js-rails', '~> 4.3.0'
 # Stripe payment processor
 gem 'stripe', '~> 4.17.0'
 
+# [PUMA](https://github.com/puma/puma) web server
+gem 'puma', '~>3.12.1'
+
 # For Development Only
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views

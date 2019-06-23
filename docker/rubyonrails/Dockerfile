@@ -22,4 +22,5 @@ RUN chmod 0600 /app/.passwd-s3fs
 RUN bundle config --delete bin && rake rails:update:bin
 
 # EXPOSE 3000
-ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
+# ENTRYPOINT ["rails", "server", "--binding", "0.0.0.0"]
+ENTRYPOINT ["bundle", "exec", "puma", "--bind", "tcp://0.0.0.0:3000"]
