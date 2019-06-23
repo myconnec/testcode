@@ -41,6 +41,7 @@ resource "aws_security_group" "http" {
   vpc_id = "${aws_default_vpc.default.id}"
 }
 
+
 resource "aws_security_group" "https" {
   description = "Allow https inbound traffic on port 443."
   name        = "https-${random_uuid.provider.result}"
@@ -149,8 +150,8 @@ resource "aws_security_group" "mysql" {
 }
 
 resource "aws_security_group" "puma" {
-  description = "Allow mysql/mariadb inbound traffic on port 9293."
-  name        = "mysql-${random_uuid.provider.result}"
+  description = "Allow Ruby Puma  inbound traffic on port 9293."
+  name        = "puma-${random_uuid.provider.result}"
 
   egress {
     from_port = 0
@@ -163,7 +164,27 @@ resource "aws_security_group" "puma" {
     from_port = 9293
     to_port   = 9293
     protocol  = "tcp"
+
+    security_groups = [
+      "${aws_security_group.https.id}"
+    ]
+  }
+
+  ingress {
+    from_port = 9293
+    to_port   = 9293
+    protocol  = "tcp"
     self      = true
+  }
+
+  ingress {
+    from_port = 9293
+    to_port   = 9293
+    protocol  = "tcp"
+
+    cidr_blocks = [
+      "${chomp(data.http.local_ip.body)}/32",
+    ]
   }
 
   lifecycle {

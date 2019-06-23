@@ -192,15 +192,7 @@
       shell: |
         pkill ruby
         cd /home/{{ local_user }}/{{ APP_NAME }}
-        bundle exec puma --bind tcp://0.0.0.0:3000 --control-token "u6MNFGZG2Gr9VyJSu^99yDv@vuFC!CAv" --environment {{ APP_ENV }} --daemon
-
-    # Redirect requests from port 80 (web) to 3000 (Ruby Puma server)
-
-    - name: iptables rules
-      shell: |
-        iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000
-        iptables-save > ~/iptables.conf
-        iptables-restore < ~/iptables.conf
+        bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
 
     - name: Install system dependencies
       apt:
