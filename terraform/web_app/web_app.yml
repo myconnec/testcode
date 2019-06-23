@@ -144,7 +144,7 @@
         accept_hostkey: yes
         remote: origin
         depth: 1
-        dest: /home/ubuntu/connechub
+        dest: /home/{{ local_user }}/{{ APP_NAME }}
         repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/connechub
         version: develop
         force: true
@@ -153,23 +153,23 @@
 
     - name: Install bunbler and gems
       shell: |
-        cd /home/ubuntu/connechub && gem install bundler -v 1.3.5 && ./bin/bundle install
+        cd /home/{{ local_user }}/{{ APP_NAME }} && gem install bundler -v 1.3.5 && ./bin/bundle install
         # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
         # after v 1.4.0: --jobs=5
 
     - name: Simple GET operation
       command: >
-        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.env /home/ubuntu/connechub/.env
+        aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ APP_NAME }}/.env
 
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
     - name: Update RDS DNS address
       command: >
-        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_address }}"/g' /home/ubuntu/connechub/.env
+        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_address }}"/g' /home/{{ local_user }}/{{ APP_NAME }}/.env
 
     - name: Change ownership of web app dir
       file:
-        path: /home/ubuntu/connechub
+        path: /home/{{ local_user }}/{{ APP_NAME }}
         group: ubuntu
         owner: ubuntu
         recurse: true
@@ -177,17 +177,17 @@
     - name: Setup database
       become: ubuntu
       shell: |
-        cd /home/ubuntu/connechub && ./bin/rake db:setup
+        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:setup
 
     - name: Migrate database
       become: ubuntu
       shell: |
-        cd /home/ubuntu/connechub && ./bin/rake db:migrate
+        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:migrate
 
     - name: Start Rails server
       shell: |
         pkill ruby
-        cd /home/ubuntu/connechub
+        cd /home/{{ local_user }}/{{ APP_NAME }}
         rails server -d --binding 0.0.0.0 --port 3000
 
     # Redirect requests from port 80 to 3000 (Ruby on Rails default server port)
@@ -205,12 +205,9 @@
         state: present
 
     - name: Copy API keys for S3 mounting into EC2 instance
-      copy:
-        src: "../../.passwd-s3fs"
-        dest: "/home/{{ local_user }}/.passwd-s3fs"
-        owner: "{{ local_user }}"
-        group: "{{ local_user }}"
-        mode: 0600
+      shell: |
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
+        chmod 0600 /home/{{ local_user }}/.passwd-s3fs     
 
     # Configure fusermount to enable 'allow_other' s3fs mounting
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
@@ -222,13 +219,13 @@
 
     - name: Check if media_source_bucket path exists
       stat:
-        path: /home/{{ local_user }}/{{ media_source_bucket_id }}
+        path: /home/{{ local_user }}/media-source-{{ APP_ENV }}
       register: media_source_bucket_stats
 
     - name: Create media_source_bucket_id directory if it does not exist
       file:
         state: directory
-        path: /home/{{ local_user }}/{{ media_source_bucket_id }}
+        path: /home/{{ local_user }}/media-source-{{ APP_ENV }}
         owner: "{{ local_user }}"
         group: "{{ local_user }}"
         mode: 0755
@@ -239,7 +236,7 @@
         s3fs \
           -d \
           {{ media_source_bucket_id }} \
-          /home/{{ local_user }}/{{ media_source_bucket_id }} \
+          /home/{{ local_user }}/media-source-{{ APP_ENV }} \
           -o endpoint={{ AWS_REGION }} \
           -o use_cache=/tmp \
           -o multireq_max=5 \
@@ -269,7 +266,7 @@
       shell: |
         s3fs \
           -d \
-          media-display-84353407-c9be-f0a5-44c8-651f7942c60f-dev \
+          {{ media_display_bucket_id }} \
           /home/{{ local_user }}/{{ APP_NAME }}/public/system \
           -o endpoint={{ AWS_REGION }} \
           -o use_cache=/tmp \
