@@ -27,6 +27,7 @@ docker build -t  connechub_webapp --file ./docker/rubyonrails/Dockerfile .
 docker run -d -p 3306:3306 \
 --cpus=1 \
 -e MYSQL_ROOT_PASSWORD=password \
+-e MYSQL_DATABASE=connechub_dev \
 --memory=512M \
 --name mariadb \
 --net connechub \
@@ -34,8 +35,6 @@ connechub_mariadb:latest
 
 --mount type=bind,source="$(pwd)"/docker/mariadb/data_dir,target=/var/lib/mysql \
 --mount type=bind,source="$(pwd)"/docker/mariadb/my.cnf,target=/etc/mysql/my.cnf \
-
--e MYSQL_DATABASE=connechub_dev \
 
 # RoR, limit hardwar to simulate a small cloud instance
 docker run -d -it -p 3000:3000 \
@@ -51,16 +50,16 @@ docker run -d -it -p 3000:3000 \
 
 # Create local DIR and mount S3 Buckets in running container
 # source
-docker exec web_app mkdir /media-source-${APP_ENV}
+docker exec web_app mkdir media-source-${APP_ENV}
 docker exec web_app s3fs \
     -d \
+    media-source-84353407-c9be-f0a5-44c8-651f7942c60f-${APP_ENV} \
     media-source-${APP_ENV} \
-    /media-source-${APP_ENV} \
     -o endpoint=us-east-1 \
     -o use_cache=/tmp \
     -o multireq_max=5 \
     -o passwd_file=/app/.passwd-s3fs  \
-    -o url=https://s3.us-east-1.amazonaws.com \
+    -o url=https://s3.${AWS_REGION}.amazonaws.com \
     -o nonempty \
     -o allow_other
 
@@ -74,7 +73,7 @@ docker exec web_app s3fs \
     -o use_cache=/tmp \
     -o multireq_max=5 \
     -o passwd_file=/app/.passwd-s3fs  \
-    -o url=https://s3.us-east-1.amazonaws.com \
+    -o url=https://s3.${AWS_REGION}.amazonaws.com \
     -o nonempty \
     -o allow_other
 ```
@@ -113,6 +112,12 @@ docker exec -it web_app rake db:schema:load
 
 ```bash
 docker exec -it web_app rake db:migrate
+```
+
+Use the database.sql SQL dump to __seed__ the database with data.
+
+```bash
+docker exec -it web_app rake db:seed
 ```
 
 ## Stop
