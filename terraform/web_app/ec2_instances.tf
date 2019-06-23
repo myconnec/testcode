@@ -23,9 +23,8 @@ resource "aws_instance" "web_app" {
     tech    = "Ruby on Rails"
   }
   security_groups = [
-    "${aws_default_security_group.default.name}",
-    "${aws_security_group.https.name}",
     "${aws_security_group.mysql.name}",
+    "${aws_security_group.puma.name}",
     "${aws_security_group.ssh.name}",
   ]
 }

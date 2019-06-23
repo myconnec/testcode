@@ -55,6 +55,7 @@ module "web_app" {
   APP_NAME         = "${var.APP_NAME}"
   AWS_REGION       = "${var.AWS_REGION}"
   AWS_PEM_KEY_PAIR = "${var.AWS_PEM_KEY_PAIR}"
+  CONTACT_EMAIL    = "${var.CONTACT_EMAIL}"
   DB_USER          = "${var.DB_USER}"
   DB_PASS          = "${var.DB_PASS}"
 

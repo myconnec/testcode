@@ -8,6 +8,7 @@ variable "COMPUTE_SIZE" {
   default = "t2.micro"
 }
 
+variable "CONTACT_EMAIL" {}
 variable "DB_USER" {}
 variable "DB_PASS" {}
 variable "media_display_bucket_id" {}

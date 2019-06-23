@@ -4,7 +4,7 @@
 
 resource "aws_lb" "web_app" {
   # 'aws_elb` is the classic load balancer, do not use it.
-  enable_http2       = true 
+  enable_http2       = true
   internal           = false
   load_balancer_type = "application"
   name               = "${var.APP_NAME}-load-balancer-${var.APP_ENV}"
@@ -17,11 +17,11 @@ resource "aws_lb" "web_app" {
   # }
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
-    service = "ec2"
-    tech    = "load balancer"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "load balancer"
+    tech    = "network"
   }
   security_groups = [
     "${aws_security_group.https.id}",
@@ -29,20 +29,30 @@ resource "aws_lb" "web_app" {
   subnets = [
     # "${data.aws_subnet.web_app.*.id}"
     "subnet-065d251a97a108fdf",
-    "subnet-07a42d4736771e4b7"
+
+    "subnet-07a42d4736771e4b7",
+  ]
+
   # "${data.aws_subnet_ids.web_app.ids[0]}",
   # "${data.aws_subnet_ids.web_app.ids[1]}"
-  ]
 }
 
 resource "aws_lb_target_group" "web_app" {
   name     = "webapplbtargetgroup"
-  port     = 80
+  port     = 9293
   protocol = "HTTP"
   vpc_id   = "${aws_default_vpc.default.id}"
 
   lifecycle {
     create_before_destroy = true
+  }
+
+  tags = {
+    app     = "${var.APP_NAME}"
+    env     = "${var.APP_ENV}"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "load balancer - target group"
+    tech    = "network"
   }
 
   depends_on = [
@@ -98,7 +108,7 @@ resource "aws_lb_listener" "web_app_https" {
 resource "aws_lb_target_group_attachment" "web_app" {
   target_group_arn = "${aws_lb_target_group.web_app.arn}"
   target_id        = "${aws_instance.web_app.id}"
-  port             = 80
+  port             = 443
 
   depends_on = [
     "aws_lb_listener.web_app_https",

@@ -174,17 +174,17 @@
     - name: Change ownership of web app dir
       file:
         path: /home/{{ local_user }}/{{ APP_NAME }}
-        group: {{ local_group }}
-        owner: {{ local_user }}
+        group: '{{ local_group }}'
+        owner: '{{ local_user }}'
         recurse: true
 
     - name: Setup database
-      become: {{ local_user }}
+      become: '{{ local_user }}'
       shell: |
         cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:setup
 
     - name: Migrate database
-      become: {{ local_user }}
+      become: '{{ local_user }}'
       shell: |
         cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:migrate
 
@@ -192,7 +192,7 @@
       shell: |
         pkill ruby
         cd /home/{{ local_user }}/{{ APP_NAME }}
-        bundle exec puma --bind tcp://0.0.0.0:3000 --daemon
+        bundle exec puma --bind tcp://0.0.0.0:3000 --control-token "u6MNFGZG2Gr9VyJSu^99yDv@vuFC!CAv" --environment {{ APP_ENV }} --daemon
 
     # Redirect requests from port 80 (web) to 3000 (Ruby Puma server)
 
