@@ -17,19 +17,20 @@ cd ~/
 echo "" >> ~/.passwd-s3fs
 chmod 0600 ~/.passwd-s3fs
 sudo apt-get install -y s3fs
-cd ./ConnecHub
+cd ./connechub
 
 cp -rf ./public ./public_old
 rm -rf ./public
 mkdir ./public
 chmod 0775 ./public
-s3fs -d media-source-prd -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/ubuntu/.passwd-s3fs /home/ubuntu/ConnecHub/public
+s3fs -d media-source-prd -o use_cache=/tmp -o multireq_max=5 -o passwd_file=/home/ubuntu/.passwd-s3fs /home/ubuntu/connechub/public
 cp -rf ./public_old/ ./public
 ```
 
-Start the Rails server
+Start the Rails Puma web server
 
 ```bash
-cd ~/ConnecHub
+cd ~/connechub
 rails server -d --binding 0.0.0.0
+bundle exec puma --bind tcp://0.0.0.0:3000
 ```

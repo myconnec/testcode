@@ -30,6 +30,6 @@ data "aws_subnet_ids" "web_app" {
 }
 
 data "aws_subnet" "web_app" {
-  count = "${length(data.aws_subnet_ids.web_app.ids)}"
+  # count = "${length(data.aws_subnet_ids.web_app.ids)}"
   id    = "${data.aws_subnet_ids.web_app.ids[count.index]}"
 }

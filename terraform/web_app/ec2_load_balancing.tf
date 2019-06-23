@@ -4,7 +4,7 @@
 
 resource "aws_lb" "web_app" {
   # 'aws_elb` is the classic load balancer, do not use it.
-  enable_http2       = true
+  enable_http2       = true 
   internal           = false
   load_balancer_type = "application"
   name               = "${var.APP_NAME}-load-balancer-${var.APP_ENV}"
@@ -24,18 +24,15 @@ resource "aws_lb" "web_app" {
     tech    = "load balancer"
   }
   security_groups = [
-    "${aws_security_group.http.id}",
     "${aws_security_group.https.id}",
   ]
   subnets = [
     # "${data.aws_subnet.web_app.*.id}"
     "subnet-065d251a97a108fdf",
-
-    "subnet-07a42d4736771e4b7",
-  ]
-
+    "subnet-07a42d4736771e4b7"
   # "${data.aws_subnet_ids.web_app.ids[0]}",
   # "${data.aws_subnet_ids.web_app.ids[1]}"
+  ]
 }
 
 resource "aws_lb_target_group" "web_app" {
