@@ -4,8 +4,6 @@ class Listing < ActiveRecord::Base
 
   after_validation :geocode
 
-  before_post_process :transliterate_file_name
-
   belongs_to :category
   belongs_to :subcategory
   belongs_to :user
@@ -41,6 +39,9 @@ class Listing < ActiveRecord::Base
     "video/webm"
   ]
 
+  # this must be AFTER had_attached_file
+  before_post_process :transliterate_file_name
+
   def full_address
     [city, state, zipcode].join(', ')
   end
@@ -53,10 +54,10 @@ class Listing < ActiveRecord::Base
   end
 
   private
-  
+
   def transliterate_file_name
-    extension = File.extname(local_file_name).gsub(/^\.+/, '')
-    filename = local_file_name.gsub(/\.#{extension}$/, '')
-    self.local.instance_write(:file_name, "#{transliterate(filename)}.#{transliterate(extension)}")
+    extension = File.extname(media_file_name).gsub(/^\.+/, '')
+    filename = media_file_name.gsub(/\.#{extension}$/, '')
+    self.media.instance_write(:file_name, "#{transliterate(filename)}.#{transliterate(extension)}")
   end
 end

@@ -13,7 +13,8 @@ def transliterate(str)
   # Source http://arvind-ror.blogspot.com/2013/04/make-url-friendly-filenames-in.html
 
   # Escape str by transliterating to UTF-8 with Iconv
-  s = Iconv.iconv('ascii//ignore//translit', 'utf-8', str).to_s
+  # s = Iconv.iconv('ascii//ignore//translit', 'utf-8', str).to_s
+  s = str
 
   # Downcase string
   s.downcase!
