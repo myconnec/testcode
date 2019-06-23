@@ -25,7 +25,7 @@ resource "aws_lb" "web_app" {
   }
   security_groups = [
     "${aws_security_group.http.id}",
-    "${aws_security_group.https.id}"
+    "${aws_security_group.https.id}",
   ]
   subnets = [
     # "${data.aws_subnet.web_app.*.id}"
