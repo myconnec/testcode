@@ -4,6 +4,8 @@ class Listing < ActiveRecord::Base
 
   after_validation :geocode
 
+  before_post_process :transliterate_file_name
+
   belongs_to :category
   belongs_to :subcategory
   belongs_to :user
@@ -48,5 +50,13 @@ class Listing < ActiveRecord::Base
     listings = listings.where("title LIKE ? or description LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     listings = listings.near(params[:location], 100) if params[:location].present?
     listings
+  end
+
+  private
+  
+  def transliterate_file_name
+    extension = File.extname(local_file_name).gsub(/^\.+/, '')
+    filename = local_file_name.gsub(/\.#{extension}$/, '')
+    self.local.instance_write(:file_name, "#{transliterate(filename)}.#{transliterate(extension)}")
   end
 end
