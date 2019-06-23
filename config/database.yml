@@ -15,6 +15,10 @@ test:
   <<: *default
   database: <%= ENV['DB_TST_SCHE'] %>
 
+development:
+  <<: *default
+  database: <%= ENV['DB_SCHE'] %>
+
 production:
   <<: *default
   database: <%= ENV['DB_SCHE'] %>
