@@ -15,10 +15,10 @@
 
   pre_tasks:
     - name: Update dependencies via apt-get
-      raw: sudo apt-get clean && apt-get autoclean && sudo apt autoremove -y && sudo apt-get update -y
+      raw: apt-get clean && apt-get autoclean && apt autoremove -y && apt-get update -y && apt-get upgrade -y
 
     - name: Installing awscli, https transport, build-essential, Python & PIP
-      raw: sudo apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
+      raw: apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
 
   tasks:
     # source: https://linuxize.com/post/how-to-add-swap-space-on-ubuntu-18-04/
@@ -194,6 +194,8 @@
         cd /home/{{ local_user }}/{{ APP_NAME }}
         bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
 
+    # TODO make this a S3FS role
+
     - name: Install system dependencies
       apt:
         pkg:
@@ -203,15 +205,15 @@
     - name: Copy API keys for S3 mounting into EC2 instance
       shell: |
         aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
-        chmod 0600 /home/{{ local_user }}/.passwd-s3fs     
-        chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs     
+        chmod 0600 /home/{{ local_user }}/.passwd-s3fs
+        chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs
 
     # Configure fusermount to enable 'allow_other' s3fs mounting
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
     - name: Configure fusermount
       command: >
         sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf
-  
+
     # Media Source bucket
 
     - name: Check if media_source_bucket path exists
@@ -229,6 +231,7 @@
       when: media_source_bucket_stats.stat.exists == false
 
     - name: Mount media_source_bucket_id to local file system
+      become: '{{ local_user }}'
       command: >
         s3fs \
           -d \
@@ -260,7 +263,8 @@
       when: media_display_bucket_stats.stat.exists == false
 
     - name: Mount media_display_bucket_id to local file system
-      shell: |
+      become: '{{ local_user }}'
+      command: |
         s3fs \
           -d \
           {{ media_display_bucket_id }} \
