@@ -33,6 +33,7 @@ while [ $secs -gt 0 ]; do
 done
 
 echo '...load SQL schema source with seed data.'
+docker exec -it web_app rake db:schema:load
 docker exec -it web_app rake db:seed
 docker exec -it web_app rake db:migrate
 
