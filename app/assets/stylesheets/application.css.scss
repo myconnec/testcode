@@ -1098,3 +1098,17 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   background-color: #3B7E3A;
   border-color: #3B7E3A
 }
+
+/* ConnecHub flexbox implimentation */
+
+.ch_card_container {
+  list-style: none;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  .ch_card {
+    flex-basis: 25%;
+  }
+}
