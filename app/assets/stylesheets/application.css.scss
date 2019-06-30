@@ -347,39 +347,6 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   margin-top: 20px;
   display: flex; }
 
-
-
-
-/*# sourceMappingURL=connechub.css.map */
-/*
-  960 Grid System ~ Core CSS.
-  Learn more ~ http://960.gs/
-
-  Licensed under GPL and MIT.
-*/
-
-/*
-  Forces backgrounds to span full width,
-  even if there is horizontal scrolling.
-  Increase this if your layout is wider.
-
-  Note: IE6 works fine without this fix.
-*/
-
-body {
-  min-width: 960px;
-}
-
-/* `Container
-----------------------------------------------------------------------------------------------------*/
-
-.container_12,
-.container_16 {
-  margin-left: auto;
-  margin-right: auto;
-  width: 960px;
-}
-
 /* `Grid >> Global
 ----------------------------------------------------------------------------------------------------*/
 

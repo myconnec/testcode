@@ -1,55 +1,42 @@
+<br>
+<br>
 
-<br>
-<br>
-<div class="container">
-  <div class="text-center"> <%= image_tag("connechub.svg", :alt => "ConnecHub", height: 'auto', width: '50%') %></div>
+<div class="container-fluid">
+  <div class="text-center">
+    <%= image_tag("connechub.svg", :alt => ENV['APP_NAME'], height: 'auto', width: '50%') %>
+  </div>
+
   <br>
   <br>
 
-<div class="text-center" style="width: 100%;">
-<%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
-<div class="form-group">
-    <div class="col-xs-20">
-    <div cass="form-inline">
-    <div class="col-xs-2">
-        <%= text_field_tag :search, nil, placeholder: 'keyword/s', class: "form-control", style: 'width: 180px; height: 35px' %>
-    </div>
-    </div>
-    </div>
-</div>
+  <div class="form-group text-center row">
+    <%= form_tag search_listings_path, method: :get do |f| %>
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <%= text_field_tag :search, nil, placeholder: 'keywords', class: "form-control"%>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <%= text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control"%>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+        <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control"%>
+      </div>
+
+      <div class="col-xs-12 col-sm-4 col-sm-offset-4" style="margin-top: 25px">
+        <%= submit_tag 'Search', class: "btn btn-block btn-success" %>
+      </div>
+
+    <% end %>
+  </div>
+
+  <br>
+  <br>
+  <br>
+
+
 <!--
-<div class="form-group">
-    <div class="col-xs-20">
-    <div class="form-inline">
-    <div class="col-xs-2">
-    <%=
-    # text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control" , style: 'width: 180px; height: 35px'
-    %>
-    </div>
-    </div>
-    </div>
-</div>
--->
-<div class="form-group">
-    <div class="col-xs-20">
-    <div class="form-inline">
-    <div class="col-xs-2">
-    <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 180px; height: 35px' %>
-    </div>
-    </div>
-    </div>
-</div>
-<br>
-<br>
-    <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 150px; height: 35px'  %>
- <br>
-<% end %>
-</div>
-
- <br>
-<br>
-<br>
-
 <div align="center" style="width: 100%;"><%= image_tag("directlistsm.jpg", :alt => "directory list") %></div>
 <br>
 
@@ -181,3 +168,4 @@
 
 </div>
 <div style="height: 45px; width: 100%;"></div>
+-->
