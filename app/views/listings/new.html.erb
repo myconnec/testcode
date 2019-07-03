@@ -92,19 +92,9 @@
     <%= image_tag("loading_spinner.gif", :alt => ENV['APP_NAME']) %>
     <p>Please wait while your video uploads.</p>
     <p>The page will refresh once complete.</p>
-    <p> Depending on the video size and connection this can take several minutes.</p>
 </div>
 
 <%= javascript_include_tag "listings.js" %>
-
-<script>
-$(document).ready(function() {
-  $("#listings_submit").on('click', function() {
-        console.log('Show loading spinner...')
-        $("#overlay").toggle();
-  });
-});
-</script>
 
 <% if ENV["APP_ENV"] == 'dev' %>
     <script>

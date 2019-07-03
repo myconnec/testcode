@@ -48,3 +48,10 @@ $('#listing_subcategory_id').on('change', function(){
     $('#payment_form').removeClass('hidden');
   }
 });
+
+$(document).ready(function() {
+  $("#listings_submit").on('click', function() {
+        console.log('Show loading spinner...')
+        $("#overlay").toggle();
+  });
+});
