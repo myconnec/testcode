@@ -46,7 +46,7 @@ Once finished execute the Ansible command to install web app:
 
 ```bash
 ./terraform/web_app/web_app.sh \
-    "ec2-52-53-249-240.us-west-1.compute.amazonaws.com" \
+    "ec2-13-56-247-207.us-west-1.compute.amazonaws.com" \
     $(terraform output APP_ENV) \
     $(terraform output APP_NAME) \
     $(terraform output AWS_REGION) \

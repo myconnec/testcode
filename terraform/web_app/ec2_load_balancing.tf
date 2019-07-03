@@ -67,14 +67,14 @@ resource "aws_lb_target_group" "web_app" {
 
 resource "aws_lb_listener" "web_app_http" {
   load_balancer_arn = "${aws_lb.web_app.arn}"
-  port              = "80"
+  port              = 80
   protocol          = "HTTP"
 
   default_action {
     type = "redirect"
 
     redirect {
-      port        = "443"
+      port        = 443
       protocol    = "HTTPS"
       status_code = "HTTP_301"
     }
@@ -92,7 +92,7 @@ resource "aws_lb_listener" "web_app_http" {
 resource "aws_lb_listener" "web_app_https" {
   certificate_arn   = "${var.securit_tls_arn}"
   load_balancer_arn = "${aws_lb.web_app.arn}"
-  port              = "443"
+  port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
 
@@ -115,7 +115,7 @@ resource "aws_lb_listener" "web_app_https" {
 resource "aws_lb_target_group_attachment" "web_app" {
   target_group_arn = "${aws_lb_target_group.web_app.arn}"
   target_id        = "${aws_instance.web_app.id}"
-  port             = 443
+  port             = 9293
 
   depends_on = [
     "aws_lb_listener.web_app_https",
