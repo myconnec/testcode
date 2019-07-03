@@ -77,7 +77,7 @@
 
                 <div class="input-group">
                     <div class="actions">
-                        <%= f.submit "Submit Your Post", class: "btn btn-success" %>
+                        <%= f.submit "Submit Your Post", class: "btn btn-success", id: "listings_submit" %>
                     </div>
                 </div>
 
@@ -88,21 +88,35 @@
     </div>
 </div>
 
+<div id="overlay">
+    <%= image_tag("loading_spinner.gif", :alt => ENV['APP_NAME']) %>
+    <p>Please wait while your video uploads.</p>
+    <p>The page will refresh once complete.</p>
+    <p> Depending on the video size and connection this can take several minutes.</p>
+</div>
+
 <%= javascript_include_tag "listings.js" %>
 
-<% if ENV["APP_ENV"] == 'lcl' %>
+<script>
+$(document).ready(function() {
+  $("#listings_submit").on('click', function() {
+        console.log('Show loading spinner...')
+        $("#overlay").toggle();
+  });
+});
+</script>
+
+<% if ENV["APP_ENV"] == 'dev' %>
     <script>
     $( document ).ready(function() {
+        // $('select#listing_category_id>option:eq(1)').attr('selected', true);
         $('#listing_price').val('1.23');
         $('#listing_title').val('Test Title');
         $('#listing_ademail').val('test@email.com');
         $('#listing_city').val('Tampa');
         $('#listing_state').val('Florida');
         $('#listing_zipcode').val('33759');
-        $('#listing_description').val('Test Description');
-
-        //$('select#listing_category_id>option:eq(1)').attr('selected', true);
-
+        $('#listing_description').val('Test Description');        
     });
     </script>
 <% end %>

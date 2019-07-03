@@ -19,7 +19,9 @@ COPY ./ /app
 RUN chmod 0600 /app/.passwd-s3fs
 
 # DB install and migrations
-RUN bundle config --delete bin && rake rails:update:bin
+RUN gem install bundler -v 1.3.5
+RUN bundle --binstubs
+RUN bundle install
 
 EXPOSE 9293
 

@@ -1112,3 +1112,19 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
     flex-basis: 25%;
   }
 }
+
+#overlay {
+  background: #ffffff;
+  color: #666666;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  float: left;
+  text-align: center;
+  padding-top: 15%;
+  opacity: 0.90;
+  display: none;
+}
