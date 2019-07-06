@@ -21,4 +21,3 @@
 //= require helpers
 //= require_tree .
 //= require video.js
-
