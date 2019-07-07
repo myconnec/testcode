@@ -1128,3 +1128,35 @@ body > div > div > div > div > ul {
     margin-right: 0;
     padding-left: 40px;
 }
+
+/* User Mgnt View styles */
+#app_view_devise {
+  .panel-heading {
+      padding: 5px 15px;
+  }
+
+  .panel-footer {
+    padding: 1px 15px;
+    color: #A0A0A0;
+  }
+
+  .profile-img {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 10px;
+    display: block;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+
+  .sign-h{
+    text-align:left;
+    color:#317EAC;
+  }
+
+  #sign-icon{
+    margin-right:5px;
+    color:#317EAC;
+  } 
+}
