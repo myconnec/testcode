@@ -26,6 +26,10 @@ output "database_address" {
   value = "${module.web_app.database_address}"
 }
 
+output "aws_instance_web_app_dns" {
+  value = "${module.web_app.aws_instance_web_app_dns}"
+}
+
 output "media_display_bucket_id" {
   value = "${module.media_storage.media_display_bucket_id}"
 }

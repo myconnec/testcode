@@ -5,3 +5,7 @@ output "database_address" {
 output "route53_record_subdomain_name" {
   value = "${aws_route53_record.subdomain.name}"
 }
+
+output "aws_instance_web_app_dns" {
+  value = "${aws_instance.web_app.public_dns}"
+}

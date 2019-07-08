@@ -15,7 +15,7 @@
 
   pre_tasks:
     - name: Update dependencies via apt-get
-      raw: apt-get clean && apt-get autoclean && apt autoremove -y && apt-get update -y && apt-get upgrade -y
+      raw: dpkg --configure -a && apt-get clean && apt-get autoclean && apt autoremove -y && apt-get update -y && apt-get upgrade -y
 
     - name: Installing awscli, https transport, build-essential, Python & PIP
       raw: apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
@@ -164,7 +164,17 @@
         # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
         # after v 1.4.0: --jobs=5
 
-    - name: Simple GET operation
+    - name: Check if app .env file exists
+      stat:
+        path: /home/{{ local_user }}/{{ APP_NAME }}/.env
+      register: env_file
+
+    - name: Remove app .env file
+      command: >
+        rm /home/{{ local_user }}/{{ APP_NAME }}/.env
+      when: env_file.stat.exists == true
+
+    - name: GET app .env from storage
       command: >
         aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ APP_NAME }}/.env
 
