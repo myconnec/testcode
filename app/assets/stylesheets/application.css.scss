@@ -129,17 +129,6 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   }
 }
 
-#masonry-container {
-  background: #FFF;
-  padding: 5px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  clear: both;
-  -webkit-border-radius: 5px;
-     -moz-border-radius: 5px;
-          border-radius: 5px;
-}
-
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
@@ -1111,4 +1100,31 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   .ch_card {
     flex-basis: 25%;
   }
+}
+
+#overlay {
+  background: #ffffff;
+  color: #666666;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  float: left;
+  text-align: center;
+  padding-top: 15%;
+  opacity: 0.90;
+  display: none;
+}
+
+/* right side UL menu on sub/category views */
+body > div > div > div > div > ul {
+    display: block;
+    list-style-type: none;
+    margin-top: 1em;
+    margin-bottom: 1 em;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 40px;
 }

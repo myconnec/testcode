@@ -1,5 +1,6 @@
-# Rubymine project
+# Editor/IDE metadata
 .idea/
+.vscode/
 
 # Test and misc files
 *.rbc

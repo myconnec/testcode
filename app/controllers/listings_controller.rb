@@ -4,6 +4,10 @@ class ListingsController < ApplicationController
   before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
   impressionist actions: [:show], unique: [:session_hash]
 
+  def index
+    redirect_to '/'
+  end
+
   def new
     @listing = Listing.new
   end

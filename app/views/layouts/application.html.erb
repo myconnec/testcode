@@ -2,8 +2,6 @@
 <html>
   <head>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-    <script src="https://unpkg.com/masonry-layout@4.1.1/dist/masonry.pkgd.min.js"></script>
-    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <%= render "partials/google_analytics" %>
@@ -114,9 +112,6 @@
             </div>
           </div>
       </nav>
-      <script>
-        $('.dropdown-toggle').dropdown();
-      </script>
-      <% #console %>
+      <%= console %>
     </body>
 </html>
