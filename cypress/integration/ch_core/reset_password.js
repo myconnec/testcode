@@ -1,0 +1,21 @@
+
+describe('User Management functionality.', function() {
+    it('Send the "I forgot my password" email.', function() {
+        cy.visit()
+        cy.get('.container > #navbar > .nav > li:nth-child(2) > a').click()
+        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_username').type('david eddy')
+        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_email').type('me@davidjeddy.com')
+        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_password').type('asdf1234')
+        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_password_confirmation').type('asdf1234')
+        cy.visit()
+        cy.get('body > .jbar').click()
+        cy.get('.container > #navbar > .nav > li:nth-child(3) > a').click()
+        cy.visit()
+        cy.get('body > .jbar').click()
+        cy.get('.container > #navbar > .nav > li:nth-child(1) > a').click()
+        cy.get('.row > .col-sm-6 > .panel > .panel-footer > a:nth-child(3)').click()
+        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_email').type('me@davidjeddy.com')
+        cy.get('fieldset > .row > .col-sm-12 > .form-group > .btn').click()
+        cy.visit('users/sign_in')
+    })
+})
