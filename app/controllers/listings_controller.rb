@@ -20,6 +20,13 @@ class ListingsController < ApplicationController
     @listing.ending_at = Time.now.to_i + 2592000
     @listing.user = current_user
 
+    # if the cat req. payment
+    if @listing.category =""
+    if !process_payment
+      flash[:alert] = 'And error occurent while process the payment, please double check and try again.'
+      render 'new'
+    end
+
     if @listing.save
       redirect_to @listing
     else
@@ -84,5 +91,51 @@ class ListingsController < ApplicationController
       if ENV['APP_ENV'].downcase != 'lcl' or ENV['APP_ENV'].downcase == 'dev'
         redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
       end
+  end
+
+  def process_payment
+    begin
+      Stripe.api_key = ENV['STRIPE_SK']
+      session = Stripe::Checkout::Session.create(
+        billing_address_collection: 'required',
+        payment_method_types: ['card'],
+        line_items: [{
+          name: 'Standard Posting',
+          description: @listing.description,
+          amount: @listing.amount,
+          currency: 'usd',
+          quantity: 1,
+        }],
+        success_url: ENV['APP_HOST'],
+        cancel_url: ENV['APP_HOST'],
+      )
+    rescue Stripe::CardError => e
+      # Since it's a decline, Stripe::CardError will be caught
+      body = e.json_body
+      err  = body[:error]
+    
+      puts "Status is: #{e.http_status}"
+      puts "Type is: #{err[:type]}"
+      puts "Charge ID is: #{err[:charge]}"
+      # The following fields are optional
+      puts "Code is: #{err[:code]}" if err[:code]
+      puts "Decline code is: #{err[:decline_code]}" if err[:decline_code]
+      puts "Param is: #{err[:param]}" if err[:param]
+      puts "Message is: #{err[:message]}" if err[:message]
+    rescue Stripe::RateLimitError => e
+      # Too many requests made to the API too quickly
+    rescue Stripe::InvalidRequestError => e
+      # Invalid parameters were supplied to Stripe's API
+    rescue Stripe::AuthenticationError => e
+      # Authentication with Stripe's API failed
+      # (maybe you changed API keys recently)
+    rescue Stripe::APIConnectionError => e
+      # Network communication with Stripe failed
+    rescue Stripe::StripeError => e
+      # Display a very generic error to the user, and maybe send
+      # yourself an email
+    rescue => e
+      # Something else happened, completely unrelated to Stripe
+    end
   end
 end
