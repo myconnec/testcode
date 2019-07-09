@@ -46,6 +46,10 @@ output "route53_record_subdomain_name" {
   value = "${module.web_app.route53_record_subdomain_name}"
 }
 
-output "security_tls_domain_name" {
-  value = "${module.security.tls_domain_name}"
+# output "security_tls_domain_name" {
+#   value = "${module.security.tls_domain_name}"
+# }
+
+output "ec2_public_dns" {
+  value = "${module.web_app.ec2_public_dns}"
 }
