@@ -58,6 +58,6 @@ class Listing < ActiveRecord::Base
   def transliterate_file_name
     extension = File.extname(media_file_name).gsub(/^\.+/, '')
     filename = media_file_name.gsub(/\.#{extension}$/, '')
-    self.media.instance_write(:file_name, "#{transliterate(filename)}.#{transliterate(extension)}")
+    self.media.instance_write(:file_name, "#{transliterate(filename)}.mp4")
   end
 end
