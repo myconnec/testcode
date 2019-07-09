@@ -14,10 +14,13 @@
   gather_facts: false
 
   pre_tasks:
-    - name: Update dependencies via apt-get
-      raw: apt-get clean && apt-get autoclean && apt autoremove -y && apt-get update -y && apt-get upgrade -y
+    - name: system prep
+      raw: export DEBIAN_FRONTEND=noninteractive && dpkg --configure -a
 
-    - name: Installing awscli, https transport, build-essential, Python & PIP
+    - name: Update dependencies via apt-get
+      raw: apt-get clean -y && apt-get autoclean -y && apt autoremove -yq && apt-get update -yq && apt-get upgrade -yq
+
+    - name: Install CLI tools
       raw: apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
 
   tasks:
@@ -149,7 +152,7 @@
         depth: 1
         dest: /home/{{ local_user }}/{{ APP_NAME }}
         repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/connechub
-        version: develop
+        version: deployment/0.3.3
         force: true
 
     # TODO would like to use the bundler module
