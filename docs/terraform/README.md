@@ -74,5 +74,9 @@ terraform destroy -var-file=.env ./
 
 'Instance profile already exists': https://github.com/hashicorp/terraform/issues/3749
 
+```sh
+aws iam delete-instance-profile --instance-profile-name profile_name_here
+```
+
 Connection #0 to host media-source-84353407-c9be-f0a5-44c8-651f7942c60f-dev.s3.us-west-1.amazonaws.com left intact
 ... HTTP response code 403 was returned, returning EPERM': Updated theuser access policy to allow access to the new buckets.

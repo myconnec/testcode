@@ -54,4 +54,6 @@ Rails.application.configure do
         authentication:   :login,
         enable_starttls_auto: true 
     }
+
+    config.web_console.whitelisted_ips = ENV['DEV_NETWORK_CIDR']
 end
