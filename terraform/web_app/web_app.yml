@@ -152,7 +152,7 @@
         depth: 1
         dest: /home/{{ local_user }}/{{ APP_NAME }}
         repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/connechub
-        version: deployment/0.3.3
+        version: master
         force: true
 
     # TODO would like to use the bundler module
