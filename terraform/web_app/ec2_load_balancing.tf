@@ -70,31 +70,15 @@ resource "aws_lb_listener" "web_app_http" {
   port              = 80
   protocol          = "HTTP"
 
-  default_action {
-    type = "redirect"
+  # default_action {
+  #   type = "redirect"
 
-    redirect {
-      port        = 443
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
-    }
-  }
-
-  lifecycle {
-    create_before_destroy = true
-  }
-
-  depends_on = [
-    "aws_lb_target_group.web_app",
-  ]
-}
-
-resource "aws_lb_listener" "web_app_https" {
-  certificate_arn   = "${var.securit_tls_arn}"
-  load_balancer_arn = "${aws_lb.web_app.arn}"
-  port              = 443
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  #   redirect {
+  #     port        = 443
+  #     protocol    = "HTTPS"
+  #     status_code = "HTTP_301"
+  #   }
+  # }
 
   default_action {
     type             = "forward"
@@ -110,6 +94,27 @@ resource "aws_lb_listener" "web_app_https" {
   ]
 }
 
+# resource "aws_lb_listener" "web_app_https" {
+#   certificate_arn   = "${var.securit_tls_arn}"
+#   load_balancer_arn = "${aws_lb.web_app.arn}"
+#   port              = 443
+#   protocol          = "HTTPS"
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = "${aws_lb_target_group.web_app.arn}"
+#   }
+
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+
+#   depends_on = [
+#     "aws_lb_target_group.web_app",
+#   ]
+# }
+
 ## Load Balancer - Group Attachment
 
 resource "aws_lb_target_group_attachment" "web_app" {
@@ -118,6 +123,7 @@ resource "aws_lb_target_group_attachment" "web_app" {
   port             = 9293
 
   depends_on = [
-    "aws_lb_listener.web_app_https",
+    "aws_lb_listener.web_app_http",
+    # "aws_lb_listener.web_app_https",
   ]
 }
