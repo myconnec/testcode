@@ -19,7 +19,7 @@ data "aws_ami" "ubuntu" {
   }
 
   # owners = ["345292015349"] # ConnecHub
-  owners = ["099720109477"] # Canonical
+  owners = ["099720109477"] # Canonical us-west-1
 }
 
 data "http" "local_ip" {
