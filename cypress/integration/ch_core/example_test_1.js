@@ -13,7 +13,7 @@
 describe('Test boolean true eval', function () {
     // basic boolean assertion
     it('Eval for true', function () {
-        expect(true).to.equal(false)
+        expect(true).to.equal(true)
     })
 })
 

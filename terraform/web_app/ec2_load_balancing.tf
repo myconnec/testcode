@@ -29,9 +29,10 @@ resource "aws_lb" "web_app" {
   ]
   subnets = [
     # "${data.aws_subnet.web_app.*.id}"
-    "subnet-065d251a97a108fdf",
-
-    "subnet-07a42d4736771e4b7",
+    # "subnet-065d251a97a108fdf", # us-west-1
+    # "subnet-07a42d4736771e4b7", # us-west-1
+    "subnet-a12a05eb", # us-east-1
+    "subnet-96c75fca", # us-east-1
   ]
 
   # "${data.aws_subnet_ids.web_app.ids[0]}",
