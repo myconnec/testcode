@@ -20,6 +20,7 @@ cd ../../../
 export AWS_REGION=YOUR_REGION_HERE
 echo $AWS_REGION
 terraform init
+terraform workspace
 ```
 
 ## Plan

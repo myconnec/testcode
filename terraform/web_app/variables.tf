@@ -13,4 +13,5 @@ variable "DB_USER" {}
 variable "DB_PASS" {}
 variable "media_display_bucket_id" {}
 variable "media_source_bucket_id" {}
-# variable "securit_tls_arn" {}
+
+variable "security_tls_arn" {}
