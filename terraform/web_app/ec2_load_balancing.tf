@@ -3,16 +3,13 @@
 ## Load Balancer
 
 resource "aws_lb" "web_app" {
-  # 'aws_elb` is the classic load balancer, do not use it.
   enable_http2       = true
   internal           = false
   load_balancer_type = "application"
   name               = "${var.APP_NAME}-load-balancer-${var.APP_ENV}"
 
-  # TODO: Create a logging AWs acct to act as a central logging location.
   # access_logs {
-  #   bucket  = "${var.APP_NAME}-log-${var.APP_ENV}"
-  #   prefix  = "log"
+  #   bucket  = "${aws_s3_bucket.web_app_log.bucket}"
   #   enabled = true
   # }
 
@@ -25,18 +22,11 @@ resource "aws_lb" "web_app" {
   }
   security_groups = [
     "${aws_security_group.http.id}",
-    "${aws_security_group.https.id}"
+    "${aws_security_group.https.id}",
   ]
   subnets = [
-    # "${data.aws_subnet.web_app.*.id}"
-    # "subnet-065d251a97a108fdf", # us-west-1
-    # "subnet-07a42d4736771e4b7", # us-west-1
-    "subnet-a12a05eb", # us-east-1
-    "subnet-96c75fca", # us-east-1
+    "${data.aws_subnet_ids.web_app.ids}",
   ]
-
-  # "${data.aws_subnet_ids.web_app.ids[0]}",
-  # "${data.aws_subnet_ids.web_app.ids[1]}"
 }
 
 ## Load Balancer - Target Group
@@ -71,15 +61,30 @@ resource "aws_lb_listener" "web_app_http" {
   port              = 80
   protocol          = "HTTP"
 
-  # default_action {
-  #   type = "redirect"
+  default_action {
+    type = "redirect"
 
-  #   redirect {
-  #     port        = 443
-  #     protocol    = "HTTPS"
-  #     status_code = "HTTP_301"
-  #   }
-  # }
+    redirect {
+      port        = 443
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  depends_on = [
+    "aws_lb_target_group.web_app",
+  ]
+}
+
+resource "aws_lb_listener" "web_app_https" {
+  certificate_arn   = "${var.security_tls_arn}"
+  load_balancer_arn = "${aws_lb.web_app.arn}"
+  port              = 443
+  protocol          = "HTTPS"
 
   default_action {
     type             = "forward"
@@ -95,29 +100,7 @@ resource "aws_lb_listener" "web_app_http" {
   ]
 }
 
-# resource "aws_lb_listener" "web_app_https" {
-#   certificate_arn   = "${var.securit_tls_arn}"
-#   load_balancer_arn = "${aws_lb.web_app.arn}"
-#   port              = 443
-#   protocol          = "HTTPS"
-#   ssl_policy        = "ELBSecurityPolicy-2016-08"
-
-#   default_action {
-#     type             = "forward"
-#     target_group_arn = "${aws_lb_target_group.web_app.arn}"
-#   }
-
-#   lifecycle {
-#     create_before_destroy = true
-#   }
-
-#   depends_on = [
-#     "aws_lb_target_group.web_app",
-#   ]
-# }
-
 ## Load Balancer - Group Attachment
-
 resource "aws_lb_target_group_attachment" "web_app" {
   target_group_arn = "${aws_lb_target_group.web_app.arn}"
   target_id        = "${aws_instance.web_app.id}"
@@ -125,6 +108,6 @@ resource "aws_lb_target_group_attachment" "web_app" {
 
   depends_on = [
     "aws_lb_listener.web_app_http",
-    # "aws_lb_listener.web_app_https",
+    "aws_lb_listener.web_app_https",
   ]
 }

@@ -61,5 +61,6 @@ module "web_app" {
 
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
   media_source_bucket_id  = "${module.media_storage.media_source_bucket_id}"
-  # securit_tls_arn         = "${module.security.tls_arn}"
+
+  security_tls_arn = "${module.security.tls_arn}"
 }

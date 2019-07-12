@@ -41,7 +41,6 @@ resource "aws_security_group" "http" {
   vpc_id = "${aws_default_vpc.default.id}"
 }
 
-
 resource "aws_security_group" "https" {
   description = "Allow https inbound traffic on port 443."
   name        = "https-${random_uuid.provider.result}"
@@ -166,7 +165,7 @@ resource "aws_security_group" "puma" {
     protocol  = "tcp"
 
     security_groups = [
-      "${aws_security_group.https.id}"
+      "${aws_security_group.https.id}",
     ]
   }
 
