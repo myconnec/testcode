@@ -1,0 +1,20 @@
+describe('Posting searching...', function() {
+
+ it('...confirm post shows in search restults.', function() {
+    cy.visit('')
+    cy.get('.container > #navbar > .nav > li > .post').click()
+    cy.get('.panel-body > #new_listing > .input-group > .form-control > #listing_category_id').click()
+    cy.get('.panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select('1')
+    cy.get('.panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id').select('1')
+    cy.get('.panel > .panel-body > #new_listing > .input-group > #listing_price').type('3.45')
+    cy.get('.panel > .panel-body > #new_listing > .input-group > #listing_city').type('Testtown')
+    cy.get('.panel > .panel-body > #new_listing > .input-group > #listing_zipcode').type('33612')
+    cy.get('.panel > .panel-body > #new_listing > .input-group > #listing_media').type('C:\...\24fps.mp4')
+    cy.visit('')
+    cy.get('.navbar > .container > .navbar-header > a > img').click()
+    cy.get('.container-fluid > .form-group > form > .col-xs-12 > #search').click()
+    cy.get('.container-fluid > .form-group > form > .col-xs-12 > #search').type('Test Title')
+    cy.visit('listings/search?utf8=%E2%9C%93&search=Test+Title&location=&category=1&commit=Search')
+    cy.get('body > div.container > div > div.leftbar > div > div:nth-child(2) > div.panel-footer.pin-content > div.price > b').has('text', '3.45')
+ })
+})
