@@ -59,9 +59,7 @@ class ListingsController < ApplicationController
   end
 
   def search
-    @listings = Listing.search(params).where(:ending_at > Time.now.to_i)
-    @listings = Listing
-
+    @listings = Listing.search(params)
   end
 
   private
