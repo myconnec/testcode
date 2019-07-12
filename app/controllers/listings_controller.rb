@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-  around_filter :catch_not_found
+  # around_filter :catch_not_found
   before_filter :authenticate_user!, only: [:new, :create]
   before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
   impressionist actions: [:show], unique: [:session_hash]
@@ -75,12 +75,12 @@ class ListingsController < ApplicationController
     end
   end
 
-  def catch_not_found
-    yield
-    # TODO maybe more specific errors here?
-    rescue
-      if ENV['APP_ENV'].downcase != 'lcl' or ENV['APP_ENV'].downcase == 'dev'
-        redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
-      end
-  end
+  # def catch_not_found
+  #   yield
+  #   # TODO maybe more specific errors here?
+  #   rescue
+  #     if ENV['APP_ENV'].downcase != 'lcl' or ENV['APP_ENV'].downcase == 'dev'
+  #       redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
+  #     end
+  # end
 end
