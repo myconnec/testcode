@@ -1,7 +1,7 @@
 <div class="container_12">
-    <%= link_to 'Connechub', root_path %> 
+    <%= link_to 'Connechub', root_path %>
     <hr>
-    
+
     <div class="leftbar">
 
     <div class = "grid transitions-enabled">
@@ -15,14 +15,14 @@
                             mp4: listing.media.url,
                             webm: listing.media.url,
                             ogg: listing.media.url
-                        }, 
+                        },
                         controls: false,
                         setup: "{}",
                         class: 'img-responsive'
                     ),
                     listing %>
                 </div>
-                    <div class="panel-footer pin-content"> 
+                    <div class="panel-footer pin-content">
                     <div class="price"><b>$<%= listing.price %></b></div>
                     <div class="name"><b><%= link_to listing.title, listing %></b></div>
                     <div class="description"><%= listing.city %>, <%= listing.state %></div>
@@ -47,11 +47,11 @@
             <div align="center" class="rightbar-top">
                 <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
                     <div class="space"><%= text_field_tag :search, nil, placeholder: 'keyword/s', class: "form-control", style: 'width: 150px; height: 30px' %></div>
-                    <div class="space"><%# = text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control" , style: 'width: 150px; height: 30px' %></div>               
+                    <div class="space"><%= text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control" , style: 'width: 150px; height: 30px' %></div>
                     <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
                     <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 80px; height: 30px'  %>
                 </div>
-            <% end %>	
+            <% end %>
         </div>
         <br>
 
