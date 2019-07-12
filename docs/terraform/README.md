@@ -20,6 +20,7 @@ cd ../../../
 export AWS_REGION=YOUR_REGION_HERE
 echo $AWS_REGION
 terraform init
+terraform workspace
 ```
 
 ## Plan
@@ -79,4 +80,4 @@ aws iam delete-instance-profile --instance-profile-name profile_name_here
 ```
 
 Connection #0 to host media-source-84353407-c9be-f0a5-44c8-651f7942c60f-dev.s3.us-west-1.amazonaws.com left intact
-... HTTP response code 403 was returned, returning EPERM': Updated theuser access policy to allow access to the new buckets.
+... HTTP response code 403 was returned, returning EPERM': Updated the user access policy to allow access to the new buckets.

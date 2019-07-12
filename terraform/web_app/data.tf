@@ -7,10 +7,8 @@ data "aws_ami" "ubuntu" {
   filter {
     name = "name"
 
-    # us-east-1 ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20190320 ami-0c8b8e32659017cc5
-    # us-west-1 ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20190320 ami-0f1d0daf2937d0064
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20190320"]
     # values = ["connechub_web_app"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20190320"]
   }
 
   filter {
@@ -19,7 +17,7 @@ data "aws_ami" "ubuntu" {
   }
 
   # owners = ["345292015349"] # ConnecHub
-  owners = ["099720109477"] # Canonical us-west-1
+  owners = ["099720109477"] # Canonical us-east-1
 }
 
 data "http" "local_ip" {
