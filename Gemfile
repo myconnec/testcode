@@ -44,6 +44,7 @@ gem 'dotenv-rails', '~> 2.6.0'
 # A simple, fast Mysql library for Ruby, binding to libmysql
 gem 'mysql2', '~> 0.4.0'
 # Use jquery as the JavaScript library
+# source https://github.com/rails/jquery-rails
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

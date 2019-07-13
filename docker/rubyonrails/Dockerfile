@@ -22,6 +22,8 @@ RUN chmod 0600 /app/.passwd-s3fs
 RUN gem install bundler -v 1.3.5
 RUN bundle --binstubs
 RUN bundle install
+ENV RAILS_ENV=productin
+RUN rake assets:precompile
 
 EXPOSE 9293
 

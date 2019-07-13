@@ -10,14 +10,17 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// These have to load before everything else
 //= require jquery
 //= require jquery_ujs
 //= require jquery.bar.custom
-//= require turbolinks
+//
 //= require bootstrap-sprockets
-//= require masonry/jquery.masonry
-//= require imagesloaded
-//= require video
+//= require bootstrap.min
 //= require helpers
-//= require_tree .
+//= require imagesloaded
+//= require masonry/jquery.masonry
+//= require turbolinks
+//= require video
 //= require video.js
+//= require_tree .
