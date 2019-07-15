@@ -19,9 +19,7 @@ COPY ./ /app
 RUN chmod 0600 /app/.passwd-s3fs
 
 # DB install and migrations
-RUN gem install bundler -v 1.3.5
-RUN bundle --binstubs
-RUN bundle install
+RUN gem install bundler -v 1.3.5 && bundle --binstubs && bundle update && bundle install
 
 EXPOSE 9293
 

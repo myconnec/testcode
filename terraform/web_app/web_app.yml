@@ -159,8 +159,7 @@
         cd /home/{{ local_user }}/{{ APP_NAME }}
         gem install bundler -v 1.3.5
         # source https://bundler.io/man/bundle-binstubs.1.html
-        bundle --binstubs
-        bundle install
+        gem install bundler -v 1.3.5 && bundle --binstubs && bundle update && bundle install
         # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
         # after v 1.4.0: --jobs=5
 

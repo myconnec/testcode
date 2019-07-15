@@ -58,8 +58,9 @@ bower.json
 *.tfstate.*
 *.plan
 
-# ignore archive files
+# ignore archive and generated files
 **/*.zip
 **/*.rar
 **.*gz
 .passwd*
+/bin
