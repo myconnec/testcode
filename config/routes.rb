@@ -14,11 +14,9 @@ Rails.application.routes.draw do
     member do
 		 put "like",    to: "listings#upvote"
 	  end
-
   end
 
   resources :charges, only: [:new, :create]
-
 
   root 'categories#index'
 

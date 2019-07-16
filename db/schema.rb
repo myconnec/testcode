@@ -74,8 +74,9 @@ ActiveRecord::Schema.define(version: 20190716020311) do
     t.string   "media_content_type", limit: 32
     t.integer  "media_file_size",    limit: 4
     t.datetime "media_updated_at"
-    t.integer  "ending_at",          limit: 4,     default: 1563149016, null: false
+    t.integer  "ending_at",          limit: 4,     default: 1563315631, null: false
     t.string   "stripe_token",       limit: 32
+    t.integer  "stipe_amount",       limit: 4
   end
 
   add_index "listings", ["ending_at"], name: "index_listings_on_ending_at", using: :btree

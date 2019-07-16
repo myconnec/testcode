@@ -16,13 +16,12 @@ class ListingsController < ApplicationController
     @listing = Listing.new(listing_params)
 
     @listing.ademail = current_user.email
-    # TODO: phase 1: limit to 30 days. Phase 2: based on selected upgrades
     @listing.ending_at = Time.now.to_i + 2592000
     @listing.user = current_user
 
     if @listing.save
       if @listing.subcategory_id
-        redirect_to :controller => 'charges', :action => 'new'
+        redirect_to :controller => 'charges', :action => 'new', :params => ['order_id' => @listing.id, 'stipe_amount' -> 100]
       else
         redirect_to @listing
       end      
