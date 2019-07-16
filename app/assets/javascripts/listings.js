@@ -11,42 +11,51 @@ var getSubcategories = function(category_id){
     $subcategories.append('<option value=""></option>')
     $.each(data.subcategories, function(index, subcategory){
       var option = $('<option />');
-      option.attr('data-chargable', subcategory.chargable);
       option.attr('value', subcategory.id);
+      option.attr('data-chargable', subcategory.chargable);
       option.text(subcategory.name);
       $subcategories.append(option);
     });
   })
 };
 
-$('#listing_category_id').on('change', function(){
-  // on change of Category DDL, trigger Sub-category population
-  getSubcategories($('#listing_category_id').val());
-});
-
-$('#listing_category_id, #listing_subcategory_id').on('change', function(){
-  if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
-    // if 'community'  or 'free' category is selected, no payment required.
-    console.log('free subcategories')
-    $('#listing_price').val('0.00').attr('disabled', true);
-    $('#payment_form').addClass('hidden');
-  } else if ($('#listing_subcategory_id > option').data( 'chargable' ) == true) {
-    // if the sub-catagory has the data-chargable attribute
-    console.log('paid subcategories')
-    $('#listing_price').attr('disabled', false);
-    $('#payment_form').removeClass('hidden');
-  } else {
-    // resets for `normal` subcategories
-    console.log('normal subcategories')
+$(document).ready(function() {
+  $('#listing_category_id').on('change', function(){
+    // on change of Category DDL, trigger subcategory population
+    getSubcategories($('#listing_category_id').val());
+  });
+  
+  $('#listing_category_id').on('change', function(){
+    // set elements default state
     $('#listing_price').val('').attr('disabled', false);
     $('#payment_form').addClass('hidden');
-  }
-});
 
-$(document).ready(function() {
+    // community and free category posts do not cost anything, set price to 0.00 and disable the field
+    if ($(this).val() == '2' || $(this).val() == '5') {
+      $('#listing_price').val('0.00').attr('disabled', true);
+      $('#payment_form').addClass('hidden');
+      return
+    }
+  })
+
+  $('#listing_subcategory_id').on('change', function(){
+    if ($('#listing_subcategory_id > option').data('chargable')) {
+      console.log('asdf')
+      // when the subcategory is changed AND if the subcategory option has 'chargable' show payment notice
+      $('#payment_form').removeClass('hidden');
+    }
+  })
+
+  $('#listing_subcategory_id').on('change', function(){
+    if ($('#listing_subcategory_id > option').data('chargable')) {
+      console.log('asdf')
+      // when the subcategory is changed AND if the subcategory option has 'chargable' show payment notice
+      $('#payment_form').removeClass('hidden');
+    }
+  })
+
   $("#listings_submit").on('click', function() {
-        $("#overlay").toggle();
+    // lodaing animation when form is submitted
+    $("#overlay").toggle();
   });
 });
-
-
