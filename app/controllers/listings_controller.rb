@@ -21,7 +21,13 @@ class ListingsController < ApplicationController
 
     if @listing.save
       if @listing.subcategory_id
-        redirect_to :controller => 'charges', :action => 'new', :params => ['order_id' => @listing.id, 'stipe_amount' -> 100]
+        redirect_to :controller => 'charges', :action => 'new', :params => {
+          'current_user' => @current_user,
+          'order_id' => @listing.id,
+          'stripe_amount' =>  100, # get the chargable amount from the subcategory
+          'stripe_email' => current_user.email,
+          'stripe_token' => ENV['STRIPE_PK'],
+        }
       else
         redirect_to @listing
       end      

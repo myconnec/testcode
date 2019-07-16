@@ -2,8 +2,9 @@ class StripeChargesServices
     DEFAULT_CURRENCY = 'usd'.freeze
 
     def initialize(params, user)
-      @stripe_email = params[:stripeEmail]
-      @stripe_token = params[:stripeToken]
+      @stripe_amount = params[:stripe_amount] 
+      @stripe_email = params[:stripe_email]
+      @stripe_token = params[:stripe_token]
       @order = params[:order_id]
       @user = user
     end
@@ -14,7 +15,7 @@ class StripeChargesServices
 
     private
 
-    attr_accessor :user, :stripe_email, :stripe_token, :order
+    attr_accessor :stripe_amount, :stripe_email, :stripe_token, :order, :user
 
     def find_customer
       if user.stripe_token
@@ -40,13 +41,9 @@ class StripeChargesServices
     def create_charge(customer)
       Stripe::Charge.create(
         customer: customer.id,
-        amount: 50, #order_amount, # 50 cent in this case
+        amount: @stripe_amount,
         description: customer.email,
         currency: DEFAULT_CURRENCY
       )
     end
-
-    # def order_amount
-    #   Order.find_by(id: order).amount
-    # end
   end

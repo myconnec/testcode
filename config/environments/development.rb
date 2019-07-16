@@ -55,5 +55,8 @@ Rails.application.configure do
         enable_starttls_auto: true 
     }
 
+    config.log_level = ENV.fetch('LOG_LEVEL', :debug)
+    config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+
     config.web_console.whitelisted_ips = ENV['DEV_NETWORK_CIDR']
 end
