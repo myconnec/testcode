@@ -11,6 +11,7 @@ var getSubcategories = function(category_id){
     $subcategories.append('<option value=""></option>')
     $.each(data.subcategories, function(index, subcategory){
       var option = $('<option />');
+      option.attr('data-chargable', subcategory.chargable);
       option.attr('value', subcategory.id);
       option.text(subcategory.name);
       $subcategories.append(option);
@@ -18,40 +19,34 @@ var getSubcategories = function(category_id){
   })
 };
 
-// on change of Category DDL, trigger Sub-category population
 $('#listing_category_id').on('change', function(){
+  // on change of Category DDL, trigger Sub-category population
   getSubcategories($('#listing_category_id').val());
 });
 
-// remove element on any change of the category DDL
 $('#listing_category_id, #listing_subcategory_id').on('change', function(){
-  $('#listing_price').val('').attr('disabled', false);
-  $('#payment_form').addClass('hidden');
-
-  // community category posts do not cost anything, set price to 0.00 and disable the field
-  if ($('#listing_category_id').val() == '2') {
+  if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
+    // if 'community'  or 'free' category is selected, no payment required.
+    console.log('free subcategories')
     $('#listing_price').val('0.00').attr('disabled', true);
-  }
-})
-
-$('#listing_subcategory_id').on('change', function(){
-  // if 'community' category is selected, no payment required.
-  if ($('#listing_category_id').val() == '2') {
-    return true;
-  }
-
-  if ($('#listing_subcategory_id').val() > 10) {
+    $('#payment_form').addClass('hidden');
+  } else if ($('#listing_subcategory_id > option').data( 'chargable' ) == true) {
+    // if the sub-catagory has the data-chargable attribute
+    console.log('paid subcategories')
+    $('#listing_price').attr('disabled', false);
     $('#payment_form').removeClass('hidden');
-  }
-
-  if ($('#listing_subcategory_id').val() > 10) {
-    $('#payment_form').removeClass('hidden');
+  } else {
+    // resets for `normal` subcategories
+    console.log('normal subcategories')
+    $('#listing_price').val('').attr('disabled', false);
+    $('#payment_form').addClass('hidden');
   }
 });
 
 $(document).ready(function() {
   $("#listings_submit").on('click', function() {
-        console.log('Show loading spinner...')
         $("#overlay").toggle();
   });
 });
+
+

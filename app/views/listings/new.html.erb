@@ -29,15 +29,21 @@
                 </div>
                 <br>
 
+                <div class="input-group hidden text-warning" id="payment_form">
+                    <div>This category will require payment on the next step.</div>
+<div id="input-upload-file" class="box-shadow">
+  <span>upload! (ღ˘⌣˘ღ)</span>
+  <input type="file" class="upload" id="fileUp" name="fileUpload">
+</div>
+<pre id="infos"></pre>
+                    <br>
+                </div>
+
                 <div class="input-group">
                     <div class="input-group-addon">$</div>
                     <%= f.text_field :price, autofocus: true, class:"form-control" %>
                 </div>
                 <br>
-
-                <div class="input-group hidden" id="payment_form">
-                    ASDF
-                </div>
 
                 <div class="input-group">
                     <div class="input-group-addon">Posting Title</div>
