@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20190716020311) do
     t.string   "avatar_content_type",    limit: 32
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
+    t.string   "stripe_token",           limit: 32
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
