@@ -46,15 +46,7 @@ $(document).ready(function() {
     }
   })
 
-  $('#listing_subcategory_id').on('change', function(){
-    if ($('#listing_subcategory_id > option').data('chargable')) {
-      console.log('asdf')
-      // when the subcategory is changed AND if the subcategory option has 'chargable' show payment notice
-      $('#payment_form').removeClass('hidden');
-    }
-  })
-
-  $("#listings_submit").on('click', function() {
+    $("#listings_submit").on('click', function() {
     // lodaing animation when form is submitted
     $("#overlay").toggle();
   });
