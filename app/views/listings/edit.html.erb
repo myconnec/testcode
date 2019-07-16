@@ -27,6 +27,11 @@
                 </div>
                 <br>
 
+                <div class="input-group hidden text-warning" id="payment_form">
+                    <div>* This category will require payment on the next page to complete creating a listing.</div>
+                    <br>
+                </div>
+
                 <div class="input-group">
                     <div class="input-group-addon">$</div>
                     <%= f.text_field :price, autofocus: true, class:"form-control" %>
