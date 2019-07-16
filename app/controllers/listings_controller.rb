@@ -21,7 +21,11 @@ class ListingsController < ApplicationController
     @listing.user = current_user
 
     if @listing.save
-      redirect_to @listing
+      if @listing.subcategory_id
+        redirect_to :controller => 'charges', :action => 'new'
+      else
+        redirect_to @listing
+      end      
     else
       flash[:alert] = @listing.errors.full_messages.to_sentence
       render 'new'
