@@ -1,7 +1,11 @@
 # File and file types to ignore
 .*
-.git*
 .docker*
+.env.*
+.git*
+.passwd-*
+ansible.cfg
+cypress.json
 Dockerfile*
 **/*.log
 **/*.md
@@ -11,11 +15,14 @@ Dockerfile*
 
 # DIR to ignore
 .git
+.terraform
+cypress
+docker
 docs
+helper_scripts
 spec
 terraform
 tmp
-media-source-dev
 
 # exceptions to ignore rules
 !.env

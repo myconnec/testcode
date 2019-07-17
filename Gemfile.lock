@@ -42,6 +42,16 @@ GEM
       execjs
     av (0.9.0)
       cocaine (~> 0.5.3)
+    aws-eventstream (1.0.3)
+    aws-sdk (2.11.314)
+      aws-sdk-resources (= 2.11.314)
+    aws-sdk-core (2.11.314)
+      aws-sigv4 (~> 1.0)
+      jmespath (~> 1.0)
+    aws-sdk-resources (2.11.314)
+      aws-sdk-core (= 2.11.314)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     bcrypt (3.1.12)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
@@ -100,6 +110,7 @@ GEM
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
+    jmespath (1.4.0)
     jquery-rails (4.3.3)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -241,6 +252,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_votable (~> 0.10.0)
+  aws-sdk (~> 2)
   bcrypt (~> 3.1.12)
   bootstrap-sass (~> 3.3, >= 3.3.7)
   bower (~> 0.0.5)

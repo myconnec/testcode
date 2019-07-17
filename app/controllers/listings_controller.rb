@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
   # around_filter :catch_not_found
+  before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
   before_filter :authenticate_user!, only: [:new, :create]
   before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
   impressionist actions: [:show], unique: [:session_hash]
@@ -73,6 +74,13 @@ class ListingsController < ApplicationController
     unless current_user = @listing.user
       redirect_to root_path, alert: "Sorry, you are not the user of this listing."
     end
+  end
+
+  def set_s3_direct_post
+    @s3_direct_post = S3_BUCKET.presigned_post(
+      key: "#{SecureRandom.uuid}_${filename}",
+      success_action_status: '201'
+    )
   end
 
   # def catch_not_found

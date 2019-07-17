@@ -16,9 +16,9 @@ Phase 3: Make it fast
 - [Ruby on Rails](https://rubyonrails.org/)
 - [Puma](https://github.com/puma/puma) webserver
 
-
 ... also check Gemfile for version of dependencies.
 
+## Resource
 
 ## Usage
 

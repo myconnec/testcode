@@ -9,104 +9,22 @@
 
             <div class="panel-body">
 
-                <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %>
+                <%= form_for(@listing, html: {
+                    class: 'directUpload',
+                    data: {
+                        'form-data' => (@s3_direct_post.fields),
+                        'url' => @s3_direct_post.url,
+                        'host' => URI.parse(@s3_direct_post.url).host
+                        }
+                    }) do |f| %>
 
-                <div class="input-group">
-                    <div class="input-group-addon">Main Category</div>
-                    <div class="form-control">
-                        <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}, include_blank: true %>
+                    <div class="field">
+                        <%= f.label :media %><br>
+                        <%= f.file_field :media %><br>
                     </div>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Sub Category</div>
-                    <div class="form-control">
-                        <select name="listing[subcategory_id]" id="listing_subcategory_id">
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">$</div>
-                    <%= f.text_field :price, autofocus: true, class:"form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group hidden" id="payment_form">
-                    ASDF
-                </div>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Posting Title</div>
-                    <%= f.text_field :title, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">City</div>
-                    <%= f.text_field :city, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">State</div>
-                    <%= f.text_field :state, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Zip</div>
-                    <%= f.text_field :zipcode, class: "form-control", maxlength: "5" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Video</div>
-                    <%= f.file_field :media, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Description</div>
-                    <%= f.text_area :description, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="actions">
-                        <%= f.submit "Submit Your Post", class: "btn btn-success", id: "listings_submit" %>
-                    </div>
-                </div>
 
                 <% end %>
-
             </div>
         </div>
     </div>
 </div>
-
-<div id="overlay">
-    <%= image_tag("loading_spinner.gif", :alt => ENV['APP_NAME']) %>
-    <p>Please wait while your video uploads.</p>
-    <p>The page will refresh once complete.</p>
-</div>
-
-<%= javascript_include_tag "listings.js" %>
-
-<% if ENV["APP_ENV"] == 'dev' %>
-    <script>
-    $( document ).ready(function() {
-        // $('select#listing_category_id>option:eq(1)').attr('selected', true);
-        $('#listing_price').val('1.23');
-        $('#listing_title').val('Test Title');
-        $('#listing_ademail').val('test@email.com');
-        $('#listing_city').val('Tampa');
-        $('#listing_state').val('Florida');
-        $('#listing_zipcode').val('33759');
-        $('#listing_description').val('Test Description');        
-    });
-    </script>
-<% end %>
