@@ -9,8 +9,9 @@
 
             <div class="panel-body">
 
-                <%= form_for(@listing, html: {
-                    class: 'directUpload',
+                <%= simple_form_for(@listing, html: {
+                    multipart: true,
+                    class: 'directUpload form-horizontal ',
                     data: {
                         'form-data' => (@s3_direct_post.fields),
                         'url' => @s3_direct_post.url,
@@ -18,12 +19,91 @@
                         }
                     }) do |f| %>
 
-                    <div class="field">
-                        <%= f.label :media %><br>
-                        <%= f.file_field :media %><br>
+                    <div class="input-group">
+                        <div class="input-group-addon">Main Category</div>
+                        <div class="form-control">
+                            <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}, include_blank: true %>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Sub Category</div>
+                        <div class="form-control">
+                            <select name="listing[subcategory_id]" id="listing_subcategory_id">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">$</div>
+                        <%= f.text_field :price, autofocus: true, class:"form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group hidden" id="payment_form">
+                        ASDF
                     </div>
 
-                <% end %>
+                    <div class="input-group">
+                        <div class="input-group-addon">Posting Title</div>
+                        <%= f.text_field :title, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">City</div>
+                        <%= f.text_field :city, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">State</div>
+                        <%= f.text_field :state, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">City</div>
+                        <%= f.text_field :city, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">State</div>
+                        <%= f.text_field :state, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Zip</div>
+                        <%= f.text_field :zipcode, class: "form-control", maxlength: "5" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Video</div>
+                        <%= f.file_field :media, class: "form-control" %><br>
+                        <pre id="listing_media_info"></pre>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Description</div>
+                        <%= f.text_area :description, class: "form-control" %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="actions">
+                            <%= f.submit "Submit Your Post", class: "btn btn-success", id: "listings_submit" %>
+                        </div>
+                    </div>
+                    
+                <% end %>          
+
             </div>
         </div>
     </div>
