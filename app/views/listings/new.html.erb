@@ -11,7 +11,7 @@
 
                 <%= simple_form_for(@listing, html: {
                     multipart: true,
-                    class: 'directUpload form-horizontal ',
+                    class: 'form-horizontal ',
                     data: {
                         'form-data' => (@s3_direct_post.fields),
                         'url' => @s3_direct_post.url,
