@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
   # around_filter :catch_not_found
-  before_action :set_s3_direct_post, only: [:new, :edit, :create, :update]
+  before_action :set_s3_direct_post, only: [:upload, :create_upload]
   before_filter :authenticate_user!, only: [:new, :create]
   before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
   impressionist actions: [:show], unique: [:session_hash]
@@ -45,14 +45,14 @@ class ListingsController < ApplicationController
 
     # create the charge to Stripe
     charge = Stripe::Charge.create({
-        amount: 500,
+        amount: 250,
         currency: 'usd',
         description: 'ConnecHub listing.',
         source: token,
     })
 
     if (charge.save)
-      redirect_to action: "upload", id: @listing.id
+      redirect_to action: "upload", id: params[:id]
     else
       flash[:alert] = @charge.errors.full_messages.to_sentence
       redirect_to action: "payment", id: @listing.id

@@ -3,7 +3,7 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h2>Post Your New Listing</h2>
+                <h2>Create New Listing</h2>
                 <div class = "small-heading">(All fields required.) </div>
             </div>
 
@@ -12,12 +12,7 @@
                 <%= simple_form_for(@listing, html: {
                     multipart: true,
                     class: 'form-horizontal ',
-                    data: {
-                        'form-data' => (@s3_direct_post.fields),
-                        'url' => @s3_direct_post.url,
-                        'host' => URI.parse(@s3_direct_post.url).host
-                        }
-                    }) do |f| %>
+                }) do |f| %>
 
                     <div class="input-group">
                         <div class="input-group-addon">Main Category</div>

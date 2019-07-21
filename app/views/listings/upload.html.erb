@@ -3,12 +3,39 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h2>Upload</h2>
+                <h2>Upload Media for New Listing</h2>
             </div>
 
             <div class="panel-body">
 
-            
+                <%= simple_form_for(@listing, html: {
+                    multipart: true,
+                    class: 'form-horizontal ',
+                    data: {
+                        'form-data' => (@s3_direct_post.fields),
+                        'url' => @s3_direct_post.url,
+                        'host' => URI.parse(@s3_direct_post.url).host,
+                        'filename' => SecureRandom.uuid
+                    }
+                }) do |f| %>
+
+                    <div class="input-group field">
+                        <div class="input-group-addon">Media</div>
+                        <%= f.file_field :media, class: "form-control" %><br>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="actions">
+                            <%= f.submit "Submit Your Post", class: "btn btn-success", id: "listings_submit" %>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="actions" id="listing_media_info">
+                        </div>
+                    </div>
+
+                <% end %>
 
             </div>
         </div>
