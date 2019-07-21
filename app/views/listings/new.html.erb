@@ -3,8 +3,8 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                <h2>Post Your New Ad</h2>
-                <div class = "small-heading", style="color:red">(All fields required.) </div>
+                <h2>Post Your New Listing</h2>
+                <div class = "small-heading">(All fields required.) </div>
             </div>
 
             <div class="panel-body">
@@ -38,14 +38,10 @@
                     <br>
 
                     <div class="input-group">
-                        <div class="input-group-addon">$</div>
+                        <div class="input-group-addon">Sale Price</div>
                         <%= f.text_field :price, autofocus: true, class:"form-control" %>
                     </div>
                     <br>
-
-                    <div class="input-group hidden" id="payment_form">
-                        ASDF
-                    </div>
 
                     <div class="input-group">
                         <div class="input-group-addon">Posting Title</div>
@@ -66,27 +62,8 @@
                     <br>
 
                     <div class="input-group">
-                        <div class="input-group-addon">City</div>
-                        <%= f.text_field :city, class: "form-control" %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">State</div>
-                        <%= f.text_field :state, class: "form-control" %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
                         <div class="input-group-addon">Zip</div>
                         <%= f.text_field :zipcode, class: "form-control", maxlength: "5" %>
-                    </div>
-                    <br>
-
-                    <div class="input-group field">
-                        <div class="input-group-addon">Video</div>
-                        <%= f.file_field :media, class: "form-control" %><br>
-                        <pre id="listing_media_info"></pre>
                     </div>
                     <br>
 

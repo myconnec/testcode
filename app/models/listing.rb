@@ -18,29 +18,29 @@ class Listing < ActiveRecord::Base
   validates_presence_of :city
   validates_presence_of :state
   validates_presence_of :zipcode
-  validates_presence_of :media
+  # validates_presence_of :media
   validates_presence_of :description
 
   has_many :comments, dependent: :destroy
   # place the source media at this location
   # TODO: change based on ENV of lcl or other
-  has_attached_file :media, :path => ":rails_root/../"+ENV["AWS_S3_MEDIA_SOURCE_BUCKET"]+"-"+ENV["APP_ENV"]+"/:class/:attachment/:id_partition/:style/:filename"
+  # has_attached_file :media, :path => ":rails_root/../"+ENV["AWS_S3_MEDIA_SOURCE_BUCKET"]+"-"+ENV["APP_ENV"]+"/:class/:attachment/:id_partition/:style/:filename"
 
   # validates_attachment_size :media, :less_than => 800.megabytes
-  validates_attachment_presence :media
-  validates_attachment_content_type :media, :content_type => [
-    "video/quicktime",
-    "video/x-ms-wmv",
-    "video/mp4",
-    "video/3gpp",
-    "audio/mp4",
-    "video/x-flv",
-    "video/x-msvideo",
-    "video/webm"
-  ]
+  # validates_attachment_presence :media
+  # validates_attachment_content_type :media, :content_type => [
+  #   "video/quicktime",
+  #   "video/x-ms-wmv",
+  #   "video/mp4",
+  #   "video/3gpp",
+  #   "audio/mp4",
+  #   "video/x-flv",
+  #   "video/x-msvideo",
+  #   "video/webm"
+  # ]
 
   # this must be AFTER had_attached_file
-  before_post_process :transliterate_file_name
+  # before_post_process :transliterate_file_name
 
   def full_address
     [city, state, zipcode].join(', ')
