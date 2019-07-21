@@ -22,7 +22,8 @@ class ListingsController < ApplicationController
     @listing.user = current_user
 
     if @listing.save
-      redirect_to action: "payment", id: @listing.id
+      # redirect_to action: "payment", id: @listing.id
+      redirect_to action: "upload", id: @listing.id
     else
       flash[:alert] = @listing.errors.full_messages.to_sentence
       render 'new'
