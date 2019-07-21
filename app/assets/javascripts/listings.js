@@ -7,6 +7,11 @@ $( document ).ready(function() {
   $('#listing_zipcode').val('33612');
   $('#listing_description').val('Test Description');        
 
+  $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
+  $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
+  $('span.CardField-cvc.CardField-child > span > span > input').val('567');
+  $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
+
   var getSubcategories = function(category_id){
     var $subcategories = $('#listing_subcategory_id');
   

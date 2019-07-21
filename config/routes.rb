@@ -14,14 +14,14 @@ Rails.application.routes.draw do
     member do
 		 put "like",    to: "listings#upvote"
 	  end
-
   end
-
-  resources :charges, only: [:new, :create]
-
+  match '/listings/payment/:id', to: 'listings#payment', via: :get
+  match '/listings/create_payment/:id', to: 'listings#create_payment', via: :post
+  match '/listings/upload/:id', to: 'listings#upload', via: :get
+  match '/listings/create_upload/:id', to: 'listings#create_upload', via: :post
 
   root 'categories#index'
-
+  
   match '/about', to: 'pages#about', via: :get
   match '/contact', to: 'pages#contact', via: :get
   match '/cookie', to: 'pages#cookie', via: :get

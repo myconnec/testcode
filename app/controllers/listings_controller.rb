@@ -22,11 +22,47 @@ class ListingsController < ApplicationController
     @listing.user = current_user
 
     if @listing.save
-      redirect_to @listing
+      redirect_to action: "payment", id: @listing.id
     else
       flash[:alert] = @listing.errors.full_messages.to_sentence
       render 'new'
     end
+  end
+
+  def payment
+    @listing = Listing.find(params[:id])
+  end
+
+  def create_payment
+    # Set your secret key: remember to change this to your live secret key in production
+    # See your keys here: https://dashboard.stripe.com/account/apikeys
+    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+
+    # Token is created using Checkout or Elements!
+    # Get the payment token ID submitted by the form:
+    token = params[:stripeToken]
+
+    # create the charge to Stripe
+    charge = Stripe::Charge.create({
+        amount: 500,
+        currency: 'usd',
+        description: 'ConnecHub listing.',
+        source: token,
+    })
+
+    if (charge.save)
+      redirect_to action: "upload", id: @listing.id
+    else
+      flash[:alert] = @charge.errors.full_messages.to_sentence
+      redirect_to action: "payment", id: @listing.id
+    end
+  end
+
+  def upload
+    @listing = Listing.find(params[:id])
+  end
+
+  def create_upload
   end
 
   def show
@@ -66,7 +102,19 @@ class ListingsController < ApplicationController
   private
 
   def listing_params
-    params.require(:listing).permit(:title, :price, :description, :city, :state, :zipcode, :ademail, :category_id, :subcategory_id)
+    params.require(:listing).permit(
+      :ademail,
+      :category_id,
+      :city,
+      :description,
+      :media_file_name,
+      :price,
+      :state,
+      :stripe_token,
+      :subcategory_id,
+      :title,
+      :zipcode,
+    )
   end
 
   def is_user?
