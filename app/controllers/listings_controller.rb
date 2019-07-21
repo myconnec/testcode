@@ -127,7 +127,7 @@ class ListingsController < ApplicationController
 
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET.presigned_post(
-      key: "#{SecureRandom.uuid}_${filename}",
+      key: "#{SecureRandom.uuid}_#{SecureRandom.uuid}",
       success_action_status: '201'
     )
   end

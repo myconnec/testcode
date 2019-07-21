@@ -59,4 +59,3 @@ $( document ).ready(function() {
     $("#overlay").toggle()
   });
 });
-

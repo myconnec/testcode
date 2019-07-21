@@ -14,28 +14,38 @@
                     data: {
                         'form-data' => (@s3_direct_post.fields),
                         'url' => @s3_direct_post.url,
-                        'host' => URI.parse(@s3_direct_post.url).host,
-                        'filename' => SecureRandom.uuid
-                    }
+                        'host' => URI.parse(@s3_direct_post.url).host
+                    }, id: 'listing_create_upload',
                 }) do |f| %>
 
-                    <div class="input-group field">
-                        <div class="input-group-addon">Media</div>
-                        <%= f.file_field :media, class: "form-control" %><br>
-                    </div>
-
-                    <div class="input-group">
-                        <div class="actions">
-                            <%= f.submit "Submit Your Post", class: "btn btn-success", id: "listings_submit" %>
-                        </div>
-                    </div>
-
-                    <div class="input-group">
-                        <div class="actions" id="listing_media_info">
-                        </div>
-                    </div>
+                    <input id="fileupload" type="file" name="file">
 
                 <% end %>
+
+<script>
+$(function () {
+    $('#fileupload').fileupload({
+        autoUpload: true,
+        dataType: 'XML',  // S3 returns XML if success_action_status is set to 201
+        formData: $('#listing_create_upload').data('form-data'),
+        type: 'POST',
+        url: $('#listing_create_upload').data('url'),
+        // dataType: 'json',
+        add: function (e, data) {
+            data.context = $('<button/>').text('Upload')
+                .appendTo(document.body)
+                .click(function () {
+                    data.context = $('<p/>').text('Uploading...').replaceAll($(this));
+                    data.submit();
+                });
+        },
+        done: function (e, data) {
+            data.context.text('Upload finished.');
+            console.log('Now AJAX call and update listings.')
+        }
+    });
+});
+</script>
 
             </div>
         </div>
