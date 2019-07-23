@@ -7,15 +7,11 @@
         <p>
             <div>
                 <%= videojs_rails sources: {
-                    mov: @listing.media.url,
-                    mp4: @listing.media.url,
-                    webm: @listing.media.url,
-                    ogg: @listing.media.url
+                    mp4: 'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3.amazonaws.com/' + @listing.media_file_name
                 },
                 controls: true,
                 autoplay: false,
                 preload: true,
-                setup: "{}",
                 width:"450",
                 height:"450" do%><% end %>
             </div>

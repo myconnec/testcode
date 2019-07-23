@@ -9,18 +9,7 @@
             <% @listings.each do |listing| %>
             <div class="panel panel-default pin-item">
                 <div class="panel-body">
-                    <%= link_to (
-                        videojs_rails sources: {
-                            mov: listing.media.url,
-                            mp4: listing.media.url,
-                            webm: listing.media.url,
-                            ogg: listing.media.url
-                        },
-                        controls: false,
-                        setup: "{}",
-                        class: 'img-responsive'
-                    ),
-                    listing %>
+                    <%= render :partial => 'categories/item_card', locals: {listing: listing}  %>
                 </div>
                     <div class="panel-footer pin-content">
                     <div class="price"><b>$<%= listing.price %></b></div>

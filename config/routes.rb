@@ -19,7 +19,8 @@ Rails.application.routes.draw do
   match '/listings/create_payment/:id', to: 'listings#create_payment', via: :post
   match '/listings/upload/:id', to: 'listings#upload', via: :get
   match '/listings/create_upload/:id', to: 'listings#create_upload', via: :post
-
+  match '/listings/update_upload/:id', to: 'listings#update_upload', via: :patch
+  
   root 'categories#index'
   
   match '/about', to: 'pages#about', via: :get

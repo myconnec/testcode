@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190606115012) do
+ActiveRecord::Schema.define(version: 20190721118000) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 32
@@ -70,11 +70,11 @@ ActiveRecord::Schema.define(version: 20190606115012) do
     t.float    "latitude",           limit: 24
     t.float    "longitude",          limit: 24
     t.integer  "user_id",            limit: 4
-    t.string   "media_file_name",    limit: 32
+    t.string   "media_file_name",    limit: 128
     t.string   "media_content_type", limit: 32
     t.integer  "media_file_size",    limit: 4
     t.datetime "media_updated_at"
-    t.integer  "ending_at",          limit: 4,     default: 1563722669, null: false
+    t.integer  "ending_at",          limit: 4,     default: 1563841755, null: false
   end
 
   add_index "listings", ["ending_at"], name: "index_listings_on_ending_at", using: :btree

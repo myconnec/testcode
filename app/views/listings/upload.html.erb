@@ -19,9 +19,11 @@
                 }) do |f| %>
 
                     <input id="fileupload" type="file" name="file">
+                    <br />
                     <div id="listing_media_info"></div>
-
                 <% end %>
+
+                <button id="listing_create_upload">Submit</button>
 
 <script>
 $(function () {
@@ -44,16 +46,9 @@ $(function () {
         dataType: 'XML',  // S3 returns XML if success_action_status is set to 201
         replaceFileInput: false,
         add: function (e, data) {
-            data.context = $('<button/>').text('Upload')
-                .appendTo(document.body)
-                .click(function () {
-                    data.context = $('<p/>').text('Uploading...').replaceAll($(this));
-                    data.submit();
-                });
-        },
-        done: function (e, data) {
-            data.context.text('Upload finished.');
-            console.log('Now AJAX call and update listings.')
+            $('button#listing_create_upload').off('click').on('click', function () {
+                data.submit();
+            });
         },
         progressall: function (e, data) {
             var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -61,14 +56,15 @@ $(function () {
         },
         start: function (e) {
             submitButton.prop('disabled', true);
-
             progressBar.
-            css('background', 'green').
-            css('display', 'block').
-            css('width', '0%').
-            text("Loading...");
+                css('background', 'green').
+                css('display', 'block').
+                css('width', '0%').
+                text("Loading...");
         },
         done: function(e, data) {
+            console.log('Now AJAX call and update listings.')
+
             submitButton.prop('disabled', false);
             progressBar.text("Uploading done");
 
@@ -77,15 +73,33 @@ $(function () {
             var url   = '//' + form.data('host') + '/' + key;
 
             // create hidden field
-            var input = $("<input />", { type:'input', name: fileInput.attr('name'), value: url })
-            form.append(input);
+            // var input = $("<input />", { type:'input', name: fileInput.attr('name'), value: url })
+            console.log('final filename: ', key)
+            var url_path = window.location.pathname.split('/');
+            var listings_id = url_path[url_path.length - 1];
+
+            $.ajax({
+                type: 'PATCH',
+                url: '/listings/update_upload/' + listings_id,
+                data: {
+                    listing: listings_id,
+                    media_file_name: key
+                },
+                dataType: 'json',
+                statusCode: {
+                    200: function() {
+                        // if the response is a 200, success, fwd to listing item view
+                        console.log('Redirecting to listing item view.')
+                        window.location.href = "//<%= ENV['APP_HOST'] %>/listings/" + listings_id;
+                    }
+                }
+            })
         },
         fail: function(e, data) {
             submitButton.prop('disabled', false);
-
             progressBar.
-            css("background", "red").
-            text("Failed");
+                css("background", "red").
+                text("Failed");
         }
       });
   });

@@ -22,8 +22,7 @@ class ListingsController < ApplicationController
     @listing.user = current_user
 
     if @listing.save
-      # redirect_to action: "payment", id: @listing.id
-      redirect_to action: "upload", id: @listing.id
+      redirect_to action: "payment", id: @listing.id
     else
       flash[:alert] = @listing.errors.full_messages.to_sentence
       render 'new'
@@ -45,16 +44,18 @@ class ListingsController < ApplicationController
 
     # create the charge to Stripe
     charge = Stripe::Charge.create({
-        amount: 250,
+        amount: 125,
         currency: 'usd',
         description: 'ConnecHub listing.',
         source: token,
     })
 
     if (charge.save)
-      redirect_to action: "upload", id: params[:id]
+      @listing = Listing.find(params[:id])
+      # TODO update listings w/ payment confirmation
+      redirect_to action: "upload", id: @listing.id
     else
-      flash[:alert] = @charge.errors.full_messages.to_sentence
+      flash[:alert] = 'Somerthing happened ' #@charge.errors.full_messages.to_sentence
       redirect_to action: "payment", id: @listing.id
     end
   end
@@ -63,7 +64,12 @@ class ListingsController < ApplicationController
     @listing = Listing.find(params[:id])
   end
 
-  def create_upload
+  def update_upload
+    @listing = Listing.find(params[:id])
+    @listing.update({
+      "media_file_name" => params[:media_file_name] # TODO replace file extension to be mp4
+    })
+    redirect_to @listing
   end
 
   def show
@@ -108,10 +114,10 @@ class ListingsController < ApplicationController
       :category_id,
       :city,
       :description,
+      :id,
       :media_file_name,
       :price,
       :state,
-      :stripe_token,
       :subcategory_id,
       :title,
       :zipcode,
@@ -127,16 +133,16 @@ class ListingsController < ApplicationController
 
   def set_s3_direct_post
     @s3_direct_post = S3_BUCKET.presigned_post(
-      key: "#{SecureRandom.uuid}_${filename}",
+      key: "#{SecureRandom.uuid}/${filename}",
       success_action_status: '201'
     )
   end
-
+  
   # def catch_not_found
   #   yield
   #   # TODO maybe more specific errors here?
   #   rescue
-  #     if ENV['APP_ENV'].downcase != 'lcl' or ENV['APP_ENV'].downcase == 'dev'
+  #     if ENV['APP_ENV'].downcase != 'dev' or ENV['APP_ENV'].downcase != 'tst'
   #       redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
   #     end
   # end
