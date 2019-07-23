@@ -67,7 +67,8 @@ class ListingsController < ApplicationController
   def update_upload
     @listing = Listing.find(params[:id])
     @listing.update({
-      "media_file_name" => params[:media_file_name] # TODO replace file extension to be mp4
+      'media_file_name' => params[:media_file_name], # TODO replace file extension to be mp4
+      'media_uploaded_at' => Time.now.to_i
     })
     redirect_to @listing
   end
