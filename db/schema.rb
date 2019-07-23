@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190721118000) do
+ActiveRecord::Schema.define(version: 20190722000001) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 32
