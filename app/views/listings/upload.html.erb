@@ -25,10 +25,50 @@
                     <div id="listing_media_info"></div>
                 <% end %>
 
-                <button id="listing_create_upload">Submit</button>
+                    <div class="input-group">
+                        <div class="actions">
+                            <button class="btn btn-success" id="listings_submit">Submit</button>
+                        </div>
+                    </div>
 
 <script>
 $(function () {
+  var media_file = [];
+
+  document.getElementById('fileupload').onchange = setFileInfo;
+
+  function setFileInfo() {
+    var files = this.files;
+    media_file.push(files[0]);
+    var video = document.createElement('video');
+    video.preload = 'metadata';
+
+    video.onloadedmetadata = function() {
+      var duration = video.duration;
+      media_file[media_file.length - 1].duration = duration;
+      var infos = document.getElementById('infos');
+      infos.textContent = "";
+      for (var i = 0; i < media_file.length; i++) {
+        // infos.textContent += media_file[i].name + " duration: " + media_file[i].duration + '\n';
+         infos.textContent = "Duration: " + sec2time(media_file[i].duration) + '\n';
+      }
+    }
+
+    function sec2time(timeInSeconds) {
+      var pad = function(num, size) { return ('000' + num).slice(size * -1); },
+      time = parseFloat(timeInSeconds).toFixed(3),
+      hours = Math.floor(time / 60 / 60),
+      minutes = Math.floor(time / 60) % 60,
+      seconds = Math.floor(time - minutes * 60),
+      milliseconds = time.slice(-3);
+  
+      // return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
+      return  minutes + ' minutes and ' + pad(seconds, 2) + ' seconds.';
+  }
+
+    video.src = URL.createObjectURL(files[0]);
+  }
+  
   $('#new_listing_upload').find("input:file").each(function(i, elem) {
     var fileInput = $(elem);
     var form = $(fileInput.parents('form:first'));
@@ -48,7 +88,8 @@ $(function () {
         dataType: 'XML',  // S3 returns XML if success_action_status is set to 201
         replaceFileInput: false,
         add: function (e, data) {
-            $('button#listing_create_upload').off('click').on('click', function () {
+            $('button#listings_submit').off('click').on('click', function () {
+                $("#overlay").toggle()
                 data.submit();
             });
         },

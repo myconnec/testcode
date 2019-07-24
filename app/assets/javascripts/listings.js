@@ -69,13 +69,13 @@ $( document ).ready(function() {
     $('#sub_category_cost_container').css("display", "none");
   });
 
-  $('#new_listing').on('submit', function (event){
-    console.log('Show loading spinner...')
-    $("#overlay").toggle()
-  });
-
   $('#new_listing').submit(function() {
     $('#listing_price').attr('disabled', false).val('0.00');
     return true;
+  });
+
+  $('#listings_submit').on('click', function() {
+    console.log('Show loading spinner...')
+    $("#overlay").toggle()
   });
 });
