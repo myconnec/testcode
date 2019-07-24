@@ -1,3 +1,10 @@
+const formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 2
+})
+
+
 $( document ).ready(function() {
   // $('select#listing_category_id>option:eq(1)').attr('selected', true);
   $('#listing_price').val('1.23');
@@ -27,6 +34,7 @@ $( document ).ready(function() {
         var option = $('<option />');
         option.attr('value', subcategory.id);
         option.text(subcategory.name);
+        option.attr('data-chargable', subcategory.chargable);
         $subcategories.append(option);
       })
     })
@@ -36,26 +44,38 @@ $( document ).ready(function() {
   $('#listing_category_id').on('change', function(){
     getSubcategories($('#listing_category_id').val());
   });
-  
-  // remove element on any change of the category DDL
-  $('#listing_category_id, #listing_subcategory_id').on('change', function(){
-    $('#listing_price').attr('disabled', false);
-  
-    // community category posts do not cost anything, set price to 0.00 and disable the field
-    if ($('#listing_category_id').val() == '2') {
-      $('#listing_price').val('0.00').attr('disabled', true);
-    }
-  })
-  
+
   $('#listing_subcategory_id').on('change', function(){
-    // if 'community' category is selected, no payment required.
-    if ($('#listing_category_id').val() == '2') {
-      return true;
+
+    if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
+      // if 'community' or 'free' category is selected, no cost is valid
+      $('#listing_price').val('0.00').attr('disabled', true);
+      $('#sub_category_cost_container').css("display", "none");
+      return;
     }
+
+    if ($('#listing_subcategory_id :selected').data('chargable') != 0) {
+      // if sub category has a chargable amount != 0, show message
+      $('#listing_price').attr('disabled', false);
+      $('#sub_category_cost_container').css("display", "block");
+
+      // display fee that will be required
+      $('#fee_amount ').text(formatter.format($('#listing_subcategory_id :selected').data('chargable') / 100) + ' USD ')
+      return
+    }
+
+    // if not a free category and not a fee sub category, return to default state
+    $('#listing_price').attr('disabled', false);
+    $('#sub_category_cost_container').css("display", "none");
   });
 
   $('#new_listing').on('submit', function (event){
     console.log('Show loading spinner...')
     $("#overlay").toggle()
+  });
+
+  $('#new_listing').submit(function() {
+    $('#listing_price').attr('disabled', false).val('0.00');
+    return true;
   });
 });

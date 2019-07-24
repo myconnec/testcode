@@ -9,13 +9,15 @@
             <div class="panel-body">
 
                 <%= simple_form_for(@listing, html: {
-                    multipart: true,
-                    class: 'form-horizontal ',
+                    authenticity_token: true,
                     data: {
                         'form-data' => (@s3_direct_post.fields),
                         'url' => @s3_direct_post.url,
                         'host' => URI.parse(@s3_direct_post.url).host
-                    }, id: 'new_listing_upload',
+                    },
+                    class: 'form-horizontal ',
+                    id: 'new_listing_upload',
+                    multipart: true,
                 }) do |f| %>
 
                     <input id="fileupload" type="file" name="file">

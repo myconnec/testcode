@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190722000001) do
+ActiveRecord::Schema.define(version: 20190724000001) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 32
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 20190722000001) do
     t.integer  "media_file_size",    limit: 4
     t.datetime "media_updated_at"
     t.integer  "ending_at",          limit: 4,     default: 1563847391, null: false
+    t.integer  "charge_amount",      limit: 4,     default: 0
+    t.integer  "charge_complete",    limit: 4,     default: 0
   end
 
   add_index "listings", ["ending_at"], name: "index_listings_on_ending_at", using: :btree

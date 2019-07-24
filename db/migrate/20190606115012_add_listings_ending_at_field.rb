@@ -5,7 +5,7 @@ class AddListingsEndingAtField < ActiveRecord::Migration
   end
 
   def down
-    removea_column :listings, :ending_at
+    remove_column :listings, :ending_at
     remove_index :listings, :ending_at
   end
 end

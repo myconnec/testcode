@@ -15,14 +15,24 @@ class ListingsController < ApplicationController
 
   def create
     @listing = Listing.new(listing_params)
-
     @listing.ademail = current_user.email
     # TODO: phase 1: limit to 30 days. Phase 2: based on selected upgrades
     @listing.ending_at = Time.now.to_i + 2592000
     @listing.user = current_user
+    
+    # read the subcategory, if chargable > 0  set amount on listing
+    listing_sub_category = Subcategory.find(@listing.subcategory_id)
+    if listing_sub_category.chargable > 0
+      @listing.charge_amount = listing_sub_category.chargable
+    end
 
     if @listing.save
-      redirect_to action: "payment", id: @listing.id
+      # if subcategory.chargable > 0, goto payment for
+      if listing_sub_category.chargable > 0
+        return redirect_to action: "payment", id: @listing.id
+      else
+        return redirect_to action: "upload", id: @listing.id
+      end
     else
       flash[:alert] = @listing.errors.full_messages.to_sentence
       render 'new'
@@ -42,22 +52,28 @@ class ListingsController < ApplicationController
     # Get the payment token ID submitted by the form:
     token = params[:stripeToken]
 
+    #  find the listing based on the id provided
+    @listing = Listing.find(params[:id])
+
     # create the charge to Stripe
     charge = Stripe::Charge.create({
-        amount: 125,
+        amount: @listing.charge_amount.to_i,
         currency: 'usd',
         description: 'ConnecHub listing.',
         source: token,
     })
 
-    if (charge.save)
-      @listing = Listing.find(params[:id])
-      # TODO update listings w/ payment confirmation
-      redirect_to action: "upload", id: @listing.id
+    if charge.save
+      @listing.charge_complete = 1
+      if @listing.save      
+        return redirect_to action: "upload", id: @listing.id
+      end
+      flash[:alert] = 'Your payment was successful; however, an error occured while updating your listing.'
     else
-      flash[:alert] = 'Somerthing happened ' #@charge.errors.full_messages.to_sentence
-      redirect_to action: "payment", id: @listing.id
+      flash[:alert] = charge.errors.full_messages.to_sentence
     end
+
+    redirect_to action: "payment", id: @listing.id
   end
 
   def upload
@@ -66,10 +82,17 @@ class ListingsController < ApplicationController
 
   def update_upload
     @listing = Listing.find(params[:id])
+
+    # if someone find the upload form but the Listing requires payment, redirect to payment form
+    if @listing.charge_amount > 0 && @listing.charge_complete != 1
+      return redirect_to action: "payment", id: @listing.id
+    end
+
     @listing.update({
       'media_file_name' => params[:media_file_name], # TODO replace file extension to be mp4
-      'media_uploaded_at' => Time.now.to_i
+      'media_updated_at' => Time.now.to_i
     })
+
     redirect_to @listing
   end
 

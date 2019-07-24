@@ -10,6 +10,7 @@
             <div class="panel-body">
 
                 <%= simple_form_for(@listing, html: {
+                    authenticity_token: true,
                     multipart: true,
                     class: 'form-horizontal ',
                 }) do |f| %>
@@ -31,6 +32,16 @@
                         </div>
                     </div>
                     <br>
+
+                    <div id="sub_category_cost_container" style="display: none">
+                        <div class="input-group">
+                            <div class="input-group-addon" style="color: red">Fee required</div>
+                            <div class="form-control">
+                                Selected category requires a payment of <span id="fee_amount" style="font-weight: bolder"></span> on the next step.
+                            </div>
+                        </div>
+                        <br>
+                    </div>
 
                     <div class="input-group">
                         <div class="input-group-addon">Sale Price</div>
