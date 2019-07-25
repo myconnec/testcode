@@ -88,8 +88,12 @@ class ListingsController < ApplicationController
       return redirect_to action: "payment", id: @listing.id
     end
 
+    # replace ANY file extension with .mp4, that is the ONLY output format we provide
+    file_name = params[:media_file_name]
+    file_name = File.dirname(file_name) + '/' + File.basename(file_name, '.*') + '.mp4'
+
     @listing.update({
-      'media_file_name' => params[:media_file_name], # TODO replace file extension to be mp4
+      'media_file_name' => file_name, # TODO replace file extension to be mp4
       'media_updated_at' => Time.now.to_i
     })
 
