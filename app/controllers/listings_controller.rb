@@ -1,9 +1,6 @@
 class ListingsController < ApplicationController
   # around_filter :catch_not_found
-<<<<<<< HEAD
   before_action :set_s3_direct_post, only: [:upload, :create_upload]
-=======
->>>>>>> 2e19707a58ee8009ee278a2c6c758c3f1094599b
   before_filter :authenticate_user!, only: [:new, :create]
   before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
   impressionist actions: [:show], unique: [:session_hash]
