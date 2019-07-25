@@ -1,8 +1,0 @@
-<%= link_to (
-    videojs_rails sources: {
-    mp4: 'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3.amazonaws.com/' + listing.media_file_name
-    },
-    controls: false,
-    setup: "{}",
-    class: 'img-responsive'),
-listing %>

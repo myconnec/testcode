@@ -1,0 +1,11 @@
+<%
+url = ('https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3.amazonaws.com/' + listing.media_file_name).to_s
+
+link_to (
+    videojs_rails sources: {
+    mp4: url
+    },
+    controls: false,
+    setup: "{}",
+    class: 'img-responsive'),
+listing %>
