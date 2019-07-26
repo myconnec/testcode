@@ -14,6 +14,14 @@ resource "aws_s3_bucket" "media_display" {
     }
   }
 
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["https://${var.APP_HOST}"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3600
+  }
+
   tags = {
     app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
@@ -36,6 +44,14 @@ resource "aws_s3_bucket" "media_source" {
         sse_algorithm = "AES256"
       }
     }
+  }
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["POST", "PUT"]
+    allowed_origins = ["https://${var.APP_HOST}"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3600
   }
 
   tags = {

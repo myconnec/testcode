@@ -1,8 +1,9 @@
 module "media_storage" {
   source  = "./terraform/media_storage"
-  version = "0.0.1"
+  version = "0.3.5"
 
   APP_ENV                     = "${var.APP_ENV}"
+  APP_HOST                    = "${APP_HOST}"
   APP_NAME                    = "${var.APP_NAME}"
   AWS_REGION                  = "${var.AWS_REGION}"
   AWS_S3_MEDIA_DISPLAY_BUCKET = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
@@ -12,7 +13,7 @@ module "media_storage" {
 
 module "media_processing" {
   source  = "./terraform/media_processing"
-  version = "0.0.1"
+  version = "0.3.5"
 
   # variables
   APP_ENV    = "${var.APP_ENV}"
@@ -25,7 +26,7 @@ module "media_processing" {
 
 module "lambda_s3_to_transcoder" {
   source  = "./terraform/lambda_s3_to_transcoder/"
-  version = "0.0.1"
+  version = "0.3.5"
 
   APP_ENV    = "${var.APP_ENV}"
   APP_NAME   = "${var.APP_NAME}"
@@ -38,7 +39,7 @@ module "lambda_s3_to_transcoder" {
 
 module "security" {
   source  = "./terraform/security"
-  version = "0.0.1"
+  version = "0.3.5"
 
   APP_ENV  = "${var.APP_ENV}"
   APP_NAME = "${var.APP_NAME}"
@@ -49,7 +50,7 @@ module "security" {
 
 module "web_app" {
   source  = "./terraform/web_app"
-  version = "0.0.1"
+  version = "0.3.5"
 
   APP_ENV          = "${var.APP_ENV}"
   APP_NAME         = "${var.APP_NAME}"
