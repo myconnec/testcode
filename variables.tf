@@ -2,6 +2,7 @@
 # terraform [comman] [options]] -var-file=.env
 
 variable "APP_ENV" {}
+variable "APP_HOST" {}
 variable "APP_NAME" {}
 variable "AWS_REGION" {}
 variable "AWS_ACCESS_KEY" {}

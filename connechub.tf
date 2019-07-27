@@ -3,7 +3,7 @@ module "media_storage" {
   version = "0.3.5"
 
   APP_ENV                     = "${var.APP_ENV}"
-  APP_HOST                    = "${APP_HOST}"
+  APP_HOST                    = "${var.APP_HOST}"
   APP_NAME                    = "${var.APP_NAME}"
   AWS_REGION                  = "${var.AWS_REGION}"
   AWS_S3_MEDIA_DISPLAY_BUCKET = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"

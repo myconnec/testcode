@@ -1,3 +1,7 @@
+locals {
+  web_host_uri = "https://${var.APP_HOST}"
+}
+
 # Bucket
 resource "aws_s3_bucket" "media_display" {
   acl           = "private"
@@ -17,7 +21,7 @@ resource "aws_s3_bucket" "media_display" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET"]
-    allowed_origins = ["https://${var.APP_HOST}"]
+    allowed_origins = ["${local.web_host_uri}"]
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
   }
@@ -49,7 +53,7 @@ resource "aws_s3_bucket" "media_source" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["POST", "PUT"]
-    allowed_origins = ["https://${var.APP_HOST}"]
+    allowed_origins = ["${local.web_host_uri}"]
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
   }

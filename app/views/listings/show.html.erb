@@ -7,7 +7,7 @@
         <p>
             <div>
                 <%= videojs_rails sources: {
-                    mp4: 'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3.amazonaws.com/' + @listing.media_file_name
+                    mp4: 'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3-'+ ENV['AWS_REGION'] + '.amazonaws.com/' + @listing.media_file_name
                 },
                 controls: true,
                 autoplay: false,
