@@ -1,5 +1,5 @@
 locals {
-  web_host_uri = "https://${var.APP_HOST}"
+  web_host_uri = "https://${var.APP_ENV}.${var.APP_NAME}.com"
 }
 
 # Bucket

@@ -1,5 +1,4 @@
 variable "APP_ENV" {}
-variable "APP_HOST" {}
 variable "APP_NAME" {}
 variable "AWS_REGION" {}
 variable "AWS_S3_MEDIA_DISPLAY_BUCKET" {}

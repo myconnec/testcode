@@ -1,7 +1,5 @@
 # Testing
 
-### Suites - Type
-
 ### RSpec - Unit
 
 ### Cypress - UAT

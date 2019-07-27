@@ -142,7 +142,7 @@
                         200: function() {
                             // if the response is a 200, success, fwd to listing item view
                             console.log('Redirecting to listing item view.')
-                            window.location.href = "//<%= ENV['APP_HOST'] %>/listings/" + listings_id;
+                            window.location.href = "//<%= ENV['APP_ENV'] %>.<%= ENV['APP_NAME'] %>/listings/" + listings_id;
                         }
                     }
                 })
