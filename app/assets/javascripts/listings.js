@@ -5,7 +5,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 })
 
 
-$( document ).ready(function() {
+$( document ).on('turbolinks:load', function() {
   // $('select#listing_category_id>option:eq(1)').attr('selected', true);
   $('#listing_price').val('1.23');
   $('#listing_title').val('Test Title');
