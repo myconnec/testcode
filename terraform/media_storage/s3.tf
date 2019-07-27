@@ -4,7 +4,7 @@ locals {
 
 # Bucket
 resource "aws_s3_bucket" "media_display" {
-  acl           = "private"
+  acl           = "public-read"
   bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
   force_destroy = "${var.APP_ENV != "prd" ? true : false}"
   provider      = "aws.region_1"
