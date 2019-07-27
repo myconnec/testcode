@@ -15,7 +15,19 @@ class CategoriesController < ApplicationController
     end
 
     def show
-    @listings = Listing.where(category_id: params[:id]).order("created_at DESC")
-    @category = Category.find(params[:id])
+        @listings = Listing.where(category_id: params[:id])
+            .where("ending_at > '#{Time.now.to_i}'")
+            .order("created_at DESC")
+
+        @listings.each do | listing |
+            signer = Aws::S3::Presigner.new
+            listing.presigned_media_url = signer.presigned_url(
+              :get_object,
+              bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
+              key: listing.media_file_name
+            )
+        end
+
+        @category = Category.find(params[:id])
     end
 end

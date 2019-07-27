@@ -25,7 +25,7 @@ docker run -d -it -p 9293:9293 \
 connechub_webapp:latest
 
 echo '...waiting for services to start up.'
-secs=$((15))
+secs=$((5))
 while [ $secs -gt 0 ]; do
    echo -ne "$secs\033[0K\r"
    sleep 1

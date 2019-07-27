@@ -1,9 +1,6 @@
-<%
-url = ('https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3.amazonaws.com/' + listing.media_file_name).to_s
-
-link_to (
+<%= link_to (
     videojs_rails sources: {
-    mp4: url
+        mp4: listing.presigned_media_url
     },
     controls: false,
     setup: "{}",

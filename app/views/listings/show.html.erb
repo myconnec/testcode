@@ -2,12 +2,11 @@
     <div class="clear"></div>
     <%= link_to 'Connechub', root_path %> > <%= link_to @listing.category.name, category_path(@listing.category) %> > <%= link_to @listing.subcategory.name, category_subcategory_path(@listing.category, @listing.subcategory) %>
     <hr>
-
     <div class="grid_6">
         <p>
             <div>
                 <%= videojs_rails sources: {
-                    mp4: 'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3-'+ ENV['AWS_REGION'] + '.amazonaws.com/' + @listing.media_file_name
+                    mp4: @presigned_media_url
                 },
                 controls: true,
                 autoplay: false,
@@ -17,6 +16,7 @@
             </div>
             <small><b>Posted By: &nbsp;</b><%= @listing.user.email %></small>
             <br><br><br>
+            <%= @media_url %>
             <%= render 'comments/comment' %>
         </p>
     </div>

@@ -105,7 +105,17 @@ class ListingsController < ApplicationController
       .where("id = '#{params[:id]}'")
       .where("ending_at > '#{Time.now.to_i}'")
       .first
-    @comments = Comment.where(listing_id: @listing).order("created_at DESC")
+
+      @comments = Comment.where(listing_id: @listing).order("created_at DESC")
+
+      # source https://stackoverflow.com/questions/44741473/recommended-way-to-generate-a-presigned-url-to-s3-bucket-in-ruby
+      # source https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#presigned_url-instance_method
+      signer = Aws::S3::Presigner.new
+      @presigned_media_url = signer.presigned_url(
+        :get_object,
+        bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
+        key: @listing.media_file_name
+      )
   end
 
   def edit
@@ -160,7 +170,7 @@ class ListingsController < ApplicationController
   end
 
   def set_s3_direct_post
-    @s3_direct_post = S3_BUCKET.presigned_post(
+    @s3_direct_post = AWS_S3_MEDIA_SOURCE_BUCKET.presigned_post(
       key: "#{SecureRandom.uuid}/${filename}",
       success_action_status: '201'
     )
