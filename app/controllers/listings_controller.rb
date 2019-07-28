@@ -144,8 +144,8 @@ class ListingsController < ApplicationController
     @listings = Listing.search(params)
     signer = Aws::S3::Presigner.new
     @listings.each do | listing |    
-      if !listing.has_attribute?(:presigned_media_url)
-        listing.media_file_name = 'video_not_found.png' # no video found placeholder image
+      if !listing.has_attribute?(:media_file_name)
+        next
       end
 
       listing.presigned_media_url = signer.presigned_url(
