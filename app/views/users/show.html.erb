@@ -27,7 +27,7 @@
               <hr>
               <div class = "grid transitions-enabled">
                 <% if @user.listings.present? %>
-                  <% @user.listings.each do |listing| %>
+                  <% @listings.each do |listing| %>
                       <div class="panel panel-default pin-item">
                           <div class="panel-body">
                             <%= render :partial => 'partials/item_card', locals: {listing: listing}  %>
