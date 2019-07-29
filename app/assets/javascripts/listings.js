@@ -70,7 +70,12 @@ $( document ).on('turbolinks:load', function() {
   });
 
   $('#new_listing').submit(function() {
-    $('#listing_price').attr('disabled', false).val('0.00');
+    if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
+      $('#listing_price').val('0.00').attr('disabled', false);
+      $('#sub_category_cost_container').css("display", "none");
+      return;
+    }
+
     return true;
   });
 
