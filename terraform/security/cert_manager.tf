@@ -1,5 +1,5 @@
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "${var.APP_ENV == "prd" ? "${var.APP_NAME}.com" : "${var.APP_ENV}.${var.APP_NAME}.com"}"
+  domain_name       = "${var.APP_ENV}.${var.APP_NAME}.com"
   validation_method = "DNS"
 
   tags = {

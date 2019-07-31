@@ -3,7 +3,7 @@
 resource "aws_db_instance" "rds" {
   allocated_storage     = 10
   copy_tags_to_snapshot = true
-  deletion_protection   = "${var.APP_ENV == "prd" ? true :false}"
+  deletion_protection   = "${var.APP_ENV == "www" ? true :false}"
   engine                = "mariadb"
   engine_version        = "10.3"
   identifier            = "connechub-${var.APP_ENV}"
@@ -11,8 +11,8 @@ resource "aws_db_instance" "rds" {
   name                  = "connechub_${var.APP_ENV}"
   parameter_group_name  = "default.mariadb10.3"
   password              = "${var.DB_PASS}"
-  publicly_accessible    = "${var.APP_ENV != "prd" ? true :false}"
-  skip_final_snapshot   = "${var.APP_ENV != "prd" ? true :false}"
+  publicly_accessible   = "${var.APP_ENV == "www" ? false : true}"
+  skip_final_snapshot   = "${var.APP_ENV == "www" ? false : true}"
   storage_type          = "gp2"
   username              = "${var.DB_USER}"
 
