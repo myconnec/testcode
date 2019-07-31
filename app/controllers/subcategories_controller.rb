@@ -4,14 +4,11 @@ class SubcategoriesController < ApplicationController
         @listings = Listing
             .where(subcategory_id: params[:id])
             .where("ending_at > '#{Time.now.to_i}'")
+            .where("media_file_name IS NOT NULL")
             .order("created_at DESC")
 
             signer = Aws::S3::Presigner.new
             @listings.each do | listing |    
-                if !listing.has_attribute?(:media_file_name)
-                    next
-                end
-
                 listing.presigned_media_url = signer.presigned_url(
                   :get_object,
                   bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
