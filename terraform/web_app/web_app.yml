@@ -191,10 +191,11 @@
         owner: '{{ local_user }}'
         recurse: true
 
-    - name: Setup database
-      become: '{{ local_user }}'
-      shell: |
-        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:setup
+    # db is already setup, do not overwrite
+    # - name: Setup database
+    #   become: '{{ local_user }}'
+    #   shell: |
+    #     cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:setup
 
     - name: Migrate database
       become: '{{ local_user }}'
