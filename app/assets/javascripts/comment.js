@@ -1,5 +1,5 @@
 /* Disable the submit button until the comment_body has a value. */
-$(document).on('ready turbolinks:load', function(){
+$(document).on('ready', function(){
     /* Disable submit btn by default. */
     $('#submit-btn').prop('disabled', true);
 
