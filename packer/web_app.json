@@ -1,0 +1,39 @@
+{
+    "variables": {
+      "APP_ENV": "",
+      "APP_NAME": "",
+      "aws_access_key": "",
+      "aws_region": "",
+      "aws_secret_key": "",
+      "database_address": "",
+      "media_display_bucket_id": "",
+      "media_source_bucket_id": ""
+    },
+    "builders": [{
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "us-east-1",
+      "source_ami_filter": {
+        "filters": {
+          "virtualization-type": "hvm",
+          "name": "ubuntu-bionic-18.04-amd64-server-*",
+          "root-device-type": "ebs"
+        },
+        "owners": ["099720109477"],
+        "most_recent": true
+      },
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "ch-web-app-{{timestamp}}"
+    }],
+    "provisioners": [{
+      "ansible_env_vars": [
+        "ANSIBLE_HOST_KEY_CHECKING=False",
+        "ANSIBLE_SSH_ARGS='-o ForwardAgent=yes -o ControlMaster=auto -o ControlPersist=60s'",
+        "ANSIBLE_NOCOW=True"
+      ],
+      "type": "ansible",
+      "playbook_file": "../ansible/web_app.yml"
+    }]
+  }

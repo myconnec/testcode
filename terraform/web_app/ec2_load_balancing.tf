@@ -32,7 +32,7 @@ resource "aws_lb" "web_app" {
 ## Load Balancer - Target Group
 
 resource "aws_lb_target_group" "web_app" {
-  name     = "webapplbtargetgroup"
+  name     = "${var.APP_ENV}webapplbtargetgroup"
   port     = 9293
   protocol = "HTTP"
   vpc_id   = "${aws_default_vpc.default.id}"

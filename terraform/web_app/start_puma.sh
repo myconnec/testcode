@@ -1,4 +1,3 @@
 #!/bin/bash +xe
-# typically located ~ /home/ubuntu
-cd ~/connechub
+cd /ubuntu/connechub
 bundle exec puma --bind tcp://0.0.0.0:9293 --daemon

@@ -6,7 +6,8 @@ locals {
 resource "aws_s3_bucket" "media_display" {
   acl           = "public-read"
   bucket        = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
-  force_destroy = "${var.APP_ENV != "www" ? true : false}"
+  # force_destroy = "${var.APP_ENV != "www" ? true : false}"
+  force_destroy = true
   provider      = "aws.region_1"
   region        = "${var.AWS_REGION}"
 
@@ -38,7 +39,8 @@ resource "aws_s3_bucket" "media_display" {
 resource "aws_s3_bucket" "media_source" {
   acl           = "private"
   bucket        = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
-  force_destroy = "${var.APP_ENV != "www" ? true : false}"
+  //force_destroy = "${var.APP_ENV != "www" ? true : false}"
+  force_destroy = true
   provider      = "aws.region_1"
   region        = "${var.AWS_REGION}"
 
