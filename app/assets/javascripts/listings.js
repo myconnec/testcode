@@ -4,20 +4,19 @@ const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2
 })
 
-
-$( document ).on('turbolinks:load', function() {
+$(document).on('ready turbolinks:load', function() {
   // $('select#listing_category_id>option:eq(1)').attr('selected', true);
-  $('#listing_price').val('1.23');
-  $('#listing_title').val('Test Title');
-  $('#listing_city').val('Tampa');
-  $('#listing_state').val('FL');
-  $('#listing_zipcode').val('33612');
-  $('#listing_description').val('Test Description');        
+  // $('#listing_price').val('1.23');
+  // $('#listing_title').val('Test Title');
+  // $('#listing_city').val('Tampa');
+  // $('#listing_state').val('FL');
+  // $('#listing_zipcode').val('33612');
+  // $('#listing_description').val('Test Description');        
 
-  $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
-  $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
-  $('span.CardField-cvc.CardField-child > span > span > input').val('567');
-  $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
+  // $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
+  // $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
+  // $('span.CardField-cvc.CardField-child > span > span > input').val('567');
+  // $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
 
   var getSubcategories = function(category_id){
     var $subcategories = $('#listing_subcategory_id');
