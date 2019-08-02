@@ -115,10 +115,11 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
     background-color: inherit;
     border: inherit;
     box-shadow: inherit;
+    padding: 0px 25px;
   }
   .navbar-nav .open .dropdown-menu > li > a,
   .navbar-nav .open .dropdown-menu .dropdown-header {
-    padding: inherit;
+    padding: 10px 0px;
   }
   .navbar-nav .open .dropdown-menu > li > a {
     line-height: inherit;
