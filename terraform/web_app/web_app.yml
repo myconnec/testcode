@@ -209,85 +209,86 @@
         bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
 
     # TODO make this a S3FS role
+    # No longer needed. S3 is used via pre-signed URLs
 
-    - name: Install system dependencies
-      apt:
-        pkg:
-          - s3fs
-        state: present
+    # - name: Install system dependencies
+    #   apt:
+    #     pkg:
+    #       - s3fs
+    #     state: present
 
-    - name: Copy API keys for S3 mounting into EC2 instance
-      shell: |
-        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
-        chmod 0600 /home/{{ local_user }}/.passwd-s3fs
-        chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs
+    # - name: Copy API keys for S3 mounting into EC2 instance
+    #   shell: |
+    #     aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
+    #     chmod 0600 /home/{{ local_user }}/.passwd-s3fs
+    #     chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs
 
-    # Configure fusermount to enable 'allow_other' s3fs mounting
-    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
-    - name: Configure fusermount
-      command: >
-        sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf
+    # # Configure fusermount to enable 'allow_other' s3fs mounting
+    # # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+    # - name: Configure fusermount
+    #   command: >
+    #     sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf
 
-    # Media Source bucket
+    # # Media Source bucket
 
-    - name: Check if media_source_bucket path exists
-      stat:
-        path: /home/{{ local_user }}/media-source-{{ APP_ENV }}
-      register: media_source_bucket_stats
+    # - name: Check if media_source_bucket path exists
+    #   stat:
+    #     path: /home/{{ local_user }}/media-source-{{ APP_ENV }}
+    #   register: media_source_bucket_stats
 
-    - name: Create media_source_bucket_id directory if it does not exist
-      file:
-        state: directory
-        path: /home/{{ local_user }}/media-source-{{ APP_ENV }}
-        owner: "{{ local_user }}"
-        group: "{{ local_user }}"
-        mode: 0755
-      when: media_source_bucket_stats.stat.exists == false
+    # - name: Create media_source_bucket_id directory if it does not exist
+    #   file:
+    #     state: directory
+    #     path: /home/{{ local_user }}/media-source-{{ APP_ENV }}
+    #     owner: "{{ local_user }}"
+    #     group: "{{ local_user }}"
+    #     mode: 0755
+    #   when: media_source_bucket_stats.stat.exists == false
 
-    - name: Mount media_source_bucket_id to local file system
-      become: '{{ local_user }}'
-      command: >
-        s3fs \
-          -d \
-          {{ media_source_bucket_id }} \
-          /home/{{ local_user }}/media-source-{{ APP_ENV }} \
-          -o endpoint={{ AWS_REGION }} \
-          -o use_cache=/home/ubuntu \
-          -o multireq_max=5 \
-          -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
-          -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
-          -o nonempty \
-          -o allow_other
-      when: media_source_bucket_stats.stat.exists == false
+    # - name: Mount media_source_bucket_id to local file system
+    #   become: '{{ local_user }}'
+    #   command: >
+    #     s3fs \
+    #       -d \
+    #       {{ media_source_bucket_id }} \
+    #       /home/{{ local_user }}/media-source-{{ APP_ENV }} \
+    #       -o endpoint={{ AWS_REGION }} \
+    #       -o use_cache=/home/ubuntu \
+    #       -o multireq_max=5 \
+    #       -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
+    #       -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
+    #       -o nonempty \
+    #       -o allow_other
+    #   when: media_source_bucket_stats.stat.exists == false
 
-    # Media Display bucket
+    # # Media Display bucket
 
-    - name: Check if media_display_bucket_id path exists
-      stat:
-        path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
-      register: media_display_bucket_stats
+    # - name: Check if media_display_bucket_id path exists
+    #   stat:
+    #     path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
+    #   register: media_display_bucket_stats
 
-    - name: Create media_display_bucket_id directory if it does not exist
-      file:
-        state: directory
-        path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
-        owner: "{{ local_user }}"
-        group: "{{ local_user }}"
-        mode: 0755
-      when: media_display_bucket_stats.stat.exists == false
+    # - name: Create media_display_bucket_id directory if it does not exist
+    #   file:
+    #     state: directory
+    #     path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
+    #     owner: "{{ local_user }}"
+    #     group: "{{ local_user }}"
+    #     mode: 0755
+    #   when: media_display_bucket_stats.stat.exists == false
 
-    - name: Mount media_display_bucket_id to local file system
-      become: '{{ local_user }}'
-      command: |
-        s3fs \
-          -d \
-          {{ media_display_bucket_id }} \
-          /home/{{ local_user }}/{{ APP_NAME }}/public/system \
-          -o endpoint={{ AWS_REGION }} \
-          -o use_cache=/home/ubuntu \
-          -o multireq_max=5 \
-          -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
-          -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
-          -o nonempty \
-          -o allow_other
-      when: media_display_bucket_stats.stat.exists == false
+    # - name: Mount media_display_bucket_id to local file system
+    #   become: '{{ local_user }}'
+    #   command: |
+    #     s3fs \
+    #       -d \
+    #       {{ media_display_bucket_id }} \
+    #       /home/{{ local_user }}/{{ APP_NAME }}/public/system \
+    #       -o endpoint={{ AWS_REGION }} \
+    #       -o use_cache=/home/ubuntu \
+    #       -o multireq_max=5 \
+    #       -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
+    #       -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
+    #       -o nonempty \
+    #       -o allow_other
+    #   when: media_display_bucket_stats.stat.exists == false
