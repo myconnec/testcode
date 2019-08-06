@@ -6,7 +6,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 
 $(document).on('ready turbolinks:load', function() {
   if (location.host != 'www.connechub.com') {
-    $('select#listing_category_id>option:eq(1)').attr('selected', true);
+    // $('select#listing_category_id>option:eq(1)').attr('selected', true);
     $('#listing_price').val('1.23');
     $('#listing_title').val('Test Title');
     $('#listing_city').val('Tampa');

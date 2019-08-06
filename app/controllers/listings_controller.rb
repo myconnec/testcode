@@ -93,13 +93,14 @@ class ListingsController < ApplicationController
     file_name = File.dirname(file_name) + '/' + File.basename(file_name, '.*') + '.mp4'
     @listing.media_file_name = file_name
     @listing.media_updated_at = Time.now.to_i
+    @listing.save
 
     if !@listing.save
       flash[:alert] = 'An error occured while updating your Listing with the video.'
       return redirect_to action: "upload", id: @listing.id
     end
 
-    redirect_to @listing
+    return render :nothing => true, :status => 200
   end
 
   def show
