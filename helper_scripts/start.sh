@@ -13,7 +13,7 @@ docker run -d -p 3306:3306 \
 connechub_mariadb:latest
 
 echo '...starting web app container.'
-docker run -d -it -p 9293:9293 \
+docker run -d -it -p 80:9293 \
 --cap-add SYS_ADMIN \
 --cpus=1 \
 --device /dev/fuse \
