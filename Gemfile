@@ -79,7 +79,7 @@ group :development do
   # Byebug is a Ruby debugger. It's implemented using the TracePoint C API for execution control and the Debug Inspector C API for call stack navigation.
   gem 'byebug'
   # Preloads your application so things like console, rake and tests run faster
-  gem 'spring'
+  # gem 'spring'
 end
 
 # For Test only
