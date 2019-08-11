@@ -5,7 +5,7 @@
             <div class="panel-body">
               <%= render :partial => 'partials/item_card', locals: {listing: listing}  %>
             </div>
-              <div class="panel-footer pin-content"> 
+              <div class="panel-footer pin-content">
               <div class="price"><b>$<%= listing.price %></b></div>
               <div class="name"><b><%= link_to listing.title, listing %></b></div>
               <div class="description"><%= listing.city %>, <%= listing.state %></div>
@@ -23,22 +23,22 @@
 </div>
 <br>
 
-<div class="rightbar0">
+<div class="rightbar0 col-xs-6 col-sm-4 col-md-2">
   <div class="rightbar">
     <div align="center" class="rightbar-top">
       <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
       <div class="space"><%= text_field_tag :search, nil, placeholder: 'search', class: "form-control", style: 'width: 150px; height: 30px' %></div>
-  
-      <div class="space"><%= 
+
+      <div class="space"><%=
       #text_field_tag :location, nil, placeholder: 'near', class: "form-control" , style: 'width: 150px; height: 30px'
       %></div>
-  
+
 	    <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
-	 
+
       <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 80px; height: 30px'  %>
     </div>
 
-  <% end %>	
+  <% end %>
   </div>
   <br>
 

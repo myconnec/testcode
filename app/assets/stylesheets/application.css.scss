@@ -964,8 +964,11 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 
 .rightbar0 {
   float: right;
-  width: 180px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
 
 .rightbar {
    width: 180px;
@@ -1160,5 +1163,5 @@ body > div > div > div > div > ul {
   #sign-icon{
     margin-right:5px;
     color:#317EAC;
-  } 
+  }
 }

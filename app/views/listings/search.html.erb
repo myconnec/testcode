@@ -2,7 +2,7 @@
     <%= link_to 'Connechub', root_path %>
     <hr>
 
-    <div class="leftbar">
+    <div class="leftbar_old col-xs-6 col-sm-8 col-md-10">
 
     <div class = "grid transitions-enabled">
         <% if @listings.present? %>
@@ -31,7 +31,7 @@
 </div>
 <br>
 
-<div class="rightbar0">
+<div class="rightbar0 col-xs-6 col-sm-4 col-md-2">
         <div class="rightbar">
             <div align="center" class="rightbar-top">
                 <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
