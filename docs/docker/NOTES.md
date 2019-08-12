@@ -30,7 +30,6 @@ docker run -d -p 3306:3306 \
 -e MYSQL_DATABASE=connechub_dev \
 --memory=512M \
 --name mariadb \
---net connechub \
 connechub_mariadb:latest
 
 --mount type=bind,source="$(pwd)"/docker/mariadb/data_dir,target=/var/lib/mysql \
@@ -44,7 +43,6 @@ docker run -d -it -p 3000:3000 \
 --memory=512M \
 --mount type=bind,source="$(pwd)"/,target=/app \
 --name web_app \
---net connechub \
 --entrypoint "rails" connechub_webapp:latest server -e development \
 --binding 0.0.0.0
 

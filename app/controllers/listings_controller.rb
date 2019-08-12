@@ -100,6 +100,7 @@ class ListingsController < ApplicationController
       return redirect_to action: "upload", id: @listing.id
     end
 
+    flash[:notice] = "Video has been uploaded. You will recieve an email once processing completed."
     return render :nothing => true, :status => 200
   end
 

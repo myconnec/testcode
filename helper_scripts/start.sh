@@ -8,7 +8,6 @@ docker run -d -p 3306:3306 \
 --cpus=1 \
 --memory=512M \
 --name mariadb \
---net connechub \
 --rm \
 connechub_mariadb:latest
 
@@ -20,7 +19,6 @@ docker run -d -it -p 80:9293 \
 --memory=512M \
 --mount type=bind,source="$(pwd)"/,target=/app \
 --name web_app \
---net connechub \
 --rm \
 connechub_webapp:latest
 
