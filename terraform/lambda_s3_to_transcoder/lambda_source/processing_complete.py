@@ -1,78 +1,52 @@
-# source http://blog.rambabusaravanan.com/send-smtp-email-using-aws-lambda/ https://gist.github.com/rambabusaravanan/dfa2b80369c89ce7517855f4094367e6
-import smtplib
+# source http://blog.rambabusaravanan.com/send-smtp-email-using-aws-lambda/
+# source https://gist.github.com/rambabusaravanan/dfa2b80369c89ce7517855f4094367e6
+import email.message
 import os
+import smtplib
 
-# Create the plain-text and HTML version of your message
-def craft_message():
-    # body = body + " filename: <a href=\"https://connechub.com/listings/" + event['Records'][0]['s3']['object']['key'] + "\" target=\"_new\">." 
-
-    message = MIMEMultipart("alternative")
-
-    text = """\
-    Hi,
-    How are you?
-    ConnecHub has many great Listings!
-    https://connechub.com"""
-
-    html = """\
+def msg_content():
+    content = """
     <html>
-    <body>
-        <p>Hi,<br>
-        How are you?<br>
-        <a href="https://connechub.com">ConnecHub</a> 
-        has many great Listings!
-        </p>
-    </body>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <title>A message from ConnecHub.</title>
+        </head>
+        <body>
+            Your listing is ready. <a href="https://www.connechub.com/listings" target="_new">Click here</a> to view it.
+        </body>
     </html>
     """
 
-    # Turn these into plain/html MIMEText objects
-    part1 = MIMEText(text, "plain")
-    part2 = MIMEText(html, "html")
+    return content
 
-    # Add HTML/plain-text parts to MIMEMultipart message
-    # The email client will try to render the last part first
-    message.attach(part1)
-    message.attach(part2)
+# def send_html_email(host, port, username, password, subject, body, mail_to, message, mail_from = None, reply_to = None):
+def send_html_email(host, port, username, password, mail_to, mail_from = 'admin@connechub.com'):
+   
+    message = 'A message fromo ConnecHub.'
 
-    return message
+    msg = email.message.Message()
+    msg['Subject'] = 'A message from ConnecHub.'
+    msg['From'] = mail_from
+    msg['To'] = mail_to
+    msg.add_header('Content-Type', 'text/html')
+    msg.set_payload(msg_content())
 
-def send_email(host, port, username, password, subject, body, mail_to, message, mail_from = None, reply_to = None):
-    if mail_from is None: mail_from = username
-    if reply_to is None: reply_to = mail_to
-
-    message = """From: %s\nTo: %s\nReply-To: %s\nSubject: %s\n\n%s""" % (mail_from, mail_to, reply_to, subject, body)
-    print (message)
-    try:
-        server = smtplib.SMTP(host, port)
-        server.ehlo()
-        server.starttls()
-        server.login(username, password)
-        server.sendmail(mail_from, mail_to, message)
-        server.close()
-        return True
-    except Exception as ex:
-        print (ex)
-        return False
+    server = smtplib.SMTP(host, port)
+    server.starttls()
+    
+    # Login Credentials for sending the mail
+    server.login(username, password)
+    server.sendmail(msg['From'], [msg['To']], msg.as_string())
 
 def lambda_handler(event, context):
-
-    # initialize variables
-    # body = event['body']
-    # reply_to = event['queryStringParameters'].get('reply')
-    # subject = event['queryStringParameters']['subject']
-    body = os.environ['SMTPBODY']
     host = os.environ['SMTPHOST']
-    mail_from = os.environ.get('MAIL_FROM')
-    mail_from = os.environ['SMTPREPLYTO']
-    mail_to = os.environ['MAIL_TO']     # separate multiple recipient by comma. eg: "abc@gmail.com, xyz@gmail.com"
-    origin = os.environ.get('ORIGIN')
-    password = os.environ['PASSWORD']
     port = os.environ['SMTPPORT']
-    reply_to = os.environ['SMTPREPLYTO']
-    subject = os.environ['SMTPSUBJECT']
     username = os.environ['USERNAME']
-    message = craft_message()
+    password = os.environ['PASSWORD']
+
+    mail_from = os.environ['SMTPREPLYTO']
+    mail_to = os.environ['MAIL_TO']
 
     # send mail
-    return send_email(host, port, username, password, subject, body, mail_to, message, mail_from, reply_to)
+    #  def send_html_email(host, port, username, password, subject, body, mail_to, message, mail_from, reply_to):
+    return send_html_email(host, port, username, password, mail_to, mail_from)
