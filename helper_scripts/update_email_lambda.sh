@@ -1,7 +1,7 @@
 #!/bin/bash +xe
 # source https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function
 
-lambda_name="test_lambda_fn"
+lambda_name=${processing_complete_lambda_name}
 
 echo -e "\nEnsuring pre-reqs...\n"
 pip install --user virtualenv
@@ -17,9 +17,12 @@ deactivate
 cd ../../
 
 echo -e "\nBuilding the processing complete email sending lambda...\n"
-cp ./terraform/lambda_s3_to_transcoder/lambda_source/processing_complete.py ./lambda_function.py
+cp -r ./terraform/lambda_s3_to_transcoder/lambda_source/processing_complete.py ./lambda_function.py
+cp -r ./.tmp/${lambda_name}/lib/python2.7/site-packages/pymysql ./pymysql
 chmod 755 ./lambda_function.py
-zip -r ./${lambda_name}.zip ./.tmp/${lambda_name}/lib/python2.7/site-packages/pymysql ./lambda_function.py
+chmod 755 ./pymysql -R
+
+zip -r ./${lambda_name}.zip ./pymysql ./lambda_function.py
 
 echo -e "\n...pushing update...\n"
 aws lambda update-function-code \
@@ -28,7 +31,8 @@ aws lambda update-function-code \
     --publish
 
 echo -e "\n...removing tmp resource...\n"
-rm -f ./lambda_function.py
-rm -f ./${lambda_name}.zip
+rm -rf ./pymysql
+rm -rf ./lambda_function.py
+rm -rf ./${lambda_name}.zip
 
 echo -e "\n...done.\n"
