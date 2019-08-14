@@ -36,6 +36,24 @@ module "lambda_s3_to_transcoder" {
   video_process_media_source_bucket_arn = "${module.media_storage.media_source_bucket_arn}"
 }
 
+module "lambda_s3_to_email" {
+  source  = "./terraform/lambda_s3_to_email/"
+  version = "0.1.0"
+
+  # SMTP creds
+  SMTP_FROM = "${var.SES_SMTP_SENDER}"
+  SMTP_HOST = "${var.SES_SMTP_ADDRESS}"
+  SMTP_PASS = "${var.SES_SMTP_PASSWORD}"
+  SMTP_PORT = "${var.SES_SMTP_PORT}"
+  SMTP_USER = "${var.SES_SMTP_USERNAME}"
+
+  # SQL creds
+  SQL_HOST = "${var.DB_HOST}"
+  SQL_PASS = "${var.DB_PASS}"
+  SQL_SCHE = "${var.DB_SCHE}"
+  SQL_USER = "${var.DB_USER}"
+}
+
 module "security" {
   source  = "./terraform/security"
   version = "0.3.5"
