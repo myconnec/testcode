@@ -1,10 +1,30 @@
 # source http://blog.rambabusaravanan.com/send-smtp-email-using-aws-lambda/
 # source https://gist.github.com/rambabusaravanan/dfa2b80369c89ce7517855f4094367e6
+# source https://pynative.com/python-mysql-database-connection/
+# source https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function
 import email.message
 import os
+import pymysql
 import smtplib
+import sys
 
-def msg_content():
+def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
+
+    try:
+        connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
+        db_info = connection.get_server_info()
+        cursor = connection.cursor()
+        cursor.execute("SELECT id, media_file_name FROM listings WHERE media_file_name = '" + event['Records'][0]['s3']['object']['key'] + "';")
+        record = cursor.fetchone()
+        cursor.close()
+        connection.close()
+    except:
+        print("ERROR: Could not connect to MySql instance.")
+        sys.exit()
+
+    return {'id' : record[0], 'media_file_name' : record[1]}
+
+def msg_content(listing):
     content = """
     <html>
         <head>
@@ -12,24 +32,20 @@ def msg_content():
             <title>A message from ConnecHub.</title>
         </head>
         <body>
-            Your listing is ready. <a href="https://www.connechub.com/listings" target="_new">Click here</a> to view it.
+            Your listing is ready. <a href="https://www.connechub.com/listings/""" + str(listing['id']) + """" target="_new">Click here</a> to view it.
         </body>
     </html>
     """
 
     return content
 
-# def send_html_email(host, port, username, password, subject, body, mail_to, message, mail_from = None, reply_to = None):
-def send_html_email(host, port, username, password, mail_to, mail_from = 'admin@connechub.com'):
-   
-    message = 'A message fromo ConnecHub.'
-
+def send_html_email(host, port, username, password, mail_to, mail_from = 'admin@connechub.com', message = 'Placeholder message.'):
     msg = email.message.Message()
     msg['Subject'] = 'A message from ConnecHub.'
     msg['From'] = mail_from
     msg['To'] = mail_to
     msg.add_header('Content-Type', 'text/html')
-    msg.set_payload(msg_content())
+    msg.set_payload(message)
 
     server = smtplib.SMTP(host, port)
     server.starttls()
@@ -39,14 +55,28 @@ def send_html_email(host, port, username, password, mail_to, mail_from = 'admin@
     server.sendmail(msg['From'], [msg['To']], msg.as_string())
 
 def lambda_handler(event, context):
-    host = os.environ['SMTPHOST']
-    port = os.environ['SMTPPORT']
-    username = os.environ['USERNAME']
-    password = os.environ['PASSWORD']
+    smpt_host = os.environ['SMTP_HOST']
+    smpt_port = os.environ['SMTP_PORT']
+    smpt_user = os.environ['SMTP_USER']
+    smpt_pass = os.environ['SMTP_PASS']
 
-    mail_from = os.environ['SMTPREPLYTO']
-    mail_to = os.environ['MAIL_TO']
+    mail_from = os.environ['SMTP_FROM']
+    mail_to = os.environ['SMTP_TO']
+
+    sql_host = os.environ['SQL_HOST']
+    sql_user = os.environ['SQL_USER']
+    sql_pass = os.environ['SQL_PASS']
+    sql_sche = os.environ['SQL_SCHE']
+
+    # get Listing data from DB
+
+    listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
+
+    # create message
+    message = msg_content(listing)
 
     # send mail
-    #  def send_html_email(host, port, username, password, subject, body, mail_to, message, mail_from, reply_to):
-    return send_html_email(host, port, username, password, mail_to, mail_from)
+    send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_to, mail_from, message)
+
+    # function response
+    return {'status': 'success', 'code': 200}

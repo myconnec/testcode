@@ -1,6 +1,7 @@
 # Editor/IDE metadata
 .idea/
 .vscode/
+.tmp/
 
 # Test and misc files
 *.rbc
