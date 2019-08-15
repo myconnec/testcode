@@ -43,7 +43,6 @@ module "lambda_s3_to_email" {
   # APP vars
   APP_ENV    = "${var.APP_ENV}"
   APP_NAME   = "${var.APP_NAME}"
-  AWS_REGION = "${var.AWS_REGION}"
 
   # SMTP creds
   SMTP_FROM = "${var.SES_SMTP_SENDER}"
