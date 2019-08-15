@@ -2,7 +2,7 @@ resource "aws_lambda_function" "media_processing_complete_email" {
   environment {
     variables = {
       # SMTP creds and defaults
-      SMTP_FROM = "${var.SMTP_SENDER}"
+      SMTP_FROM = "${var.SMTP_FROM}"
       SMTP_HOST = "${var.SMTP_HOST}"
       SMTP_PASS = "${var.SMTP_PASS}"
       SMTP_PORT = "${var.SMTP_PORT}"
@@ -16,7 +16,6 @@ resource "aws_lambda_function" "media_processing_complete_email" {
     }
   }
 
-resource "aws_lambda_function" "media_processing_complete_email" {
   function_name    = "${var.APP_NAME}_media_processing_complete_email_${var.APP_ENV}"
   handler          = "index"
   role             = "${aws_iam_role.lambda_role.arn}"

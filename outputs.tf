@@ -42,8 +42,8 @@ output "media_source_bucket_arn" {
   value = "${module.media_storage.media_source_bucket_arn}"
 }
 
-output "lambda_s3_to_transcoder_s3_to_transcoder_function_name" {
-  value = "${module.lambda_s3_to_transcoder.lambda_s3_to_transcoder_s3_to_transcoder_function_name}"
+output "lambda_s3_to_transcoder_lambda_function_name" {
+  value = "${module.lambda_s3_to_transcoder.lambda_s3_to_transcoder_lambda_function_name}"
 }
 
 output "route53_record_subdomain_name" {

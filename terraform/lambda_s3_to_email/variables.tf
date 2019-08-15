@@ -1,3 +1,9 @@
+# APP vars
+
+variable "APP_ENV" {}
+
+variable "APP_NAME" {}
+
 # SMTP vars
 variable "SMTP_FROM" {
 
@@ -30,7 +36,6 @@ variable "SQL_USER" {
 }
 
 # AWS resources
-
 variable "video_process_media_display_bucket_arn" {
 
 }

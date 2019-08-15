@@ -40,6 +40,11 @@ module "lambda_s3_to_email" {
   source  = "./terraform/lambda_s3_to_email/"
   version = "0.1.0"
 
+  # APP vars
+  APP_ENV    = "${var.APP_ENV}"
+  APP_NAME   = "${var.APP_NAME}"
+  AWS_REGION = "${var.AWS_REGION}"
+
   # SMTP creds
   SMTP_FROM = "${var.SES_SMTP_SENDER}"
   SMTP_HOST = "${var.SES_SMTP_ADDRESS}"
