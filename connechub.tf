@@ -52,6 +52,9 @@ module "lambda_s3_to_email" {
   SQL_PASS = "${var.DB_PASS}"
   SQL_SCHE = "${var.DB_SCHE}"
   SQL_USER = "${var.DB_USER}"
+
+  # AWS Resource
+  video_process_media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
 }
 
 module "security" {

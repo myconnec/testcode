@@ -3,17 +3,16 @@ resource "aws_lambda_function" "media_processing_complete_email" {
     variables = {
       # SMTP creds and defaults
       SMTP_FROM = "${var.SMTP_SENDER}"
-      SMTP_HOST = ""
-      SMTP_PASS = ""
-      SMTP_PORT = ""
-      SMTP_TO = "" # TODO Get this from the DB during exection
-      SMTP_USER = ""
+      SMTP_HOST = "${var.SMTP_HOST}"
+      SMTP_PASS = "${var.SMTP_PASS}"
+      SMTP_PORT = "${var.SMTP_PORT}"
+      SMTP_USER = "${var.SMTP_USER}"
 
       # SQL creds
-      SQL_HOST = ""
-      SQL_PASS = ""
-      SQL_SCHE = ""
-      SQL_USER = ""
+      SQL_HOST = "${var.SQL_HOST}"
+      SQL_PASS = "${var.SQL_PASS}"
+      SQL_SCHE = "${var.SQL_SCHE}"
+      SQL_USER = "${var.SQL_USER}"
     }
   }
 
