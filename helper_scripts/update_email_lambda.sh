@@ -20,10 +20,10 @@ echo -e "\nBuilding the processing complete email sending lambda...\n"
 zip -r ./${lambda_name}.zip ./pymysql ./index.py
 
 echo -e "\n...pushing update...\n"
-# aws lambda update-function-code \
-#     --function-name ${lambda_name} \
-#     --zip-file "fileb://${lambda_name}.zip" \
-#     --publish
+aws lambda update-function-code \
+    --function-name ${lambda_name} \
+    --zip-file "fileb://${lambda_name}.zip" \
+    --publish
 
 echo -e "\n...removing tmp resource...\n"
 rm -rf ./.tmp/

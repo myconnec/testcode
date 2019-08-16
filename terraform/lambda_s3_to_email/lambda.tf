@@ -16,8 +16,9 @@ resource "aws_lambda_function" "media_processing_complete_email" {
     }
   }
 
+  filename         = "${data.archive_file.lambda_zip.output_path}"
   function_name    = "${var.APP_NAME}_media_processing_complete_email_${var.APP_ENV}"
-  handler          = "index"
+  handler          = "index.lambda_handler"
   role             = "${aws_iam_role.lambda_role.arn}"
   runtime          = "python3.7"
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
@@ -28,5 +29,5 @@ resource "aws_lambda_permission" "allow_bucket" {
   action        = "lambda:InvokeFunction"
   function_name = "${aws_lambda_function.media_processing_complete_email.arn}"
   principal     = "s3.amazonaws.com"
-  source_arn    = "${var.video_process_media_display_bucket_arn}"
+  source_arn    = "${var.media_display_bucket_arn}"
 }

@@ -36,31 +36,6 @@ module "lambda_s3_to_transcoder" {
   video_process_media_source_bucket_arn = "${module.media_storage.media_source_bucket_arn}"
 }
 
-module "lambda_s3_to_email" {
-  source  = "./terraform/lambda_s3_to_email/"
-  version = "0.1.0"
-
-  # APP vars
-  APP_ENV    = "${var.APP_ENV}"
-  APP_NAME   = "${var.APP_NAME}"
-
-  # SMTP creds
-  SMTP_FROM = "${var.SES_SMTP_SENDER}"
-  SMTP_HOST = "${var.SES_SMTP_ADDRESS}"
-  SMTP_PASS = "${var.SES_SMTP_PASSWORD}"
-  SMTP_PORT = "${var.SES_SMTP_PORT}"
-  SMTP_USER = "${var.SES_SMTP_USERNAME}"
-
-  # SQL creds
-  SQL_HOST = "${var.DB_HOST}"
-  SQL_PASS = "${var.DB_PASS}"
-  SQL_SCHE = "${var.DB_SCHE}"
-  SQL_USER = "${var.DB_USER}"
-
-  # AWS Resource
-  video_process_media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
-}
-
 module "security" {
   source  = "./terraform/security"
   version = "0.3.5"
@@ -88,4 +63,31 @@ module "web_app" {
   media_source_bucket_id  = "${module.media_storage.media_source_bucket_id}"
 
   security_tls_arn = "${module.security.tls_arn}"
+}
+
+# Needs RDS host to work, so must be set up after web_app
+module "lambda_s3_to_email" {
+  source  = "./terraform/lambda_s3_to_email/"
+  version = "0.1.0"
+
+  # APP vars
+  APP_ENV    = "${var.APP_ENV}"
+  APP_NAME   = "${var.APP_NAME}"
+
+  # SMTP creds
+  SMTP_FROM = "${var.SES_SMTP_SENDER}"
+  SMTP_HOST = "${var.SES_SMTP_ADDRESS}"
+  SMTP_PASS = "${var.SES_SMTP_PASSWORD}"
+  SMTP_PORT = "${var.SES_SMTP_PORT}"
+  SMTP_USER = "${var.SES_SMTP_USERNAME}"
+
+  # SQL creds
+  SQL_HOST = "${module.web_app.aws_db_instance_rds_address}"
+  SQL_PASS = "${var.DB_PASS}"
+  SQL_SCHE = "${var.DB_SCHE}"
+  SQL_USER = "${var.DB_USER}"
+
+  # AWS Resource
+  media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
+  media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
 }

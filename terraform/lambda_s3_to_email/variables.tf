@@ -36,6 +36,7 @@ variable "SQL_USER" {
 }
 
 # AWS resources
-variable "video_process_media_display_bucket_arn" {
 
-}
+variable "media_display_bucket_id" {}
+
+variable "media_display_bucket_arn" {}

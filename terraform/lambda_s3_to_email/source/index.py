@@ -14,7 +14,7 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
         connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
         db_info = connection.get_server_info()
         cursor = connection.cursor()
-        cursor.execute("SELECT id, media_file_name FROM listings WHERE media_file_name = '" + event['Records'][0]['s3']['object']['key'] + "';")
+        cursor.execute("SELECT id, ademail, media_file_name FROM listings WHERE media_file_name = '" + event['Records'][0]['s3']['object']['key'] + "';")
         record = cursor.fetchone()
         cursor.close()
         connection.close()
@@ -22,7 +22,7 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
         print("ERROR: Could not connect to MySql instance.")
         sys.exit()
 
-    return {'id' : record[0], 'media_file_name' : record[1]}
+    return {'id' : record[0], 'ademail': record[1], 'media_file_name' : record[2]}
 
 def msg_content(listing):
     content = """
@@ -39,11 +39,11 @@ def msg_content(listing):
 
     return content
 
-def send_html_email(host, port, username, password, mail_to, mail_from = 'admin@connechub.com', message = 'Placeholder message.'):
+def send_html_email(host, port, username, password, mail_from = 'admin@connechub.com', message = 'Placeholder message.', listing = {}):
     msg = email.message.Message()
     msg['Subject'] = 'A message from ConnecHub.'
     msg['From'] = mail_from
-    msg['To'] = mail_to
+    msg['To'] = listing['ademail'] # user email
     msg.add_header('Content-Type', 'text/html')
     msg.set_payload(message)
 
@@ -61,7 +61,6 @@ def lambda_handler(event, context):
     smpt_pass = os.environ['SMTP_PASS']
 
     mail_from = os.environ['SMTP_FROM']
-    mail_to = os.environ['SMTP_TO']
 
     sql_host = os.environ['SQL_HOST']
     sql_user = os.environ['SQL_USER']
@@ -76,7 +75,7 @@ def lambda_handler(event, context):
     message = msg_content(listing)
 
     # send mail
-    send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_to, mail_from, message)
+    send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_from, message, listing)
 
     # function response
     return {'status': 'success', 'code': 200}

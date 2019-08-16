@@ -9,6 +9,16 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
   policy_arn = "${aws_iam_policy.lambda_logging.arn}"
 }
 
+resource "aws_iam_role_policy_attachment" "rds_access" {
+  role       = "${aws_iam_role.lambda_role.name}"
+  policy_arn = "${data.aws_iam_policy.rds_access.arn}"
+}
+
+resource "aws_iam_role_policy_attachment" "basic_exec" {
+  role       = "${aws_iam_role.lambda_role.name}"
+  policy_arn = "${data.aws_iam_policy.basic_exec.arn}"
+}
+
 ## Policy
 
 resource "aws_iam_policy" "lambda_logging" {
@@ -23,7 +33,7 @@ resource "aws_iam_policy" "lambda_logging" {
     {
         "Effect": "Allow",
         "Action": [
-            "s3:List*",
+            "s3:List*"
         ],
         "Resource": "*"
     },
@@ -49,24 +59,6 @@ resource "aws_iam_policy" "lambda_logging" {
             "s3:ListBucket",
             "s3:*MultipartUpload*",
             "s3:Get*"
-        ],
-        "Resource": "*"
-    },
-    {
-        "Sid": "2",
-        "Effect": "Allow",
-        "Action": "sns:Publish",
-        "Resource": "*"
-    },
-    {
-        "Sid": "3",
-        "Effect": "Deny",
-        "Action": [
-            "s3:*Delete*",
-            "s3:*Policy*",
-            "sns:*Remove*",
-            "sns:*Delete*",
-            "sns:*Permission*"
         ],
         "Resource": "*"
     }

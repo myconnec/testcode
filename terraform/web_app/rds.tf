@@ -8,7 +8,7 @@ resource "aws_db_instance" "rds" {
   engine_version        = "10.3"
   identifier            = "connechub-${var.APP_ENV}"
   instance_class        = "db.t2.micro"
-  name                  = "connechub_${var.APP_ENV}"
+  name                  = "connechub"
   parameter_group_name  = "default.mariadb10.3"
   password              = "${var.DB_PASS}"
   publicly_accessible   = "${var.APP_ENV == "www" ? false : true}"

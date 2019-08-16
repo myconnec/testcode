@@ -119,10 +119,11 @@ resource "aws_security_group" "mysql" {
   name        = "mysql-${random_uuid.provider.result}"
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "tcp"
-    self      = true
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+    self        = true
   }
 
   ingress {
@@ -130,6 +131,13 @@ resource "aws_security_group" "mysql" {
     to_port   = 3306
     protocol  = "tcp"
     self      = true
+  }
+
+  ingress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   lifecycle {
@@ -176,15 +184,15 @@ resource "aws_security_group" "puma" {
     self      = true
   }
 
-  ingress {
-    from_port = 9293
-    to_port   = 9293
-    protocol  = "tcp"
+  # ingress {
+  #   from_port = 9293
+  #   to_port   = 9293
+  #   protocol  = "tcp"
 
-    cidr_blocks = [
-      "${chomp(data.http.local_ip.body)}/32",
-    ]
-  }
+  #   cidr_blocks = [
+  #     "${chomp(data.http.local_ip.body)}/32",
+  #   ]
+  # }
 
   lifecycle {
     create_before_destroy = true

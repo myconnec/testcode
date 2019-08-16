@@ -179,6 +179,16 @@
     - name: Migrate database
       become: '{{ local_user }}'
       shell: |
+        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:schema:load
+
+    - name: Migrate database
+      become: '{{ local_user }}'
+      shell: |
+        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:setup
+
+    - name: Migrate database
+      become: '{{ local_user }}'
+      shell: |
         cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:migrate
 
     - name: Start Rails server
@@ -187,20 +197,19 @@
         cd /home/{{ local_user }}/{{ APP_NAME }}
         bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
 
-    # TODO make this a S3FS role
-    # No longer needed. S3 is used via pre-signed URLs
+    # Configure and mount profile image storage bucket
 
-    - name: Install system dependencies
-      apt:
-        pkg:
-          - s3fs
-        state: present
+    # - name: Install system dependencies
+    #   apt:
+    #     pkg:
+    #       - s3fs
+    #     state: present
 
-    - name: Copy API keys for S3 mounting into EC2 instance
-      shell: |
-        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
-        chmod 0600 /home/{{ local_user }}/.passwd-s3fs
-        chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs
+    # - name: Copy API keys for S3 mounting into EC2 instance
+    #   shell: |
+    #     aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
+    #     chmod 0600 /home/{{ local_user }}/.passwd-s3fs
+    #     chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs
 
     # # Configure fusermount to enable 'allow_other' s3fs mounting
     # # TODO: Consider using the replace, lineinfile or template module rather than running sed.
