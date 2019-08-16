@@ -1,7 +1,7 @@
 # data
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "./terraform/lambda_s3_to_transcoder/lambda_source"
+  source_dir  = "./terraform/lambda_s3_to_transcoder/source"
   output_path = "./terraform/lambda_s3_to_transcoder/index.js.zip"
 }
 

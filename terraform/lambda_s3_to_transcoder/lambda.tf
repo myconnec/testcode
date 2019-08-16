@@ -11,7 +11,7 @@ resource "aws_lambda_function" "s3_to_transcoder" {
     }
   }
 
-  filename         = "./terraform/lambda_s3_to_transcoder/index.js.zip"
+  filename         = "${data.archive_file.lambda_zip.output_path}" #./terraform/lambda_s3_to_transcoder/index.js.zip"
   function_name    = "${var.APP_NAME}_s3_to_transcoder_${var.APP_ENV}"
   handler          = "index.handler"
   role             = "${aws_iam_role.lambda_role.arn}"

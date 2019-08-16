@@ -1,3 +1,4 @@
+// source https://read.acloud.guru/easy-video-transcoding-in-aws-7a0abaaab7b8
 'use strict';
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3({
@@ -30,15 +31,9 @@ exports.handler = function(event, context) {
    Container: 'auto'
   },
   Outputs: [{
-   Key: newKey + '.mp4',
-   // Generic 720p in mp4: 1351620000001-000010
-   // Generic 1080p in mp4: 11351620000001-000001
-   PresetId: '1351620000001-000001', //
-//   ThumbnailPattern: 'thumbs-' + newKey + '-{count}',
-//    Watermarks: [{
-//     InputKey: 'watermarks/logo-horiz-large.png',
-//     PresetWatermarkId: 'BottomRight'
-//    }],
+    Key: newKey + '.mp4',
+    PresetId: '1351620000001-000001',
+    ThumbnailPattern: newKey + '-{count}'
   }]
  };
  console.log('Starting Job');

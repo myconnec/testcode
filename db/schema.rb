@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20190805000001) do
     t.string   "media_content_type", limit: 32
     t.integer  "media_file_size",    limit: 4
     t.datetime "media_updated_at"
-    t.integer  "ending_at",          limit: 4,     default: 1565648030, null: false
+    t.integer  "ending_at",          limit: 4,     default: 1565930552, null: false
     t.integer  "charge_amount",      limit: 4,     default: 0
     t.integer  "charge_complete",    limit: 4,     default: 0
   end
