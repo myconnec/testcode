@@ -26,6 +26,20 @@ resource "aws_s3_bucket" "media_display" {
     max_age_seconds = 3600
   }
 
+  lifecycle_rule {
+    id      = "media_display_lifecycle"
+    enabled = true
+
+    expiration {
+      days = "${var.APP_ENV == "www" ? 1 : 35}"
+    }
+
+    tags = {
+      "rule"      = "log"
+      "autoclean" = "true"
+    }
+  }
+
   tags = {
     app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
@@ -56,6 +70,20 @@ resource "aws_s3_bucket" "media_source" {
     allowed_origins = ["${local.web_host_uri}"]
     expose_headers  = ["ETag"]
     max_age_seconds = 3600
+  }
+
+  lifecycle_rule {
+    id      = "media_source_lifecycle"
+    enabled = true
+
+    expiration {
+      days = "${var.APP_ENV == "www" ? 1 : 35}"
+    }
+
+    tags = {
+      "rule"      = "log"
+      "autoclean" = "true"
+    }
   }
 
   tags = {

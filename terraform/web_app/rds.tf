@@ -9,7 +9,7 @@ resource "aws_db_instance" "rds" {
   engine                  = "mariadb"
   engine_version          = "10.3"
   identifier              = "connechub-${var.APP_ENV}"
-  instance_class          = "db.t2.micro"
+  instance_class          = "db.m1.small"
   maintenance_window      = "Sun:04:30-Sun:05:00"
   name                    = "connechub"
   parameter_group_name    = "default.mariadb10.3"

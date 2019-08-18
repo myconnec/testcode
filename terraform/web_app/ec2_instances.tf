@@ -16,6 +16,8 @@ resource "aws_instance" "web_app" {
     tech    = "Ruby on Rails"
   }
 
+  user_data = "${file("./terraform/web_app/web_app_start.sh")}" # source https://www.bogotobogo.com/DevOps/Terraform/Terraform-terraform-userdata.php
+
   security_groups = [
     "${aws_security_group.mysql.name}",
     "${aws_security_group.puma.name}",

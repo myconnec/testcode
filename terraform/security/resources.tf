@@ -32,7 +32,7 @@ resource "aws_acm_certificate_validation" "cert" {
   validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
 }
 
-## CloudFront (cf) TLS cert
+# CloudFront (cf) TLS cert
 # resource "aws_acm_certificate" "cf_cert" {
 #   domain_name       = "${var.APP_ENV}.${var.APP_NAME}.com"
 #   provider          = "aws.us_east_1"
