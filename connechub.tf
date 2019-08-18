@@ -95,19 +95,28 @@ module "lambda_s3_to_email" {
 
 # source https://github.com/cloudposse/terraform-aws-cloudfront-cdn
 module "cdn" {
-  source             = "git::https://github.com/cloudposse/terraform-aws-cloudfront-cdn.git?ref=master"
-  namespace          = "${var.APP_NAME}"
-  stage              = "${var.APP_ENV}"
-  name               = "${var.APP_NAME}"
-  origin_https_port = "443"
-  parent_zone_name   = "${var.APP_NAME}.com"
-  origin_domain_name = "origin.${var.APP_NAME}.com"
-  geo_restriction_locations = [
-    "US"
-  ]
-  geo_restriction_type = "whitelist"
-  aliases            = [
-    "${var.APP_NAME}.com",
-    "www.${var.APP_NAME}.com"
-  ]
+  source = "git::https://github.com/cloudposse/terraform-aws-cloudfront-cdn.git?ref=master"
+
+  attributes = ["${var.APP_NAME}.com"]
+  name       = "${var.APP_NAME}"
+  namespace  = "${var.APP_NAME}"
+  stage      = "${var.APP_ENV}"
+
+  acm_certificate_arn    = "${module.security.tls_arn}"
+  aliases                = ["${var.APP_ENV}.${var.APP_NAME}.com"]
+  allowed_methods        = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"]
+  cached_methods         = ["GET", "HEAD"]
+  compress               = "true"
+  default_root_object    = ""
+  default_ttl            = 60
+  forward_cookies        = "all"
+  forward_headers        = ["*"]
+  forward_query_string   = "true"
+  max_ttl                = 86400
+  min_ttl                = 0
+  origin_domain_name     = "origin.${var.APP_NAME}.com"
+  origin_protocol_policy = "match-viewer"
+  parent_zone_name       = "${var.APP_NAME}.com"
+  price_class            = "PriceClass_All"
+  viewer_protocol_policy = "redirect-to-https"
 }

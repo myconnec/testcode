@@ -3,10 +3,10 @@
 ## Instances
 
 resource "aws_instance" "web_app" {
-  ami = "${data.aws_ami.ubuntu.id}"
+  ami                  = "${data.aws_ami.ubuntu.id}"
   iam_instance_profile = "${aws_iam_instance_profile.ec2_profile.name}"
-  instance_type = "${var.COMPUTE_SIZE}"
-  key_name = "${var.AWS_PEM_KEY_PAIR}"
+  instance_type        = "${var.COMPUTE_SIZE}"
+  key_name             = "${var.AWS_PEM_KEY_PAIR}"
 
   tags = {
     app     = "connechub"

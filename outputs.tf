@@ -66,6 +66,10 @@ output "route53_record_subdomain_name" {
   value = "${module.web_app.route53_record_subdomain_name}"
 }
 
+output "security_tls_arn" {
+  value = "${module.security.tls_arn}"
+}
+
 output "security_tls_domain_name" {
   value = "${module.security.tls_domain_name}"
 }

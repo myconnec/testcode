@@ -176,10 +176,11 @@
         owner: '{{ local_user }}'
         recurse: true
 
-    - name: Migrate database
-      become: '{{ local_user }}'
-      shell: |
-        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:schema:load
+    # No need to load demo data.
+    # - name: Migrate database
+    #   become: '{{ local_user }}'
+    #   shell: |
+    #     cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:schema:load
 
     - name: Migrate database
       become: '{{ local_user }}'
