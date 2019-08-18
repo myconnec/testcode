@@ -1165,3 +1165,8 @@ body > div > div > div > div > ul {
     color:#317EAC;
   }
 }
+
+/* Use to allow the fee message form-control container ehight to adjust as needed on http[s]://FQDN/listings/new */
+.fee_amount_message {
+  height: initial
+}

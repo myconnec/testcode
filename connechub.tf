@@ -94,21 +94,20 @@ module "lambda_s3_to_email" {
 }
 
 # source https://github.com/cloudposse/terraform-aws-cloudfront-cdn
-# module "cdn" {
-#   source             = "git::https://github.com/cloudposse/terraform-aws-cloudfront-cdn.git?ref=master"
-#   namespace          = "${var.APP_NAME}_${var.APP_ENV}"
-#   stage              = "${var.APP_ENV}"
-#   name               = "${var.APP_NAME}"
-#   origin_https_port = "443"
-#   parent_zone_name   = "${var.APP_NAME}.com"
-#   origin_domain_name = "origin.${var.APP_NAME}.com"
-#   geo_restriction_locations = [
-#     "USA"
-#   ]
-#   geo_restriction_type = "whitelist"
-#   aliases            = [
-#     "${var.APP_NAME}.com",
-#     "www.${var.APP_NAME}.com"
-#   ]
-# }
-
+module "cdn" {
+  source             = "git::https://github.com/cloudposse/terraform-aws-cloudfront-cdn.git?ref=master"
+  namespace          = "${var.APP_NAME}"
+  stage              = "${var.APP_ENV}"
+  name               = "${var.APP_NAME}"
+  origin_https_port = "443"
+  parent_zone_name   = "${var.APP_NAME}.com"
+  origin_domain_name = "origin.${var.APP_NAME}.com"
+  geo_restriction_locations = [
+    "US"
+  ]
+  geo_restriction_type = "whitelist"
+  aliases            = [
+    "${var.APP_NAME}.com",
+    "www.${var.APP_NAME}.com"
+  ]
+}
