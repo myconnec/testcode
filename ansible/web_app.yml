@@ -74,51 +74,51 @@
 
     # Ruby source, build, install, clean up
 
-    # - name: Create a working directory
-    #   file:
-    #     path:  /tmp/build_ruby
-    #     state: directory
-    #     mode: "u+rwx"
+    - name: Create a working directory
+      file:
+        path:  /tmp/build_ruby
+        state: directory
+        mode: "u+rwx"
 
-    # - name: Download Ruby 2.3.8
-    #   get_url:
-    #     url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
-    #     dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
+    - name: Download Ruby 2.3.8
+      get_url:
+        url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
 
-    # - name: Unpack Ruby 2.3.8
-    #   unarchive:
-    #     src: /tmp/build_ruby/ruby-2.3.8.tar.gz
-    #     dest: /tmp/build_ruby/
-    #     remote_src: yes
+    - name: Unpack Ruby 2.3.8
+      unarchive:
+        src: /tmp/build_ruby/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/
+        remote_src: yes
 
-    # - name: Build ruby
-    #   command: >
-    #     {{ item }}
-    #     chdir=/tmp/build_ruby/ruby-2.3.8
-    #     creates=/usr/local/bin/ruby
-    #   with_items:
-    #     - ./configure --enable-shared
-    #     - make
-    #     - make install
+    - name: Build ruby
+      command: >
+        {{ item }}
+        chdir=/tmp/build_ruby/ruby-2.3.8
+        creates=/usr/local/bin/ruby
+      with_items:
+        - ./configure --enable-shared
+        - make
+        - make install
 
-    # - name: Add ruby symlinks
-    #   file:
-    #     src: "/usr/local/bin/{{ item }}"
-    #     dest: "/usr/bin/{{ item }}"
-    #     state: link
-    #     force: yes
-    #   with_items:
-    #     - erb
-    #     - gem
-    #     - irb
-    #     - rake
-    #     - rdoc
-    #     - ruby
+    - name: Add ruby symlinks
+      file:
+        src: "/usr/local/bin/{{ item }}"
+        dest: "/usr/bin/{{ item }}"
+        state: link
+        force: yes
+      with_items:
+        - erb
+        - gem
+        - irb
+        - rake
+        - rdoc
+        - ruby
 
-    # - name: Remove the working directory
-    #   file:
-    #     path:  /tmp/build_ruby
-    #     state: absent
+    - name: Remove the working directory
+      file:
+        path:  /tmp/build_ruby
+        state: absent
 
     # GiT & SSH Configuration
     # TODO this can be a role
@@ -226,10 +226,10 @@
 
     # Start web server. This is the same as the instance's startup user-data
 
-    # - name: Run DB migrations and start the Puma web server
-    #   shell: |
-    #     sudo ubuntu
-    #     cd /home/{{ local_user }}/{{ APP_NAME }}
-    #     ./bin/rake db:migrate
-    #     pkill ruby
-    #     bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
+    - name: Run DB migrations and start the Puma web server
+      shell: |
+        sudo ubuntu
+        cd /home/{{ local_user }}/{{ APP_NAME }}
+        ./bin/rake db:migrate
+        pkill puma
+        bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
