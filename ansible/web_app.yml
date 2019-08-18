@@ -127,7 +127,7 @@
       shell: |
         aws s3 cp s3://connechub-configs/{{ APP_ENV }}/iam_private_key ~/.ssh/iam_private_key
         chmod 0600 ~/.ssh/iam_private_key
-  
+
     - name: Create SSH config
       copy:
         dest: ~/.ssh/config
@@ -175,7 +175,7 @@
 
     # TODO would like to use the bundler module
 
-    - name: Install bunbler and gems
+    - name: Install Ruby Bundler and gems
       shell: |
         cd /home/{{ local_user }}/{{ APP_NAME }}
         gem install bundler -v 1.3.5
@@ -184,6 +184,13 @@
         bundle install
         # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
         # after v 1.4.0: --jobs=5
+
+    - name: Change ownership of web app dir
+      file:
+        path: "/home/{{ local_user }}"
+        group: "{{ local_group }}"
+        owner: "{{ local_user }}"
+        recurse: true
 
    # S3 mount for user profile images
    # TODO this can be a role
@@ -215,14 +222,6 @@
           -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
           -o nonempty \
           -o allow_other
-      when: media_profile_bucket_stats.stat.exists == false
-
-    - name: Change ownership of web app dir
-      file:
-        path: /home/{{ local_user }}
-        group: "{{ local_group }}"
-        owner: "{{ local_user }}"
-        recurse: true
 
     # Start web server. This is the same as the instance's startup user-data
 

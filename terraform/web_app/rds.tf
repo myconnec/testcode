@@ -1,13 +1,14 @@
 # RDS
 
 resource "aws_db_instance" "rds" {
-  allocated_storage       = 10
+  allocated_storage       = 20
   backup_retention_period = 14
   backup_window           = "04:00-04:30"
   copy_tags_to_snapshot   = true
   deletion_protection     = "${var.APP_ENV == "www" ? true :false}"
   engine                  = "mariadb"
   engine_version          = "10.3"
+  final_snapshot_identifier = "connechub-${var.APP_ENV}-final"
   identifier              = "connechub-${var.APP_ENV}"
   instance_class          = "db.t2.small"
   maintenance_window      = "Sun:04:30-Sun:05:00"
