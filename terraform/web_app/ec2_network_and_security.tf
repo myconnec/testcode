@@ -189,6 +189,7 @@ resource "aws_security_group" "puma" {
   #   to_port   = 9293
   #   protocol  = "tcp"
 
+
   #   cidr_blocks = [
   #     "${chomp(data.http.local_ip.body)}/32",
   #   ]
@@ -197,7 +198,6 @@ resource "aws_security_group" "puma" {
   lifecycle {
     create_before_destroy = true
   }
-
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
@@ -206,6 +206,5 @@ resource "aws_security_group" "puma" {
     tech    = "Networking"
     Name    = "puma"
   }
-
   vpc_id = "${aws_default_vpc.default.id}"
 }

@@ -21,4 +21,3 @@ output "media_profile_bucket_id" {
 output "media_profile_bucket_arn" {
   value = "${aws_s3_bucket.media_profile.arn}"
 }
-

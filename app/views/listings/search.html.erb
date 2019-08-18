@@ -36,7 +36,7 @@
             <div align="center" class="rightbar-top">
                 <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
                     <div class="space"><%= text_field_tag :search, nil, placeholder: 'keyword/s', class: "form-control", style: 'width: 150px; height: 30px' %></div>
-                    <div class="space"><%= text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control" , style: 'width: 150px; height: 30px' %></div>
+                    <!--<div class="space"><% #= text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control" , style: 'width: 150px; height: 30px' %></div>-->
                     <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
                     <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 80px; height: 30px'  %>
                 </div>

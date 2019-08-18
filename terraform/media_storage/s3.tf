@@ -99,7 +99,6 @@ resource "aws_s3_bucket" "media_profile" {
   }
 }
 
-
 # ACLs
 
 resource "aws_s3_bucket_public_access_block" "media_display_settings" {

@@ -72,8 +72,8 @@ module "lambda_s3_to_email" {
   version = "0.1.0"
 
   # APP vars
-  APP_ENV    = "${var.APP_ENV}"
-  APP_NAME   = "${var.APP_NAME}"
+  APP_ENV  = "${var.APP_ENV}"
+  APP_NAME = "${var.APP_NAME}"
 
   # SMTP creds
   SMTP_FROM = "${var.SES_SMTP_SENDER}"
@@ -90,7 +90,7 @@ module "lambda_s3_to_email" {
 
   # AWS Resource
   media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
-  media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
+  media_display_bucket_id  = "${module.media_storage.media_display_bucket_id}"
 }
 
 # source https://github.com/cloudposse/terraform-aws-cloudfront-cdn
@@ -111,3 +111,4 @@ module "lambda_s3_to_email" {
 #     "www.${var.APP_NAME}.com"
 #   ]
 # }
+
