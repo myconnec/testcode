@@ -32,7 +32,7 @@ resource "aws_security_group" "http" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "http"
@@ -67,7 +67,7 @@ resource "aws_security_group" "https" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "https"
@@ -105,7 +105,7 @@ resource "aws_security_group" "ssh" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "ssh"
@@ -147,7 +147,7 @@ resource "aws_security_group" "mysql" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "mysql"
@@ -201,7 +201,7 @@ resource "aws_security_group" "puma" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Networking"
     Name    = "puma"

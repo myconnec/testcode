@@ -13,58 +13,50 @@
 
 * Terraform remote state currently has a bug where it only uses ~/.aws/credentials \[default\] credentials. Please ensure they are valid for the AWS account being used.
 
-```bash
-export AWS_REGION=YOUR_REGION_HERE
-echo $AWS_REGION
-terraform init
-terraform workspace list
+load .env k/v's int ENV VAR and esnure they are set.
+
+```sh
+export $(grep -v '^#' .env | xargs)
+printenv | sort | grep APP_*
 ```
 
-## Plan
+Now on to Terraform actions
 
-```bash
+```sh
+terraform init
+terraform workspace list
 terraform plan --out ./out.plan -var-file=.env
+terraform apply -lock=true ./out.plan
+```
+
+For development: `Once Terraform sets up the resources, connect to the RDS database and import the starting point data set.`
+
+Once finished execute the Ansible command to install web app:
+
+```sh
+./helper_scripts/ansible_init_provision.sh
+```
+
+## Destroy
+
+```sh
+terraform destroy -var-file=.env ./
 ```
 
 ## Import Existing Resource
 
-```bash
+```sh
 # tf import varfile location name/arn
 terraform import -var-file=.env module.media_storage.aws_s3_bucket.media_display media-display-dev
 terraform import -var-file=.env module.media_storage.aws_s3_bucket.media_source media-source-dev
 ```
 
-## Apply
-
-```bash
-terraform apply -lock=true ./out.plan
-```
-
-Once finished execute the Ansible command to install web app:
-
-```bash
-./terraform/web_app/web_app.sh \
-    $(terraform output ec2_public_dns) \
-    $(terraform output APP_ENV) \
-    $(terraform output APP_NAME) \
-    $(terraform output AWS_REGION) \
-    $(terraform output media_profile_bucket_id) \
-    $(terraform output database_address) \
-    $(terraform output AWS_PEM_KEY_PAIR)
-```
-
 ## Mark a resource for recreation
 
-```bash
+```sh
 terraform taint -module=web_app aws_instance.web_app
 terraform taint -module=web_app aws_eip.web_app
 terraform taint -module=media_processing aws_elastictranscoder_pipeline.transcoder_pipeline
-```
-
-## Destroy
-
-```bash
-terraform destroy -var-file=.env ./
 ```
 
 ## Common Errors

@@ -43,6 +43,7 @@ module "security" {
 
   APP_ENV  = "${var.APP_ENV}"
   APP_NAME = "${var.APP_NAME}"
+  CONTACT_EMAIL = "${var.CONTACT_EMAIL}"
 
   // this var doesn't do anything inside the module, but it does make this module wait for the DNS record is created BEFORE the TLS cert is created
   web_app_route_53_record = "${module.web_app.route53_record_subdomain_name}"

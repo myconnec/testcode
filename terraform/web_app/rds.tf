@@ -9,12 +9,12 @@ resource "aws_db_instance" "rds" {
   engine                  = "mariadb"
   engine_version          = "10.3"
   identifier              = "connechub-${var.APP_ENV}"
-  instance_class          = "db.m1.small"
+  instance_class          = "db.t2.small"
   maintenance_window      = "Sun:04:30-Sun:05:00"
   name                    = "connechub"
   parameter_group_name    = "default.mariadb10.3"
   password                = "${var.DB_PASS}"
-  publicly_accessible     = "${var.APP_ENV == "www" ? false : true}"
+  publicly_accessible     = true  # 'cause lambda can only access public resources!? This needs fixed
   skip_final_snapshot     = "${var.APP_ENV == "www" ? false : true}"
   storage_encrypted       = true
   storage_type            = "gp2"
@@ -23,7 +23,7 @@ resource "aws_db_instance" "rds" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "RDS"
     tech    = "MariaDB"
   }

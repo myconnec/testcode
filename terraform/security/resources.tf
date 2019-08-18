@@ -8,7 +8,7 @@ resource "aws_acm_certificate" "cert" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "acm"
     tech    = "tls"
     Name    = "${var.APP_NAME}_${var.APP_ENV}_tls_certificate"
@@ -41,7 +41,7 @@ resource "aws_acm_certificate_validation" "cert" {
 #   tags = {
 #     app     = "connechub"
 #     env     = "${var.APP_ENV}"
-#     owner   = "admin@connechub.com"
+#     owner   = "${var.CONTACT_EMAIL}"
 #     service = "acm"
 #     tech    = "tls"
 #     Name    = "${var.APP_NAME}_${var.APP_ENV}_cf_tls_certificate"

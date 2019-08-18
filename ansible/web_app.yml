@@ -4,12 +4,14 @@
     APP_ENV: APP_ENV
     APP_NAME: APP_NAME
     AWS_REGION: AWS_REGION
-    SSH_KEY_ID: APKAVAZICA32R3PTTN3W
+    SSH_KEY_ID: SSH_KEY_ID
 
     database_address: database_address
+    media_profile_bucket_id: media_profile_bucket_id
+    version: master
+
     local_group: ubuntu
     local_user: ubuntu
-    media_profile_bucket_id: media_profile_bucket_id
 
   become: true
   gather_facts: false
@@ -72,57 +74,59 @@
 
     # Ruby source, build, install, clean up
 
-    - name: Create a working directory
-      file:
-        path:  /tmp/build_ruby
-        state: directory
-        mode: "u+rwx"
+    # - name: Create a working directory
+    #   file:
+    #     path:  /tmp/build_ruby
+    #     state: directory
+    #     mode: "u+rwx"
 
-    - name: Download Ruby 2.3.8
-      get_url:
-        url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
-        dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
+    # - name: Download Ruby 2.3.8
+    #   get_url:
+    #     url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
+    #     dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
 
-    - name: Unpack Ruby 2.3.8
-      unarchive:
-        src: /tmp/build_ruby/ruby-2.3.8.tar.gz
-        dest: /tmp/build_ruby/
-        remote_src: yes
+    # - name: Unpack Ruby 2.3.8
+    #   unarchive:
+    #     src: /tmp/build_ruby/ruby-2.3.8.tar.gz
+    #     dest: /tmp/build_ruby/
+    #     remote_src: yes
 
-    - name: Build ruby
-      command: >
-        {{ item }}
-        chdir=/tmp/build_ruby/ruby-2.3.8
-        creates=/usr/local/bin/ruby
-      with_items:
-        - ./configure --enable-shared
-        - make
-        - make install
+    # - name: Build ruby
+    #   command: >
+    #     {{ item }}
+    #     chdir=/tmp/build_ruby/ruby-2.3.8
+    #     creates=/usr/local/bin/ruby
+    #   with_items:
+    #     - ./configure --enable-shared
+    #     - make
+    #     - make install
 
-    - name: Add ruby symlinks
-      file:
-        src: "/usr/local/bin/{{ item }}"
-        dest: "/usr/bin/{{ item }}"
-        state: link
-        force: yes
-      with_items:
-        - erb
-        - gem
-        - irb
-        - rake
-        - rdoc
-        - ruby
+    # - name: Add ruby symlinks
+    #   file:
+    #     src: "/usr/local/bin/{{ item }}"
+    #     dest: "/usr/bin/{{ item }}"
+    #     state: link
+    #     force: yes
+    #   with_items:
+    #     - erb
+    #     - gem
+    #     - irb
+    #     - rake
+    #     - rdoc
+    #     - ruby
 
-    - name: Remove the working directory
-      file:
-        path:  /tmp/build_ruby
-        state: absent
+    # - name: Remove the working directory
+    #   file:
+    #     path:  /tmp/build_ruby
+    #     state: absent
 
     # GiT & SSH Configuration
+    # TODO this can be a role
 
     - name: Copy SSH private key
       shell: |
         aws s3 cp s3://connechub-configs/{{ APP_ENV }}/id_rsa /home/{{ local_user }}/.ssh/id_rsa
+        chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/.ssh -R
         chmod 0600 /home/{{ local_user }}/.ssh/id_rsa
   
     - name: Create SSH config
@@ -131,18 +135,20 @@
         content: |
           Host git-codecommit.*.amazonaws.com
           User {{ SSH_KEY_ID }}
-          IdentityFile /root/.ssh/id_rsa
+          IdentityFile /home/{{ local_user }}/.ssh/id_rsa
 
     - name: GiT Clone web app repository
       git:
         accept_hostkey: true
         clone: true
         dest: "/home/{{ local_user }}/{{ APP_NAME }}"
+        force: true
         remote: codecommit
         repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ APP_NAME }}"
-        version: master
+        version: "{{ version }}"
 
     # Copy in configs
+    # TODO this can be a role
 
     - name: GET app .env from storage
       command: >
@@ -152,7 +158,7 @@
       shell: |
         aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
         chmod 0600 /home/{{ local_user }}/.passwd-s3fs
-        chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs
+        chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/.passwd-s3fs
 
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
@@ -180,14 +186,8 @@
         # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
         # after v 1.4.0: --jobs=5
 
-    - name: Change ownership of web app dir
-      file:
-        path: /home/{{ local_user }}
-        group: "{{ local_group }}"
-        owner: "{{ local_user }}"
-        recurse: true
-
-    # S3 mount for user profile images
+   # S3 mount for user profile images
+   # TODO this can be a role
 
     - name: Check if media_profile_bucket_id path exists
       stat:
@@ -204,7 +204,6 @@
       when: media_profile_bucket_stats.stat.exists == false
 
     - name: Mount media_profile_bucket_id to local file system
-      become: "{{ local_user }}"
       command: |
         s3fs \
           -d \
@@ -218,3 +217,20 @@
           -o nonempty \
           -o allow_other
       when: media_profile_bucket_stats.stat.exists == false
+
+    - name: Change ownership of web app dir
+      file:
+        path: /home/{{ local_user }}
+        group: "{{ local_group }}"
+        owner: "{{ local_user }}"
+        recurse: true
+
+    # Start web server. This is the same as the instance's startup user-data
+
+    # - name: Run DB migrations and start the Puma web server
+    #   shell: |
+    #     sudo ubuntu
+    #     cd /home/{{ local_user }}/{{ APP_NAME }}
+    #     ./bin/rake db:migrate
+    #     pkill ruby
+    #     bundle exec puma --bind tcp://0.0.0.0:9293 --daemon

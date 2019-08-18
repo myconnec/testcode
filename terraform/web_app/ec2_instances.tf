@@ -11,12 +11,12 @@ resource "aws_instance" "web_app" {
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
-    owner   = "admin@connechub.com"
+    owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
     tech    = "Ruby on Rails"
   }
 
-  user_data = "${file("./terraform/web_app/web_app_start.sh")}" # source https://www.bogotobogo.com/DevOps/Terraform/Terraform-terraform-userdata.php
+  user_data = "${file("./terraform/web_app/ec2_web_app_start.sh")}" # source https://www.bogotobogo.com/DevOps/Terraform/Terraform-terraform-userdata.php
 
   security_groups = [
     "${aws_security_group.mysql.name}",
