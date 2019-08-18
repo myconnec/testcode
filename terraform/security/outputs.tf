@@ -6,6 +6,6 @@ output "tls_arn" {
   value = "${aws_acm_certificate.cert.arn}"
 }
 
-output "tls_cf_arn" {
-  value = "${aws_acm_certificate.cf_cert.arn}"
-}
+# output "tls_cf_arn" {
+#   value = "${aws_acm_certificate.cf_cert.arn}"
+# }
