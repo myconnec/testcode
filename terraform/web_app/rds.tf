@@ -8,7 +8,7 @@ resource "aws_db_instance" "rds" {
   deletion_protection     = "${var.APP_ENV == "www" ? true :false}"
   engine                  = "mariadb"
   engine_version          = "10.3"
-  final_snapshot_identifier = "connechub-${var.APP_ENV}-final"
+  final_snapshot_identifier = "connechub-${var.APP_ENV}-final" # can we add a time stamp to this?
   identifier              = "connechub-${var.APP_ENV}"
   instance_class          = "db.t2.small"
   maintenance_window      = "Sun:04:30-Sun:05:00"
