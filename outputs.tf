@@ -22,6 +22,10 @@ output "AWS_S3_MEDIA_SOURCE_BUCKET" {
   value = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
 }
 
+output "AWS_S3_MEDIA_PROFILE_BUCKET" {
+  value = "${var.AWS_S3_MEDIA_PROFILE_BUCKET}"
+}
+
 output "database_address" {
   value = "${module.web_app.database_address}"
 }
@@ -34,12 +38,24 @@ output "media_display_bucket_id" {
   value = "${module.media_storage.media_display_bucket_id}"
 }
 
+output "media_display_bucket_arn" {
+  value = "${module.media_storage.media_display_bucket_arn}"
+}
+
 output "media_source_bucket_id" {
   value = "${module.media_storage.media_source_bucket_id}"
 }
 
 output "media_source_bucket_arn" {
   value = "${module.media_storage.media_source_bucket_arn}"
+}
+
+output "media_profile_bucket_id" {
+  value = "${module.media_storage.media_profile_bucket_id}"
+}
+
+output "media_profile_bucket_arn" {
+  value = "${module.media_storage.media_profile_bucket_arn}"
 }
 
 output "lambda_s3_to_transcoder_lambda_function_name" {

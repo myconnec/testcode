@@ -7,6 +7,7 @@ module "media_storage" {
   AWS_REGION                  = "${var.AWS_REGION}"
   AWS_S3_MEDIA_DISPLAY_BUCKET = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
   AWS_S3_MEDIA_SOURCE_BUCKET  = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
+  AWS_S3_MEDIA_PROFILE_BUCKET = "${var.AWS_S3_MEDIA_PROFILE_BUCKET}"
   CONTACT_EMAIL               = "${var.CONTACT_EMAIL}"
 }
 
@@ -91,3 +92,22 @@ module "lambda_s3_to_email" {
   media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
 }
+
+# source https://github.com/cloudposse/terraform-aws-cloudfront-cdn
+# module "cdn" {
+#   source             = "git::https://github.com/cloudposse/terraform-aws-cloudfront-cdn.git?ref=master"
+#   namespace          = "${var.APP_NAME}_${var.APP_ENV}"
+#   stage              = "${var.APP_ENV}"
+#   name               = "${var.APP_NAME}"
+#   origin_https_port = "443"
+#   parent_zone_name   = "${var.APP_NAME}.com"
+#   origin_domain_name = "origin.${var.APP_NAME}.com"
+#   geo_restriction_locations = [
+#     "USA"
+#   ]
+#   geo_restriction_type = "whitelist"
+#   aliases            = [
+#     "${var.APP_NAME}.com",
+#     "www.${var.APP_NAME}.com"
+#   ]
+# }

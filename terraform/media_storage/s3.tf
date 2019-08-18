@@ -67,6 +67,39 @@ resource "aws_s3_bucket" "media_source" {
   }
 }
 
+resource "aws_s3_bucket" "media_profile" {
+  acl           = "private"
+  bucket        = "${var.AWS_S3_MEDIA_PROFILE_BUCKET}"
+  force_destroy = "${var.APP_ENV == "www" ? false : true}"
+  provider      = "aws.region_1"
+  region        = "${var.AWS_REGION}"
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
+    expose_headers  = ["ETag"]
+    max_age_seconds = 3600
+  }
+
+  tags = {
+    app     = "${var.APP_NAME}"
+    env     = "${var.APP_ENV}"
+    owner   = "${var.CONTACT_EMAIL}"
+    service = "S3"
+    tech    = "Storage"
+  }
+}
+
+
 # ACLs
 
 resource "aws_s3_bucket_public_access_block" "media_display_settings" {
@@ -88,6 +121,18 @@ resource "aws_s3_bucket_public_access_block" "media_source_settings" {
   block_public_policy = true
 
   depends_on = ["aws_s3_bucket.media_source"]
+
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_public_access_block" "media_profile_settings" {
+  bucket = "${aws_s3_bucket.media_profile.id}"
+
+  block_public_acls   = true
+  block_public_policy = true
+
+  depends_on = ["aws_s3_bucket.media_profile"]
 
   ignore_public_acls      = true
   restrict_public_buckets = true

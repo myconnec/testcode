@@ -17,11 +17,10 @@ ansible-playbook \
         "APP_ENV": "'$2'",
         "APP_NAME": "'$3'",
         "AWS_REGION": "'$4'",
-        "media_display_bucket_id": "'$5'",
-        "media_source_bucket_id": "'$6'",
-        "database_address": "'$7'"
+        "media_profile_bucket_id": "'$5'",
+        "database_address": "'$6'"
     }' \
-    --private-key ~/.ssh/$8.pem \
+    --private-key ~/.ssh/$7.pem \
     ./terraform/web_app/web_app.yml
 
 printf '...done.\n\n'

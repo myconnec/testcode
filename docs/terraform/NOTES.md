@@ -49,8 +49,7 @@ Once finished execute the Ansible command to install web app:
     $(terraform output APP_ENV) \
     $(terraform output APP_NAME) \
     $(terraform output AWS_REGION) \
-    $(terraform output media_display_bucket_id) \
-    $(terraform output media_source_bucket_id) \
+    $(terraform output media_profile_bucket_id) \
     $(terraform output database_address) \
     $(terraform output AWS_PEM_KEY_PAIR)
 ```

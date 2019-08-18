@@ -6,6 +6,7 @@ variable "AWS_PEM_KEY_PAIR" {}
 variable "AWS_REGION" {}
 variable "AWS_S3_MEDIA_DISPLAY_BUCKET" {}
 variable "AWS_S3_MEDIA_SOURCE_BUCKET" {}
+variable "AWS_S3_MEDIA_PROFILE_BUCKET" {}
 variable "AWS_SECRET_KEY" {}
 variable "CONTACT_EMAIL" {}
 variable "DB_HOST" {}
