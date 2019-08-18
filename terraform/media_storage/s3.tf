@@ -58,6 +58,15 @@ resource "aws_s3_bucket" "media_source" {
     max_age_seconds = 3600
   }
 
+  lifecycle_rule {
+    id ="media_exiration"
+    enabled = true
+
+    noncurrent_version_expiration {
+      days = 35
+    }
+  }
+
   tags = {
     app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"

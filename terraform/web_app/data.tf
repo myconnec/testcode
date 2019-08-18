@@ -1,14 +1,14 @@
 # Data
 
 ## compute base image
-data "aws_ami" "ubuntu" {
+data "aws_ami" "web_app" {
   most_recent = true
 
   filter {
     name = "name"
 
-    # values = ["connechub_web_app"]
-    values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20190320"]
+    values = ["connechub-web-app-*"]
+    # values = ["ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20190320"]
   }
 
   filter {
@@ -16,8 +16,8 @@ data "aws_ami" "ubuntu" {
     values = ["hvm"]
   }
 
-  # owners = ["345292015349"] # ConnecHub
-  owners = ["099720109477"] # Canonical us-east-1
+  owners = ["345292015349"] # ConnecHub
+  # owners = ["099720109477"] # Canonical us-east-1
 }
 
 data "http" "local_ip" {

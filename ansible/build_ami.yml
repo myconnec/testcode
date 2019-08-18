@@ -4,22 +4,20 @@
     APP_ENV: APP_ENV
     APP_NAME: APP_NAME
     AWS_REGION: AWS_REGION
-    database_address: database_address
     local_group: ubuntu
     local_user: ubuntu
-    profile_image_bucket_id: profile_image_bucket_id
+    repo_ref: master
+    SSH_KEY_ID: APKAVAZICA32R3PTTN3W
 
   become: true
   gather_facts: false
 
-  pre_tasks:
-    - name: Update dependencies via apt-get
-      raw: export DEBIAN_FRONTEND=noninteractive && dpkg --configure -a && apt-get clean -y && apt-get autoclean -y && apt autoremove -yq && apt-get update -yq && apt-get upgrade -yq
-
-    - name: Install CLI tools
-      raw: apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
-
   tasks:
+    - name: System Prep
+      shell : |
+        apt-get clean -y && apt-get update -yq && apt-get install -yq awscli apt-transport-https build-essential python-apt python-minimal python-setuptools python-pip software-properties-common  && apt-get autoclean -y && apt autoremove -yq
+        # python-apt python-minimal python-setuptools python-pip software-properties-common 
+
     # source: https://linuxize.com/post/how-to-add-swap-space-on-ubuntu-18-04/
     - name: Add swap disk to instance
       shell: |
@@ -40,12 +38,14 @@
           - imagemagick
           - libcurl4-openssl-dev
           - libffi-dev
+          - libmysqlclient-dev
           - libreadline6-dev
+          - mysql-client
           - zlib1g
           - zlib1g-dev
         state: present
 
-    - name: Install NodeJs and NPM
+    - name: Install NodeJs and NPM as Javascript runtime
       apt:
         pkg:
           - nodejs
@@ -55,6 +55,8 @@
         state: present
 
     # Source: https://github.com/wakproductions/ansible-examples/blob/master/roles/install-ruby241/tasks/main.yml
+
+    # Begin Ruby build process. Can this be an Ansible `role`?
 
     - name: Install dependencies specificly for Ruby 2.3.8
       apt:
@@ -70,18 +72,17 @@
           - libtool
           - bison
           - subversion
-          - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
-          - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
+          - zlib1g
+          - zlib1g-dev
           - libssl-dev
         state: present
 
     # Ruby source, build, install, clean up
-
     - name: Create a working directory
       file:
-        path:  /tmp/build_ruby
+        path: /tmp/build_ruby
         state: directory
-        mode: 'u+rwx'
+        mode: "u+rwx"
 
     - name: Download Ruby 2.3.8
       get_url:
@@ -120,36 +121,48 @@
 
     - name: Remove the working directory
       file:
-        path:  /tmp/build_ruby
+        path: /tmp/build_ruby
         state: absent
 
-    # MySQL client
+    # Configure SSH credentials - source https://serverfault.com/questions/910071/how-to-generate-host-ssh-keys-via-ansible
+    - name: GET SSH private key
+      command: >
+        mkdir -p /home/{{ local_user }}/.ssh
+        aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/id_rsa /home/{{ local_user }}/.ssh/id_rsa
 
-    - name: Install mysql-client and dependencies
-      apt:
-        pkg:
-          - mysql-client
-          - libmysqlclient-dev
-        state: present
+    - name: Create /home/{{ local_user }}/.ssh/config
+      copy:
+        dest: /home/{{ local_user }}/.ssh/config
+        content: |
+          Host git-codecommit.*.amazonaws.com
+            User {{ SSH_KEY_ID }}
+            IdentityFile /home/{{ local_user }}/.ssh/id_rsa
 
-  # Copy in SSH configuration
+    # git module is not creating the target dir, do it here instead
+    - name: GET SSH private key
+      command: >
+        mkdir -p /home/{{ local_user }}/{{ APP_NAME }}
 
-  # GiT Clone
-
-    - git:
-        accept_hostkey: yes
+    # Git operations
+    - name: GiT Clone web app repository
+      git:
+        accept_hostkey: true
+        clone: true
+        # dest: /home/{{ local_user }}/{{ APP_NAME }}
+        dest: /home/ubuntu/connechub
         remote: origin
-        depth: 1
-        dest: /home/{{ local_user }}/{{ APP_NAME }}
-        repo: https://git-codecommit.us-east-1.amazonaws.com/v1/repos/connechub
-        version: master
-        force: true
+        repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ APP_NAME }}"
+        version: "{{ repo_ref }}"
 
-    # TODO would like to use the bundler module
+    - name: GET dotfiles
+      command: >
+        aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ APP_NAME }}/.env
+        aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/{{ APP_NAME }}/.passwd-s3fs
 
+    # Ruby bundler dependency manager
     - name: Install bunbler and gems
       shell: |
-        cd /home/{{ local_user }}/{{ APP_NAME }}
+        /home/{{ local_user}}/{{ APP_NAME }}
         gem install bundler -v 1.3.5
         # source https://bundler.io/man/bundle-binstubs.1.html
         bundle --binstubs
@@ -157,101 +170,6 @@
         # source https://philna.sh/blog/2017/06/12/speed-up-bundle-install-with-this-one-trick/
         # after v 1.4.0: --jobs=5
 
-    # Configuration
-
-    - name: GET app .env from storage
-      command: >
-        aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ APP_NAME }}/.env
-
-    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
-
-    - name: Update RDS DNS address
-      command: >
-        sed -i 's/DB_HOST="mariadb"/DB_HOST="{{ database_address }}"/g' /home/{{ local_user }}/{{ APP_NAME }}/.env
-
-    - name: Change ownership of web app dir
-      file:
-        path: /home/{{ local_user }}/{{ APP_NAME }}
-        group: '{{ local_group }}'
-        owner: '{{ local_user }}'
-        recurse: true
-
-    - name: Migrate database
-      become: '{{ local_user }}'
+    - name: Set owner of ~/ content
       shell: |
-        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:schema:load
-
-    - name: Migrate database
-      become: '{{ local_user }}'
-      shell: |
-        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:setup
-
-    - name: Migrate database
-      become: '{{ local_user }}'
-      shell: |
-        cd /home/{{ local_user }}/{{ APP_NAME }} && ./bin/rake db:migrate
-
-    - name: Start Rails server
-      shell: |
-        pkill ruby
-        cd /home/{{ local_user }}/{{ APP_NAME }}
-        bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
-
-    # Configure and mount profile image storage bucket
-
-    # - name: Install system dependencies
-    #   apt:
-    #     pkg:
-    #       - s3fs
-    #     state: present
-
-    # - name: Copy API keys for S3 mounting into EC2 instance
-    #   shell: |
-    #     aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
-    #     chmod 0600 /home/{{ local_user }}/.passwd-s3fs
-    #     chown {{ local_user}}:{{ local_user}} /home/{{ local_user }}/.passwd-s3fs
-
-    # # Configure fusermount to enable 'allow_other' s3fs mounting
-    # # TODO: Consider using the replace, lineinfile or template module rather than running sed.
-    # - name: Configure fusermount
-    #   command: >
-    #     sed -i 's/#user_allow_other/user_allow_other/g' /etc/fuse.conf
-
-    # # Media Source bucket
-
-    # - name: Check if media_source_bucket path exists
-    #   stat:
-    #     path: /home/{{ local_user }}/media-source-{{ APP_ENV }}
-    #   register: media_source_bucket_stats
-
-    # # Media Display bucket
-
-    # - name: Check if profile_image_bucket_id path exists
-    #   stat:
-    #     path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
-    #   register: media_display_bucket_stats
-
-    # - name: Create profile_image_bucket_id directory if it does not exist
-    #   file:
-    #     state: directory
-    #     path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
-    #     owner: "{{ local_user }}"
-    #     group: "{{ local_user }}"
-    #     mode: 0755
-    #   when: media_display_bucket_stats.stat.exists == false
-
-    # - name: Mount profile_image_bucket_id to local file system
-    #   become: '{{ local_user }}'
-    #   command: |
-    #     s3fs \
-    #       -d \
-    #       {{ profile_image_bucket_id }} \
-    #       /home/{{ local_user }}/{{ APP_NAME }}/public/system \
-    #       -o endpoint={{ AWS_REGION }} \
-    #       -o use_cache=/home/ubuntu \
-    #       -o multireq_max=5 \
-    #       -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
-    #       -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
-    #       -o nonempty \
-    #       -o allow_other
-    #   when: media_display_bucket_stats.stat.exists == false
+        chown {{ local_group }}:{{ local_user }} /home/{{ local_user }} -R

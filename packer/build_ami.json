@@ -1,0 +1,47 @@
+{
+    "variables": {
+        "APP_ENV": "{{env `APP_ENV`}}",
+        "APP_NAME": "{{env `APP_NAME`}}",
+        "AWS_REGION": "{{env `AWS_REGION`}}",
+        "CONTACT_EMAIL": "{{env `CONTACT_EMAIL`}}",
+        "SSH_KEY_ID": "{{env `SSH_KEY_ID`}}"
+    },
+    "builders": [{
+        "tags": {
+          "app"     : "{{user `APP_NAME`}}",
+          "built-by": "Packer",
+          "env"     : "{{user `APP_ENV`}}",
+          "Name"    : "{{user `APP_NAME`}} Web App Server",
+          "owner"   : "{{user `CONTACT_EMAIL`}}",
+          "service" : "EC2",
+          "tech"    : "Ruby on Rails"
+        },
+        "encrypt_boot": true,
+        "iam_instance_profile": "connechub-ServiceRoleForEC2S3ReadOnlyEnvConfigBucket",
+        "type": "amazon-ebs",
+        "profile": "default",
+        "source_ami_filter": {
+          "filters": {
+            "virtualization-type": "hvm",
+            "name": "ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-*",
+            "root-device-type": "ebs"
+          },
+          "owners": ["099720109477"],
+          "most_recent": true
+        },
+        "instance_type": "t2.small",
+        "ssh_username": "ubuntu",
+        "ami_name": "{{user `APP_NAME`}}-web-app-ami-{{timestamp}}"
+    }],
+    "provisioners": [{
+        "type": "ansible",
+        "playbook_file": "./ansible/build_ami.yml",
+        "ansible_env_vars": [
+            "ANSIBLE_CONFIG=./ansible/ansible.cfg"
+        ],
+        "extra_arguments": [
+            "--extra-vars",
+            "APP_ENV={{user `APP_ENV`}} APP_NAME={{user `APP_NAME`}} AWS_REGION={{user `AWS_REGION`}} CONTACT_EMAIL={{user `CONTACT_EMAIL`}} SSH_KEY_ID={{user `SSH_KEY_ID`}}"
+        ]
+    }]
+}

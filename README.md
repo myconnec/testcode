@@ -23,3 +23,39 @@ Phase 3: Make it fast
 - [POSTman Documents](./docs/POSTman)
 - [Production Deployment Process](./docs/production/NOTES.md)
 - [Terraform Operations](./docs/terraform/NOTES.md)
+
+## Deployment process
+
+- ./helper_scripts/load_vars.sh - Load .env into ENV VAR for use by later tooling
+
+```sh
+./helper_scripts/
+```
+
+- Packler - build AMI 
+  - Ansible to provision base configuration
+
+```sh
+packer build ./packer/build_ami.json
+```
+
+- Terraform - Stand up Resoures
+  - Ansible to provision updates
+
+```sh
+terraform init
+terraform workspace list
+terraform plan
+terraform apply
+```
+
+On initial setup of the environment you need to update the .env config stored in the S3 bucket with then FQDN of the database. Then `terraform tain` the EC2 instance and re-provision it with `terraform plan && terraform apply`.
+
+- AWS EC2 user_data - startup logic
+
+```sh
+Copy .env
+Update 
+Run migrations
+Start web server
+```

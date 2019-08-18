@@ -91,3 +91,15 @@ module "lambda_s3_to_email" {
   media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
 }
+
+# module "cdn" {
+#   source             = "git::https://github.com/cloudposse/terraform-aws-cloudfront-cdn.git?ref=master"
+#   namespace          = "${var.APP_NAME}_${var.APP_ENV}"
+#   stage              = "${var.APP_ENV}"
+#   name               = "${var.APP_NAME}"
+#   aliases            = [
+#     "${var.APP_ENV}.${var.APP_NAME}.com"
+#   ]
+#   parent_zone_name   = "${var.APP_NAME}.com"
+#   origin_domain_name = "origin.${var.APP_NAME}.com"
+# }
