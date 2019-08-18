@@ -123,27 +123,26 @@
     # GiT & SSH Configuration
     # TODO this can be a role
 
-    - name: Copy SSH private key
+    - name: Get SSH private key for cloning web app repo
       shell: |
-        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/id_rsa /home/{{ local_user }}/.ssh/id_rsa
-        chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/.ssh -R
-        chmod 0600 /home/{{ local_user }}/.ssh/id_rsa
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/iam_private_key ~/.ssh/iam_private_key
+        chmod 0600 ~/.ssh/iam_private_key
   
     - name: Create SSH config
       copy:
-        dest: /home/{{ local_user }}/.ssh/config
+        dest: ~/.ssh/config
         content: |
           Host git-codecommit.*.amazonaws.com
           User {{ SSH_KEY_ID }}
-          IdentityFile /home/{{ local_user }}/.ssh/id_rsa
+          IdentityFile ~/.ssh/iam_private_key
 
-    - name: GiT Clone web app repository
+    - name: Git clone web app repo
       git:
         accept_hostkey: true
         clone: true
         dest: "/home/{{ local_user }}/{{ APP_NAME }}"
         force: true
-        remote: codecommit
+        remote: origin
         repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ APP_NAME }}"
         version: "{{ version }}"
 
