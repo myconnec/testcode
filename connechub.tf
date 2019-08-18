@@ -102,9 +102,9 @@ module "cdn" {
   namespace  = "${var.APP_NAME}"
   stage      = "${var.APP_ENV}"
 
-  acm_certificate_arn    = "${module.security.tls_arn}"
+  acm_certificate_arn    = "${module.security.tls_cf_arn}"
   aliases                = ["${var.APP_ENV}.${var.APP_NAME}.com"]
-  allowed_methods        = ["GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS"]
+  allowed_methods        = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
   cached_methods         = ["GET", "HEAD"]
   compress               = "true"
   default_root_object    = ""

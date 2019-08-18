@@ -70,6 +70,10 @@ output "security_tls_arn" {
   value = "${module.security.tls_arn}"
 }
 
+output "security_tls_cf_arn" {
+  value = "${module.security.tls_cf_arn}"
+}
+
 output "security_tls_domain_name" {
   value = "${module.security.tls_domain_name}"
 }

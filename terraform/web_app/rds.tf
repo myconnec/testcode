@@ -16,6 +16,7 @@ resource "aws_db_instance" "rds" {
   password                = "${var.DB_PASS}"
   publicly_accessible     = "${var.APP_ENV == "www" ? false : true}"
   skip_final_snapshot     = "${var.APP_ENV == "www" ? false : true}"
+  storage_encrypted       = true
   storage_type            = "gp2"
   username                = "${var.DB_USER}"
 
