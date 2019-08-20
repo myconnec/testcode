@@ -1,4 +1,4 @@
-resource "aws_s3_bucket_notification" "bucket_notification" {
+resource "aws_s3_bucket_notification" "display_bucket_notification" {
   bucket = "${var.media_display_bucket_id}"
 
   lambda_function {
