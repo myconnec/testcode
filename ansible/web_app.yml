@@ -226,9 +226,9 @@
     # Start web server. This is the same as the instance's startup user-data
 
     - name: Run DB migrations and start the Puma web server
+      become: "{{ local_user }}"
       shell: |
-        sudo ubuntu
-        cd /home/{{ local_user }}/{{ APP_NAME }}
-        ./bin/rake db:migrate
+        cd ~/{{ APP_NAME }}
+        rake db:migrate
         pkill puma
         bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
