@@ -2,9 +2,9 @@
 
 ## The Game Plan
 
-Phase 1: Make it work <- we are here
+Phase 1: Make it work
 
-Phase 2: Make it right
+Phase 2: Make it right <- we are here
 
 Phase 3: Make it fast
 

@@ -39,12 +39,13 @@ bower.json
 # ignore ENV file
 .env
 .env.*
+# but not the dist example
+!.env.dist
 
 # *SQL
 /docker/mariadb/data.sql
 /docker/mariadb/data_dir/
 /docs/runbooks/sqlite3_to_mariadb10/**/*.sql
-/media-source-dev/
 
 # Ignore generated docs
 /docs/api/*

@@ -2,13 +2,14 @@
 
 resource "aws_db_instance" "rds" {
   allocated_storage       = 20
-  backup_retention_period = 14
+  apply_immediately       = "${var.APP_ENV == "www" ? false : true}"
+  backup_retention_period = "${var.APP_ENV == "www" ? 14 : 0}"
   backup_window           = "04:00-04:30"
   copy_tags_to_snapshot   = true
   deletion_protection     = "${var.APP_ENV == "www" ? true :false}"
   engine                  = "mariadb"
   engine_version          = "10.3"
-  final_snapshot_identifier = "connechub-${var.APP_ENV}-final" # can we add a time stamp to this?
+  final_snapshot_identifier = "${var.APP_ENV == "www" ? "connechub-${var.APP_ENV}-final" : "no-final-snapshoot-should-exist"}"  # can we add a time stamp to this?
   identifier              = "connechub-${var.APP_ENV}"
   instance_class          = "db.t2.small"
   maintenance_window      = "Sun:04:30-Sun:05:00"
