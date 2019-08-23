@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-  # around_filter :catch_not_found
+  around_filter :catch_not_found
   before_action :set_s3_direct_post, only: [:upload, :create_upload]
   before_filter :authenticate_user!, only: [:new, :create]
   before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
@@ -19,7 +19,7 @@ class ListingsController < ApplicationController
     # TODO: phase 1: limit to 30 days. Phase 2: based on selected upgrades
     @listing.ending_at = Time.now.to_i + 2592000
     @listing.user = current_user
-    
+
     # read the subcategory, if chargable > 0  set amount on listing
     listing_sub_category = Subcategory.find(@listing.subcategory_id)
     if listing_sub_category.chargable > 0
@@ -65,7 +65,7 @@ class ListingsController < ApplicationController
 
     if charge.save
       @listing.charge_complete = 1
-      if @listing.save      
+      if @listing.save
         return redirect_to action: "upload", id: @listing.id
       end
       flash[:alert] = 'Your payment was successful; however, an error occured while updating your listing.'
@@ -110,16 +110,21 @@ class ListingsController < ApplicationController
       .where("ending_at > '#{Time.now.to_i}'")
       .first
 
-      @comments = Comment.where(listing_id: @listing).order("created_at DESC")
+    # if not listing found (ie deleted) redirect back to landing view w/ message
+    if @listing.blank?
+      return redirect_to root_url, :flash => { :error => "Sorry, that Listing was not found." }
+    end
 
-      # source https://stackoverflow.com/questions/44741473/recommended-way-to-generate-a-presigned-url-to-s3-bucket-in-ruby
-      # source https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#presigned_url-instance_method
-      signer = Aws::S3::Presigner.new
-      @presigned_media_url = signer.presigned_url(
-        :get_object,
-        bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-        key: @listing.media_file_name
-      )
+    @comments = Comment.where(listing_id: @listing).order("created_at DESC")
+
+    # source https://stackoverflow.com/questions/44741473/recommended-way-to-generate-a-presigned-url-to-s3-bucket-in-ruby
+    # source https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#presigned_url-instance_method
+    signer = Aws::S3::Presigner.new
+    @presigned_media_url = signer.presigned_url(
+      :get_object,
+      bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
+      key: @listing.media_file_name
+    )
   end
 
   def edit
@@ -147,7 +152,7 @@ class ListingsController < ApplicationController
   def search
     @listings = Listing.search(params)
     signer = Aws::S3::Presigner.new
-    @listings.each do | listing |    
+    @listings.each do | listing |
       if !listing.has_attribute?(:media_file_name)
         next
       end
@@ -191,13 +196,13 @@ class ListingsController < ApplicationController
       success_action_status: '201'
     )
   end
-  
-  # def catch_not_found
-  #   yield
-  #   # TODO maybe more specific errors here?
-  #   rescue
-  #     if ENV['APP_ENV'].downcase != 'dev' or ENV['APP_ENV'].downcase != 'tst'
-  #       redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
-  #     end
-  # end
+
+  def catch_not_found
+    yield
+    # TODO maybe more specific errors here?
+    rescue
+      if ENV['APP_ENV'].downcase != 'dev' or ENV['APP_ENV'].downcase != 'tst'
+        redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
+      end
+  end
 end
