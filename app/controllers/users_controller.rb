@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  around_filter :catch_not_found
+
   def show
     @user = User.find_by username: params[:username]
 
@@ -16,5 +18,13 @@ class UsersController < ApplicationController
         key: listing.media_file_name
       )
     end
+  end
+
+  def catch_not_found
+    yield
+    rescue
+      if ENV['APP_ENV'].downcase != 'dev'
+        redirect_to root_url, :flash => { :error => "Sorry, a problem occured while loading your profile." }
+      end
   end
 end

@@ -201,7 +201,7 @@ class ListingsController < ApplicationController
     yield
     # TODO maybe more specific errors here?
     rescue
-      if ENV['APP_ENV'].downcase != 'dev' or ENV['APP_ENV'].downcase != 'tst'
+      if ENV['APP_ENV'].downcase != 'dev'
         redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
       end
   end
