@@ -8,18 +8,11 @@ Phase 2: Make it right <- we are here
 
 Phase 3: Make it fast
 
-## Toolchain
+## Documentation
 
-- [Ansible](https://www.ansible.com/)
-- [AWS CLI](https://aws.amazon.com)
-- [Terraform](https://app.terraform.io/app/ConnecHub/workspaces)
-- [Ruby on Rails](https://rubyonrails.org/)
-- [Puma](https://github.com/puma/puma) webserver
+All documentation is availalbe under the ./docs directory.
 
-... also check Gemfile for version of dependencies.
-
-- [CH Docker usage](./docs/docker/NOTES.md)
-- [Lighthouse Perf. reports](./docs/lighthouse)
-- [POSTman Documents](./docs/POSTman)
-- [Production Deployment Process](./docs/production/NOTES.md)
-- [Terraform Operations](./docs/terraform/NOTES.md)
+- [Toolchain](./docs/toolchain.md)
+- [Additional Information](./docs/additiona.dm)
+- [Deployment](./docs/deployment.md)
+- [Initial Setup](./docs/initial_setup.md)
