@@ -16,3 +16,9 @@ All documentation is availalbe under the ./docs directory.
 - [Additional Information](./docs/additiona.dm)
 - [Deployment](./docs/deployment.md)
 - [Initial Setup](./docs/initial_setup.md)
+
+## TODO
+
+After provisioning the application via Terraform;
+- mount the remote FS onto the local development machine
+- during editing, commit and push locally to remote repo
