@@ -3,7 +3,7 @@
 printf 'Starting Ansible playbook...\n'
 
 ansible-playbook \
-    -i $(terraform output ec2_public_dns), \
+    -i $(terraform output aws_instance_web_app_dns), \
     -u ubuntu \
     --extra-vars='{
         "APP_ENV": "'${APP_ENV}'",

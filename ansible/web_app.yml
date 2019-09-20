@@ -37,6 +37,7 @@
 
     - name: Install system dependencies
       apt:
+        update_cache: true
         pkg:
           - autoconf
           - automake
@@ -64,14 +65,11 @@
           - npm
           - s3fs
           - subversion
-          - zlib1g
           - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
-          - zlib1g-dev
           - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
         state: present
 
     # TODO move into a Ansible role
-
     # Ruby source, build, install, clean up
 
     - name: Create a working directory
@@ -125,6 +123,7 @@
 
     - name: Get SSH private key for cloning web app repo
       shell: |
+        mkdir ~/.ssh
         aws s3 cp s3://connechub-configs/{{ APP_ENV }}/iam_private_key ~/.ssh/iam_private_key
         chmod 0600 ~/.ssh/iam_private_key
 
@@ -159,6 +158,7 @@
         chmod 0600 /home/{{ local_user }}/.passwd-s3fs
         chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/.passwd-s3fs
 
+    # Update RDS connection string
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
     - name: Update RDS DNS address
@@ -167,12 +167,12 @@
 
     # Configure fusermount to enable "allow_other" s3fs mounting
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+
     - name: Configure fusermount
       command: >
         sed -i "s/#user_allow_other/user_allow_other/g" /etc/fuse.conf
 
     # Application deps install
-
     # TODO would like to use the bundler module
 
     - name: Install Ruby Bundler and gems
@@ -192,8 +192,8 @@
         owner: "{{ local_user }}"
         recurse: true
 
-   # S3 mount for user profile images
-   # TODO this can be a role
+    # S3 mount for user profile images
+    # TODO this can be a role
 
     - name: Check if media_profile_bucket_id path exists
       stat:
