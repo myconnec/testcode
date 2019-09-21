@@ -25,4 +25,4 @@ echo "Mounting remote dir locally..."
 sshfs ubuntu@$(terraform output aws_instance_web_app_dns):/home/ubuntu/connechub/app ./remote_dev_web_app -o IdentityFile=~/.ssh/$(terraform output AWS_PEM_KEY_PAIR).pem
 
 echo "Syncing ./app and ./remote_app..."
-rsync  -r ./app/ ./remote_dev_web_app/
+rsync  -r ./app/ ../tmp
