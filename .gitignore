@@ -24,7 +24,7 @@ pickle-email-*.html
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-/remote_dev_web_app
+/**/remote_dev_web_app
 
 # Ignore rmvrc
 .rvmrc
