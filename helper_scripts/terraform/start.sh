@@ -10,4 +10,4 @@ terraform workspace select dje-dev
 terraform plan --out ./out.plan -var-file=.env
 terraform apply -auto-approve -lock=true ./out.plan
 
-./helper_scripts/ansible_init_provision.sh
+./helper_scripts/init_ec2_provision.sh
