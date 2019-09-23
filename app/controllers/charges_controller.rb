@@ -15,6 +15,6 @@ class ChargesController < ApplicationController
     end
 
     def catch_exception(exception)
-      flash[:error] = exception.message
+      flash[:danger] = exception.message
     end
 end
