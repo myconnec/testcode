@@ -8,7 +8,7 @@
 
             <div class="panel-body">
 
-                <%= simple_form_for(@listing, html: {
+                <%= simple_form_for(@listing,html: {
                     authenticity_token: true,
                     data: {
                         'form-data' => (@s3_direct_post.fields),
@@ -17,10 +17,16 @@
                     },
                     class: 'form-horizontal ',
                     id: 'new_listing_upload',
-                    multipart: true,
+                    multipart: true
                 }) do |f| %>
 
-                    <input class="form-control" id="fileupload" type="file" name="file">
+                    <%# source https://stevenyue.com/blogs/validate-attachment-file-size-and-type-in-rails/ %>
+
+                    <%= f.file_field :listing,
+                        onchange: "javascript: validateFiles(this);",
+                        id: "fileupload",
+                        class: "form-control" %>
+
                     <br>
                     <div id="listing_media_info"></div>
                     <br>
@@ -41,7 +47,39 @@
 <%= render "processing_overlay" %>
 
 <script>
-    $(function () {
+function validateFiles(inputFile) {
+    console.log('checking file attributes.')
+    console.log('inputFile.files: ', inputFile.files)
+    var maxExceededMessage = "This file exceeds the maximum allowed file size (5 MB)";
+    var extErrorMessage = "Only image file with extension: .jpg, .jpeg, .gif or .png is allowed";
+    var allowedExtension = ["jpg", "jpeg", "gif", "png"];
+
+    var extName;
+    var maxFileSize = 1; //$(inputFile).data('max-file-size');
+    var sizeExceeded = false;
+    var extError = false;
+
+    $.each(inputFile.files, function() {
+        console.log('checking each file size.')
+        if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {sizeExceeded=true;};
+        console.log('checking each file ext.')
+        if ($.inArray(this.name.split('.').pop(), allowedExtension) == -1) {extError=true;};
+    });
+
+    if (sizeExceeded) {
+        console.log('size problem.')
+        window.alert(maxExceededMessage);
+        $(inputFile).val('');
+    };
+
+    if (extError) {
+        console.log('ext problem.')
+        window.alert(extErrorMessage);
+        $(inputFile).val('');
+    };
+}
+
+$(function () {
     var media_file = [];
 
     document.getElementById('fileupload').onchange = setFileInfo;
@@ -70,21 +108,21 @@
             minutes = Math.floor(time / 60) % 60,
             seconds = Math.floor(time - minutes * 60),
             milliseconds = time.slice(-3);
-        
+
             // return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
             return  minutes + ' minutes and ' + pad(seconds, 2) + ' seconds.';
         }
 
         video.src = URL.createObjectURL(files[0]);
     }
-    
+
     $('#new_listing_upload').find("input:file").each(function(i, elem) {
         var fileInput = $(elem);
         var form = $(fileInput.parents('form:first'));
         var submitButton = form.find('input[type="submit"]');
         var progressBar  = $("<div class='bar'></div>");
         var barContainer = $("<div class='progress'></div>").append(progressBar);
-        
+
         $('#listing_media_progress').after(barContainer);
 
         fileInput.fileupload({
@@ -156,5 +194,5 @@
             }
         });
     });
-    });
+});
 </script>

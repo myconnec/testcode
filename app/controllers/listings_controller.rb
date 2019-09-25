@@ -34,7 +34,7 @@ class ListingsController < ApplicationController
         return redirect_to action: "upload", id: @listing.id
       end
     else
-      flash[:alert] = @listing.errors.full_messages.to_sentence
+      flash[:danger] = @listing.errors.full_messages.to_sentence
       render 'new'
     end
   end
@@ -68,9 +68,9 @@ class ListingsController < ApplicationController
       if @listing.save
         return redirect_to action: "upload", id: @listing.id
       end
-      flash[:alert] = 'Your payment was successful; however, an error occured while updating your listing.'
+      flash[:danger] = 'Your payment was successful; however, an error occured while updating your listing.'
     else
-      flash[:alert] = charge.errors.full_messages.to_sentence
+      flash[:danger] = charge.errors.full_messages.to_sentence
     end
 
     redirect_to action: "payment", id: @listing.id
@@ -96,11 +96,11 @@ class ListingsController < ApplicationController
     @listing.save
 
     if !@listing.save
-      flash[:alert] = 'An error occured while updating your Listing with the video.'
+      flash[:danger] = 'An error occured while updating your Listing with the video.'
       return redirect_to action: "upload", id: @listing.id
     end
 
-    flash[:notice] = "Video has been uploaded. You will recieve an email once processing completed."
+    flash[:success] = "Video has been uploaded. You will recieve an email once processing completed."
     return render :nothing => true, :status => 200
   end
 
@@ -112,7 +112,7 @@ class ListingsController < ApplicationController
 
     # if not listing found (ie deleted) redirect back to landing view w/ message
     if @listing.blank?
-      return redirect_to root_url, :flash => { :error => "Sorry, that Listing was not found." }
+      return redirect_to root_url, :flash => { :danger => "Sorry, that Listing was not found." }
     end
 
     @comments = Comment.where(listing_id: @listing).order("created_at DESC")
@@ -202,7 +202,7 @@ class ListingsController < ApplicationController
     # TODO maybe more specific errors here?
     rescue
       if ENV['APP_ENV'].downcase != 'dev'
-        redirect_to root_url, :flash => { :error => "Sorry, that was not found. Maybe it has already gone away?" }
+        redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
       end
   end
 end

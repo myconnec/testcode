@@ -1170,3 +1170,10 @@ body > div > div > div > div > ul {
 .fee_amount_message {
   height: initial
 }
+
+/* bootstrap 4 colors in bootstrap 3 */
+.alert-notice {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+}
