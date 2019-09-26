@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   match '/listings/create_upload/:id', to: 'listings#create_upload', via: :post
   match '/listings/update_upload/:id', to: 'listings#update_upload', via: :patch
   
+  match '/prices/index', to: 'prices#index', via: :get
+
   root 'categories#index'
   
   match '/about', to: 'pages#about', via: :get
@@ -37,6 +39,7 @@ Rails.application.routes.draw do
   match '/membership', to: 'pages#membership', via: :get
   match '/mobile', to: 'pages#mobile', via: :get
   match '/postads', to: 'pages#postads', via: :get
+  match '/prices', to: 'prices#index', via: :get
   match '/privacy', to: 'pages#privacy', via: :get
   match '/safety', to: 'pages#safety', via: :get
   match '/safetytips', to: 'pages#safetytips', via: :get
