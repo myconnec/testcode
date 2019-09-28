@@ -10,7 +10,7 @@ class Listing < ActiveRecord::Base
   belongs_to :subcategory
   belongs_to :user
 
-  geocoded_by :full_address
+  geocoded_by :full_addres
 
   validates_presence_of :user_id
   validates_presence_of :price

@@ -13,12 +13,17 @@
                     authenticity_token: true,
                     multipart: true,
                     class: 'form-horizontal ',
+                    presence: true
                 }) do |f| %>
 
                     <div class="input-group">
                         <div class="input-group-addon">Main Category</div>
                         <div class="form-control">
-                            <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}, include_blank: true %>
+                            <%= f.select :category_id,
+                                Category.all.map {|f| [f.name, f.id]},
+                                include_blank: true,
+                                required: true
+                            %>
                         </div>
                     </div>
                     <br>
@@ -26,9 +31,13 @@
                     <div class="input-group">
                         <div class="input-group-addon">Sub Category</div>
                         <div class="form-control">
-                            <select name="listing[subcategory_id]" id="listing_subcategory_id">
-                                <option value=""></option>
-                            </select>
+                            <%= f.select :subcategory_id,
+                                [],
+                                include_blank: true,
+                                name: "listing[subcategory_id]",
+                                id: "listing_subcategory_id",
+                                required: true
+                            %>
                         </div>
                     </div>
                     <br>
@@ -44,48 +53,72 @@
                     </div>
 
                     <div class="input-group">
-                        <div class="input-group-addon">Sale Price</div>
-                        <%= f.text_field :price, autofocus: true, class:"form-control" %>
+                        <div class="input-group-addon">Price</div>
+                        <%= f.text_field :price,
+                            class:"form-control",
+                            required: true
+                        %>
                     </div>
                     <br>
 
                     <div class="input-group">
                         <div class="input-group-addon">Posting Title</div>
-                        <%= f.text_field :title, class: "form-control" %>
+                        <%= f.text_field :title,
+                            class: "form-control",
+                            required: true,
+                            type: "text",
+                            pattern: "[A-Za-z]{3}"
+                        %>
                     </div>
                     <br>
 
                     <div class="input-group">
                         <div class="input-group-addon">City</div>
-                        <%= f.text_field :city, class: "form-control" %>
+                        <%= f.text_field :city,
+                            class: "form-control",
+                            required: true
+                        %>
                     </div>
                     <br>
 
                     <div class="input-group">
                         <div class="input-group-addon">State</div>
-                        <%= f.text_field :state, class: "form-control" %>
+                        <%= f.text_field :state,
+                            class: "form-control",
+                            required: true
+                        %>
                     </div>
                     <br>
 
                     <div class="input-group">
                         <div class="input-group-addon">Zip</div>
-                        <%= f.text_field :zipcode, class: "form-control", maxlength: "5" %>
+                        <%= f.text_field :zipcode,
+                            class: "form-control",
+                            required: true,
+                            maxlength: "5"
+                        %>
                     </div>
                     <br>
 
                     <div class="input-group">
                         <div class="input-group-addon">Description</div>
-                        <%= f.text_area :description, class: "form-control" %>
+                        <%= f.text_area :description,
+                            class: "form-control",
+                            required: true
+                        %>
                     </div>
                     <br>
 
                     <div class="input-group">
                         <div class="actions">
-                            <%= f.submit "Submit Your Post", class: "btn btn-success", id: "listings_submit" %>
+                            <%= f.submit "Submit Your Post",
+                                class: "btn btn-success",
+                                id: "listings_submit"
+                            %>
                         </div>
                     </div>
-                    
-                <% end %>          
+
+                <% end %>
 
             </div>
         </div>
