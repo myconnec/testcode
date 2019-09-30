@@ -9,65 +9,137 @@
 
             <div class="panel-body">
 
-                <%= simple_form_for(@listing, html: { multipart: true, class: 'form-horizontal' }) do |f| %>
+                <%= simple_form_for(@listing, html: {
+                    authenticity_token: true,
+                    multipart: true,
+                    class: 'form-horizontal ',
+                    presence: true
+                }) do |f| %>
 
-                <div class="input-group">
-                    <div class="input-group-addon">Main Category</div>
-                    <div class="form-control">
-                        <%= f.select :category_id, Category.all.map {|f| [f.name, f.id]}, include_blank: true %>
+                    <div class="input-group">
+                        <div class="input-group-addon">Main Category</div>
+                        <div class="form-control">
+                            <%= f.select :category_id,
+                                Category.all.map {|f| [f.name, f.id]},
+                                { include_blank: true },
+                                required: true
+                            %>
+                        </div>
                     </div>
-                </div>
-                <br>
+                    <br>
 
-                <div class="input-group">
-                    <div class="input-group-addon">Sub Category</div>
-                    <div class="form-control">
-                        <%= f.select :subcategory_id, Subcategory.all.map {|f| [f.name, f.id]}, include_blank: true %>
+                    <div class="input-group">
+                        <div class="input-group-addon">Sub Category</div>
+                        <div class="form-control">
+                            <%= f.select :subcategory_id,
+                                [],
+                                {
+                                    id: "listing_subcategory_id",
+                                    include_blank: true,
+                                    name: "listing[subcategory_id]",
+                                },
+                                required: true
+                            %>
+                        </div>
                     </div>
-                </div>
-                <br>
+                    <br>
 
-                <div class="input-group">
-                    <div class="input-group-addon">$</div>
-                    <%= f.text_field :price, autofocus: true, class:"form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Posting Title</div>
-                    <%= f.text_field :title, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">City</div>
-                    <%= f.text_field :city, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">State</div>
-                    <%= f.text_field :state, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Zip</div>
-                    <%= f.text_field :zipcode, class: "form-control", maxlength: "5" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="input-group-addon">Description</div>
-                    <%= f.text_area :description, class: "form-control" %>
-                </div>
-                <br>
-
-                <div class="input-group">
-                    <div class="actions">
-                        <%= f.submit "Update Your Post", class: "btn btn-success" %>
+                    <div id="sub_category_cost_container" style="display: none">
+                        <div class="input-group">
+                            <div class="input-group-addon" style="color: red">Fee required</div>
+                            <div class="form-control fee_amount_message">
+                                Selected category requires a payment of <span id="fee_amount" style="font-weight: bolder"></span> on the next step.
+                            </div>
+                        </div>
+                        <br>
                     </div>
-                </div>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Price</div>
+                        <%= f.text_field :price,
+                            class:"form-control",
+                            required: true,
+                            type: "text",
+                            maxlength: "32",
+                            pattern: "[0-9.,]{32}",
+                            placeholder: "exp. 1234, whole dollar amounts"
+                        %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Posting Title</div>
+                        <%= f.text_field :title,
+                            class: "form-control",
+                            required: true,
+                            type: "text",
+                            maxlength: "128",
+                            pattern: "[a-zA-Z0-9~!@#$%^&*()_+=- ,./<>?;':\"[]\\{}|/*-+]{128}",
+                            placeholder: "exp. Example Item for Sale"
+                        %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">City</div>
+                        <%= f.text_field :city,
+                            class: "form-control",
+                            required: true,
+                            type: "text",
+                            maxlength: "32",
+                            pattern: "[a-zA-Z0-9~!@#$%^&*()_+=- ,./<>?;':\"[]\\{}|/*-+]{32}",
+                            placeholder: "exp. Sometown"
+                        %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">State</div>
+                        <%= f.text_field :state,
+                            class: "form-control",
+                            required: true,
+                            type: "text",
+                            maxlength: "2",
+                            pattern: "[A-Z]{2}",
+                            placeholder: "exp. FL"
+                        %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Zip</div>
+                        <%= f.text_field :zipcode,
+                            class: "form-control",
+                            required: true,
+                            type: "number",
+                            maxlength: "5",
+                            pattern: "[0-9]{5}",
+                            placeholder: "exp. 12345"
+                        %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Description</div>
+                        <%= f.text_area :description,
+                            class: "form-control",
+                            required: true,
+                            type: "text",
+                            maxlength: "2048",
+                            pattern: "[a-zA-Z0-9!,.?-]{2048}",
+                            placeholder: "exp. Describe the item for sale as detailed as possible."
+                        %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="actions">
+                            <%= f.submit "Submit Listing",
+                                class: "btn btn-success",
+                                id: "listings_submit"
+                            %>
+                        </div>
+                    </div>
 
                 <% end %>
 

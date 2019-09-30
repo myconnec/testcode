@@ -21,23 +21,30 @@
                 }) do |f| %>
 
                     <%# source https://stevenyue.com/blogs/validate-attachment-file-size-and-type-in-rails/ %>
+                    <%# source http://www.seanbehan.com/onchange-event-fired-from-select-field-in-rails-form/ %>
 
                     <%= f.file_field :listing,
-                        onchange: "javascript: validateFiles(this);",
                         id: "fileupload",
-                        class: "form-control" %>
+                        class:"form-control",
+                        required: true,
+                        type: "file",
+                        {
+                            :onchange => "validateFiles(this);"
+                        }
+                    %>
 
                     <br>
                     <div id="listing_media_info"></div>
                     <br>
                     <div id="listing_media_progress"></div>
-                <% end %>
-
+                    
                     <div class="input-group">
                         <div class="actions">
                             <button class="btn btn-success" id="listings_submit">Submit</button>
                         </div>
                     </div>
+
+                <% end %>
 
             </div>
         </div>
@@ -50,9 +57,11 @@
 function validateFiles(inputFile) {
     console.log('checking file attributes.')
     console.log('inputFile.files: ', inputFile.files)
-    var maxExceededMessage = "This file exceeds the maximum allowed file size (5 MB)";
-    var extErrorMessage = "Only image file with extension: .jpg, .jpeg, .gif or .png is allowed";
-    var allowedExtension = ["jpg", "jpeg", "gif", "png"];
+    return true
+
+    // var maxExceededMessage = "This file exceeds the maximum allowed file size (5 MB)";
+    var extErrorMessage = "Only VIDEO file with extension: .avi, .mov, .mp4, .mkv are allowed.";
+    var allowedExtension = ["avi", "mov", "mp4", "mkv"];
 
     var extName;
     var maxFileSize = 1; //$(inputFile).data('max-file-size');
@@ -66,11 +75,11 @@ function validateFiles(inputFile) {
         if ($.inArray(this.name.split('.').pop(), allowedExtension) == -1) {extError=true;};
     });
 
-    if (sizeExceeded) {
-        console.log('size problem.')
-        window.alert(maxExceededMessage);
-        $(inputFile).val('');
-    };
+    // if (sizeExceeded) {
+       //  console.log('size problem.')
+        // window.alert(maxExceededMessage);
+        // $(inputFile).val('');
+    // };
 
     if (extError) {
         console.log('ext problem.')
@@ -99,7 +108,7 @@ $(function () {
                 // infos.textContent += media_file[i].name + " duration: " + media_file[i].duration + '\n';
                 infos.textContent = "Duration: " + sec2time(media_file[i].duration) + '\n';
             }
-            }
+        }
 
         function sec2time(timeInSeconds) {
             var pad = function(num, size) { return ('000' + num).slice(size * -1); },

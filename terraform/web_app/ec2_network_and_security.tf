@@ -19,9 +19,9 @@ resource "aws_security_group" "http" {
   }
 
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -92,7 +92,6 @@ resource "aws_security_group" "ssh" {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
-
     cidr_blocks = [
       "${chomp(data.http.local_ip.body)}/32",
     ]
@@ -124,13 +123,6 @@ resource "aws_security_group" "mysql" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
-  }
-
-  ingress {
-    from_port = 3306
-    to_port   = 3306
-    protocol  = "tcp"
-    self      = true
   }
 
   ingress {
@@ -184,20 +176,10 @@ resource "aws_security_group" "puma" {
     self      = true
   }
 
-  # ingress {
-  #   from_port = 9293
-  #   to_port   = 9293
-  #   protocol  = "tcp"
-
-
-  #   cidr_blocks = [
-  #     "${chomp(data.http.local_ip.body)}/32",
-  #   ]
-  # }
-
   lifecycle {
     create_before_destroy = true
   }
+
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"
