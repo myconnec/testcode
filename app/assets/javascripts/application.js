@@ -15,6 +15,7 @@
 //= require jquery.bar.custom
 //= require jquery.ui.widget
 //= require jquery.fileupload
+//= require jquery.validate
 //= require bootstrap-sprockets
 //= require masonry/jquery.masonry
 //= require imagesloaded
