@@ -4,6 +4,7 @@
 
             <div class="panel-heading">
                 <h2>Upload Media for New Listing</h2>
+                <div class="red">Acceptable file types are avi, .mov, .mp4, or .mkv .</div>
             </div>
 
             <div class="panel-body">
@@ -24,8 +25,9 @@
                     <%# source http://www.seanbehan.com/onchange-event-fired-from-select-field-in-rails-form/ %>
 
                     <%= f.file_field :listing,
-                        id: "fileupload",
+                        accept: ".avi, .mov, .mp4, .mkv",
                         class:"form-control",
+                        id: "fileupload",
                         required: true,
                         type: "file"
                     %>
