@@ -78,18 +78,19 @@ $(function () {
             });
             return extError;
         }
+
+        /* validate file type and size */
+        document.getElementById('fileupload').setCustomValidity("");
+        if (!validateFileType(this)) {
+            document.getElementById('fileupload').setCustomValidity("Only VIDEO file with extension: .avi, .mov, .mp4, .mkv are allowed.");
+            return false;
+        }
+
         var media_file = [];
         var files = this.files;
         media_file.push(files[0]);
         var video = document.createElement('video');
         video.preload = 'metadata';
-
-        /* validate file type and size */
-        if (!validateFileType(this.files)) {
-            document.getElementById('fileupload').setCustomValidity("Only VIDEO file with extension: .avi, .mov, .mp4, .mkv are allowed.");
-            return false;
-        }
-        document.getElementById('fileupload').setCustomValidity("");
 
         video.onloadedmetadata = function() {
             var duration = video.duration;

@@ -47,8 +47,6 @@ gem 'dotenv-rails', '~> 2.6.0'
 gem 'mysql2', '~> 0.4.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-# Use jquery form validation plugin to make it easy to read if a form is valid or not
-gem 'jquery-validation-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for safely handling passwords.

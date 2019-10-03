@@ -10,16 +10,15 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require bootstrap-sprockets
-//= require helpers
-//= require imagesloaded
 //= require jquery
 //= require jquery_ujs
 //= require jquery.bar.custom
-//= require jquery.fileupload
 //= require jquery.ui.widget
-//= require jquery.validate
+//= require jquery.fileupload
+//= require bootstrap-sprockets
 //= require masonry/jquery.masonry
+//= require imagesloaded
 //= require video
-//= require video.js
+//= require helpers
 //= require_tree .
+//= require video.js

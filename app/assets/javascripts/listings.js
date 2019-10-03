@@ -81,8 +81,9 @@ $(document).on('ready turbolinks:load', function() {
   });
 
   $('#listings_submit').on('click', function(e) {
+    console.log('Show loading spinner...')
     /* Submit the form only if no validation errors occure */
-    if ($(this).closest('form').valid() == false) {
+    if (this.closest('form').valid() == false) {
       console.log('Form is not valid, NOT submitting form data.')
       e.preventDefault();
       return false;
@@ -90,9 +91,6 @@ $(document).on('ready turbolinks:load', function() {
 
     /* show the overlay only after the form has been submitted */
     console.log('Form is valid, submitting form data.')
-    console.log('Show loading spinner...')
-    $("#overlay").toggle();
-    e.preventDefault();
-
+    $("#overlay").toggle()
   });
 });

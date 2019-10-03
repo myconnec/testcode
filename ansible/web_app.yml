@@ -231,5 +231,5 @@
       shell: |
         cd ~/{{ APP_NAME }}
         rake db:migrate
-        pkill -e -f puma
+        pkill puma
         bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
