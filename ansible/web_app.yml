@@ -222,6 +222,7 @@
           -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
           -o nonempty \
           -o allow_other
+      when: media_profile_bucket_stats.stat.exists == false
 
     # Start web server. This is the same as the instance's startup user-data
 

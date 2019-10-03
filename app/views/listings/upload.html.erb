@@ -27,10 +27,7 @@
                         id: "fileupload",
                         class:"form-control",
                         required: true,
-                        type: "file",
-                        {
-                            :onchange => "validateFiles(this);"
-                        }
+                        type: "file"
                     %>
 
                     <br>
@@ -54,46 +51,42 @@
 <%= render "processing_overlay" %>
 
 <script>
-function validateFiles(inputFile) {
-    console.log('checking file attributes.')
-    console.log('inputFile.files: ', inputFile.files)
-    return true
-
-    // var maxExceededMessage = "This file exceeds the maximum allowed file size (5 MB)";
-    var extErrorMessage = "Only VIDEO file with extension: .avi, .mov, .mp4, .mkv are allowed.";
-    var allowedExtension = ["avi", "mov", "mp4", "mkv"];
-
-    var extName;
-    var maxFileSize = 1; //$(inputFile).data('max-file-size');
-    var sizeExceeded = false;
-    var extError = false;
-
-    $.each(inputFile.files, function() {
-        console.log('checking each file size.')
-        if (this.size && maxFileSize && this.size > parseInt(maxFileSize)) {sizeExceeded=true;};
-        console.log('checking each file ext.')
-        if ($.inArray(this.name.split('.').pop(), allowedExtension) == -1) {extError=true;};
-    });
-
-    // if (sizeExceeded) {
-       //  console.log('size problem.')
-        // window.alert(maxExceededMessage);
-        // $(inputFile).val('');
-    // };
-
-    if (extError) {
-        console.log('ext problem.')
-        window.alert(extErrorMessage);
-        $(inputFile).val('');
-    };
-}
-
 $(function () {
-    var media_file = [];
-
     document.getElementById('fileupload').onchange = setFileInfo;
 
+    /* get file runtime */
     function setFileInfo() {
+        function sec2time(timeInSeconds) {
+            var pad = function(num, size) { return ('000' + num).slice(size * -1); },
+            time = parseFloat(timeInSeconds).toFixed(3),
+            hours = Math.floor(time / 60 / 60),
+            minutes = Math.floor(time / 60) % 60,
+            seconds = Math.floor(time - minutes * 60),
+            milliseconds = time.slice(-3);
+
+            // return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
+            return  minutes + ' minutes and ' + pad(seconds, 2) + ' seconds.';
+        }
+
+        function validateFileType(inputFile) {
+            var allowedExtension = ["avi", "mov", "mp4", "mkv"];
+            var extError = false;
+            $.each(inputFile.files, function() {
+                if ($.inArray(this.name.split('.').pop(), allowedExtension) == -1) {
+                    extError=true;
+                };
+            });
+            return extError;
+        }
+
+        /* validate file type and size */
+        document.getElementById('fileupload').setCustomValidity("");
+        if (!validateFileType(this)) {
+            document.getElementById('fileupload').setCustomValidity("Only VIDEO file with extension: .avi, .mov, .mp4, .mkv are allowed.");
+            return false;
+        }
+
+        var media_file = [];
         var files = this.files;
         media_file.push(files[0]);
         var video = document.createElement('video');
@@ -110,21 +103,10 @@ $(function () {
             }
         }
 
-        function sec2time(timeInSeconds) {
-            var pad = function(num, size) { return ('000' + num).slice(size * -1); },
-            time = parseFloat(timeInSeconds).toFixed(3),
-            hours = Math.floor(time / 60 / 60),
-            minutes = Math.floor(time / 60) % 60,
-            seconds = Math.floor(time - minutes * 60),
-            milliseconds = time.slice(-3);
-
-            // return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
-            return  minutes + ' minutes and ' + pad(seconds, 2) + ' seconds.';
-        }
-
         video.src = URL.createObjectURL(files[0]);
     }
 
+    /* upload progress bar, triggered when `submit` is pressed */
     $('#new_listing_upload').find("input:file").each(function(i, elem) {
         var fileInput = $(elem);
         var form = $(fileInput.parents('form:first'));
@@ -205,3 +187,5 @@ $(function () {
     });
 });
 </script>
+
+

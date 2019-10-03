@@ -59,10 +59,11 @@
                         <%= f.text_field :price,
                             class:"form-control",
                             required: true,
-                            type: "text",
+                            type: "number",
                             maxlength: "32",
-                            pattern: "[0-9.,]{32}",
-                            placeholder: "exp. 1234, whole dollar amounts"
+                            placeholder: "exp. 1234, whole US dollar amount",
+                            min: "1",
+                            step: "any"
                         %>
                     </div>
                     <br>
