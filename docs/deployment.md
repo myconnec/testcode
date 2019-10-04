@@ -36,7 +36,11 @@ Next, execute Ansible to configure the web app.
 ./helper_scripts/ansible/init_ec2_provision.sh
 ```
 
-For new environments connect and import the baseline database from [the avaialbe SQL dump](./db/sql/database.sql).
+For new environments connect to the EC2 instance and execute the import process:
+
+```sh
+rake db:setup
+```
 
 ## Destroy
 
