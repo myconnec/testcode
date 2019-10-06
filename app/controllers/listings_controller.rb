@@ -68,7 +68,7 @@ class ListingsController < ApplicationController
       if @listing.save
         return redirect_to action: "upload", id: @listing.id
       end
-      flash[:danger] = 'Your payment was successful; however, an error occured while updating your listing.'
+      flash[:danger] = 'Your payment was successful; however, an error occured while posting your listing. Please cotacgt support@connechub.com for assistance.'
     else
       flash[:danger] = charge.errors.full_messages.to_sentence
     end
