@@ -59,10 +59,11 @@
                         <%= f.text_field :price,
                             class:"form-control",
                             required: true,
-                            type: "text",
+                            type: "number",
                             maxlength: "32",
-                            pattern: "[0-9.,]{32}",
-                            placeholder: "exp. 1234, whole dollar amounts"
+                            placeholder: "exp. 1234, whole US dollar amount",
+                            min: "1",
+                            step: "any"
                         %>
                     </div>
                     <br>
@@ -72,9 +73,8 @@
                         <%= f.text_field :title,
                             class: "form-control",
                             required: true,
-                            type: "text",
-                            maxlength: "128",
-                            pattern: "[a-zA-Z\ ]",
+                            type: "regexp",
+                            pattern: "[A-Za-z\s]+{128}",
                             placeholder: "exp. Example Item for Sale"
                         %>
                     </div>
@@ -86,8 +86,7 @@
                             class: "form-control",
                             required: true,
                             type: "text",
-                            maxlength: "32",
-                            pattern: "[A-Za-z0-9 _.,!\"\']{32}",
+                            pattern: "[A-Za-z\s]+{32}",
                             placeholder: "exp. Sometown"
                         %>
                     </div>
@@ -99,8 +98,7 @@
                             class: "form-control",
                             required: true,
                             type: "text",
-                            maxlength: "2",
-                            pattern: "[A-Z]{2}",
+                            pattern: "[A-Z]+{2}",
                             placeholder: "exp. FL"
                         %>
                     </div>
@@ -112,8 +110,7 @@
                             class: "form-control",
                             required: true,
                             type: "number",
-                            maxlength: "5",
-                            pattern: "[0-9]{5}",
+                            pattern: "[0-9]+{5}",
                             placeholder: "exp. 12345"
                         %>
                     </div>
@@ -125,8 +122,7 @@
                             class: "form-control",
                             required: true,
                             type: "text",
-                            maxlength: "2048",
-                            pattern: "[a-zA-Z0-9!,.?-]{2048}",
+                            pattern: "[A-Za-z\s\!\$\,\.\?]+{2048}",
                             placeholder: "exp. Describe the item for sale as detailed as possible."
                         %>
                     </div>
@@ -149,3 +145,13 @@
 </div>
 
 <%= render "processing_overlay" %>
+
+<script>
+$(function () {
+    $('#listings_submit').on('click', function(){
+        if (document.getElementById('edit_listing').checkValidity() == true){
+            $("#overlay").toggle()
+        }
+    })
+});
+</script>

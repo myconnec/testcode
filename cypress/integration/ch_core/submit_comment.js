@@ -20,6 +20,5 @@ describe('Test Comment system', function() {
     cy.get('.container_12 > .grid_6 > .comments > #new_comment > #comment_body').click()
     cy.get('.container_12 > .grid_6 > .comments > #new_comment > #submit-btn').click()
     cy.visit('/listings/1')
-
  })
 })

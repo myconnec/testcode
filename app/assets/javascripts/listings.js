@@ -5,20 +5,20 @@ const formatter = new Intl.NumberFormat('en-US', {
 })
 
 $(document).on('ready turbolinks:load', function() {
-  if (location.host != 'www.connechub.com') {
-    // $('select#listing_category_id>option:eq(1)').attr('selected', true);
-    $('#listing_price').val('10');
-    $('#listing_title').val('Test Title');
-    $('#listing_city').val('Tampa');
-    $('#listing_state').val('FL');
-    $('#listing_zipcode').val('33612');
-    $('#listing_description').val('Test Description');
+  // if (location.host != 'www.connechub.com') {
+  //   // $('select#listing_category_id>option:eq(1)').attr('selected', true);
+  //   $('#listing_price').val('10');
+  //   $('#listing_title').val('Test Title');
+  //   $('#listing_city').val('Tampa');
+  //   $('#listing_state').val('FL');
+  //   $('#listing_zipcode').val('33612');
+  //   $('#listing_description').val('Test Description');
 
-    $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
-    $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
-    $('span.CardField-cvc.CardField-child > span > span > input').val('567');
-    $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
-  }
+  //   $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
+  //   $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
+  //   $('span.CardField-cvc.CardField-child > span > span > input').val('567');
+  //   $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
+  // }
 
   var getSubcategories = function(category_id){
     var $subcategories = $('#listing_subcategory_id');
@@ -78,19 +78,5 @@ $(document).on('ready turbolinks:load', function() {
     }
 
     return true;
-  });
-
-  $('#listings_submit').on('click', function(e) {
-    console.log('Show loading spinner...')
-    /* Submit the form only if no validation errors occure */
-    if (this.closest('form').valid() == false) {
-      console.log('Form is not valid, NOT submitting form data.')
-      e.preventDefault();
-      return false;
-    }
-
-    /* show the overlay only after the form has been submitted */
-    console.log('Form is valid, submitting form data.')
-    $("#overlay").toggle()
   });
 });

@@ -32,14 +32,14 @@
                         type: "file"
                     %>
 
-                    <br>
                     <div id="listing_media_info"></div>
                     <br>
+
                     <div id="listing_media_progress"></div>
-                    
+
                     <div class="input-group">
                         <div class="actions">
-                            <button class="btn btn-success" id="listings_submit">Submit</button>
+                            <%= f.submit "Submit Media", class: "btn btn-success", id: "listings_submit" %>
                         </div>
                     </div>
 
@@ -54,6 +54,12 @@
 
 <script>
 $(function () {
+    $('#listings_submit').on('click', function(){
+        if (document.getElementById('new_listing_upload').checkValidity() == true){
+            $("#overlay").toggle()
+        }
+    })
+
     document.getElementById('fileupload').onchange = setFileInfo;
 
     /* get file runtime */
@@ -81,10 +87,8 @@ $(function () {
             return extError;
         }
 
-        /* validate file type and size */
-        document.getElementById('fileupload').setCustomValidity("");
-        if (!validateFileType(this)) {
-            document.getElementById('fileupload').setCustomValidity("Only VIDEO file with extension: .avi, .mov, .mp4, .mkv are allowed.");
+        if (document.getElementById('new_listing_upload').checkValidity() != true){
+            console.log('form not valid')
             return false;
         }
 
