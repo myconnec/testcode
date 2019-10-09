@@ -1,9 +1,10 @@
 class ListingsController < ApplicationController
   around_filter :catch_not_found
-  before_action :set_s3_direct_post, only: [:upload, :create_upload]
-  before_filter :authenticate_user!, only: [:new, :create]
-  before_filter :is_user?, only: [:edit, :update, :delete, :upvote, :downvote]
   impressionist actions: [:show], unique: [:session_hash]
+
+  before_action :set_s3_direct_post, only: [:upload]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update]
+  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upvote, :downvote, :upload, :upload_update]
 
   def index
     redirect_to '/'
@@ -197,8 +198,8 @@ class ListingsController < ApplicationController
 
   def is_user?
     @listing = Listing.find(params[:id])
-    unless current_user = @listing.user
-      redirect_to root_path, alert: "Sorry, you are not the user of this listing."
+    if current_user != @listing.user
+      return redirect_to root_url, :flash => { :danger => "Sorry, you are not the user of this listing." }
     end
   end
 
