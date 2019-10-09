@@ -98,7 +98,7 @@ class ListingsController < ApplicationController
     last_dot_pos = file_name.index('.')
     file_name = file_name.reverse
     file_name = file_name[0...(file_name.length - last_dot_pos)]
-    file_name = File.dirname(file_name) + '/' + file_name + '.mp4'
+    file_name = File.dirname(file_name) + '/' + file_name + 'mp4'
 
     @listing.media_file_name = file_name
     @listing.media_updated_at = Time.now.to_i
