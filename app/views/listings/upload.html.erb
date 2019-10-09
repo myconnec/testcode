@@ -116,7 +116,6 @@
             replaceFileInput: false,
             add: function (e, data) {
                 $('button#listings_submit').off('click').on('click', function () {
-                    console.log('overlay and submit')
                     $("#overlay").toggle()
                     data.submit();
                 });
@@ -134,18 +133,12 @@
                     text("Loading...");
             },
             done: function(e, data) {
-                console.log('Now AJAX call and update listings.')
-
                 submitButton.prop('disabled', false);
                 progressBar.text("Uploading done");
 
                 // extract key and generate URL from response
                 var key   = $(data.jqXHR.responseXML).find("Key").text();
                 var url   = '//' + form.data('host') + '/' + key;
-
-                // create hidden field
-                // var input = $("<input />", { type:'input', name: fileInput.attr('name'), value: url })
-                console.log('final filename: ', key)
                 var url_path = window.location.pathname.split('/');
                 var listings_id = url_path[url_path.length - 1];
 
@@ -159,10 +152,10 @@
                     dataType: 'json',
                     statusCode: {
                         200: function() {
-                            // if the response is a 200, success, fwd to listing item view
-                            console.log('Redirecting to listing item view.')
-                            // window.location.href = "//" + window.location.hostname + "/listings/" + listings_id;
                             window.location.href = "//" + window.location.hostname
+                        },
+                        404: function() {
+                            location.reload();
                         }
                     }
                 })

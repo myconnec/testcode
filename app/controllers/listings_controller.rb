@@ -90,6 +90,14 @@ class ListingsController < ApplicationController
 
     # replace ANY file extension with .mp4, that is the ONLY output format we provide
     file_name = params[:media_file_name]
+
+    # check file extention is of allowed format
+    file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length]
+    if !['avi', 'mov', 'mp4', 'mkv'].include? file_ext
+      flash[:danger] = 'Please provide a video file for your listing. File types .avi, .mov, .mp4, .mkv are accepted.'
+      return redirect_to action: "upload", id: @listing.id
+    end
+
     # File.basename does nto work as it considers the '.' character to be the name delimiter
     # However, modern devices name trimmed files `trim.${UUID}.mp4`. As such basename only returns `trim`.
     # So, we have to do a reverse count to the last `.` and truncate the string at that lingth.
