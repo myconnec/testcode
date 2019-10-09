@@ -4,6 +4,7 @@
 
             <div class="panel-heading">
                 <h2>Upload Media for New Listing</h2>
+                <div>Please provide a video file for your listing. File types .avi, .mov, .mp4, .mkv are accepted.</div>
             </div>
 
             <div class="panel-body">
@@ -27,6 +28,8 @@
                         required: true,
                         type: "file"
                     %>
+                    
+                    <input id="submit-hidden" type="submit" style="display: none" />
 
                     <br>
                     <div id="listing_media_info"></div>
@@ -50,6 +53,12 @@
 <%= render "processing_overlay" %>
 
 <script>
+    $("#listings_submit").on("click", function() {
+        if (!$("#new_listing_upload")[0].checkValidity()) {
+            $("#new_listing_upload").find("#submit-hidden").click();
+        }
+    });
+
     $(function () {
     var media_file = [];
 
@@ -107,8 +116,9 @@
             replaceFileInput: false,
             add: function (e, data) {
                 $('button#listings_submit').off('click').on('click', function () {
+                    console.log('overlay and submit')
                     $("#overlay").toggle()
-                    //data.submit();
+                    data.submit();
                 });
             },
             progressall: function (e, data) {
