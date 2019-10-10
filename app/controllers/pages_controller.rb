@@ -2,7 +2,10 @@ class PagesController < ApplicationController
 
     def  about 
     end
-    
+
+    def  career
+    end
+
     def  contact 
     end
     
@@ -29,7 +32,10 @@ class PagesController < ApplicationController
       
     def  help
     end
-      
+
+    def  howitworks
+    end
+
     def  marketing 
     end
     
