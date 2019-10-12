@@ -25,7 +25,7 @@ class ListingsController < ApplicationController
     listing_sub_category = Subcategory.find(@listing.subcategory_id)
 
     # if subcat has a charge value AND the current_user.promo_1 value is > 0
-    if listing_sub_category.chargable > 0 &&  current_user.promo_1 > 0
+    if listing_sub_category.chargable > 0 && current_user.promo_1 > 0 && current_user.created_at > (Time.now.to_i - 7776000)
       promo_1 = true # are using promo_1
       @listing.ending_at = Time.now.to_i + 3888000 # 45 days duration
       @listing.charge_amount = 0 # no charge
