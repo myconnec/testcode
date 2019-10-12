@@ -17,26 +17,36 @@ class ListingsController < ApplicationController
   def create
     @listing = Listing.new(listing_params)
     @listing.ademail = current_user.email
-    # TODO: phase 1: limit to 30 days. Phase 2: based on selected upgrades
     @listing.ending_at = Time.now.to_i + 2592000
     @listing.user = current_user
+    promo_1 = false
 
     # read the subcategory, if chargable > 0  set amount on listing
     listing_sub_category = Subcategory.find(@listing.subcategory_id)
-    if listing_sub_category.chargable > 0
+
+    # if subcat has a charge value AND the current_user.promo_1 value is > 0
+    if listing_sub_category.chargable > 0 &&  current_user.promo_1 > 0
+      promo_1 = true # are using promo_1
+      @listing.ending_at = Time.now.to_i + 3888000 # 45 days duration
+      @listing.charge_amount = 0 # no charge
+    elsif listing_sub_category.chargable > 0 &&  current_user.promo_1 <= 0
       @listing.charge_amount = listing_sub_category.chargable
     end
 
     if @listing.save
-      # if subcategory.chargable > 0, goto payment for
-      if listing_sub_category.chargable > 0
+
+      # if promo_1 is true (being used) reduce the promo_1 counter on the user MDL
+      if promo_1 == true
+        current_user.promo_1 = current_user.promo_1 - 1)
+        if !current_user.save
+          return render 'new', :flash => { :danger => current_user.errors.full_messages.to_sentence }
+
+      if listing_sub_category.chargable > 0 && current_user.promo_1 <= 0
         return redirect_to action: "payment", id: @listing.id
-      else
-        return redirect_to action: "upload", id: @listing.id
-      end
+
+      return redirect_to action: "upload", id: @listing.id
     else
-      flash[:danger] = @listing.errors.full_messages.to_sentence
-      render 'new'
+      return render 'new', :flash => { :danger => @listing.errors.full_messages.to_sentence }
     end
   end
 
