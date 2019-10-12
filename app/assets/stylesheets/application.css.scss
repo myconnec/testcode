@@ -258,11 +258,12 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   font-weight: normal;
   line-height: 1.2;
   margin-top: 4px;
-  color: light-font-color; }
+  color: #ffffff;
+}
 
 .hero-avatar {
-  webkit-border-radius:6px 0 6px 6px;
-	moz-border-radius:6px 0 6px 6px;
+  webkit-border-radius: 6px 0 6px 6px;
+	moz-border-radius: 6px 0 6px 6px;
 	border-radius:6px 0 6px 6px;
   position: relative;
    width: 85px;

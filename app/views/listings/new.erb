@@ -49,6 +49,9 @@
                             <div class="input-group-addon" style="color: red">Fee required</div>
                             <div class="form-control fee_amount_message">
                                 Selected category requires a payment of <span id="fee_amount" style="font-weight: bolder"></span> on the next step.
+                                <% if current_user.promo_1 > 0 %>
+                                However, you have <%= current_user.promo_1 %> promotional paid postings remaining. One will be used and no payment will be necessary.
+                                <% end %>
                             </div>
                         </div>
                         <br>

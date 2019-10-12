@@ -7,8 +7,8 @@
           <br>
           <div class="profile-info"><%= image_tag @user.avatar.url(:thumb), class: 'img-responsive', style: 'width: 100px; height: 100px' %></div>
           <hr style= "width: 100px">
-          <div class="small-heading" style="color: #ffffff"><%= @user.username %></div>
-          <div class="hero-description" style="color: #ffffff" ><%= @user.bio %></div>
+          <div class="hero-description"><%= @user.username %></div>
+          <div class="hero-description"><%= @user.bio %></div>
           <br>
           <div><%= link_to 'Edit Your Profile', edit_user_registration_path, class: "btn btn-success btn-sm" %></div>
           <br>
@@ -23,6 +23,9 @@
               <div class="">
               <div class = "small-heading">
                 <b>Active Posts: <%= @listings.count %></b>
+                <% if @user.promo_1 > 0 %>
+                 | <b>Free `Paid` Listings Remaining: <%= @user.promo_1 %></b>
+                 <% end %>
               </div>
               <hr>
               <div class = "grid transitions-enabled">

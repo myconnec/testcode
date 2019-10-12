@@ -34,15 +34,17 @@ class ListingsController < ApplicationController
     end
 
     if @listing.save
-
       # if promo_1 is true (being used) reduce the promo_1 counter on the user MDL
       if promo_1 == true
-        current_user.promo_1 = current_user.promo_1 - 1)
+        current_user.promo_1 = current_user.promo_1 - 1
         if !current_user.save
           return render 'new', :flash => { :danger => current_user.errors.full_messages.to_sentence }
+        end
+      end
 
       if listing_sub_category.chargable > 0 && current_user.promo_1 <= 0
         return redirect_to action: "payment", id: @listing.id
+      end
 
       return redirect_to action: "upload", id: @listing.id
     else
