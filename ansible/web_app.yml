@@ -122,12 +122,14 @@
     # TODO this can be a role
 
     - name: Get SSH private key for cloning web app repo
+      become: "{{ local_user }}"
       shell: |
         mkdir ~/.ssh
         aws s3 cp s3://connechub-configs/{{ APP_ENV }}/iam_private_key ~/.ssh/iam_private_key
         chmod 0600 ~/.ssh/iam_private_key
 
     - name: Create SSH config
+      become: "{{ local_user }}"
       copy:
         dest: ~/.ssh/config
         content: |
@@ -136,6 +138,7 @@
           IdentityFile ~/.ssh/iam_private_key
 
     - name: Git clone web app repo
+      become: "{{ local_user }}"
       git:
         accept_hostkey: true
         clone: true
@@ -149,10 +152,12 @@
     # TODO this can be a role
 
     - name: GET app .env from storage
+      become: "{{ local_user }}"
       command: >
         aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ APP_NAME }}/.env
 
     - name: Copy API keys for S3 mounting into EC2 instance
+      become: "{{ local_user }}"
       shell: |
         aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
         chmod 0600 /home/{{ local_user }}/.passwd-s3fs
@@ -231,5 +236,4 @@
       shell: |
         cd ~/{{ APP_NAME }}
         rake db:migrate
-        pkill puma
         bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
