@@ -78,8 +78,10 @@
 
         <div>
             <% if @listing.user == current_user %>
-            <%= link_to 'Edit', edit_listing_path %> /
-            <%= link_to 'Delete', @listing, data: {confirm: "Are you sure you want to delete this listing?" }, method: :delete %>  <% end %>
+                <%= link_to 'Change Video', "listings/upload/#{listing.id}" %> |
+                <%= link_to 'Delete', listing, method: :delete, data: {confirm: "Are you sure you want to delete this listing?"} %> |
+                <%= link_to 'Edit Listing', edit_listing_path(listing) %></span>
+            <% end %>
         </div>
         <br>
 
