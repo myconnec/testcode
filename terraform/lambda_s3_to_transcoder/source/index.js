@@ -18,7 +18,6 @@ exports.handler = function(event, context) {
   return;
  }
  var srcKey =  decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " ")); //the object may have spaces
- var newKey = key.split('.')[0];
  var params = {
   PipelineId: pipelineId,
 //  OutputKeyPrefix: '',
@@ -31,9 +30,9 @@ exports.handler = function(event, context) {
    Container: 'auto'
   },
   Outputs: [{
-    Key: newKey + '.mp4',
+    Key: key,
     PresetId: '1351620000001-000001',
-    ThumbnailPattern: newKey + '-{count}'
+    ThumbnailPattern: key + '-{count}'
   }]
  };
  console.log('Starting Job');
