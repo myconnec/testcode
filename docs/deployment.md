@@ -28,8 +28,6 @@ terraform plan --out ./out.plan -var-file=.env
 terraform apply -lock=true ./out.plan
 ```
 
-For development: `Once Terraform sets up the resources, connect to the RDS database and import the starting point data set from ./db/sql/database.sql`
-
 Next, execute Ansible to configure the web app.
 
 ```sh
@@ -40,6 +38,7 @@ For new environments connect to the EC2 instance and execute the import process:
 
 ```sh
 rake db:setup
+rake db:migrate
 ```
 
 ## Destroy
