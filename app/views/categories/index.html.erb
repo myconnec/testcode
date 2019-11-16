@@ -12,21 +12,21 @@
   <div class="form-group text-center row">
     <%= form_tag search_listings_path, method: :get do |f| %>
 
-      <div class="col-xs-12 col-sm-6">
-        <%= text_field_tag :search, nil, placeholder: 'keywords', class: "form-control"%>
-      </div>
+    <div class="col-xs-12 col-sm-6">
+      <%= text_field_tag :search, nil, placeholder: 'keywords', class: "form-control"%>
+    </div>
 
-      <!-- <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+    <!-- <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <%#= text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control"%>
       </div>-->
 
-      <div class="col-xs-12 col-sm-6">
-        <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control"%>
-      </div>
+    <div class="col-xs-12 col-sm-6">
+      <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control"%>
+    </div>
 
-      <div class="col-xs-12 col-sm-4 col-sm-offset-4" style="margin-top: 25px">
-        <%= submit_tag 'Search', class: "btn btn-block btn-success" %>
-      </div>
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4" style="margin-top: 25px">
+      <%= submit_tag 'Search', class: "btn btn-block btn-success" %>
+    </div>
 
     <% end %>
   </div>
@@ -36,146 +36,174 @@
   <br>
 
 
-<div align="center" style="width: 100%;">
-  <%= image_tag("directlistsm.jpg", :alt => "directory list") %>
-</div>
-<br>
+  <div align="center" style="width: 100%;">
+    <%= image_tag("directlistsm.jpg", :alt => "directory list") %>
+  </div>
+  <br>
 
-<div style="width: 71%; margin: 0px auto;">
+  <div style="width: 71%; margin: 0px auto;">
 
-  <!-- Sale -->
-  <div class="section group">
-    <div class="col span_1_of_4">
-      <div class="catg_title">
-        <i class = "glyphicon glyphicon-shopping-cart"></i>
-        <strong><%= link_to 'Sale', category_path(@sale) %></strong>
-      </div>
-      <div class="category_title">
+    <div class="section group">
 
-        <ul>
-          <% @sale.subcategories.each_with_index do |subcategory, index| %>
+      <div class="col span_1_of_4">
+
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-shopping-cart"></i>
+          <strong><%= link_to 'Sale', category_path(@sale) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
+            <% @sale.subcategories.each_with_index do |subcategory, index| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@sale, subcategory) %>
               <%= @sale_subcat_posting_count[subcategory.id] %>
             </li>
-          <% end %>
-        </ul>
+            <% end %>
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
+
       </div>
-    <div style="height: 15px; width: 100%;"></div>
-  </div>
+      <div class="col span_1_of_4">
 
-
-
-
-
-<div class="col span_1_of_4">
-<%#
-<div class="catg_title"><i class = "glyphicon glyphicon-heart"></i> <strong><%= link_to 'Personals', category_path(@personals) </strong></div>
-<div class="category_title">
-            <%# <% @personals.subcategories.each do |subcategory|
-            <ul>
-              <li><%# <%= link_to subcategory.name, category_subcategory_path(@personals, subcategory) </li>
-            </ul>
-            <%# <% end
-</div>
-<div style="height: 15px; width: 100%;"></div>
-%>
-<div class="catg_title"><i class = "glyphicon glyphicon-globe"></i> <strong><%= link_to 'Community', category_path(@community) %></strong></div>
-<div class="category_title">
-
-            <% @community.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@community, subcategory) %></li>
-            </ul>
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-globe"></i>
+          <strong><%= link_to 'Community', category_path(@community) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
+            <% @community.subcategories.each_with_index do |subcategory, index| %>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@community, subcategory) %>
+              <%= @community_subcat_posting_count[subcategory.id] %>
+            </li>
             <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-<div class="catg_title"><i class = "glyphicon glyphicon-cog"></i> <strong><%= link_to 'Services', category_path(@services) %></strong></div>
-<div class="category_title">
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
+
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-cog"></i>
+          <strong><%= link_to 'Services', category_path(@services) %></strong>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
+        <div class="category_title">
+          <ul>
             <% @services.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@services, subcategory) %></li>
-            </ul>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@services, subcategory) %>
+              <%= @services_subcat_posting_count[subcategory.id] %>
+            </li>
             <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-<%#
-<div class="catg_title"><i class = "glyphicon glyphicon-user"></i> <strong><%= link_to 'Talent', category_path(@talent) </strong></div>
-<div class="category_title">
-           <% @talent.subcategories.each do |subcategory|
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@talent, subcategory) </li>
-            </ul>
-            <% end
-</div>
-<div style="height: 15px; width: 100%;"></div>
-%>
-</div>
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
 
-<div class="col span_1_of_4">
-<div class="catg_title"><i class = "glyphicon glyphicon-briefcase"></i> <strong><%= link_to 'Jobs', category_path(@jobs) %></strong></div>
-<div class="category_title">
-           <% @jobs.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@jobs, subcategory) %></li>
-            </ul>
+      </div>
+      <div class="col span_1_of_4">
+
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-briefcase"></i>
+          <strong><%= link_to 'Jobs', category_path(@jobs) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
+            <% @jobs.subcategories.each do |subcategory| %>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@jobs, subcategory) %>
+              <%= @jobs_subcat_posting_count[subcategory.id] %>
+            </li>
             <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-</div>
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
 
-<div class="col span_1_of_4">
-<div class="catg_title"><i class = "glyphicon glyphicon-home"></i> <strong><%= link_to 'Housing', category_path(@housing) %></strong></div>
-<div class="category_title">
+      </div>
+      <div class="col span_1_of_4">
+
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-home"></i>
+          <strong><%= link_to 'Housing', category_path(@housing) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
             <% @housing.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@housing, subcategory) %></li>
-            </ul>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@housing, subcategory) %>
+              <%= @housing_subcat_posting_count[subcategory.id] %>
+            </li>
             <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-<div class="catg_title"><i class = "glyphicon glyphicon-education"></i> <strong><%= link_to 'Campus', category_path(@campus) %></strong></div>
-<div class="category_title">
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
+
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-education"></i>
+          <strong><%= link_to 'Campus', category_path(@campus) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
             <% @campus.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@campus, subcategory) %></li>
-            </ul>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@campus, subcategory) %>
+              <%= @campus_subcat_posting_count[subcategory.id] %>
+            </li>
             <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-<div class="catg_title"><i class = "glyphicon glyphicon-search"></i> <strong><%= link_to 'Hard to Find', category_path(@h2f) %></strong></div>
-<div class="category_title">
-           <% @h2f.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@h2f, subcategory) %></li>
-            </ul>
-            <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-<div class="catg_title"><i class = "glyphicon glyphicon-gift"></i> <strong><%= link_to 'Free', category_path(@free) %></strong></div>
-<div class="category_title">
-           <% @free.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@free, subcategory) %></li>
-            </ul>
-            <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-<div class="catg_title"><i class = "glyphicon glyphicon-eye-open"></i> <strong><%= link_to 'Unboxing', category_path(@unboxing) %></strong></div>
-<div class="category_title">
-           <% @unboxing.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@unboxing, subcategory) %></li>
-            </ul>
-            <% end %>
-</div>
-</div>
-</div>
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
 
-</div>
-<br>
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-search"></i>
+          <strong><%= link_to 'Hard to Find', category_path(@h2f) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
+            <% @h2f.subcategories.each do |subcategory| %>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@h2f, subcategory) %>
+              <%= @h2f_subcat_posting_count[subcategory.id] %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
 
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-gift"></i>
+          <strong><%= link_to 'Free', category_path(@free) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
+            <% @free.subcategories.each do |subcategory| %>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@free, subcategory) %>
+              <%= @free_subcat_posting_count[subcategory.id] %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
 
+        <div class="catg_title">
+          <i class="glyphicon glyphicon-eye-open"></i>
+          <strong><%= link_to 'Unboxing', category_path(@unboxing) %></strong>
+        </div>
+        <div class="category_title">
+          <ul>
+            <% @unboxing.subcategories.each do |subcategory| %>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@unboxing, subcategory) %>
+              <%= @unboxing_subcat_posting_count[subcategory.id] %>
+            </li>
+            <% end %>
+          </ul>
+        </div>
+        <div style="height: 15px; width: 100%;"></div>
+
+    </div>
+  </div>
+  <br>
 
 </div>
 <div style="height: 45px; width: 100%;"></div>

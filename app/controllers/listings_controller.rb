@@ -108,6 +108,7 @@ class ListingsController < ApplicationController
 
     # check file extention is of allowed format
     file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length]
+    file_ext = file_ext.downcase
     if !['avi', 'mov', 'mp4', 'mkv'].include? file_ext
       flash[:danger] = 'Please provide a video file for your listing. File types .avi, .mov, .mp4, .mkv are accepted.'
       return redirect_to action: "upload", id: @listing.id

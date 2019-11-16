@@ -4,43 +4,31 @@ class CategoriesController < ApplicationController
         @categories = Category.all
 
         @campus = @categories[0]
-        @community = @categories[1]
-        @housing = @categories[2]
-        @h2f = @categories[3]
-        @free = @categories[4]
-        @jobs = @categories[5]
-        
-        @sale = @categories[6]
-        # @sale_subcat_posting_count = [0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6]
-        # @sale_subcat_posting_count = {
-        #     167 => 1,
-        #     168 => 0,
-        #     169 => 0,
-        #     170 => 0,
-        #     171 => 0,
-        #     172 => 0,
-        #     173 => 0,
-        #     174 => 0,
-        #     175 => 5,
-        #     176 => 0,
-        #     177 => 0,
-        #     178 => 0,
-        #     179 => 0,
-        #     180 => 0,
-        #     181 => 0,
-        #     182 => 0,
-        #     183 => 10,
-        #     184 => 0,
-        #     185 => 0
-        # }
+        @campus_subcat_posting_count = Subcategory.count_per_subcat(@campus)
 
-        @sale_subcat_posting_count = {}
-        @sale.subcategories.each do |subcategory|
-            @sale_subcat_posting_count.merge!({subcategory.id => Subcategory.count_per_subcat(subcategory.id)})
-        end
+        @community = @categories[1]
+        @community_subcat_posting_count = Subcategory.count_per_subcat(@community)
+
+        @housing = @categories[2]
+        @housing_subcat_posting_count = Subcategory.count_per_subcat(@housing)
+
+        @h2f = @categories[3]
+        @h2f_subcat_posting_count = Subcategory.count_per_subcat(@h2f)
+
+        @free = @categories[4]
+        @free_subcat_posting_count = Subcategory.count_per_subcat(@free)
+
+        @jobs = @categories[5]
+        @jobs_subcat_posting_count = Subcategory.count_per_subcat(@jobs)
+
+        @sale = @categories[6]
+        @sale_subcat_posting_count = Subcategory.count_per_subcat(@sale)
 
         @services = @categories[7]
+        @services_subcat_posting_count = Subcategory.count_per_subcat(@services)
+
         @unboxing = @categories[8]
+        @unboxing_subcat_posting_count = Subcategory.count_per_subcat(@unboxing)
     end
 
     def show
