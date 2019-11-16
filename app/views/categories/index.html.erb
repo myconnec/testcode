@@ -36,25 +36,37 @@
   <br>
 
 
-<div align="center" style="width: 100%;"><%= image_tag("directlistsm.jpg", :alt => "directory list") %></div>
+<div align="center" style="width: 100%;">
+  <%= image_tag("directlistsm.jpg", :alt => "directory list") %>
+</div>
 <br>
-
-
 
 <div style="width: 71%; margin: 0px auto;">
 
-<div class="section group">
-<div class="col span_1_of_4">
-<div class="catg_title"><i class = "glyphicon glyphicon-shopping-cart"></i> <strong><%= link_to 'Sale', category_path(@sale) %></strong></div>
-<div class="category_title">
-            <% @sale.subcategories.each do |subcategory| %>
-            <ul>
-              <li><%= link_to subcategory.name, category_subcategory_path(@sale, subcategory) %></li>
-            </ul>
-            <% end %>
-</div>
-<div style="height: 15px; width: 100%;"></div>
-</div>
+  <!-- Sale -->
+  <div class="section group">
+    <div class="col span_1_of_4">
+      <div class="catg_title">
+        <i class = "glyphicon glyphicon-shopping-cart"></i>
+        <strong><%= link_to 'Sale', category_path(@sale) %></strong>
+      </div>
+      <div class="category_title">
+
+        <ul>
+          <% @sale.subcategories.each_with_index do |subcategory, index| %>
+            <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(@sale, subcategory) %>
+              <%= @sale_subcat_posting_count[subcategory.id] %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <div style="height: 15px; width: 100%;"></div>
+  </div>
+
+
+
+
 
 <div class="col span_1_of_4">
 <%#

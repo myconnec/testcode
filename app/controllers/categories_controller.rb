@@ -9,7 +9,36 @@ class CategoriesController < ApplicationController
         @h2f = @categories[3]
         @free = @categories[4]
         @jobs = @categories[5]
+        
         @sale = @categories[6]
+        # @sale_subcat_posting_count = [0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6,0,2,4,8,6,5,4,8,2,6]
+        # @sale_subcat_posting_count = {
+        #     167 => 1,
+        #     168 => 0,
+        #     169 => 0,
+        #     170 => 0,
+        #     171 => 0,
+        #     172 => 0,
+        #     173 => 0,
+        #     174 => 0,
+        #     175 => 5,
+        #     176 => 0,
+        #     177 => 0,
+        #     178 => 0,
+        #     179 => 0,
+        #     180 => 0,
+        #     181 => 0,
+        #     182 => 0,
+        #     183 => 10,
+        #     184 => 0,
+        #     185 => 0
+        # }
+
+        @sale_subcat_posting_count = {}
+        @sale.subcategories.each do |subcategory|
+            @sale_subcat_posting_count.merge!({subcategory.id => Subcategory.count_per_subcat(subcategory.id)})
+        end
+
         @services = @categories[7]
         @unboxing = @categories[8]
     end
