@@ -32,26 +32,8 @@
 <br>
 
 <div class="rightbar0 col-xs-6 col-sm-4 col-md-2">
-        <div class="rightbar">
-            <div align="center" class="rightbar-top">
-                <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
-                    <div class="space"><%= text_field_tag :search, nil, placeholder: 'keyword/s', class: "form-control", style: 'width: 150px; height: 30px' %></div>
-                    <!--<div class="space"><%#= text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control" , style: 'width: 150px; height: 30px' %></div>-->
-                    <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
-                    <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 80px; height: 30px'  %>
-                </div>
-            <% end %>
-        </div>
-        <br>
-
-        <div class= 'categories1'>
-            <div align="center" style= "padding:10px 0px 0px 1px;" class = "small-heading"> Quick Links</div>
-            <ul class='categories'>
-                <% all_categories.each do |category| %>
-                    <li><%= link_to(category.name, category_path(category)) %></li>
-                <% end %>
-            </ul>
-        </div>
-
-    </div>
+  <%= render :partial => 'categories/sidebar_search_form'  %>
+  <br>
+  <%= render :partial => 'categories/more_categories', locals: {all_categories: all_categories}  %>
+  <br>
 </div>

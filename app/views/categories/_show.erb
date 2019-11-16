@@ -26,26 +26,9 @@
 <br>
 
 <div class="rightbar0 col-xs-6 col-sm-4 col-md-2">
-  <div class="rightbar">
-    <div align="center" class="rightbar-top">
-      <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
-      <div class="space"><%= text_field_tag :search, nil, placeholder: 'search', class: "form-control", style: 'width: 150px; height: 30px' %></div>
-
-      <div class="space"><%=
-      #text_field_tag :location, nil, placeholder: 'near', class: "form-control" , style: 'width: 150px; height: 30px'
-      %></div>
-
-        <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
-
-      <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 80px; height: 30px'  %>
-    </div>
-
-  <% end %>
-  </div>
+  <%= render :partial => 'categories/sidebar_search_form'  %>
   <br>
-
-    <%= render :partial => 'categories/more_categories', locals: {all_categories: all_categories}  %>
-
-    <br>
-  </div>
+  <%= render :partial => 'categories/more_categories', locals: {all_categories: all_categories}  %>
+  <br>
+</div>
 
