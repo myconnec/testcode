@@ -7,6 +7,8 @@
     SSH_KEY_ID: SSH_KEY_ID
 
     database_address: database_address
+    database_password: database_password
+
     media_profile_bucket_id: media_profile_bucket_id
     version: master
 
@@ -166,9 +168,10 @@
     # Update RDS connection string
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
-    - name: Update RDS DNS address
+    - name: Update RDS MariaDB credentials
       command: >
         sed -i "s/DB_HOST=\"mariadb\"/DB_HOST=\"{{ database_address }}\"/g" /home/{{ local_user }}/{{ APP_NAME }}/.env
+        sed -i "s/DB_PASS=\"password\"/DB_HOST=\"{{ database_password }}\"/g" /home/{{ local_user }}/{{ APP_NAME }}/.env
 
     # Configure fusermount to enable "allow_other" s3fs mounting
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.

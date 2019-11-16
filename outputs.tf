@@ -26,10 +26,6 @@ output "AWS_S3_MEDIA_PROFILE_BUCKET" {
   value = "${var.AWS_S3_MEDIA_PROFILE_BUCKET}"
 }
 
-output "database_address" {
-  value = "${module.web_app.database_address}"
-}
-
 output "aws_instance_web_app_dns" {
   value = "${module.web_app.aws_instance_web_app_dns}"
 }

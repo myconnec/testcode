@@ -1,7 +1,3 @@
-output "database_address" {
-  value = "${aws_db_instance.rds.address}"
-}
-
 output "ec2_public_dns" {
   value = "${aws_instance.web_app.public_dns}"
 }
