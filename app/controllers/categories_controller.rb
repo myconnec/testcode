@@ -37,7 +37,8 @@ class CategoriesController < ApplicationController
             .where("media_file_name IS NOT NULL")
             .order("created_at DESC")
 
-        # media_file_name, remove extension, add -00001.png
+        # TODO move this to a CNTL helper
+        # media_file_name, add -00001.png
         signer = Aws::S3::Presigner.new
         @listings.each do | listing |    
             listing.presigned_media_url = signer.presigned_url(
