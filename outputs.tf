@@ -54,6 +54,10 @@ output "media_profile_bucket_arn" {
   value = "${module.media_storage.media_profile_bucket_arn}"
 }
 
+output "database_address" {
+  value = "${module.web_app.database_address}"
+}
+
 output "lambda_s3_to_transcoder_lambda_function_name" {
   value = "${module.lambda_s3_to_transcoder.lambda_s3_to_transcoder_lambda_function_name}"
 }

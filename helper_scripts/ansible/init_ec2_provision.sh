@@ -2,6 +2,7 @@
 
 printf 'Starting Ansible playbook...\n'
 
+export $(grep -v '^#' .env | xargs)
 ansible-playbook \
     -i $(terraform output aws_instance_web_app_dns), \
     -u ubuntu \
