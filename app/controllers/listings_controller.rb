@@ -105,13 +105,12 @@ class ListingsController < ApplicationController
 
     # replace ANY file extension with .mp4, that is the ONLY output format we provide
     file_name = params[:media_file_name]
-    # lowercase filename and remove all non alphanumeric characters
+    # remove non alphanumberic characters from filename
     file_name.downcase.gsub!(/[^0-9A-Za-z]/, '')
 
     # check file extention is of allowed format
     file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length]
-    # lowercase filename and remove all non alphanumeric characters
-    file_ext = file_ext.downcase.gsub!(/[^0-9A-Za-z]/, '')
+    file_ext = file_ext.downcase
     if !['avi', 'mov', 'mp4', 'mkv'].include? file_ext
       flash[:danger] = 'Please provide a video file for your listing. File types .avi, .mov, .mp4, .mkv are accepted.'
       return redirect_to action: "upload", id: @listing.id
