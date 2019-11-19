@@ -117,7 +117,7 @@
 
     - name: Remove the working directory
       file:
-        path:  /tmp/build_ruby
+        path: /tmp/build_ruby
         state: absent
 
     # GiT & SSH Configuration

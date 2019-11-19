@@ -30,9 +30,9 @@ exports.handler = function(event, context) {
    Container: 'auto'
   },
   Outputs: [{
-    Key: key,
+    Key: key.toLowerCase(),
     PresetId: '1351620000001-000001',
-    ThumbnailPattern: key + '-{count}'
+    ThumbnailPattern: key.toLowerCase() + '-{count}'
   }]
  };
  console.log('Starting Job');

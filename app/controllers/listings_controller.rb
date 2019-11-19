@@ -119,7 +119,7 @@ class ListingsController < ApplicationController
     # So, we have to do a reverse count to the last `.` and truncate the string at that lingth.
     file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
 
-    @listing.media_file_name = file_name
+    @listing.media_file_name = file_name.downcase
     @listing.media_updated_at = Time.now.to_i
     @listing.save
 
