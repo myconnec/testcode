@@ -105,8 +105,6 @@ class ListingsController < ApplicationController
 
     # replace ANY file extension with .mp4, that is the ONLY output format we provide
     file_name = params[:media_file_name]
-    # remove non alphanumberic characters from filename
-    file_name.downcase.gsub!(/[^0-9A-Za-z]/, '')
 
     # check file extention is of allowed format
     file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length]
@@ -121,7 +119,8 @@ class ListingsController < ApplicationController
     # So, we have to do a reverse count to the last `.` and truncate the string at that lingth.
     file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
 
-    @listing.media_file_name = file_name.downcase
+    # remove non alphanumberic characters from filename before saving to the DB
+    @listing.media_file_name = file_name.downcase.gsub!(/[^0-9A-Za-z]/, '')
     @listing.media_updated_at = Time.now.to_i
     @listing.save
 
@@ -153,7 +152,8 @@ class ListingsController < ApplicationController
     @presigned_media_url = signer.presigned_url(
       :get_object,
       bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-      key: @listing.media_file_name
+      # remove non alphanumberic characters from filename before saving to S3
+      key: @listing.media_file_name.downcase.gsub!(/[^0-9A-Za-z]/, '')
     )
   end
 
