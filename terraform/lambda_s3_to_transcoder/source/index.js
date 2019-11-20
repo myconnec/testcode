@@ -12,6 +12,8 @@ exports.handler = function(event, context) {
  console.log('Executing Elastic Transcoder Orchestrator');
  var bucket = event.Records[0].s3.bucket.name;
  var key = event.Records[0].s3.object.key;
+ // allow only alphanumeric, dash, dot, and forward slash
+ key = key.toLowerCase().replace(/0-9a-zA-Z0-9\-\.\//g, '')
  var pipelineId = process.env.transcoder_pipeline_id;
  if (bucket !== process.env.media_source_bucket_id) {
   context.fail('Incorrect Video Input Bucket');
@@ -30,9 +32,9 @@ exports.handler = function(event, context) {
    Container: 'auto'
   },
   Outputs: [{
-    Key: key.toLowerCase(),
+    Key: key,
     PresetId: '1351620000001-000001',
-    ThumbnailPattern: key.toLowerCase() + '-{count}'
+    ThumbnailPattern: key + '-{count}'
   }]
  };
  console.log('Starting Job');
