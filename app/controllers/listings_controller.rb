@@ -120,7 +120,7 @@ class ListingsController < ApplicationController
     file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
 
     # remove non alphanumberic characters from filename before saving to the DB
-    @listing.media_file_name = file_name.downcase.gsub!(/[^0-9A-Za-z]/, '')
+    @listing.media_file_name = file_name.downcase.gsub!(/[^0-9A-Za-z\/\.]/, '')
     @listing.media_updated_at = Time.now.to_i
     @listing.save
 
@@ -153,7 +153,7 @@ class ListingsController < ApplicationController
       :get_object,
       bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
       # remove non alphanumberic characters from filename before saving to S3
-      key: @listing.media_file_name.downcase.gsub!(/[^0-9A-Za-z]/, '')
+      key: @listing.media_file_name.downcase.gsub!(/[^0-9A-Za-z\/\.]/, '')
     )
   end
 
