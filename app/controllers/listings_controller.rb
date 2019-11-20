@@ -118,9 +118,10 @@ class ListingsController < ApplicationController
     # However, modern devices name trimmed files `trim.${UUID}.mp4`. As such basename only returns `trim`.
     # So, we have to do a reverse count to the last `.` and truncate the string at that lingth.
     file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
+    file_name.downcase.gsub!(/[^0-9A-Za-z\-\/\.]/, '')
 
     # remove non alphanumberic characters from filename before saving to the DB
-    @listing.media_file_name = file_name.downcase.gsub!(/[^0-9A-Za-z\/\.]/, '')
+    @listing.media_file_name = file_name
     @listing.media_updated_at = Time.now.to_i
     @listing.save
 
@@ -153,7 +154,7 @@ class ListingsController < ApplicationController
       :get_object,
       bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
       # remove non alphanumberic characters from filename before saving to S3
-      key: @listing.media_file_name.downcase.gsub!(/[^0-9A-Za-z\/\.]/, '')
+      key: file_name
     )
   end
 
