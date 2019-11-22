@@ -1,4 +1,4 @@
-#!/bin/bash +xe
+#!/bin/bash
 
 export $(grep -v '^#' .env | xargs)
 printenv | sort | grep APP_*
