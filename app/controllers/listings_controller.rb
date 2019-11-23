@@ -28,6 +28,7 @@ class ListingsController < ApplicationController
     if listing_sub_category.chargable > 0
       @listing.charge_amount = listing_sub_category.chargable
 
+      # if the user promo counter is > 0
       if current_user.promo_1 > 0 # && current_user.created_at > (Time.now.to_i - 7776000)
         promo_1 = true # using a promo_1 listing
         @listing.ending_at = Time.now.to_i + 3888000 # 45 days duration
@@ -36,14 +37,6 @@ class ListingsController < ApplicationController
     end
 
     if @listing.save
-      # if promo_1 is true (being used) reduce the promo_1 counter on the user MDL
-      if promo_1 == true
-        current_user.promo_1 = current_user.promo_1 - 1
-        if !current_user.save
-          return render 'new', :flash => { :danger => current_user.errors.full_messages.to_sentence }
-        end
-      end
-
       if listing_sub_category.chargable > 0 && current_user.promo_1 <= 0
         return redirect_to action: "payment", id: @listing.id
       end

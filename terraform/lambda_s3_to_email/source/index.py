@@ -49,7 +49,7 @@ def send_html_email(host, port, username, password, mail_from = 'admin@connechub
 
     server = smtplib.SMTP(host, port)
     server.starttls()
-    
+
     # Login Credentials for sending the mail
     server.login(username, password)
     server.sendmail(msg['From'], [msg['To']], msg.as_string())
