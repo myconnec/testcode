@@ -36,7 +36,7 @@
           <h2 class="featurette-heading">Connechub is simple, easy to use, and free to sign up </h2>
         </span>
 
-          <% if !@user.username %>
+          <% if !current_user %>
             <p class="lead">First, you need to create your own account
               <a href="https://<%= ENV['APP_ENV'].downcase %>.connechub.com/users/sign_up">
                 <span style='font-size:16.0pt;line-height:106%'>here</span>
