@@ -52,5 +52,7 @@ def lambda_handler(event, context):
     # get Listing data from DB
     listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
 
+    print(listing)
+
     # function response
     return {'status': 'success', 'code': 200}

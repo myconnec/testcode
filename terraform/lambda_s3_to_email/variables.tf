@@ -1,8 +1,9 @@
 # APP vars
-
 variable "APP_ENV" {}
 
 variable "APP_NAME" {}
+
+variable "AWS_REGION" {}
 
 # SMTP vars
 variable "SMTP_FROM" {}

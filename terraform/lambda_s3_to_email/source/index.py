@@ -8,7 +8,7 @@ import pymysql
 import smtplib
 import sys
 
-def get_listing(sql_host, sql_user, sql_pass, sql_sche, event, app_env):
+def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
 
     try:
         connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
@@ -24,7 +24,7 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event, app_env):
 
     return {'id' : record[0], 'ademail': record[1], 'media_file_name' : record[2]}
 
-def msg_content(listing):
+def msg_content(listing, app_env):
     content = """
     <html>
         <head>
@@ -68,15 +68,16 @@ def lambda_handler(event, context):
     sql_sche = os.environ['SQL_SCHE']
 
     app_env = os.environ['APP_ENV']
+    app_name = os.environ['APP_NAME']
 
     # get Listing data from DB
     listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
 
     # create message
-    message = msg_content(listing)
+    message = msg_content(listing, app_env)
 
     # send mail
-    send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_from, message, listing, app_env)
+    send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_from, message, listing)
 
     # function response
     return {'status': 'success', 'code': 200}

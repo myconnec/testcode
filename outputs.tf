@@ -58,9 +58,18 @@ output "database_address" {
   value = "${module.web_app.database_address}"
 }
 
-output "lambda_s3_to_transcoder_lambda_function_name" {
-  value = "${module.lambda_s3_to_transcoder.lambda_s3_to_transcoder_lambda_function_name}"
+output "lambda_promo_counter_function_name" {
+  value = "${module.lambda_promo_counter.lambda_promo_counter_function_name}"
 }
+
+output "lambda_s3_to_email_function_name" {
+  value = "${module.lambda_s3_to_email.lambda_s3_to_email_function_name}"
+}
+
+output "lambda_s3_to_transcoder_function_name" {
+  value = "${module.lambda_s3_to_transcoder.lambda_s3_to_transcoder_function_name}"
+}
+
 
 output "route53_record_subdomain_name" {
   value = "${module.web_app.route53_record_subdomain_name}"

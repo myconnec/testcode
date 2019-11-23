@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "basic_exec" {
 ## Policy
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "${var.APP_NAME}_lambda_logging_${var.APP_ENV}"
+  name        = "${var.APP_NAME}_lambda_s3_to_email_logging_${var.APP_ENV}"
   path        = "/"
   description = "IAM policy for logging from a lambda"
 
