@@ -8,7 +8,7 @@ import pymysql
 import smtplib
 import sys
 
-def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
+def get_listing(sql_host, sql_user, sql_pass, sql_sche, event, app_env):
 
     try:
         connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
@@ -32,7 +32,7 @@ def msg_content(listing):
             <title>A message from ConnecHub.</title>
         </head>
         <body>
-            Your listing is ready. <a href="https://www.connechub.com/listings/""" + str(listing['id']) + """" target="_new">Click here</a> to view it.
+            Your listing is ready. <a href="https://""" + str(app_env) + """.connechub.com/listings/""" + str(listing['id']) + """" target="_new">Click here</a> to view it.
         </body>
     </html>
     """
@@ -67,15 +67,16 @@ def lambda_handler(event, context):
     sql_pass = os.environ['SQL_PASS']
     sql_sche = os.environ['SQL_SCHE']
 
-    # get Listing data from DB
+    app_env = os.environ['APP_ENV']
 
+    # get Listing data from DB
     listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
 
     # create message
     message = msg_content(listing)
 
     # send mail
-    send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_from, message, listing)
+    send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_from, message, listing, app_env)
 
     # function response
     return {'status': 'success', 'code': 200}
