@@ -21,18 +21,17 @@ class ListingsController < ApplicationController
     @listing.user = current_user
     promo_1 = false
 
-    # read the subcategory, if chargable > 0  set amount on listing
+    # get subcategory MDL data
     listing_sub_category = Subcategory.find(@listing.subcategory_id)
 
-    # if subcat has a charge value AND the current_user.promo_1 value is > 0
     if listing_sub_category.chargable > 0
       @listing.charge_amount = listing_sub_category.chargable
 
       # if the user promo counter is > 0
-      if current_user.promo_1 > 0 # && current_user.created_at > (Time.now.to_i - 7776000)
+      if current_user.promo_1 > 0
         promo_1 = true # using a promo_1 listing
         @listing.ending_at = Time.now.to_i + 3888000 # 45 days duration
-        @listing.charge_amount = 0 # no charge
+        @listing.charge_amount = 0 # no charge for a promo listing
       end
     end
 
