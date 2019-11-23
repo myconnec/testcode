@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :categories do
-  	resources :subcategories
+    resources :subcategories
   end
 
   resources :listings do
@@ -12,8 +12,8 @@ Rails.application.routes.draw do
       get 'search'
     end
     member do
-		 put "like",    to: "listings#upvote"
-	  end
+    put "like", to: "listings#upvote"
+    end
   end
 
   match '/listings/payment/:id', to: 'listings#payment', via: :get
