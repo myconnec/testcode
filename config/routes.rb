@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
   match '/about', to: 'pages#about', via: :get
   match '/career', to: 'pages#career', via: :get
-  match '/contact', to: 'pages#contact', via: :get
   match '/cookie', to: 'pages#cookie', via: :get
   match '/copyright', to: 'pages#copyright', via: :get
   match '/corporate', to: 'pages#corporate', via: :get

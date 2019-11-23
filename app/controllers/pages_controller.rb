@@ -1,68 +1,65 @@
 class PagesController < ApplicationController
 
-    def  about 
+    def  about
     end
-    
-    def  contact 
+
+    def  cookie
     end
-    
-    def  cookie 
-    end 
-      
-    def  copyright 
-    end 
-      
-    def  corporate 
+
+    def  copyright
     end
-      
-    def  customersupport 
-    end  
-    
-    def  design 
+
+    def  corporate
     end
-    
-    def  faq 
-    end   
-    
+
+    def  customersupport
+    end
+
+    def  design
+    end
+
+    def  faq
+    end
+
     def  following
     end
-      
+
     def  help
     end
-      
-    def  marketing 
+
+    def  marketing
     end
-    
-    def  membership 
-    end  
-    
-    def  mobile 
-    end 
-    
-    def  postads 
-    end 
-    
-    def  privacy 
+
+    def  membership
     end
-      
-    def  safety 
+
+    def  mobile
     end
-    
-    def  safetytips 
-    end  
-    
-    def  sales 
+
+    def  postads
     end
-    
-    def  scams 
-    end 
-    
+
+    def  privacy
+    end
+
+    def  safety
+    end
+
+    def  safetytips
+    end
+
+    def  sales
+    end
+
+    def  scams
+    end
+
     def  technology
     end
-    
-    def  terms 
+
+    def  terms
     end
-    
+
     def  trademark
     end
 
