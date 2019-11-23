@@ -13,6 +13,10 @@ resource "aws_lambda_function" "media_processing_complete_email" {
       SQL_PASS = "${var.SQL_PASS}"
       SQL_SCHE = "${var.SQL_SCHE}"
       SQL_USER = "${var.SQL_USER}"
+
+      # APP data
+      APP_NAME = "${var.APP_NAME}"
+      APP_ENV  = "${var.APP_ENV}"
     }
   }
 
