@@ -235,6 +235,9 @@
           -o allow_other
       when: media_profile_bucket_stats.stat.exists == false
 
+    - name: Final package update before startiing the web server
+      shell: apt-get update -y
+
     # Start web server. This is the same as the instance's startup user-data
 
     - name: Run DB migrations and start the Puma web server

@@ -40,7 +40,7 @@ CREATE TABLE `categories` (
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` VALUES
-(1'campus'),
+(1, 'campus'),
 (2,'community'),
 (3,'housing'),
 (4,'h2f'),
