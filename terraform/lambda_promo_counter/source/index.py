@@ -1,55 +1,60 @@
-# source http://blog.rambabusaravanan.com/send-smtp-email-using-aws-lambda/
-# source https://gist.github.com/rambabusaravanan/dfa2b80369c89ce7517855f4094367e6
-# source https://pynative.com/python-mysql-database-connection/
-# source https://www.isc.upenn.edu/accessing-mysql-databases-aws-python-lambda-function
-import email.message
 import os
 import pymysql
-import smtplib
 import sys
 
-def get_listing(sql_host, sql_user, sql_pass, sql_sche, event, app_env):
+def get_listing(db_conn, event):
 
-    try:
-        connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
-        db_info = connection.get_server_info()
+    cursor = connection.cursor()
+    cursor.execute("SELECT id, sub_category, user_id FROM listings WHERE media_file_name = '" + event['Records'][0]['s3']['object']['key'] + "';")
+    record = cursor.fetchone()
+    cursor.close()
+
+    return {'id' : record[0], 'sub_category': record[1], 'user_id' : record[2]}
+
+def get_user(db_conn, listing_data):
+
+    cursor = connection.cursor()
+    cursor.execute("SELECT id, promo_1 FROM users WHERE id = '" + int(listing_data[2]) + "';")
+    record = cursor.fetchone()
+    cursor.close()
+
+    return {'id' : record[0], 'promo_1': record[1]}
+
+def process_promo_count(db_conn, listing_data, user_data):
+    '''
+    If the listing is a paid sub_cat, and the user has a promo counter > 0; decrease user promo counter by 1
+    '''
+    if int(user_data.promo_1) > 0:
+        user_data.promo_1 = int(user_data.promo_1) - 1
+
         cursor = connection.cursor()
-        cursor.execute("SELECT id, ademail, media_file_name FROM listings WHERE media_file_name = '" + event['Records'][0]['s3']['object']['key'] + "';")
+        cursor.execute("UPDATE users SET promo_1 = '" + user_data.promo_1 + "' WHERE id = '" + int(listing_data[2]) + "';")
         record = cursor.fetchone()
         cursor.close()
-        connection.close()
-    except:
-        print("ERROR: Could not connect to MySql instance.")
-        sys.exit()
 
-    return {'id' : record[0], 'ademail': record[1], 'media_file_name' : record[2]}
-
-def calc_promo_counter(listing):
-'''
-If the listing is a paid sub_cat, and the user has a promo counter > 0; decrease user promo counter by 1
-'''
-    # Ruby implimentation of the logic
-# # if promo_1 is true (being used) reduce the promo_1 counter on the user MDL
-# if promo_1 == true
-#     current_user.promo_1 = current_user.promo_1 - 1
-#     if !current_user.save
-#         return render 'new', :flash => { :danger => current_user.errors.full_messages.to_sentence }
-#     end
-# end
+    return {'id' : record[0], 'promo_1': record[1]}
 
 def lambda_handler(event, context):
-    sql_host = os.environ['SQL_HOST']
-    sql_user = os.environ['SQL_USER']
-    sql_pass = os.environ['SQL_PASS']
-    sql_sche = os.environ['SQL_SCHE']
+    app_env  = str(os.environ['APP_ENV'])
+    app_name = str(os.environ['APP_NAME'])
+    sql_host = str(os.environ['SQL_HOST'])
+    sql_pass = str(os.environ['SQL_PASS'])
+    sql_sche = str(os.environ['SQL_SCHE'])
+    sql_user = str(os.environ['SQL_USER'])
 
-    app_env  = os.environ['APP_ENV']
-    app_name = os.environ['APP_NAME']
+    db_conn = pymysql.connect(
+        host = sql_host,
+        user = sql_user,
+        password = sql_pass,
+        db = sql_sche
+    )
 
     # get Listing data from DB
-    listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
+    listing_data = get_listing(db_conn, event)
+    user_data = get_user(db_conn, listing_data)
+    process_promo_count(db_conn, listing_data, user_data)
 
-    print(listing)
+    db_conn.close()
 
     # function response
     return {'status': 'success', 'code': 200}
