@@ -36,7 +36,6 @@ Rails.application.routes.draw do
   match '/faq', to: 'pages#faq', via: :get
   match '/following', to: 'pages#following', via: :get
   match '/help', to: 'pages#help', via: :get
-  match '/howitworks', to: 'pages#howitworks', via: :get
   match '/marketing', to: 'pages#marketing', via: :get
   match '/membership', to: 'pages#membership', via: :get
   match '/mobile', to: 'pages#mobile', via: :get

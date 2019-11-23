@@ -25,12 +25,24 @@
         <img class="featurette-image img-circle img-responsive pull-right" style="width: 382px; height: 522px"
           src="/assets/howitworks/image004.jpg" alt="image004" />
 
-        <span><img class="featurette-image img-circle img-responsive pull-left" style="width: 34px; height: 34px"
-            src="/assets/howitworks/image006.jpg" alt="image006" /></span><span>
+        <span>
+          <img
+            class="featurette-image img-circle img-responsive pull-left"
+            style="width: 34px; height: 34px"
+            src="/assets/howitworks/image006.jpg" alt="image006"
+          />
+        </span>
+        <span>
           <h2 class="featurette-heading">Connechub is simple, easy to use, and free to sign up </h2>
         </span>
-        <p class="lead">First, you need to create your own account <a href="https://www.connechub.com/users/sign_up">
-            <span style='font-size:16.0pt;line-height:106%'>here</span></a>, which will allow you to post video ads.
+
+          <% if !@user.username %>
+            <p class="lead">First, you need to create your own account
+              <a href="https://www.connechub.com/users/sign_up">
+                <span style='font-size:16.0pt;line-height:106%'>here</span>
+              </a>, which will allow you to post video ads.
+            </p>
+          <% end %>
         </p>
 
       </div>
