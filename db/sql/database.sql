@@ -276,7 +276,7 @@ CREATE TABLE `subcategories` (
 LOCK TABLES `subcategories` WRITE;
 /*!40000 ALTER TABLE `subcategories` DISABLE KEYS */;
 INSERT INTO `subcategories` VALUES
-(1'Activities & Events',1,0),
+(1,'Activities & Events',1,0),
 (2,'Jobs',1,0),
 (3,'Furniture',1,0),
 (4,'Electronics',1,0),
