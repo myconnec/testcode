@@ -38,9 +38,7 @@
 
           <% if !current_user %>
             <p class="lead">First, you need to create your own account
-              <a href="https://<%= ENV['APP_ENV'].downcase %>.connechub.com/users/sign_up">
-                <span style='font-size:16.0pt;line-height:106%'>here</span>
-              </a>, which will allow you to post video ads.
+              <span style='font-size:16.0pt;line-height:106%'><a href="https://<%= ENV['APP_ENV'].downcase %>.connechub.com/users/sign_up">here</a></span>, which will allow you to post video ads.
             </p>
           <% end %>
         </p>
