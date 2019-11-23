@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   match '/listings/update_upload/:id', to: 'listings#update_upload', via: :patch
 
   match '/prices/index', to: 'prices#index', via: :get
+  match '/howitworks/index', to: 'howitworks#index', via: :get
 
   root 'categories#index'
 
