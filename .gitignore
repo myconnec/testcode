@@ -18,8 +18,6 @@ pickle-email-*.html
 /.bundle
 
 # Configs
-# actually, we want to track this one. Credentials will be available via ENV VARS or other mechanisms.
-#/config/database.yml
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
@@ -66,3 +64,7 @@ bower.json
 **/*.rar
 **.*gz
 .passwd*
+
+# Vendor provided libraries for TF controlled Lambdas
+/terraform/**/pymysql/
+
