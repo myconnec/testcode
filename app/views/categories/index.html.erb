@@ -56,7 +56,7 @@
             <% @sale.subcategories.each_with_index do |subcategory, index| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@sale, subcategory) %>
-              <%= @sale_subcat_posting_count[subcategory.id] == '0' ? 'QWER' : 'ASDF' %>
+              <%= @sale_subcat_posting_count[subcategory.id] == '0' ? @sale_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
