@@ -146,7 +146,6 @@
             <% @campus.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@campus, subcategory) %>
-              <%= @campus_subcat_posting_count[subcategory.id] %>
               <%= @campus_subcat_posting_count[subcategory.id] == '0' ? @campus_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
