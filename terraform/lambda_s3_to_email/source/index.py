@@ -67,7 +67,7 @@ def lambda_handler(event, context):
     sql_pass = os.environ['SQL_PASS']
     sql_sche = os.environ['SQL_SCHE']
 
-    app_env = os.environ['APP_ENV']
+    app_env  = os.environ['APP_ENV']
     app_name = os.environ['APP_NAME']
 
     # get Listing data from DB

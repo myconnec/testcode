@@ -24,22 +24,10 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event, app_env):
 
     return {'id' : record[0], 'ademail': record[1], 'media_file_name' : record[2]}
 
-def lambda_handler(event, context):
-    smpt_host = os.environ['SMTP_HOST']
-    smpt_port = os.environ['SMTP_PORT']
-    smpt_user = os.environ['SMTP_USER']
-    smpt_pass = os.environ['SMTP_PASS']
-
-    mail_from = os.environ['SMTP_FROM']
-
-    sql_host = os.environ['SQL_HOST']
-    sql_user = os.environ['SQL_USER']
-    sql_pass = os.environ['SQL_PASS']
-    sql_sche = os.environ['SQL_SCHE']
-
-    app_env  = os.environ['APP_ENV']
-    app_name = os.environ['APP_NAME']
-
+def calc_promo_counter(listing):
+'''
+If the listing is a paid sub_cat, and the user has a promo counter > 0; decrease user promo counter by 1
+'''
     # Ruby implimentation of the logic
 # # if promo_1 is true (being used) reduce the promo_1 counter on the user MDL
 # if promo_1 == true
@@ -48,6 +36,15 @@ def lambda_handler(event, context):
 #         return render 'new', :flash => { :danger => current_user.errors.full_messages.to_sentence }
 #     end
 # end
+
+def lambda_handler(event, context):
+    sql_host = os.environ['SQL_HOST']
+    sql_user = os.environ['SQL_USER']
+    sql_pass = os.environ['SQL_PASS']
+    sql_sche = os.environ['SQL_SCHE']
+
+    app_env  = os.environ['APP_ENV']
+    app_name = os.environ['APP_NAME']
 
     # get Listing data from DB
     listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
