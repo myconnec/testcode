@@ -32,7 +32,7 @@ class CategoriesController < ApplicationController
     end
 
     def show
-        @all_categories = Categories.where('1=1')
+        @all_categories = Category.where('1=1')
 
         @category = Category.find(params[:id])
 
