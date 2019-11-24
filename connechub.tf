@@ -95,25 +95,25 @@ module "lambda_s3_to_email" {
   media_display_bucket_id  = "${module.media_storage.media_display_bucket_id}"
 }
 
-module "lambda_s3_to_rds_for_promo_1" {
-  source  = "./terraform/lambda_s3_to_rds_for_promo_1/"
-  version = "0.0.1"
+# module "lambda_s3_to_rds_for_promo_1" {
+#   source  = "./terraform/lambda_s3_to_rds_for_promo_1/"
+#   version = "0.0.1"
 
-  # APP vars
-  APP_ENV    = "${var.APP_ENV}"
-  APP_NAME   = "${var.APP_NAME}"
-  AWS_REGION = "${var.AWS_REGION}"
+#   # APP vars
+#   APP_ENV    = "${var.APP_ENV}"
+#   APP_NAME   = "${var.APP_NAME}"
+#   AWS_REGION = "${var.AWS_REGION}"
 
-  # SQL creds
-  SQL_HOST = "${module.web_app.aws_db_instance_rds_address}"
-  SQL_PASS = "${var.DB_PASS}"
-  SQL_SCHE = "${var.DB_SCHE}"
-  SQL_USER = "${var.DB_USER}"
+#   # SQL creds
+#   SQL_HOST = "${module.web_app.aws_db_instance_rds_address}"
+#   SQL_PASS = "${var.DB_PASS}"
+#   SQL_SCHE = "${var.DB_SCHE}"
+#   SQL_USER = "${var.DB_USER}"
 
-  # AWS Resource
-  media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
-  media_display_bucket_id  = "${module.media_storage.media_display_bucket_id}"
-}
+#   # AWS Resource
+#   media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
+#   media_display_bucket_id  = "${module.media_storage.media_display_bucket_id}"
+# }
 
 # source https://github.com/cloudposse/terraform-aws-cloudfront-cdn
 # module "cdn" {

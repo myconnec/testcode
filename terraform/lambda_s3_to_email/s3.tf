@@ -1,4 +1,4 @@
-resource "aws_s3_bucket_notification" "display_bucket_notification" {
+resource "aws_s3_bucket_notification" "s3_email_display_bucket_notification" {
   bucket = "${var.media_display_bucket_id}"
 
   # TODO figure out how to make this work
