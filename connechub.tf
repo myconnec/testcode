@@ -95,10 +95,9 @@ module "lambda_s3_to_email" {
   media_display_bucket_id  = "${module.media_storage.media_display_bucket_id}"
 }
 
-# Needs RDS host to work, so must be set up after web_app
-module "lambda_promo_counter" {
-  source  = "./terraform/lambda_promo_counter/"
-  version = "0.1.0"
+module "lambda_s3_to_rds_for_promo_1" {
+  source  = "./terraform/lambda_s3_to_rds_for_promo_1/"
+  version = "0.0.1"
 
   # APP vars
   APP_ENV    = "${var.APP_ENV}"
