@@ -58,10 +58,6 @@ output "database_address" {
   value = "${module.web_app.database_address}"
 }
 
-output "lambda_s3_to_promo_function_name" {
-  value = "${module.lambda_s3_to_promo.lambda_s3_to_promo_function_name}"
-}
-
 output "lambda_s3_to_email_function_name" {
   value = "${module.lambda_s3_to_email.lambda_s3_to_email_function_name}"
 }
