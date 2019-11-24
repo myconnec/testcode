@@ -32,6 +32,10 @@ class CategoriesController < ApplicationController
     end
 
     def show
+        @all_categories = Categories.where('1=1')
+
+        @category = Category.find(params[:id])
+
         @listings = Listing.where(category_id: params[:id])
             .where("ending_at > '#{Time.now.to_i}'")
             .where("media_file_name IS NOT NULL")
@@ -40,14 +44,12 @@ class CategoriesController < ApplicationController
         # TODO move this to a CNTL helper
         # media_file_name, add -00001.png
         signer = Aws::S3::Presigner.new
-        @listings.each do | listing |    
+        @listings.each do | listing |
             listing.presigned_media_url = signer.presigned_url(
               :get_object,
               bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
               key: (listing.media_file_name[0..-5] + '.mp4-00001.png')
             )
         end
-
-        @category = Category.find(params[:id])
     end
 end

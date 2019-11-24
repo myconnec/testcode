@@ -169,7 +169,10 @@ class ListingsController < ApplicationController
   end
 
   def search
+    @all_categories = Categories.where('1=1')
+
     @listings = Listing.search(params)
+
     signer = Aws::S3::Presigner.new
     @listings.each do | listing |
       if !listing.has_attribute?(:media_file_name)
