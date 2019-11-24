@@ -44,14 +44,7 @@
   </div>
   <br>
 
-    <div class= 'categories1'>
-        <div align="center" style= "padding:10px 0px 0px 1px;" class = "small-heading"> Quick Links</div>
-        <ul class='categories'>
-            <% all_categories.each do |category| %>
-                <li><%= link_to(category.name, category_path(category)) %></li>
-            <% end %>
-        </ul>
-    </div>
+    <%= render :partial => 'categories/more_categories', locals: {all_categories: all_categories}  %>
 
     <br>
   </div>
