@@ -95,14 +95,13 @@ class ListingsController < ApplicationController
       return redirect_to action: "payment", id: @listing.id
     end
 
-    # replace ANY file extension with .mp4, that is the ONLY output format we provide
-    file_name = params[:media_file_name]
-
     # File.basename does not work as it considers the '.' character to be the name delimiter
     # However, modern devices name trimmed files `trim.${UUID}.mp4`. As such basename only returns `trim`.
     # So, we have to do a reverse count to the last `.` and truncate the string at that lingth.
+    # replace ANY file extension with .mp4, that is the ONLY output format we provide
+    file_name = params[:media_file_name]
     file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'.downcase
-    # file_name = file_name.gsub!(/[^0-9a-zA-Z\-\.\/]/, '')
+    file_name = file_name.gsub!(/[^0-9a-zA-Z\-\.\/]/, '')
 
     # check file extention is of allowed format
     file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length].downcase
