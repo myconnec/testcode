@@ -101,7 +101,7 @@ class ListingsController < ApplicationController
     # replace ANY file extension with .mp4, that is the ONLY output format we provide
     file_name = params[:media_file_name]
     file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
-    file_name = file_name.downcase.gsub!(/[^0-9a-zA-Z\-\.\/]/, '')
+    file_name = file_name.downcase.gsub(/[^0-9a-zA-Z\-\.\/]/, '')
 
     # check file extention is of allowed format
     file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length].downcase
