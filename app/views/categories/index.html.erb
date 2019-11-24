@@ -56,7 +56,7 @@
             <% @sale.subcategories.each_with_index do |subcategory, index| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@sale, subcategory) %>
-              <%= @sale_subcat_posting_count[subcategory.id] != '0' ? @sale_subcat_posting_count[subcategory.id] : '' %>
+              <%= @sale_subcat_posting_count[subcategory.id] != 0 ? @sale_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -75,7 +75,7 @@
             <% @community.subcategories.each_with_index do |subcategory, index| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@community, subcategory) %>
-              <%= @community_subcat_posting_count[subcategory.id] != '0' ? @community_subcat_posting_count[subcategory.id] : '' %>
+              <%= @community_subcat_posting_count[subcategory.id] != 0 ? @community_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -92,7 +92,7 @@
             <% @services.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@services, subcategory) %>
-              <%= @services_subcat_posting_count[subcategory.id] != '0' ? @services_subcat_posting_count[subcategory.id] : '' %>
+              <%= @services_subcat_posting_count[subcategory.id] != 0 ? @services_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -111,7 +111,7 @@
             <% @jobs.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@jobs, subcategory) %>
-              <%= @jobs_subcat_posting_count[subcategory.id] != '0' ? @jobs_subcat_posting_count[subcategory.id] : '' %>
+              <%= @jobs_subcat_posting_count[subcategory.id] != 0 ? @jobs_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -130,7 +130,7 @@
             <% @housing.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@housing, subcategory) %>
-              <%= @housing_subcat_posting_count[subcategory.id] != '0' ? @housing_subcat_posting_count[subcategory.id] : '' %>
+              <%= @housing_subcat_posting_count[subcategory.id] != 0 ? @housing_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -146,7 +146,7 @@
             <% @campus.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@campus, subcategory) %>
-              <%= @campus_subcat_posting_count[subcategory.id] != '0' ? @campus_subcat_posting_count[subcategory.id] : '' %>
+              <%= @campus_subcat_posting_count[subcategory.id] != 0 ? @campus_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -162,7 +162,7 @@
             <% @h2f.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@h2f, subcategory) %>
-              <%= @h2f_subcat_posting_count[subcategory.id] != '0' ? @h2f_subcat_posting_count[subcategory.id] : '' %>
+              <%= @h2f_subcat_posting_count[subcategory.id] != 0 ? @h2f_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -178,7 +178,7 @@
             <% @free.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@free, subcategory) %>
-              <%= @free_subcat_posting_count[subcategory.id] != '0' ? @free_subcat_posting_count[subcategory.id] : '' %>
+              <%= @free_subcat_posting_count[subcategory.id] != 0 ? @free_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
@@ -194,7 +194,7 @@
             <% @unboxing.subcategories.each do |subcategory| %>
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@unboxing, subcategory) %>
-              <%= @unboxing_subcat_posting_count[subcategory.id] != '0' ? @unboxing_subcat_posting_count[subcategory.id] : '' %>
+              <%= @unboxing_subcat_posting_count[subcategory.id] != 0 ? @unboxing_subcat_posting_count[subcategory.id] : '' %>
             </li>
             <% end %>
           </ul>
