@@ -24,7 +24,7 @@ resource "aws_lambda_function" "lambda_s3_to_rds_for_promo_1" {
 resource "aws_lambda_permission" "allow_bucket" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.media_processing_complete_email.arn}"
+  function_name = "${aws_lambda_function.lambda_s3_to_rds_for_promo_1.arn}"
   principal     = "s3.amazonaws.com"
   source_arn    = "${var.media_display_bucket_arn}"
 }

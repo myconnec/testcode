@@ -7,7 +7,7 @@ resource "aws_s3_bucket_notification" "display_bucket_notification" {
   # ]
 
   lambda_function {
-    lambda_function_arn = "${aws_lambda_function.media_processing_complete_email.arn}"
+    lambda_function_arn = "${aws_lambda_function.lambda_s3_to_rds_for_promo_1.arn}"
     events              = ["s3:ObjectCreated:*"]
   }
 }
