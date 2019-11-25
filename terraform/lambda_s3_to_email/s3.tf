@@ -9,5 +9,6 @@ resource "aws_s3_bucket_notification" "display_bucket_notification" {
   lambda_function {
     lambda_function_arn = "${aws_lambda_function.media_processing_complete_email.arn}"
     events              = ["s3:ObjectCreated:*"]
+    filter_suffix       = ".mp4"
   }
 }
