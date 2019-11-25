@@ -22,6 +22,7 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
             )
         )
         record = cursor.fetchone()
+        print(record)
         cursor.close()
         connection.close()
     except:
@@ -71,6 +72,10 @@ def decrease_promo_counter(sql_host, sql_user, sql_pass, sql_sche, listing):
     # try:
     connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
     cursor = connection.cursor()
+
+    # TODO still need logic to determine if the listing is in a paid sub category
+
+    print('Select user data.')
     cursor.execute(
         "SELECT id, promo_1 FROM users WHERE id = %s;",
         (
@@ -78,22 +83,24 @@ def decrease_promo_counter(sql_host, sql_user, sql_pass, sql_sche, listing):
         )
     )
     user = cursor.fetchone()
-    cursor.close()
+    print(user)
     user = {'id' : user[0], 'promo_1': user[1]}
 
+    # Decrease promo_1 counter by 1 if over 0
     if int(user['promo_1']) > 0:
-        # Decrease promo_1 counter by 1
-        cursor2 = connection.cursor()
-        cursor2.execute(
+        print('Decrease user.promo_1')
+        counter = int(user['promo_1']) - 1
+        print('User promo_1 counter after math: ' + str(counter))
+        cursor.execute(
             "UPDATE users SET promo_1 = %s WHERE id = %s;",
             (
-                (int(user['promo_1']) - 1),
+                counter,
                 user['id']
             )
         )
-        cursor2.commit()
-        cursor2.close()
-
+        connection.commit()
+    
+    cursor.close()
     connection.close()
     # except:
     #     print("ERROR: Could not execute database logic for promo_1.")
@@ -117,6 +124,9 @@ def lambda_handler(event, context):
     app_env  = os.environ['APP_ENV']
     app_name = os.environ['APP_NAME']
 
+    print('Event data payload.')
+    print(event)
+    
     # get Listing data from DB
     listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
 
