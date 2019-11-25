@@ -16,7 +16,7 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
         connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
         cursor = connection.cursor()
         cursor.execute(
-            "SELECT id, ademail, media_file_name, user_id FROM listings WHERE media_file_name = %s;",
+            "SELECT id, ademail, media_file_name, subcategory_id, user_id FROM listings WHERE media_file_name = %s;",
             (
                 str(event['Records'][0]['s3']['object']['key'])
             )
@@ -29,7 +29,7 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
         print("ERROR: Could not execute database logic for email sending.")
         sys.exit()
 
-    return {'id' : record[0], 'ademail': record[1], 'media_file_name' : record[2], 'user_id' : record[3]}
+    return {'id' : record[0], 'ademail': record[1], 'media_file_name' : record[2], 'subcategory_id' : record[3], 'user_id' : record[4]}
 
 def msg_content(app_env, listing):
     content = """
@@ -61,7 +61,7 @@ def send_html_email(host, port, username, password, mail_from = 'admin@connechub
     server.login(username, password)
     server.sendmail(msg['From'], [msg['To']], msg.as_string())
 
-def decrease_promo_counter(sql_host, sql_user, sql_pass, sql_sche, listing):
+def decrease_promo_counter(sql_host, sql_user, sql_pass, sql_sche,  listing = {}):
     '''
     Ref: https://www.terraform.io/docs/providers/aws/r/s3_bucket_notification.html
     NOTE: An S3 bucket can not have two notifications. The S3 Event _CAN_ trigger two Lambdas. Dont have time to refactor 3 TF modules. Stuffing it here for now.
@@ -73,7 +73,20 @@ def decrease_promo_counter(sql_host, sql_user, sql_pass, sql_sche, listing):
     connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
     cursor = connection.cursor()
 
-    # TODO still need logic to determine if the listing is in a paid sub category
+    # is the sub_cat of the listing a paid sub_cat?
+    print('Determine if the listing is in a paid sub cat.')
+    cursor.execute(
+        "SELECT chargable FROM subcategories WHERE id = %s;",
+        (
+            int(listing['subcategory_id'])
+        )
+    )
+    listing_sub_cat_charable = cursor.fetchone()
+    print(listing_sub_cat_charable)
+
+    if int(listing_sub_cat_charable[0]) == 0:
+        print('Sub cat does not req. promo_1 logic.')
+        return True
 
     print('Select user data.')
     cursor.execute(
