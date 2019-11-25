@@ -14,9 +14,13 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
 
     try:
         connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
-        db_info = connection.get_server_info()
         cursor = connection.cursor()
-        cursor.execute("SELECT id, ademail, media_file_name, user_id FROM listings WHERE media_file_name = '" + event['Records'][0]['s3']['object']['key'] + "';")
+        cursor.execute(
+            "SELECT id, ademail, media_file_name, user_id FROM listings WHERE media_file_name = %s;",
+            (
+                str(event['Records'][0]['s3']['object']['key'])
+            )
+        )
         record = cursor.fetchone()
         cursor.close()
         connection.close()
@@ -26,7 +30,7 @@ def get_listing(sql_host, sql_user, sql_pass, sql_sche, event):
 
     return {'id' : record[0], 'ademail': record[1], 'media_file_name' : record[2], 'user_id' : record[3]}
 
-def msg_content(listing, app_env):
+def msg_content(app_env, listing):
     content = """
     <html>
         <head>
@@ -64,24 +68,36 @@ def decrease_promo_counter(sql_host, sql_user, sql_pass, sql_sche, listing):
     1) Listing was a paid list
     2) User.promo_1 > 0
     '''
-    try:
-        connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
-        db_info = connection.get_server_info()
-        cursor = connection.cursor()
-        cursor.execute("SELECT id, promo_1 FROM users WHERE id = '" + listing[3] + "';")
-        user = cursor.fetchone()
-        cursor.close()
+    # try:
+    connection = pymysql.connect(host=str(sql_host), user=str(sql_user), password=str(sql_pass), db=str(sql_sche))
+    cursor = connection.cursor()
+    cursor.execute(
+        "SELECT id, promo_1 FROM users WHERE id = %s;",
+        (
+            int(listing['user_id'])
+        )
+    )
+    user = cursor.fetchone()
+    cursor.close()
+    user = {'id' : user[0], 'promo_1': user[1]}
 
-        if int(user[2]) > 0:
-            # Decrease promo_1 counter by 1
-            cursor = connection.cursor()
-            cursor.execute("UPDATE users SET promo_1 = " + (int(user[2]) - 1) +" WHERE id = '" + listing[3] + "';")
-            cursor.commit()
+    if int(user['promo_1']) > 0:
+        # Decrease promo_1 counter by 1
+        cursor2 = connection.cursor()
+        cursor2.execute(
+            "UPDATE users SET promo_1 = %s WHERE id = %s;",
+            (
+                (int(user['promo_1']) - 1),
+                user['id']
+            )
+        )
+        cursor2.commit()
+        cursor2.close()
 
-        connection.close()
-    except:
-        print("ERROR: Could not execute database logic for promo_1.")
-        sys.exit()
+    connection.close()
+    # except:
+    #     print("ERROR: Could not execute database logic for promo_1.")
+    #     sys.exit()
 
     return True
 
@@ -105,7 +121,7 @@ def lambda_handler(event, context):
     listing = get_listing(sql_host, sql_user, sql_pass, sql_sche, event)
 
     # create message
-    message = msg_content(listing, app_env)
+    message = msg_content(app_env, listing)
 
     # send mail
     send_html_email(smpt_host, smpt_port, smpt_user, smpt_pass, mail_from, message, listing)
