@@ -22,3 +22,15 @@ All documentation is availalbe under the ./docs directory.
 After provisioning the application via Terraform;
 - mount the remote FS onto the local development machine
 - during editing, commit and push locally to remote repo
+
+## ENVs
+
+### Development
+
+./helpers/terraform/start.sh
+./helpers/ansible/init.sh
+./helpers/ssh...
+rake db:setup
+rake db:migrate
+New terminal
+./helpers/onchange.sh
