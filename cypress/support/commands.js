@@ -24,8 +24,6 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-import 'cypress-file-upload';
-
 Cypress.Commands.add('login', (userType = 'user') => {
     // this is an example of skipping your UI and logging in programmatically
 
@@ -59,15 +57,17 @@ Cypress.Commands.add('login', (userType = 'user') => {
     cy.get('#user_remember_me').check()
     cy.get('form.new_user').submit()
 
-    cy.get('body > div > div > div').contains('Signed in successfully.')
-    cy.get('body > div:nth-child(7) > div > div > button > span').click()
-    cy.get('body > div > div > div').contains('Signed in successfully.').should('not.be.visible')
+    cy.handle_splash_message('Signed in successfully.', 'notice')
 })
 
 Cypress.Commands.add('logout', () => {
 
     cy.get('#navbar > ul > li > a').contains('Logout').click()
-    cy.get('body > div > div > div').contains('Signed out successfully.')
+    cy.handle_splash_message('Signed out successfully.', 'notice')
+})
+
+Cypress.Commands.add('handle_splash_message', (msg, type) => {
+    cy.get('body > div:nth-child(7) > div > div').should('have.class', 'alert-' + type).contains(msg)
     cy.get('body > div:nth-child(7) > div > div > button > span').click()
-    cy.get('body > div > div > div').contains('Signed out successfully.').should('not.be.visible')
+    cy.get('body').contains(msg).should('not.be.visible')
 })
