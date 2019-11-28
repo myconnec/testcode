@@ -12,8 +12,6 @@ capybara-*.html
 /spec/tmp
 **.orig
 rerun.txt
-pickle-email-*.html
-/cypress
 
 # Ignore bundler config.
 /.bundle
@@ -30,6 +28,7 @@ pickle-email-*.html
 
 # If using bower-rails ignore default bower_components path bower.json file
 /vendor
+/node_modules
 *.bowerrc
 bower.json
 
