@@ -8,7 +8,7 @@
 - [https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements](https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements)
 
 
-```bash
+```sh
 cd ./bin
 curl -L https://download.cypress.io/desktop/ >> tmp.zip
 unzip tmp.zip
