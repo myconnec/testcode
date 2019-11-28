@@ -12,6 +12,8 @@ capybara-*.html
 /spec/tmp
 **.orig
 rerun.txt
+/cypress/screenshots
+/cypress/videos
 
 # Ignore bundler config.
 /.bundle
