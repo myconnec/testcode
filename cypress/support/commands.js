@@ -23,3 +23,51 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+import 'cypress-file-upload';
+
+Cypress.Commands.add('login', (userType = 'user') => {
+    // this is an example of skipping your UI and logging in programmatically
+
+    // setup some basic types
+    // and user properties
+    const types = {
+        admin: {
+            name: 'Test Admin',
+            email: 'test+admin@connechub.com',
+            password: '~Asdf1234',
+            admin: true
+        },
+        user: {
+            name: 'Test User',
+            email: 'test+user@connechub.com',
+            password: '~Asdf1234',
+            admin: false
+        }
+    }
+
+    // grab the user
+    const user = types[userType]
+
+    // log in using the test user
+    cy.visit('/users/sign_in')
+    cy.get('#navbar > ul > li:nth-child(1) > a').contains('Login').click()
+
+    cy.get('#app_view_devise > div > div > div > div.panel-heading > h3').contains('Log In!')
+    cy.get('#user_email').type('test@test.com')
+    cy.get('#user_password').type('testtest')
+    cy.get('#user_remember_me').check()
+    cy.get('form.new_user').submit()
+
+    cy.get('body > div > div > div').contains('Signed in successfully.')
+    cy.get('body > div:nth-child(7) > div > div > button > span').click()
+    cy.get('body > div > div > div').contains('Signed in successfully.').should('not.be.visible')
+})
+
+Cypress.Commands.add('logout', () => {
+
+    cy.get('#navbar > ul > li > a').contains('Logout').click()
+    cy.get('body > div > div > div').contains('Signed out successfully.')
+    cy.get('body > div:nth-child(7) > div > div > button > span').click()
+    cy.get('body > div > div > div').contains('Signed out successfully.').should('not.be.visible')
+})
