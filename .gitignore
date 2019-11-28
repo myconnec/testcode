@@ -13,6 +13,7 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
+/cypress
 
 # Ignore bundler config.
 /.bundle
