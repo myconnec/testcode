@@ -25,7 +25,8 @@ describe('Listing CRUD...', function () {
     cy.get('.panel > .panel-body > #new_listing > .input-group > #listing_state').type('FL')
     cy.get('.panel > .panel-body > #new_listing > .input-group > #listing_zipcode').type('33612')
     cy.get('.panel > .panel-body > #new_listing > .input-group > #listing_description').type('Test description.')
-    cy.get('form#new_listing').submit()
+    cy.get('input#listings_submit').click()
+    // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
 
     // step 2 of listing creation
     cy.get('input#fileupload').then(subject => {
@@ -43,11 +44,10 @@ describe('Listing CRUD...', function () {
         })
     })
 
-    // cy.get('#listing_media_info').contains('Duration: 2 minutes and 00 seconds.')
-    cy.get('form').submit()
-
-    // uploading animation visible?
-    cy.get('#overlay > img').should('be.visible')
+    cy.get('#fileupload').trigger('change')
+    cy.get('button#listings_submit').click()
+    // cy.get('#overlay > img').should('be.visible')
+    cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
 
     cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
   })

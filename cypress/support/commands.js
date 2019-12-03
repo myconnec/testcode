@@ -48,6 +48,7 @@ Cypress.Commands.add('login', (userType = 'user') => {
     const user = types[userType]
 
     // log in using the test user
+    cy.visit('')
     cy.visit('/users/sign_in')
     cy.get('#navbar > ul > li:nth-child(1) > a').contains('Login').click()
 
