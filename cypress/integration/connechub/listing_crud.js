@@ -49,7 +49,7 @@ describe('Listing CRUD...', function () {
     cy.get('#listing_city').type(formData[0]['city'])
     cy.get('#listing_state').type(formData[0]['state'])
     cy.get('#listing_zipcode').type(formData[0]['zipcode'])
-    cy.get('#listing_description').type(formData[0]['state'])
+    cy.get('#listing_description').type(formData[0]['description'])
     cy.get('#listings_submit').click()
     // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
 
