@@ -60,9 +60,11 @@
             <hr>
             <span>
                 <b><%= @listing.title %></b>
-                <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
-                    <i class = "fa fa-heart"></i>
-                    <%= @listing.votes_for.size %>
+                <%= if @user.id.present? %>
+                    <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
+                        <i class = "fa fa-heart"></i>
+                        <%= @listing.votes_for.size %>
+                    <% end %>
                 <% end %>
             </span>
         </div>

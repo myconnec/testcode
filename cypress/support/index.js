@@ -19,6 +19,14 @@ import './commands'
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 
+// cookie allowed to persist between tests
 Cypress.Cookies.defaults({
     whitelist: '_workspace_session'
 })
+
+// ignore `sharethis` errors
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+  })
