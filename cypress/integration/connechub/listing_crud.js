@@ -1,6 +1,4 @@
 describe('Listing CRUD...', function () {
-
-  const fileName = '../fixtures/24fps.mp4';
   
   const formData = [
     {
@@ -101,7 +99,7 @@ describe('Listing CRUD...', function () {
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
 
     // change all the field values to ensure changing them works
-    // cy.get('div.panel-heading > h2').contains('Edit Listing')
+    cy.get('div.panel-heading > h2').contains('Edit Listing')
     cy.get('#listing_category_id').select(formData[1]['category'])
     cy.wait(1000) // wait for ajax response
     cy.get('#listing_subcategory_id').select(formData[1]['sub_category'])
@@ -122,9 +120,7 @@ describe('Listing CRUD...', function () {
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(formData[1]['price'])
   })
 
-  // it('...updating a listing video.', function () {
+  it('...deleting a listing.', function () {
 
-  // })
-
-  
+  })
 })
