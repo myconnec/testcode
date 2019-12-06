@@ -26,7 +26,7 @@ module "media_processing" {
 
 module "security" {
   source  = "./terraform/security"
-  version = "0.3.5"
+  version = "0.4.0"
 
   APP_ENV  = "${var.APP_ENV}"
   APP_NAME = "${var.APP_NAME}"

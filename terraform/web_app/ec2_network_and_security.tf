@@ -19,9 +19,9 @@ resource "aws_security_group" "http" {
   }
 
   ingress {
-    from_port = 80
-    to_port   = 80
-    protocol  = "tcp"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -92,6 +92,7 @@ resource "aws_security_group" "ssh" {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
+
     cidr_blocks = [
       "${chomp(data.http.local_ip.body)}/32",
     ]
@@ -188,5 +189,6 @@ resource "aws_security_group" "puma" {
     tech    = "Networking"
     Name    = "puma"
   }
+
   vpc_id = "${aws_default_vpc.default.id}"
 }
