@@ -1,8 +1,11 @@
 # ACM
 
+# source https://github.com/jareware/howto/blob/master/Using%20AWS%20ACM%20certificates%20with%20Terraform.md
+
 ## Load balancer HTTPS listener TLS cert
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "${var.APP_ENV}.${var.APP_NAME}.com"
+  domain_name       = "${var.APP_NAME}.com"
+  provider          = "aws.us_east_1"       # because ACM needs to be used in the "us-east-1" region
   validation_method = "DNS"
 
   tags = {
@@ -20,15 +23,17 @@ resource "aws_acm_certificate" "cert" {
 }
 
 resource "aws_route53_record" "cert_validation" {
-  name     = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_name}"
-  records  = ["${aws_acm_certificate.cert.domain_validation_options.0.resource_record_value}"]
-  ttl      = 60
-  type     = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_type}"
-  zone_id  = "${data.aws_route53_zone.zone.id}"
+  name    = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_name}"
+  records = ["${aws_acm_certificate.cert.domain_validation_options.0.resource_record_value}"]
+  ttl     = 60
+  type    = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_type}"
+  zone_id = "${data.aws_route53_zone.zone.id}"
 }
 
+# https://www.terraform.io/docs/providers/aws/r/acm_certificate_validation.html
 resource "aws_acm_certificate_validation" "cert" {
   certificate_arn         = "${aws_acm_certificate.cert.arn}"
+  provider                = "aws.us_east_1"                                # because ACM needs to be used in the "us-east-1" region
   validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
 }
 
@@ -37,6 +42,7 @@ resource "aws_acm_certificate_validation" "cert" {
 #   domain_name       = "${var.APP_ENV}.${var.APP_NAME}.com"
 #   provider          = "aws.us_east_1"
 #   validation_method = "DNS"
+
 
 #   tags = {
 #     app     = "connechub"
@@ -47,10 +53,12 @@ resource "aws_acm_certificate_validation" "cert" {
 #     Name    = "${var.APP_NAME}_${var.APP_ENV}_cf_tls_certificate"
 #   }
 
+
 #   lifecycle {
 #     create_before_destroy = true
 #   }
 # }
+
 
 # resource "aws_route53_record" "cf_cert_validation" {
 #   name     = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_name}"
@@ -61,8 +69,10 @@ resource "aws_acm_certificate_validation" "cert" {
 #   zone_id  = "${data.aws_route53_zone.zone.id}"
 # }
 
+
 # resource "aws_acm_certificate_validation" "cf_cert" {
 #   certificate_arn         = "${aws_acm_certificate.cert.arn}"
 #   provider                = "aws.us_east_1"
 #   validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
 # }
+
