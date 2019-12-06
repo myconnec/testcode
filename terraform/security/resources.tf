@@ -4,8 +4,8 @@
 
 ## Load balancer HTTPS listener TLS cert
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "${var.APP_NAME}.com"
-  provider          = "aws.us_east_1"       # because ACM needs to be used in the "us-east-1" region
+  domain_name       = "${var.APP_ENV}.${var.APP_NAME}.com"
+  provider          = "aws.us_east_1" # because ACM needs to be used in the "us-east-1" region
   validation_method = "DNS"
 
   tags = {
@@ -14,11 +14,11 @@ resource "aws_acm_certificate" "cert" {
     owner   = "${var.CONTACT_EMAIL}"
     service = "acm"
     tech    = "tls"
-    Name    = "${var.APP_NAME}_${var.APP_ENV}_tls_certificate"
+    Name    = "${var.APP_ENV}_${var.APP_NAME}_tls_certificate"
   }
 
   lifecycle {
-    create_before_destroy = true
+    prevent_destroy = true
   }
 }
 
@@ -28,13 +28,21 @@ resource "aws_route53_record" "cert_validation" {
   ttl     = 60
   type    = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_type}"
   zone_id = "${data.aws_route53_zone.zone.id}"
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # https://www.terraform.io/docs/providers/aws/r/acm_certificate_validation.html
 resource "aws_acm_certificate_validation" "cert" {
   certificate_arn         = "${aws_acm_certificate.cert.arn}"
-  provider                = "aws.us_east_1"                                # because ACM needs to be used in the "us-east-1" region
+  provider                = "aws.us_east_1" # because ACM needs to be used in the "us-east-1" region
   validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 # CloudFront (cf) TLS cert
