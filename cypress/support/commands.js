@@ -24,37 +24,29 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('login', (userType = 'user') => {
+Cypress.Commands.add('login', (userData = false) => {
     // this is an example of skipping your UI and logging in programmatically
 
-    // setup some basic types
-    // and user properties
-    const types = {
-        admin: {
-            name: 'Test Admin',
-            email: 'test+admin@connechub.com',
-            password: '~Asdf1234',
-            admin: true
-        },
-        user: {
+    if (userData == false) {
+        // setup some basic types
+        // and user properties
+        userData = {
             name: 'Test User',
-            email: 'test+user@connechub.com',
-            password: '~Asdf1234',
+            email: 'test@test.com',
+            password: 'testtest',
             admin: false
         }
     }
 
-    // grab the user
-    const user = types[userType]
+    cy.visit('')
+    console.log('userData: ', userData)
 
     // log in using the test user
-    cy.visit('')
-    cy.visit('/users/sign_in')
     cy.get('#navbar > ul > li:nth-child(1) > a').contains('Login').click()
 
     cy.get('#app_view_devise > div > div > div > div.panel-heading > h3').contains('Log In!')
-    cy.get('#user_email').type('test@test.com')
-    cy.get('#user_password').type('testtest')
+    cy.get('#user_email').type(userData.email)
+    cy.get('#user_password').type(userData.password)
     cy.get('#user_remember_me').check()
     cy.get('form.new_user').submit()
 
@@ -63,7 +55,7 @@ Cypress.Commands.add('login', (userType = 'user') => {
 
 Cypress.Commands.add('logout', () => {
 
-    cy.get('#navbar > ul > li > a').contains('Logout').click()
+    cy.get('#navbar > ul > li:nth-child(3) > a').contains('Logout').click()
     cy.handle_splash_message('Signed out successfully.', 'notice')
 })
 

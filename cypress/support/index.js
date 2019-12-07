@@ -30,3 +30,31 @@ Cypress.on('uncaught:exception', (err, runnable) => {
     // failing the test
     return false
 })
+
+// source https://github.com/cypress-io/cypress/issues/518
+switch (Cypress.env('abort_strategy')) {
+    case 'run':
+        // eslint-disable-next-line no-undef
+        before(function onBeforeEach() {
+            // Skips any subsequent specs, if the run has been flagged as failed
+            cy.getCookie('has_failed_test').then(cookie => {
+                if (cookie && typeof cookie === 'object' && cookie.value === 'true') {
+                    Cypress.runner.stop();
+                }
+            });
+        });
+    /* fallthrough */
+    case 'spec':
+        afterEach(function onAfterEach() {
+            // Skips all subsequent tests in a spec, and flags the whole run as failed
+            if (this.currentTest.state === 'failed') {
+                cy.setCookie('has_failed_test', 'true');
+                Cypress.runner.stop();
+            }
+        });
+        Cypress.Cookies.defaults({
+            whitelist: 'has_failed_test',
+        });
+        break;
+    default:
+}

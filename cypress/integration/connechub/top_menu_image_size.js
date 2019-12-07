@@ -1,7 +1,6 @@
 describe('Ensure header image is the correct size in all viewport sizes...', function () {
-    // basic boolean assertion
-    it('...landing page does not have a title bqar header image.', function () {
-        cy.viewport('macbook-15')
+
+    it('...landing page does not have a title bar header image.', function () {
         cy.visit('')
         cy.get('body > nav.navbar.navbar-default.navbar-fixed-top > div > div.navbar > a')
             .should('not.have.descendants', 'img')
@@ -12,12 +11,10 @@ describe('Ensure header image is the correct size in all viewport sizes...', fun
         cy.get('body > nav.navbar.navbar-default.navbar-fixed-top > div > div.navbar-header > a')
             .should('have.css', 'float', 'left')
 
-        // TODO learn how to access DOM elements and attributes in CY
-        // width
-        // width = document.querySelector('body > nav.navbar.navbar-default.navbar-fixed-top > div > div.navbar-header > a > img').width
-        // height = document.querySelector('body > nav.navbar.navbar-default.navbar-fixed-top > div > div.navbar-header > a > img').height
-
-        // assertEquals(height, 55)
-        // assertEquals(width, 229)
+        cy.get('body > nav.navbar.navbar-default.navbar-fixed-top > div > div.navbar-header > a > img')
+            .should('have.property', 'height').should('be', 'auto')
+        
+        cy.get('body > nav.navbar.navbar-default.navbar-fixed-top > div > div.navbar-header > a > img')
+            .should('have.property', 'width').should('be', '65%')
     })
 })
