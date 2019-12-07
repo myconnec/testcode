@@ -1,21 +1,35 @@
-
 describe('User Management functionality.', function() {
-    it('Send the "I forgot my password" email.', function() {
-        cy.visit()
-        cy.get('.container > #navbar > .nav > li:nth-child(2) > a').click()
-        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_username').type('david eddy')
-        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_email').type('me@davidjeddy.com')
-        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_password').type('asdf1234')
-        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_password_confirmation').type('asdf1234')
-        cy.visit()
-        cy.get('body > .jbar').click()
-        cy.get('.container > #navbar > .nav > li:nth-child(3) > a').click()
-        cy.visit()
-        cy.get('body > .jbar').click()
-        cy.get('.container > #navbar > .nav > li:nth-child(1) > a').click()
-        cy.get('.row > .col-sm-6 > .panel > .panel-footer > a:nth-child(3)').click()
-        cy.get('.row > .col-sm-12 > .form-group > .input-group > #user_email').type('me@davidjeddy.com')
-        cy.get('fieldset > .row > .col-sm-12 > .form-group > .btn').click()
-        cy.visit('users/sign_in')
+    
+    const userData = {
+        name: 'Test User',
+        email: 'test@test.com',
+        password: '~Asdf1234',
+        admin: false
+    }
+
+    it('...reset password on website.', function() {
+        cy.login()
+        cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+        cy.get('#navbar > ul > li.dropdown.open > ul > li:nth-child(2) > a').contains('Edit Your Account').should('be.visible').click()
+        cy.get('body > div:nth-child(8) > div > div > div > div.panel-heading > h2').contains('Edit Your Account').click()
+
+        cy.get('#user_current_password').clear().type('testtest')
+        cy.get('#user_password').clear().type(userData.password)
+        cy.get('#user_password_confirmation').clear().type(userData.password)
+        cy.get('#edit_user > div.form-group > input').click()
+        cy.logout()
+    })
+
+    it('...confirm new password works.', function() {
+        cy.login(userData)
+        cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+        cy.get('#navbar > ul > li.dropdown.open > ul > li:nth-child(2) > a').contains('Edit Your Account').should('be.visible').click()
+        cy.get('body > div:nth-child(8) > div > div > div > div.panel-heading > h2').contains('Edit Your Account').click()
+
+        cy.get('#user_current_password').clear().type(userData.password)
+        cy.get('#user_password').clear().type('testtest')
+        cy.get('#user_password_confirmation').clear().type('testtest')
+        cy.get('#edit_user > div.form-group > input').click()
+        cy.logout()
     })
 })

@@ -9,11 +9,10 @@
 
 
 ```sh
-cd ./bin
-curl -L https://download.cypress.io/desktop/ >> tmp.zip
-unzip tmp.zip
-rm tmp.zip
-cd ../
+npm install
 
-open ./bin/Cypress # OSX
+export CYPRESS_baseUrl=https://${APP_ENV}.${APP_NAME}.com/
+export CYPRESS_abort_strategy=spec
+
+./node_modules/cypress/bin/cypress open # || `cypress run` to just run the test admin UI
 ```
