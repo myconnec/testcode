@@ -36,7 +36,7 @@ describe('Listing Search CRUD...', function () {
    it('...creating a new listing.', function () {
      // see top menu item
      cy.get('.container > #navbar > .nav > li > a').contains('POST A VIDEO AD').click()
- 
+
      // step 1 of listing creation
      cy.get('div.panel-heading > h2').contains('Create New Listing')
      cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(formData[0]['category'])
