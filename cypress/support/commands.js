@@ -69,39 +69,33 @@ Cypress.Commands.add('handle_splash_message', (msg, type) => {
  * Since so much of ConnecHub revolves around the Listing, make it easier to create one
  * Allow formData and userData to be passed in and override defaults
  */
-Cypress.Commands.add('create_new_listing', () => {
+Cypress.Commands.add('create_new_listing', (formData = false) => {
 
-    const formData = [
-        {
-            "category": "Campus",
-            "sub_category": "Activities & Events",
-            "price": "12.34",
-            "title": "Test Title",
-            "city": "Tampa",
-            "state": "FL",
-            "zipcode": "33612",
-            "description": "Test Description.",
-            "fileupload": "24fps.mp4"
-        },
-        {
-            "category": "H2F",
-            "sub_category": "Odd Items",
-            "price": "43.21",
-            "title": "Updated Test Title",
-            "city": "Clearwater",
-            "state": "FL",
-            "zipcode": "33612",
-            "description": "Updated Test Description.",
-            "fileupload": "24fps.mp4"
-        }
-    ]
-
-    const userData = {
-        admin: false,
-        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        email: 'test@test.com',
-        name: 'Test User',
-        password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
+    if (formData == false) {
+        formData = [
+            {
+                "category": "Campus",
+                "sub_category": "Activities & Events",
+                "price": "12.34",
+                "title": "Test Title",
+                "city": "Tampa",
+                "state": "FL",
+                "zipcode": "33612",
+                "description": "Test Description.",
+                "fileupload": "24fps.mp4"
+            },
+            {
+                "category": "H2F",
+                "sub_category": "Odd Items",
+                "price": "43.21",
+                "title": "Updated Test Title",
+                "city": "Clearwater",
+                "state": "FL",
+                "zipcode": "33612",
+                "description": "Updated Test Description.",
+                "fileupload": "24fps.mp4"
+            }
+        ]
     }
 
     // see top menu item
@@ -143,22 +137,5 @@ Cypress.Commands.add('create_new_listing', () => {
     cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
     cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
 
-    // read the listing to ensure it created correctly
-    cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
-    cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
-
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
-
-    cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
-    cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(formData[0]['category'])
-    cy.get('body > div:nth-child(8) > div > a:nth-child(4)').contains(formData[0]['sub_category'])
-
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > b').contains(formData[0]['title'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(formData[0]['description'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(formData[0]['price'])
-
-    cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
-
-    cy.visdit('')
-
+    cy.visit('')
 })
