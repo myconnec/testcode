@@ -59,12 +59,22 @@
                     <br>
 
                     <div class="form-group">
-                        <%= f.submit "Update", class: "btn btn-lg btn-success btn-block" %>
+                        <%= f.submit "Update", class: "btn btn-success", id: "profile_submit" %>
                     </div>
-
                 <% end %>
-
         </div>
     </div>
 </div>
 <br>
+
+<%= render "processing_overlay" %>
+
+<script>
+$(function () {
+    $('#profile_submit').on('click', function(){
+        if (document.getElementById('new_listing').checkValidity() == true){
+            $("#overlay").toggle()
+        }
+    })
+});
+</script>

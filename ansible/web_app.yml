@@ -244,4 +244,5 @@
       shell: |
         cd ~/{{ APP_NAME }}
         rake db:migrate
-        bundle exec puma --bind tcp://0.0.0.0:9293 --daemon
+        # need sudo to write to S3 bucket for user profile images
+        sudo bundle exec puma --bind tcp://0.0.0.0:9293 --daemon

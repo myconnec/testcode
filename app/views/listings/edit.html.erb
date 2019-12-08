@@ -155,11 +155,8 @@
 
 <script>
 $(function () {
-    console.log('DOM loaded')
     $('#listings_submit').on('click', function(){
-        console.log('listings_submit.click')
         if (document.getElementById('new_listing').checkValidity() == true){
-            console.log('validation ok')
             $("#overlay").toggle()
         }
     })
