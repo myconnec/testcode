@@ -21,7 +21,9 @@
                         <div class="form-control">
                             <%= f.select :category_id,
                                 Category.all.map {|f| [f.name, f.id]},
-                                { include_blank: true },
+                                {
+                                  include_blank: true
+                                },
                                 required: true
                             %>
                         </div>
@@ -152,12 +154,7 @@
 <%= render "processing_overlay" %>
 
 <script>
-$(document).on('ready turbolinks:load', function() {
-    // trigger populating sub_cat's based on cat_id
-    getSubcategories($('#listing_category_id').val());
-
-    // select sub_cat once DDL is populated
-
+$(function () {
     $('#listings_submit').on('click', function(){
         if (document.getElementById('new_listing').checkValidity() == true){
             $("#overlay").toggle()
@@ -165,3 +162,36 @@ $(document).on('ready turbolinks:load', function() {
     })
 });
 </script>
+
+<script>
+$(document).on('ready', function() {
+  // SELECT:OPTION cat_DDL based on Listing data
+  // wait for sub_cat DDL to populate
+  // SELECT:OPTION sub_cat_DLL based on Listig data
+  var getSubcategories = function(category_id){
+    var $subcategories = $('#listing_subcategory_id');
+
+    if (isNaN(parseInt(category_id))) {
+      $subcategories.empty();
+      return;
+    }
+
+    $.get('/subcategories/find_by_category', { category_id: category_id }, function(data){
+      $subcategories.empty();
+      $subcategories.append('<option value=""></option>')
+      $.each(data.subcategories, function(index, subcategory) {
+        var option = $('<option />');
+        option.attr('value', subcategory.id);
+        option.text(subcategory.name);
+        option.attr('data-chargable', subcategory.chargable);
+        $subcategories.append(option);
+      })
+    })
+  }
+
+  // on change of Category DDL, trigger Sub-category population
+  $('#listing_category_id').trigger('change', function(){
+    getSubcategories($('#listing_category_id').val());
+  });
+})
+<script>
