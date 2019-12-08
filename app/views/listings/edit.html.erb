@@ -152,7 +152,7 @@
 <%= render "processing_overlay" %>
 
 <script>
-$(function () {
+$(document).on('ready turbolinks:load', function() {
     // trigger populating sub_cat's based on cat_id
     getSubcategories($('#listing_category_id').val());
 
