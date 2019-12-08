@@ -153,6 +153,8 @@
 
 <script>
 $(function () {
+    $('#listing_category_id').trigger('change');
+
     $('#listings_submit').on('click', function(){
         if (document.getElementById('new_listing').checkValidity() == true){
             $("#overlay").toggle()

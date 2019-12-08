@@ -5,7 +5,7 @@ const formatter = new Intl.NumberFormat('en-US', {
 })
 
 $(document).on('ready turbolinks:load', function() {
-  if (location.host != 'www.connechub.com') {
+  if (location.host == 'dev.connechub.com') {
     // $('select#listing_category_id>option:eq(1)').attr('selected', true);
     $('#listing_price').val('10');
     $('#listing_title').val('Test Title');
