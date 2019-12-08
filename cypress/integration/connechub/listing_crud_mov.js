@@ -1,11 +1,11 @@
-describe('Listing CRUD...', function () {
+describe('Listing CRUD (mov)...', function () {
 
   const formData = [
     {
       "category": "Campus",
       "sub_category": "Activities & Events",
       "price": "56.78",
-      "title": "Test Title - trim.*.MOV",
+      "title": "Test Title trim MOV",
       "city": "Tampa",
       "state": "FL",
       "zipcode": "33612",

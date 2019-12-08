@@ -33,8 +33,7 @@ Cypress.Commands.add('login', (userData = false) => {
         userData = {
             name: 'Test User',
             email: 'test@test.com',
-            password: 'testtest',
-            admin: false
+            password: 'testtest'
         }
     }
 
@@ -138,4 +137,12 @@ Cypress.Commands.add('create_new_listing', (formData = false) => {
     cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
 
     cy.visit('')
+})
+
+/**
+ * This requires a user be logged in. Else is will fail.
+ */
+Cypress.Commands.add('view_user_profile', (userData = false) => {
+    cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+    cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 })

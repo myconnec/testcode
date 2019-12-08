@@ -1,4 +1,4 @@
-describe('Listing CRUD...', function () {
+describe('Listing CRUD (mp4)...', function () {
   
   const formData = [
     {
@@ -128,5 +128,24 @@ describe('Listing CRUD...', function () {
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > span:nth-child(6) > a').click()
     // cy.handle_splash_message('Video has been deleted.', 'success')
+  })
+
+  it('...like a listing.', function () {
+    cy.view_user_profile()
+    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+        .contains('Test Title').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
+  })
+
+  it('...like a listing, as a guest.', function () {
+    cy.logout()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(4) > div:nth-child(5) > ul > li:nth-child(1) > a')
+      .contains('Activities & Events').click()
+      cy.get('body > div:nth-child(8) > div.container_12 > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+      .contains('Test Title').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').should('not.exist')
+    cy.login()
   })
 })
