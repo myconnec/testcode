@@ -153,7 +153,10 @@
 
 <script>
 $(function () {
-    $('#listing_category_id').trigger('change');
+    // trigger populating sub_cat's based on cat_id
+    getSubcategories($('#listing_category_id').val());
+
+    // select sub_cat once DDL is populated
 
     $('#listings_submit').on('click', function(){
         if (document.getElementById('new_listing').checkValidity() == true){
