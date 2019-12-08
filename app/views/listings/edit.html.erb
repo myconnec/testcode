@@ -164,12 +164,12 @@ $(function () {
 </script>
 
 <script>
-console.log('DOM: loadled')
+console.log('DOM: loaded')
 
 // SELECT:OPTION cat_DDL based on Listing data
 // wait for sub_cat DDL to populate
 // SELECT:OPTION sub_cat_DLL based on Listig data
-$(document).on('ready', function() {
+$(document).on('ready turbolinks:load', function() {
     console.log('DOM: ready')
     var getSubcategories = function(category_id){
     console.log('getSubcategories: ', getSubcategories)
