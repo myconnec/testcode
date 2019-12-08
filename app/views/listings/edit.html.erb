@@ -154,13 +154,9 @@
 <%= render "processing_overlay" %>
 
 <script>
-console.log('DOM: loaded 1')
 $(function () {
-    console.log('DOM: ready 1')
     $('#listings_submit').on('click', function(){
-        console.log('LOGIC 1')
         if (document.getElementById('new_listing').checkValidity() == true){
-            console.log('LOGIC 2')
             $("#overlay").toggle()
         }
     })

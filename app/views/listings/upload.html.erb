@@ -54,6 +54,7 @@
 
 <script>
 $("#listings_submit").on("click", function() {
+    console.log('listings_submit click')
     if (!$("#new_listing_upload")[0].checkValidity()) {
         $("#new_listing_upload").find("#submit-hidden").click();
     }
@@ -115,19 +116,16 @@ $(function () {
             dataType: 'XML',  // S3 returns XML if success_action_status is set to 201
             replaceFileInput: false,
             add: function (e, data) {
-                console.log('add: function ')
                 $('button#listings_submit').off('click').on('click', function () {
                     $("#overlay").toggle()
                     data.submit();
                 });
             },
             progressall: function (e, data) {
-                console.log('progressall: f')
                 var progress = parseInt(data.loaded / data.total * 100, 10);
                 progressBar.css('width', progress + '%')
             },
             start: function (e) {
-                console.log('start: functio')
                 submitButton.prop('disabled', true);
                 progressBar.
                     css('background', 'green').
@@ -136,7 +134,6 @@ $(function () {
                     text("Loading...");
             },
             done: function(e, data) {
-                console.log('done: function')
                 submitButton.prop('disabled', false);
                 progressBar.text("Uploading done");
 
