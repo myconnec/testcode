@@ -1,6 +1,3 @@
-<script>
-    console.log('head')
-</script>
 <div class="col-md-8 col-md-offset-2">
     <div class="row">
         <div class="panel panel-default">
@@ -157,7 +154,9 @@
 <%= render "processing_overlay" %>
 
 <script>
+console.log('DOM: loaded 1')
 $(function () {
+    console.log('DOM: ready 1')
     $('#listings_submit').on('click', function(){
         if (document.getElementById('new_listing').checkValidity() == true){
             $("#overlay").toggle()
@@ -167,13 +166,13 @@ $(function () {
 </script>
 
 <script>
-console.log('DOM: loaded')
+console.log('DOM: loaded 2')
 
 // SELECT:OPTION cat_DDL based on Listing data
 // wait for sub_cat DDL to populate
 // SELECT:OPTION sub_cat_DLL based on Listig data
 $(document).on('ready turbolinks:load', function() {
-    console.log('DOM: ready')
+    console.log('DOM: ready 2')
     var getSubcategories = function(category_id){
     console.log('getSubcategories: ', getSubcategories)
     var $subcategories = $('#listing_subcategory_id');
