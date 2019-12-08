@@ -156,17 +156,15 @@ class ListingsController < ApplicationController
   def update
     @listing = Listing.find(params[:id])
     redirect_to @listing, :flash => { :danger => "Video has been updated." }
-    redirect_to @listing, :flash => { :danger => "Video has been updated." }
   end
 
   def destroy
     @listing = Listing.find(params[:id])
     redirect_to @listing, :flash => { :danger => "Video has been deleted." }
-    redirect_to @listing, :flash => { :danger => "Video has been deleted." }
   end
 
+  def upvote
     @listing.upvote_by current_user
-    redirect_to :back
     redirect_to :back
   end
 
