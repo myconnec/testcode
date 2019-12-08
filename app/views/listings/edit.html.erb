@@ -164,12 +164,14 @@ $(function () {
 </script>
 
 <script>
+console.log('DOM: loadled')
+
+// SELECT:OPTION cat_DDL based on Listing data
+// wait for sub_cat DDL to populate
+// SELECT:OPTION sub_cat_DLL based on Listig data
 $(document).on('ready', function() {
     console.log('DOM: ready')
-  // SELECT:OPTION cat_DDL based on Listing data
-  // wait for sub_cat DDL to populate
-  // SELECT:OPTION sub_cat_DLL based on Listig data
-  var getSubcategories = function(category_id){
+    var getSubcategories = function(category_id){
     console.log('getSubcategories: ', getSubcategories)
     var $subcategories = $('#listing_subcategory_id');
 
