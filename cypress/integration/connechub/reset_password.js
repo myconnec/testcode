@@ -1,5 +1,5 @@
 describe('User Management functionality.', function() {
-    
+
     const userData = {
         name: 'Test User',
         email: 'test@test.com',
