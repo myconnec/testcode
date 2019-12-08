@@ -135,6 +135,7 @@ class ListingsController < ApplicationController
     end
 
     @comments = Comment.where(listing_id: @listing).order("created_at DESC")
+    @user = current_user
 
     # source https://stackoverflow.com/questions/44741473/recommended-way-to-generate-a-presigned-url-to-s3-bucket-in-ruby
     # source https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#presigned_url-instance_method
