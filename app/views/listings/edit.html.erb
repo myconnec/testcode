@@ -165,6 +165,7 @@ $(function () {
 
 <script>
 $(document).on('ready', function() {
+    console.log('DOM: ready')
   // SELECT:OPTION cat_DDL based on Listing data
   // wait for sub_cat DDL to populate
   // SELECT:OPTION sub_cat_DLL based on Listig data
@@ -178,6 +179,7 @@ $(document).on('ready', function() {
     }
 
     $.get('/subcategories/find_by_category', { category_id: category_id }, function(data){
+            console.log('/subcategories/find_by_category')
       $subcategories.empty();
       $subcategories.append('<option value=""></option>')
       $.each(data.subcategories, function(index, subcategory) {
@@ -192,7 +194,7 @@ $(document).on('ready', function() {
 
   // on change of Category DDL, trigger Sub-category population
   $('#listing_category_id').trigger('change', function(){
-      console.log('trigger: change')
+    console.log('trigger: change')
     getSubcategories($('#listing_category_id').val());
   });
 })
