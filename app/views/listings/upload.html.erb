@@ -28,7 +28,7 @@
                         required: true,
                         type: "file"
                     %>
-                    
+
                     <input id="submit-hidden" type="submit" style="display: none" />
 
                     <br>
@@ -53,18 +53,22 @@
 <%= render "processing_overlay" %>
 
 <script>
-    $("#listings_submit").on("click", function() {
-        if (!$("#new_listing_upload")[0].checkValidity()) {
-            $("#new_listing_upload").find("#submit-hidden").click();
-        }
-    });
+$("#listings_submit").on("click", function() {
+    console.log('qwer')
+    if (!$("#new_listing_upload")[0].checkValidity()) {
+        console.log('asdf')
+        $("#new_listing_upload").find("#submit-hidden").click();
+    }
+});
 
-    $(function () {
+$(function () {
+    console.log('zxcv')
     var media_file = [];
 
     document.getElementById('fileupload').onchange = setFileInfo;
 
     function setFileInfo() {
+        console.log('tyui')
         var files = this.files;
         media_file.push(files[0]);
         var video = document.createElement('video');
@@ -88,21 +92,21 @@
             minutes = Math.floor(time / 60) % 60,
             seconds = Math.floor(time - minutes * 60),
             milliseconds = time.slice(-3);
-        
+
             // return pad(hours, 2) + ':' + pad(minutes, 2) + ':' + pad(seconds, 2) + ',' + pad(milliseconds, 3);
             return  minutes + ' minutes and ' + pad(seconds, 2) + ' seconds.';
         }
 
         video.src = URL.createObjectURL(files[0]);
     }
-    
+
     $('#new_listing_upload').find("input:file").each(function(i, elem) {
         var fileInput = $(elem);
         var form = $(fileInput.parents('form:first'));
         var submitButton = form.find('input[type="submit"]');
         var progressBar  = $("<div class='bar'></div>");
         var barContainer = $("<div class='progress'></div>").append(progressBar);
-        
+
         $('#listing_media_progress').after(barContainer);
 
         fileInput.fileupload({
