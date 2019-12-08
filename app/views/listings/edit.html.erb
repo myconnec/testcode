@@ -158,42 +158,11 @@ console.log('DOM: loaded 1')
 $(document).on('ready turbolinks:load', function() {
     console.log('DOM: ready 1')
     $('#listings_submit').on('click', function(){
+        console.log('LOGIC 1')
         if (document.getElementById('new_listing').checkValidity() == true){
+            console.log('LOGIC 2')
             $("#overlay").toggle()
         }
     })
-
-// SELECT:OPTION cat_DDL based on Listing data
-// wait for sub_cat DDL to populate
-// SELECT:OPTION sub_cat_DLL based on Listig data
-    console.log('DOM: ready 2')
-    var getSubcategories = function(category_id){
-    console.log('getSubcategories: ', getSubcategories)
-    var $subcategories = $('#listing_subcategory_id');
-
-    if (isNaN(parseInt(category_id))) {
-      $subcategories.empty();
-      return;
-    }
-
-    $.get('/subcategories/find_by_category', { category_id: category_id }, function(data){
-            console.log('/subcategories/find_by_category')
-      $subcategories.empty();
-      $subcategories.append('<option value=""></option>')
-      $.each(data.subcategories, function(index, subcategory) {
-        var option = $('<option />');
-        option.attr('value', subcategory.id);
-        option.text(subcategory.name);
-        option.attr('data-chargable', subcategory.chargable);
-        $subcategories.append(option);
-      })
-    })
-  }
-
-  // on change of Category DDL, trigger Sub-category population
-  $('#listing_category_id').trigger('change', function(){
-    console.log('trigger: change')
-    getSubcategories($('#listing_category_id').val());
-  });
 })
 <script>
