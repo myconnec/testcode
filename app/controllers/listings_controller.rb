@@ -100,7 +100,7 @@ class ListingsController < ApplicationController
     # So, we have to do a reverse count to the last `.` and truncate the string at that lingth.
     # replace ANY file extension with .mp4, that is the ONLY output format we provide
     file_name = params[:media_file_name]
-    file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
+    # file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
     file_name = file_name.downcase.gsub(/[^0-9a-zA-Z\-\.\/]/, '')
 
     # check file extention is of allowed format
@@ -182,7 +182,7 @@ class ListingsController < ApplicationController
       listing.presigned_media_url = signer.presigned_url(
         :get_object,
         bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-        key: (listing.media_file_name[0..-5] + '.mp4-00001.png')
+        key: (listing.media_file_name + '-00001.png')
       )
     end
   end
