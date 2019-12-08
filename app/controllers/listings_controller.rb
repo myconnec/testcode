@@ -3,8 +3,8 @@ class ListingsController < ApplicationController
   impressionist actions: [:show], unique: [:session_hash]
 
   before_action :set_s3_direct_post, only: [:upload]
-  before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upvote, :downvote, :upload, :upload_update]
-  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update]
+  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update, :upvote, :downvote]
 
   def index
     redirect_to '/'
@@ -136,6 +136,7 @@ class ListingsController < ApplicationController
 
     @comments = Comment.where(listing_id: @listing).order("created_at DESC")
     @user = current_user
+    @user = current_user
 
     # source https://stackoverflow.com/questions/44741473/recommended-way-to-generate-a-presigned-url-to-s3-bucket-in-ruby
     # source https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#presigned_url-instance_method
@@ -154,18 +155,18 @@ class ListingsController < ApplicationController
 
   def update
     @listing = Listing.find(params[:id])
-    @listing.update(listing_params)
+    redirect_to @listing, :flash => { :danger => "Video has been updated." }
     redirect_to @listing, :flash => { :danger => "Video has been updated." }
   end
 
   def destroy
     @listing = Listing.find(params[:id])
-    @listing.destroy
+    redirect_to @listing, :flash => { :danger => "Video has been deleted." }
     redirect_to @listing, :flash => { :danger => "Video has been deleted." }
   end
 
-  def upvote
     @listing.upvote_by current_user
+    redirect_to :back
     redirect_to :back
   end
 
