@@ -169,6 +169,7 @@ $(document).on('ready', function() {
   // wait for sub_cat DDL to populate
   // SELECT:OPTION sub_cat_DLL based on Listig data
   var getSubcategories = function(category_id){
+    console.log('getSubcategories: ', getSubcategories)
     var $subcategories = $('#listing_subcategory_id');
 
     if (isNaN(parseInt(category_id))) {
@@ -191,6 +192,7 @@ $(document).on('ready', function() {
 
   // on change of Category DDL, trigger Sub-category population
   $('#listing_category_id').trigger('change', function(){
+      console.log('trigger: change')
     getSubcategories($('#listing_category_id').val());
   });
 })
