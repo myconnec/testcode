@@ -155,8 +155,8 @@ class ListingsController < ApplicationController
   end
 
   def update
-    @listing = Listing.find(params[:id])
-    @listing.update(
+    listing = Listing.find(params[:id])
+    listing.update!(
       :price => params[:price],
       :category_id => params[:category_id],
       :subcategory_id => params[:subcategory_id],
