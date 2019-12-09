@@ -7,6 +7,7 @@
             <div>
                 <%= videojs_rails sources: {
                     mp4: @presigned_media_url
+                    mov: @presigned_media_url,
                 },
                 controls: true,
                 autoplay: false,
