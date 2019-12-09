@@ -70,7 +70,7 @@ describe('Listing Search CRUD...', function () {
 
   it('...deleting a listing.', function () {
     cy.view_user_profile()
-    cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
+    
     cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
       .contains(formData[0]['title']).should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(2)')

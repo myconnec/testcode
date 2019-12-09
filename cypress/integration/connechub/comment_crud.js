@@ -24,7 +24,6 @@ describe('Comment CRUD...', function () {
         cy.create_new_listing()
         
         cy.view_user_profile()
-        cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 
         cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
             .contains('Test Title').click()
@@ -36,7 +35,6 @@ describe('Comment CRUD...', function () {
 
     it('...reads a listing comment.', function () {
         cy.view_user_profile()
-        cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 
         cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
             .contains('Test Title').click()
