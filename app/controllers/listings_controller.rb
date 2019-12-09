@@ -148,13 +148,13 @@ class ListingsController < ApplicationController
     )
   end
 
-  def edit
-    @listing = Listing.find(params[:id])
-    @category = @listing.category
-  end
+  # def edit
+  #   @listing = Listing.find(params[:id])
+  #   @category = @listing.category
+  # end
 
   def update
-    @listing = Listing.find(params[:id])
+    Listing.update(params[:id], params)
     redirect_to @listing, :flash => { :success => "Video has been updated." }
   end
 
