@@ -1,7 +1,6 @@
 class CreateSessionTable < ActiveRecord::Migration
   def self.up
     create_table :sessions, :force => true do |t|
-      t.string :id, null: false
       t.string :ip, null: false
       t.string :session, null: false
       t.timestamps :created_at, null: false
