@@ -4,7 +4,7 @@ class ListingsController < ApplicationController
 
   before_action :set_s3_direct_post, only: [:upload]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update]
-  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upvote, :downvote, :upload, :upload_update]
+  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upvote, :upload, :upload_update]
 
   def index
     redirect_to '/'
@@ -166,7 +166,7 @@ class ListingsController < ApplicationController
 
   # source https://dev.to/jameschou93/vote-on-railsbonus-vote-as-a-guest-ckf
   def upvote
-    @listing = Idea.find(params[:id])
+    @listing = Listing.find(params[:id])
     # vote as user if logged in
     if current_user
       @listing.upvote_by current_user
