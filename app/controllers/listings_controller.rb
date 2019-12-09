@@ -165,20 +165,16 @@ class ListingsController < ApplicationController
   end
 
   # source https://dev.to/jameschou93/vote-on-railsbonus-vote-as-a-guest-ckf
+  # source https://stackoverflow.com/questions/29679742/how-to-set-up-acts-as-votable-without-devise
   def upvote
     @listing = Listing.find(params[:id])
-    # vote as user if logged in
     if current_user
+      # vote as user if logged in
       @listing.upvote_by current_user
-    # else vote is associate with session
     else
-    # TODO in 1.1.5 release
-    #   @session = VoterSession.find_by(session_id: request.session_options[:id])
-    # # Create new votersession if unique id does not exist
-    #     if @session == nil
-    #       @session = VoterSession.create(session_id: request.session_options[:id])
-    #     end
-    #   @listing.upvote_by @session
+      # else vote is associate with session
+      @session = Session.find_or_create_by(ip: session[:id])
+      @listing.upvote_by @session
     end
     redirect_to :back
   end
