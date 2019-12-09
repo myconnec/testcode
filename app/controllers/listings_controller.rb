@@ -1,10 +1,10 @@
 class ListingsController < ApplicationController
-  # around_filter :catch_not_found
+  around_filter :catch_not_found
   impressionist actions: [:show], unique: [:session_hash]
 
   before_action :set_s3_direct_post, only: [:upload]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update]
-  before_action :is_user?, only: [:payment, :create_payment, :destroy, :upload, :upload_update, :upvote]
+  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update, :upvote, :downvote]
 
   def index
     redirect_to '/'
@@ -149,6 +149,12 @@ class ListingsController < ApplicationController
   end
 
   def edit
+    @listing = Listing.find(params[:id])
+    @category = @listing.category
+    @sub_category = @listing.subcategory
+  end
+
+  def update
     Listing.update(
       params[:id],
       :user_id => current_user.id,
@@ -161,6 +167,7 @@ class ListingsController < ApplicationController
       :zipcode => params[:zipcode],
       :description => params[:description]
     )
+    redirect_to @listing, :flash => { :success => "Listing has been updated." }
   end
 
   def destroy
