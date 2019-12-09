@@ -48,7 +48,7 @@ class CategoriesController < ApplicationController
             listing.presigned_media_url = signer.presigned_url(
               :get_object,
               bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-              key: (listing.media_file_name[0..-5] + '.mp4-00001.png')
+              key: (listing.media_file_name + '-00001.png')
             )
         end
     end

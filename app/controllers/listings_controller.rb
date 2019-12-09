@@ -4,7 +4,7 @@ class ListingsController < ApplicationController
 
   before_action :set_s3_direct_post, only: [:upload]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update]
-  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update, :upvote, :downvote]
+  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upvote, :downvote, :upload, :upload_update]
 
   def index
     redirect_to '/'
@@ -154,12 +154,14 @@ class ListingsController < ApplicationController
 
   def update
     @listing = Listing.find(params[:id])
+    @listing.update(listing_params)
     redirect_to @listing, :flash => { :success => "Listing has been updated." }
   end
 
   def destroy
     @listing = Listing.find(params[:id])
-    redirect_to @listing, :flash => { :danger => "Listing has been deleted." }
+    @listing.destroy
+    redirect_to @listing, :flash => { :success => "Listing has been deleted." }
   end
 
   def upvote
@@ -181,7 +183,7 @@ class ListingsController < ApplicationController
       listing.presigned_media_url = signer.presigned_url(
         :get_object,
         bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-        key: (listing.media_file_name[0..-5] + '.mp4-00001.png')
+        key: (listing.media_file_name + '-00001.png')
       )
     end
   end
