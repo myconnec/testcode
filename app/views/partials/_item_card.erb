@@ -1,7 +1,9 @@
 <%= link_to (
     videojs_rails sources: {
-        mp4: listing.presigned_media_url,
-        mov: listing.presigned_media_url
+        avi: listing.presigned_media_url,
+        mkv: listing.presigned_media_url,
+        mov: listing.presigned_media_url,
+        mp4: listing.presigned_media_url
     },
     controls: false,
     setup: "{}",
