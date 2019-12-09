@@ -148,15 +148,15 @@ class ListingsController < ApplicationController
     )
   end
 
-  # def edit
-  #   @listing = Listing.find(params[:id])
-  #   @category = @listing.category
-  # end
-
-  def update
+  def edit
     Listing.update(params[:id], params)
-    redirect_to @listing, :flash => { :success => "Video has been updated." }
+    redirect_to @listing, :flash => { :success => "Listing has been edited." }
   end
+
+  # def update
+  #   Listing.update(params[:id], params)
+  #   redirect_to @listing, :flash => { :success => "Video has been updated." }
+  # end
 
   def destroy
     @listing = Listing.find(params[:id])
