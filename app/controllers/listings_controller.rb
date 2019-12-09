@@ -172,12 +172,13 @@ class ListingsController < ApplicationController
       @listing.upvote_by current_user
     # else vote is associate with session
     else
-      @session = VoterSession.find_by(session_id: request.session_options[:id])
-    # Create new votersession if unique id does not exist
-        if @session == nil
-          @session = VoterSession.create(session_id: request.session_options[:id])
-        end
-      @listing.upvote_by @session
+    # TODO in 1.1.5 release
+    #   @session = VoterSession.find_by(session_id: request.session_options[:id])
+    # # Create new votersession if unique id does not exist
+    #     if @session == nil
+    #       @session = VoterSession.create(session_id: request.session_options[:id])
+    #     end
+    #   @listing.upvote_by @session
     end
     redirect_to :back
   end
