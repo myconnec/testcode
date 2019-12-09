@@ -60,12 +60,12 @@
         <div class="hero-title">
             <hr>
             <span>
-                <b><%= simple_format (@listing.title) %></b>
-                <% if @user.present? %>
-                    <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
-                        <i class = "fa fa-heart"></i>
-                        <%= @listing.votes_for.size %>
-                    <% end %>
+                <b>
+                    <%= simple_format (@listing.title) %>
+                </b>
+                <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
+                    <i class = "fa fa-heart"></i>
+                    <%= @listing.votes_for.size %>
                 <% end %>
             </span>
         </div>

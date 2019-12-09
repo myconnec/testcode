@@ -159,11 +159,11 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...like a listing, as a guest.', function () {
     cy.logout()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(4) > div:nth-child(5) > ul > li:nth-child(1) > a')
-      .contains('Activities & Events').click()
-      cy.get('body > div:nth-child(8) > div.container_12 > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains('Test Title').click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').should('not.exist')
+    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+        .contains('Test Title').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('2')
     cy.login()
   })
 
