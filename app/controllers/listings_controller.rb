@@ -4,7 +4,7 @@ class ListingsController < ApplicationController
 
   before_action :set_s3_direct_post, only: [:upload]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update]
-  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upvote, :upload, :upload_update]
+  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update]
 
   def index
     redirect_to '/'
