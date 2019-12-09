@@ -1,5 +1,5 @@
 describe('Listing CRUD (mp4)...', function () {
-  
+
   const formData = [
     {
       "category": "Campus",
@@ -86,7 +86,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > b').contains(formData[0]['title'])
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(formData[0]['description'])
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(formData[0]['price'])
-    
+
     cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
   })
 
@@ -124,7 +124,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
     cy.get('div.panel-heading > h2').contains('Upload Media for Listing').click()
- 
+
     cy.get('#fileupload').then(subject => {
       return cy.fixture('24 ~!@#$%^&*()_+ fps.MP4', 'base64')
         .then(Cypress.Blob.base64StringToBlob)
@@ -151,7 +151,7 @@ describe('Listing CRUD (mp4)...', function () {
   it('...like a listing.', function () {
     cy.view_user_profile()
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-        .contains('Test Title').click()
+      .contains('Test Title').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
@@ -159,9 +159,10 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...like a listing, as a guest.', function () {
     cy.logout()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(4) > div:nth-child(5) > ul > li:nth-child(1) > a').contains('Activities & Events').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(4) > div:nth-child(5) > ul > li:nth-child(1) > a')
+      .contains('Activities & Events').click()
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-        .contains('Test Title').click()
+      .contains('Test Title').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('2')
