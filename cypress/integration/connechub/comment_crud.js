@@ -58,10 +58,10 @@ describe('Comment CRUD...', function () {
     })
 
     // currently not able to update a comment
-    // it('...updating a listing data.', function () {
+    // it('...updating a listing comment.', function () {
     // })
 
     // Currently not able to delete a comment
-    // it('...deleting a listing.', function () {
+    // it('...deleting a listing comment.', function () {
     // })
 })

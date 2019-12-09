@@ -39,9 +39,10 @@ describe('Listing CRUD (mp4)...', function () {
 
     // step 1 of listing creation
     cy.get('div.panel-heading > h2').contains('Create New Listing')
-    cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(formData[0]['category'])
+    cy.get('#listing_category_id').select(formData[0]['category']).should('have.value', '1')
+    cy.get('#listing_category_id').select(formData[0]['category'])
     cy.wait(1000) // wait for ajax response
-    cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id').select(formData[0]['sub_category'])
+    cy.get('#listing_subcategory_id').select(formData[0]['sub_category'])
     cy.get('#listing_price').clear().type(formData[0]['price'])
     cy.get('#listing_title').clear().type(formData[0]['title'])
     cy.get('#listing_city').clear().type(formData[0]['city'])
@@ -99,8 +100,8 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
 
     // change all the field values to ensure changing them works
-    cy.get('div.panel-heading > h2').contains('Edit New Listing') // Edit New Listing
-    cy.get('#listing_category_id').select(formData[1]['category'])
+    cy.get('div.panel-heading > h2').contains('Edit Listing') // Edit New Listing
+    cy.get('#listing_category_id').select(formData[1]['category']).should('have.value', '4')
     cy.wait(1000) // wait for ajax response
     cy.get('#listing_subcategory_id').select(formData[1]['sub_category'])
     cy.get('#listing_price').clear().type(formData[1]['price'])
@@ -119,7 +120,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(formData[1]['description'])
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(formData[1]['price'])
     cy.get('#listings_submit').click()
-    // cy.handle_splash_message('Video has been update.', 'success')
+    cy.handle_splash_message('Video has been update.', 'success')
   })
 
   it('...deleting a listing.', function () {
