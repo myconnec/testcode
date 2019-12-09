@@ -4,7 +4,7 @@ class ListingsController < ApplicationController
 
   before_action :set_s3_direct_post, only: [:upload]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update]
-  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update, :upvote, :downvote]
+  before_action :is_user?, only: [:payment, :create_payment, :destroy, :upload, :upload_update, :upvote]
 
   def index
     redirect_to '/'
@@ -153,10 +153,10 @@ class ListingsController < ApplicationController
     @category = @listing.category
   end
 
-  def update
-    @listing = Listing.find(params[:id])
-    redirect_to @listing, :flash => { :success => "Video has been updated." }
-  end
+  # def update
+  #   @listing = Listing.find(params[:id])
+  #   redirect_to @listing, :flash => { :success => "Video has been updated." }
+  # end
 
   def destroy
     @listing = Listing.find(params[:id])
