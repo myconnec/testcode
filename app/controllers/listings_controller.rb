@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-  around_filter :catch_not_found
+  # around_filter :catch_not_found
   impressionist actions: [:show], unique: [:session_hash]
 
   before_action :set_s3_direct_post, only: [:upload]
@@ -149,14 +149,8 @@ class ListingsController < ApplicationController
   end
 
   def edit
-    @listing = Listing.find(params[:id])
-    @category = @listing.category
+    Person.update(params[:id], params)
   end
-
-  # def update
-  #   @listing = Listing.find(params[:id])
-  #   redirect_to @listing, :flash => { :success => "Video has been updated." }
-  # end
 
   def destroy
     @listing = Listing.find(params[:id])
