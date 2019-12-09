@@ -149,7 +149,7 @@ class ListingsController < ApplicationController
   end
 
   def edit
-    Person.update(params[:id], params)
+    Listing.update(params[:id], params)
   end
 
   def destroy
