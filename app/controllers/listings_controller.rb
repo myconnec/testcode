@@ -151,21 +151,11 @@ class ListingsController < ApplicationController
   def edit
     @listing = Listing.find(params[:id])
     @category = @listing.category
-    @sub_category = @listing.subcategory
   end
 
   def update
-    listing = Listing.find(params[:id])
-    listing.update!(
-      :price => params[:price],
-      :category_id => params[:category_id],
-      :subcategory_id => params[:subcategory_id],
-      :title => params[:title],
-      :city => params[:city],
-      :state => params[:state],
-      :zipcode => params[:zipcode],
-      :description => params[:description]
-    )
+    @listing = Listing.find(params[:id])
+    @listing.update!(params)
     redirect_to @listing, :flash => { :success => "Listing has been updated." }
   end
 
