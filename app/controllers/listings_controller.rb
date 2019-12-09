@@ -149,7 +149,18 @@ class ListingsController < ApplicationController
   end
 
   def edit
-    Listing.update(params[:id], params)
+    Listing.update(
+      params[:id],
+      :user_id => current_user.id,
+      :price => params[:price],
+      :category_id => params[:category_id],
+      :subcategory_id => params[:subcategory_id],
+      :title => params[:title],
+      :city => params[:city],
+      :state => params[:state],
+      :zipcode => params[:zipcode],
+      :description => params[:description]
+    )
   end
 
   def destroy
