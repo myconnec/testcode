@@ -130,6 +130,6 @@ Cypress.Commands.add('create_new_listing', (formData = false) => {
  * This requires a user be logged in. Else is will fail.
  */
 Cypress.Commands.add('view_user_profile', (userData = false) => {
-  cy.view_user_profile()
+  cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
   cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 })
