@@ -164,6 +164,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
       .contains('Test Title').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('2')
     cy.login()
