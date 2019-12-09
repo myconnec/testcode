@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190805000001) do
+ActiveRecord::Schema.define(version: 20191209223417) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name", limit: 32
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20190805000001) do
     t.string   "media_content_type", limit: 32
     t.integer  "media_file_size",    limit: 4
     t.datetime "media_updated_at"
-    t.integer  "ending_at",          limit: 4,     default: 1565930552, null: false
+    t.integer  "ending_at",          limit: 4,     default: 1566166263, null: false
     t.integer  "charge_amount",      limit: 4,     default: 0
     t.integer  "charge_complete",    limit: 4,     default: 0
   end
@@ -127,9 +127,11 @@ ActiveRecord::Schema.define(version: 20190805000001) do
     t.string   "avatar_content_type",    limit: 32
     t.integer  "avatar_file_size",       limit: 4
     t.datetime "avatar_updated_at"
+    t.integer  "promo_1",                limit: 1,    default: 3,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["promo_1"], name: "index_users_on_promo_1", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "votes", force: :cascade do |t|
