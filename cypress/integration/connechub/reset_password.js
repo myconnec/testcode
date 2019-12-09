@@ -9,7 +9,7 @@ describe('User Management functionality.', function() {
 
     it('...reset password on website.', function() {
         cy.login()
-        cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+        cy.view_user_profile()
         cy.get('#navbar > ul > li.dropdown.open > ul > li:nth-child(2) > a').contains('Edit Your Account').should('be.visible').click()
         cy.get('body > div:nth-child(8) > div > div > div > div.panel-heading > h2').contains('Edit Your Account').click()
 
@@ -22,7 +22,7 @@ describe('User Management functionality.', function() {
 
     it('...confirm new password works.', function() {
         cy.login(userData)
-        cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+        cy.view_user_profile()
         cy.get('#navbar > ul > li.dropdown.open > ul > li:nth-child(2) > a').contains('Edit Your Account').should('be.visible').click()
         cy.get('body > div:nth-child(8) > div > div > div > div.panel-heading > h2').contains('Edit Your Account').click()
 

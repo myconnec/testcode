@@ -76,7 +76,7 @@ describe('Listing CRUD (mp4)...', function () {
   })
 
   it('...reads a listing.', function () {
-    cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+    cy.view_user_profile()
     cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
@@ -93,7 +93,7 @@ describe('Listing CRUD (mp4)...', function () {
   })
 
   it('...updating a listing data.', function () {
-    cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+    cy.view_user_profile()
     cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
@@ -119,16 +119,38 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > b').contains(formData[1]['title'])
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(formData[1]['description'])
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(formData[1]['price'])
-    cy.get('#listings_submit').click()
-    cy.handle_splash_message('Video has been update.', 'success')
+    cy.handle_splash_message('Listing has been updated.', 'success')
   })
 
-  it('...deleting a listing.', function () {
-    cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+  it('...updating a listing media.', function () {
+    cy.view_user_profile()
     cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
+
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
-    cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > span:nth-child(6) > a').click()
-    // cy.handle_splash_message('Video has been deleted.', 'success')
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
+    cy.get('div.panel-heading > h2').contains('Upload Media for Listing').click()
+ 
+    cy.get('#fileupload').then(subject => {
+      return cy.fixture('24 ~!@#$%^&*()_+ fps.MP4', 'base64')
+        .then(Cypress.Blob.base64StringToBlob)
+        .then(blob => {
+          const el = subject[0]
+          if (el != null) {
+            const testFile = new File([blob], '24 ~!@#$%^&*()_+ fps.MP4')
+            const dataTransfer = new DataTransfer()
+            dataTransfer.items.add(testFile)
+            el.files = dataTransfer.files
+          }
+          return subject
+        })
+    })
+
+    cy.get('#fileupload').trigger('change')
+    cy.get('#listings_submit').click()
+    // cy.get('#overlay > img').should('be.visible')
+    cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
+
+    cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
   })
 
   it('...like a listing.', function () {
@@ -148,5 +170,15 @@ describe('Listing CRUD (mp4)...', function () {
       .contains('Test Title').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').should('not.exist')
     cy.login()
+  })
+
+  it('...deleting a listing.', function () {
+    cy.view_user_profile()
+    cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
+    cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+      .contains(formData[1]['title']).should('be.visible').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(2)')
+      .contains('Delete').click()
+    cy.handle_splash_message('Listing has been deleted.', 'success')
   })
 })

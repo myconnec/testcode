@@ -64,7 +64,7 @@ describe('Listing CRUD (mov)...', function () {
   })
 
   it('...reads the MOV listing.', function () {
-    cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+    cy.view_user_profile()
     cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 
     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()

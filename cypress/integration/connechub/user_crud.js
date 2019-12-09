@@ -44,7 +44,7 @@ describe('User account CRUD...', function () {
 
     it('...read.', function () {
         cy.login(userData)
-        cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+        cy.view_user_profile()
         cy.get('#navbar > ul > li.dropdown.open > ul > li:nth-child(1) > a').contains('Your Profile').click()
         cy.get('#inside_view_left > div:nth-child(4)').contains(userData.name)
         cy.get('#inside_view_left > div:nth-child(5)').should('be.empty') // nothing in the bio for new users
@@ -53,7 +53,7 @@ describe('User account CRUD...', function () {
 
     it('...update.', function () {
         cy.login(userData)
-        cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
+        cy.view_user_profile()
         cy.get('#navbar > ul > li.dropdown.open > ul > li:nth-child(2) > a').contains('Edit Your Account').should('be.visible').click()
         cy.get('body > div:nth-child(8) > div > div > div > div.panel-heading > h2').contains('Edit Your Account').click()
 
