@@ -165,7 +165,7 @@ class ListingsController < ApplicationController
   end
 
   def upvote
-    @listing = Listing.find(params[:id])
+    @listing.upvote_by current_user
     redirect_to :back
   end
 
