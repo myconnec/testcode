@@ -70,6 +70,9 @@
                         <i class = "fa fa-heart"></i>
                         <%= @listing.votes_for.size %>
                     <% end %>
+                <% else %>
+                    <i class = "fa fa-heart"></i>
+                    <%= @listing.votes_for.size %>
                 <% end %>
             </span>
         </div>
