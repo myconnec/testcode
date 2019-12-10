@@ -157,7 +157,6 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('0')
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-    cy.go(-1) // go back one page
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
   })
 
@@ -168,8 +167,9 @@ describe('Listing CRUD (mp4)...', function () {
       .contains(formData[1]['sub_category']).click()
       cy.get('body > div:nth-child(8) > div.container_12 > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
       .contains(formData[1]['title']).click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
+      cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
+      cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+      cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
     cy.login()
   })
 
