@@ -148,31 +148,6 @@ describe('Listing CRUD (mp4)...', function () {
     cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
   })
 
-  // hard dependency on Listing being updated
-  it('...like a listing.', function () {
-    cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(4) > div:nth-child(8) > ul > li:nth-child(1) > a')
-      .contains(formData[1]['sub_category']).click()
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains(formData[1]['title']).click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('0')
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
-  })
-
-  // hard dependency on Listing being updated
-  it('...like a listing, as a guest.', function () {
-    cy.logout()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(4) > div:nth-child(8) > ul > li:nth-child(1) > a')
-      .contains(formData[1]['sub_category']).click()
-      cy.get('body > div:nth-child(8) > div.container_12 > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains(formData[1]['title']).click()
-      cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
-      cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-      cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
-    cy.login()
-  })
-
   it('...deleting a listing.', function () {
     cy.view_user_profile()
 

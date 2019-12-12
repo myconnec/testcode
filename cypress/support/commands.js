@@ -64,6 +64,31 @@ Cypress.Commands.add('handle_splash_message', (msg, type) => {
   cy.get('body').contains(msg).should('not.be.visible')
 })
 
+
+Cypress.Commands.add('create_new_user', (userData = false) => {
+
+  if (userData == false) {
+    const rnd = Math.floor(Math.random() * Math.floor(1024));
+    
+    userData = {
+      bio: 'Lorem ipsum dolor sit amet....',
+      email: 'test' + rnd + '+admin@connechub.com',
+      name: 'Test User ' + rnd,
+      password: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    }
+  }
+
+  cy.visit('')
+  console.log('userData: ', userData)
+  cy.get('#navbar > ul.nav.navbar-nav.navbar-right > li:nth-child(2) > a').click()
+  cy.get('#user_username').type(userData.name)
+  cy.get('#user_email').type(userData.email)
+  cy.get('#user_password').type(userData.password)
+  cy.get('#user_password_confirmation').type(userData.password)
+  cy.get('form.new_user').submit()
+  cy.get('body > div > div > div').contains('Welcome! You have signed up successfully.')
+})
+
 /**
  * Since so much of ConnecHub revolves around the Listing, make it easier to create one
  * Allow formData and userData to be passed in and override defaults
@@ -83,6 +108,8 @@ Cypress.Commands.add('create_new_listing', (formData = false) => {
       "fileupload": "24fps.mp4"
     }
   }
+
+  console.log('formData: ', formData)
 
   // see top menu item
   cy.get('.container > #navbar > .nav > li > a').contains('POST A VIDEO AD').click()
@@ -133,3 +160,13 @@ Cypress.Commands.add('view_user_profile', (userData = false) => {
   cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
   cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 })
+
+/**
+ * Got tired of cy.visit() not working
+ * TODO Get this working
+ */
+// Cypress.Commands.add('visit', (target = false) => {
+//   cy.visit(
+//     (target != false ? target : '')
+//   )
+// })
