@@ -22,6 +22,10 @@ resource "aws_db_instance" "rds" {
   storage_type              = "gp2"
   username                  = "${var.DB_USER}"
 
+  lifecycle {
+    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+  }
+
   tags = {
     app     = "connechub"
     env     = "${var.APP_ENV}"

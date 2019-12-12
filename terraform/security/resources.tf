@@ -18,7 +18,7 @@ resource "aws_acm_certificate" "cert" {
   }
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_route53_record" "cert_validation" {
   zone_id = "${data.aws_route53_zone.zone.id}"
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
   }
 }
 
@@ -41,7 +41,7 @@ resource "aws_acm_certificate_validation" "cert" {
   validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
   }
 }
 
