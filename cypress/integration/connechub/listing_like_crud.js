@@ -41,23 +41,23 @@ describe('Liking like CRUD...', function () {
         }
     ]
 
-    // it('...creating a new listing, as user 0.', function () {
-    //     // cy.create_new_user(userData[0])
-    //     cy.create_new_listing(listingData[0])
-    // })
+    it('...creating a new listing, as user 0.', function () {
+        cy.create_new_user(userData[0])
+        cy.create_new_listing(listingData[0])
+    })
 
-    // it('...like a listing, as user 0.', function () {
-    //     cy.login(userData[0])
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(1) > div.category_title > ul > li:nth-child(7) > a')
-    //         .contains(listingData[0]['sub_category']).click()
-    //     cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-    //         .contains(listingData[0]['title']).click()
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('0')
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
-    //     cy.logout()
-    // })
+    it('...like a listing, as user 0.', function () {
+        cy.login(userData[0])
+        cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(1) > div.category_title > ul > li:nth-child(7) > a')
+            .contains(listingData[0]['sub_category']).click()
+        cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+            .contains(listingData[0]['title']).click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a > i').should('have.class', 'fa-heart')
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('0')
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains('1')
+        cy.logout()
+    })
 
     // hard dependency on Listing being updated
     it('...like a listing, as user 1.', function () {
