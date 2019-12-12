@@ -3,7 +3,7 @@ class ListingsController < ApplicationController
   impressionist actions: [:show], unique: [:session_hash]
 
   before_action :set_s3_direct_post, only: [:upload]
-  before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upvote, :upload, :upload_update]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update, :upvote]
   before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update]
 
   def index
@@ -165,6 +165,7 @@ class ListingsController < ApplicationController
   end
 
   def upvote
+    @listing = Listing.find(params[:id])
     @listing.upvote_by current_user
     redirect_to :back
   end
