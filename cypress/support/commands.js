@@ -24,6 +24,15 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+/**
+ * TODO Re-load the database after each test. Ensures a known good dataset. This will only work once we have a local version of the app running as we need rake and a working DB connection.
+ */
+// beforeEach(function () {
+//   cy.exec('rake db:setup').its('code').should('eq', 0)
+//   cy.exec('rake db:migrate').its('code').should('eq', 0)
+// })
+
+
 Cypress.Commands.add('login', (userData = false) => {
   // this is an example of skipping your UI and logging in programmatically
 
