@@ -1,0 +1,32 @@
+{
+    "builders": [
+        {
+            "ami_name": "{{env APP_NAME}}-{{timestamp}}",
+            "instance_type": "t2.nano",
+            "profile": "default",
+            "source_ami_filter": {
+                "filters": {
+                    "virtualization-type": "hvm",
+                    "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*",
+                    "root-device-type": "ebs"
+                },
+                "owners": [
+                    "099720109477"
+                ],
+                "most_recent": true
+            },
+            "ssh_username": "ubuntu",
+            "type": "amazon-ebs"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "ansible",
+            "script": "./ansible/provision.yml"
+        }
+    ],
+    "variables": {
+        "APP_NAME": "{{env APP_NAME}}",
+        "AWS_REGION": "{{env AWS_REGION}}"
+    }
+}

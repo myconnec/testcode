@@ -1,0 +1,102 @@
+---
+- hosts: all
+  vars:
+    APP_ENV: APP_ENV
+    APP_NAME: APP_NAME
+    AWS_REGION: AWS_REGION
+    SSH_KEY_ID: SSH_KEY_ID
+
+    database_address: database_address
+    database_password: database_password
+
+    media_profile_bucket_id: media_profile_bucket_id
+    version: master
+
+    local_group: ubuntu
+    local_user: ubuntu
+
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: System and dependency updates
+      apt:
+        update_cache: true
+
+    - name: Git pull updates
+      become: "{{ local_user }}"
+      command: >
+        git pull origin {{version}} 
+
+    # Copy in configs
+    # TODO this can be a role
+
+    - name: GET app .env from storage
+      become: "{{ local_user }}"
+      command: >
+        aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ APP_NAME }}/.env
+
+    - name: Copy API keys for S3 mounting into EC2 instance for profile images
+      become: "{{ local_user }}"
+      shell: |
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
+        chmod 0600 /home/{{ local_user }}/.passwd-s3fs
+        chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/.passwd-s3fs
+
+    # Update RDS connection string
+    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+
+    - name: Update RDS host
+      command: >
+        sed -i "s/DB_HOST=\"mariadb\"/DB_HOST=\"{{ database_address }}\"/g" /home/{{ local_user }}/{{ APP_NAME }}/.env
+
+    - name: Update RDS pass
+      command: >
+        sed -i "s/DB_PASS=\"password\"/DB_PASS=\"{{ database_password }}\"/g" /home/{{ local_user }}/{{ APP_NAME }}/.env
+
+    # Configure fusermount to enable "allow_other" s3fs mounting
+    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+
+    - name: Configure fusermount
+      command: >
+        sed -i "s/#user_allow_other/user_allow_other/g" /etc/fuse.conf
+
+
+    - name: Create media_profile_bucket_id directory if it does not exist
+      file:
+        state: directory
+        path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
+        owner: "{{ local_user }}"
+        group: "{{ local_user }}"
+        mode: 0755
+
+    - name: Mount media_profile_bucket_id to local file system
+      command: |
+        s3fs \
+          -d \
+          {{ media_profile_bucket_id }} \
+          /home/{{ local_user }}/{{ APP_NAME }}/public/system \
+          -o endpoint={{ AWS_REGION }} \
+          -o use_cache=/home/ubuntu \
+          -o multireq_max=5 \
+          -o passwd_file=/home/{{ local_user }}/.passwd-s3fs  \
+          -o url=https://s3.{{ AWS_REGION }}.amazonaws.com \
+          -o nonempty \
+          -o allow_other
+
+    # chown ./public/system to allow the local user to RW+
+    - name: Copy API keys for S3 mounting into EC2 instance
+      shell: |
+        chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/{{ APP_NAME }}/public/system -R
+
+    - name: Run DB migrations and start the Puma web server
+      become: "{{ local_user }}"
+      shell: |
+        cd ~/{{ APP_NAME }}
+        rake db:migrate
+
+    - name: Run DB migrations and start the Puma web server
+      become: "{{ local_user }}"
+      shell: |
+        cd ~/{{ APP_NAME }}
+        sudo bundle exec puma --bind tcp://0.0.0.0:9293 --daemon

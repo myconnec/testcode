@@ -1,0 +1,166 @@
+---
+- hosts: all
+  vars:
+    APP_ENV: APP_ENV
+    APP_NAME: APP_NAME
+    AWS_REGION: AWS_REGION
+    SSH_KEY_ID: SSH_KEY_ID
+
+    version: master
+
+    local_group: ubuntu
+    local_user: ubuntu
+
+  become: true
+  gather_facts: false
+
+  pre_tasks:
+    - name: Update dependencies via apt-get
+      raw: export DEBIAN_FRONTEND=noninteractive && dpkg --configure -a && apt-get clean -y && apt-get autoclean -y && apt autoremove -yq && apt-get update -yq && apt-get upgrade -yq
+
+    - name: Install CLI tools
+      raw: apt-get install -y awscli apt-transport-https build-essential python-minimal python-setuptools python-pip software-properties-common
+
+  tasks:
+    # source: https://linuxize.com/post/how-to-add-swap-space-on-ubuntu-18-04/
+    - name: Add swap disk to instance
+      shell: |
+        swapon --show
+        dd if=/dev/zero of=/swapfile bs=1024 count=1048576
+        chmod 600 /swapfile
+        mkswap /swapfile
+        swapon /swapfile
+        swapon --show
+        free -h
+
+    - name: Install system dependencies
+      apt:
+        update_cache: true
+        pkg:
+          - autoconf
+          - automake
+          - bison
+          - curl
+          - git
+          - htop
+          - imagemagick
+          - libc6-dev
+          - libcurl4-openssl-dev
+          - libffi-dev
+          - libmysqlclient-dev
+          - libreadline6-dev
+          - libsqlite3-dev
+          - libssl-dev
+          - libtool
+          - libxml2-dev
+          - libxslt-dev
+          - libyaml-dev
+          - mysql-client
+          - ncurses-dev
+          - node-gyp
+          - nodejs
+          - nodejs-dev
+          - npm
+          - s3fs
+          - subversion
+          - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
+          - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
+        state: present
+
+    # TODO move into a Ansible role
+    # Ruby source, build, install, clean up
+
+    - name: Create a working directory
+      file:
+        path: /tmp/build_ruby
+        state: directory
+        mode: "u+rwx"
+
+    - name: Download Ruby 2.3.8
+      get_url:
+        url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
+
+    - name: Unpack Ruby 2.3.8
+      unarchive:
+        src: /tmp/build_ruby/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/
+        remote_src: yes
+
+    - name: Build ruby
+      command: >
+        {{ item }}
+        chdir=/tmp/build_ruby/ruby-2.3.8
+        creates=/usr/local/bin/ruby
+      with_items:
+        - ./configure --enable-shared
+        - make
+        - make install
+
+    - name: Add ruby symlinks
+      file:
+        src: "/usr/local/bin/{{ item }}"
+        dest: "/usr/bin/{{ item }}"
+        state: link
+        force: yes
+      with_items:
+        - erb
+        - gem
+        - irb
+        - rake
+        - rdoc
+        - ruby
+
+    - name: Remove the working directory
+      file:
+        path: /tmp/build_ruby
+        state: absent
+
+    # GiT & SSH Configuration
+    # TODO this can be a role
+
+    - name: Get SSH private key for cloning web app repo
+      become: "{{ local_user }}"
+      shell: |
+        mkdir ~/.ssh
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/iam_private_key ~/.ssh/iam_private_key
+        chmod 0600 ~/.ssh/iam_private_key
+
+    - name: Create SSH config
+      become: "{{ local_user }}"
+      copy:
+        dest: ~/.ssh/config
+        content: |
+          Host git-codecommit.*.amazonaws.com
+          User {{ SSH_KEY_ID }}
+          IdentityFile ~/.ssh/iam_private_key
+
+    - name: Git clone web app repo
+      become: "{{ local_user }}"
+      git:
+        accept_hostkey: true
+        clone: true
+        dest: "/home/{{ local_user }}/{{ APP_NAME }}"
+        force: true
+        remote: origin
+        repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ APP_NAME }}"
+        version: "{{ version }}"
+
+    # Application deps install
+    # TODO would like to use the bundler module
+
+    - name: Install Ruby Bundler and gems
+      shell: |
+        cd /home/{{ local_user }}/{{ APP_NAME }}
+        gem install bundler -v 2.0.1
+        # source https://bundler.io/man/bundle-binstubs.1.html
+        bundle --binstubs
+        bundle config --global jobs 4
+        bundle install -V
+
+    - name: Change ownership of web app dir
+      file:
+        path: "/home/{{ local_user }}"
+        group: "{{ local_group }}"
+        owner: "{{ local_user }}"
+        recurse: true
