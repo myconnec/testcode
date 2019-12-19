@@ -23,10 +23,41 @@
       apt:
         update_cache: true
 
-    - name: Git pull updates
+    # GiT & SSH Configuration
+    # TODO this can be a role
+
+    - name: Get SSH private key for cloning web app repo
+      become: "{{ local_user }}"
+      shell: |
+        mkdir ~/.ssh
+        aws s3 cp s3://connechub-configs/infra/build_key ~/.ssh/build_key
+        chmod 0600 ~/.ssh/build_key
+
+    - name: Create SSH config
+      become: "{{ local_user }}"
+      copy:
+        dest: ~/.ssh/config
+        content: |
+          Host git-codecommit.*.amazonaws.com
+          User {{ SSH_KEY_ID }} # TODO ssh key id here
+          IdentityFile ~/.ssh/build_key
+
+    - name: Git clone web app repo
+      become: "{{ local_user }}"
+      git:
+        accept_hostkey: true
+        clone: true
+        dest: "/home/{{ local_user }}/{{ APP_NAME }}"
+        force: true
+        remote: origin
+        repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ APP_NAME }}"
+        version: "{{ version }}"
+
+    - name: Git checkout ENV branch updates
       become: "{{ local_user }}"
       command: >
-        git pull origin {{version}} 
+        git fetch origin
+        git checkout {{ version }} 
 
     # Copy in configs
     # TODO this can be a role
@@ -61,7 +92,6 @@
       command: >
         sed -i "s/#user_allow_other/user_allow_other/g" /etc/fuse.conf
 
-
     - name: Create media_profile_bucket_id directory if it does not exist
       file:
         state: directory
@@ -88,6 +118,21 @@
     - name: Copy API keys for S3 mounting into EC2 instance
       shell: |
         chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/{{ APP_NAME }}/public/system -R
+
+    # Application deps install
+    # TODO would like to use the bundler module
+    # Copy in the Gemfile and Gemfile.lock in order to install dependencies
+    # We could store the Gemfile* 's in an S3 bucket along side the ENV configs
+    # Ofcourse we will run bundle during start_up as well to apply any changes
+
+    - name: Install Ruby Bundler and gems
+      shell: |
+        cd /home/{{ local_user }}/{{ APP_NAME }}
+        gem update --system
+        gem install bundler -v 1.7
+        bundle --binstubs
+        bundle config --global jobs 4
+        bundle install -V
 
     - name: Run DB migrations and start the Puma web server
       become: "{{ local_user }}"
