@@ -3,7 +3,7 @@
 ## Security Group
 
 resource "aws_default_security_group" "default" {
-  vpc_id = "${aws_default_vpc.default.id}"
+  vpc_id = aws_default_vpc.default.id
 }
 
 resource "aws_security_group" "http" {
@@ -30,15 +30,15 @@ resource "aws_security_group" "http" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
-    env     = "${var.APP_ENV}"
-    owner   = "${var.CONTACT_EMAIL}"
+    app     = var.APP_NAME
+    env     = var.APP_ENV
+    owner   = var.CONTACT_EMAIL
     service = "EC2"
     tech    = "Networking"
     Name    = "http"
   }
 
-  vpc_id = "${aws_default_vpc.default.id}"
+  vpc_id = aws_default_vpc.default.id
 }
 
 resource "aws_security_group" "https" {
@@ -65,15 +65,15 @@ resource "aws_security_group" "https" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
-    env     = "${var.APP_ENV}"
-    owner   = "${var.CONTACT_EMAIL}"
+    app     = var.APP_NAME
+    env     = var.APP_ENV
+    owner   = var.CONTACT_EMAIL
     service = "EC2"
     tech    = "Networking"
     Name    = "https"
   }
 
-  vpc_id = "${aws_default_vpc.default.id}"
+  vpc_id = aws_default_vpc.default.id
 }
 
 resource "aws_security_group" "ssh" {
@@ -103,15 +103,15 @@ resource "aws_security_group" "ssh" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
-    env     = "${var.APP_ENV}"
-    owner   = "${var.CONTACT_EMAIL}"
+    app     = var.APP_NAME
+    env     = var.APP_ENV
+    owner   = var.CONTACT_EMAIL
     service = "EC2"
     tech    = "Networking"
     Name    = "ssh"
   }
 
-  vpc_id = "${aws_default_vpc.default.id}"
+  vpc_id = aws_default_vpc.default.id
 }
 
 resource "aws_security_group" "mysql" {
@@ -138,15 +138,15 @@ resource "aws_security_group" "mysql" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
-    env     = "${var.APP_ENV}"
-    owner   = "${var.CONTACT_EMAIL}"
+    app     = var.APP_NAME
+    env     = var.APP_ENV
+    owner   = var.CONTACT_EMAIL
     service = "EC2"
     tech    = "Networking"
     Name    = "mysql"
   }
 
-  vpc_id = "${aws_default_vpc.default.id}"
+  vpc_id = aws_default_vpc.default.id
 }
 
 resource "aws_security_group" "puma" {
@@ -166,7 +166,7 @@ resource "aws_security_group" "puma" {
     protocol  = "tcp"
 
     security_groups = [
-      "${aws_security_group.https.id}",
+      aws_security_group.https.id,
     ]
   }
 
@@ -182,13 +182,14 @@ resource "aws_security_group" "puma" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
-    env     = "${var.APP_ENV}"
-    owner   = "${var.CONTACT_EMAIL}"
+    app     = var.APP_NAME
+    env     = var.APP_ENV
+    owner   = var.CONTACT_EMAIL
     service = "EC2"
     tech    = "Networking"
     Name    = "puma"
   }
 
-  vpc_id = "${aws_default_vpc.default.id}"
+  vpc_id = aws_default_vpc.default.id
 }
+
