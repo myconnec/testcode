@@ -1,6 +1,5 @@
 module "media_storage" {
   source  = "./terraform/media_storage"
-  version = "0.3.5"
 
   APP_ENV                     = var.APP_ENV
   APP_NAME                    = var.APP_NAME
@@ -13,7 +12,6 @@ module "media_storage" {
 
 module "media_processing" {
   source  = "./terraform/media_processing"
-  version = "0.3.5"
 
   # variables
   APP_ENV    = var.APP_ENV
@@ -26,7 +24,6 @@ module "media_processing" {
 
 module "security" {
   source  = "./terraform/security"
-  version = "0.4.0"
 
   APP_ENV       = var.APP_ENV
   APP_NAME      = var.APP_NAME
@@ -38,7 +35,6 @@ module "security" {
 
 module "web_app" {
   source  = "./terraform/web_app"
-  version = "0.3.5"
 
   APP_ENV          = var.APP_ENV
   APP_NAME         = var.APP_NAME
@@ -56,7 +52,6 @@ module "web_app" {
 
 module "lambda_s3_to_transcoder" {
   source  = "./terraform/lambda_s3_to_transcoder/"
-  version = "0.3.5"
 
   APP_ENV    = var.APP_ENV
   APP_NAME   = var.APP_NAME
@@ -70,7 +65,6 @@ module "lambda_s3_to_transcoder" {
 # Needs RDS host to work, so must be set up after web_app
 module "lambda_s3_to_email" {
   source  = "./terraform/lambda_s3_to_email/"
-  version = "0.1.0"
 
   # APP vars
   APP_ENV    = var.APP_ENV
