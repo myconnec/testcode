@@ -1,6 +1,10 @@
 class Subcategory < ActiveRecord::Base
     belongs_to :category
 
+    validates_presence_of :name
+    validates_presence_of :category_id
+    validates_presence_of :chargable
+
     def self.count_per_subcat(parent_cat)
         sale_subcat_posting_count = {}
         parent_cat.subcategories.each do |subcategory|

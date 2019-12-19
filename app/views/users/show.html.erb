@@ -9,6 +9,7 @@
           <hr style= "width: 100px">
           <div class="hero-description"><%= @user.username %></div>
           <div class="hero-description"><%= @user.bio %></div>
+          <div class="hero-description">Joined <%= @user.created_at %></div>
           <br>
           <div><%= link_to 'Edit Your Profile', edit_user_registration_path, class: "btn btn-success btn-sm" %></div>
           <br>

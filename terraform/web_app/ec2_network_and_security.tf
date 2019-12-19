@@ -11,8 +11,8 @@ resource "aws_security_group" "http" {
   name        = "http-${random_uuid.provider.result}"
 
   egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = 1024
+    to_port     = 65535
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
@@ -46,8 +46,8 @@ resource "aws_security_group" "https" {
   name        = "https-${random_uuid.provider.result}"
 
   egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = 1024
+    to_port     = 65535
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
@@ -81,8 +81,8 @@ resource "aws_security_group" "ssh" {
   name        = "ssh-${random_uuid.provider.result}"
 
   egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = 1024
+    to_port     = 65535
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
@@ -119,8 +119,8 @@ resource "aws_security_group" "mysql" {
   name        = "mysql-${random_uuid.provider.result}"
 
   egress {
-    from_port   = 0
-    to_port     = 0
+    from_port   = 1024
+    to_port     = 65535
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
     self        = true
@@ -154,8 +154,8 @@ resource "aws_security_group" "puma" {
   name        = "puma-${random_uuid.provider.result}"
 
   egress {
-    from_port = 0
-    to_port   = 0
+    from_port   = 1024
+    to_port     = 65535
     protocol  = "tcp"
     self      = true
   }
