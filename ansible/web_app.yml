@@ -43,6 +43,7 @@
         pkg:
           - autoconf
           - automake
+          - awslogs
           - bison
           - curl
           - git
@@ -70,6 +71,20 @@
           - zlib1g # http://askubuntu.com/questions/59205/no-such-file-to-load-zlib-error-when-installing-a-gem
           - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
         state: present
+
+    - name: Copy in AWs CloudWatch Log agent configuration
+      copy:
+        src: /ansible/awslogs.conf
+        dest: /etc/awslogs/awslogs.conf
+        owner: {{ local_user }}
+        group: {{ local_group }}
+        mode: '0644'
+
+    - name: AWS Cloud Watch agent start configuration
+      shell: |
+        sudo chkconfig awslogs on
+        sudo service awslogs start
+
 
     # TODO move into a Ansible role
     # Ruby source, build, install, clean up
@@ -233,6 +248,11 @@
           -o nonempty \
           -o allow_other
       when: media_profile_bucket_stats.stat.exists == false
+
+    - name: Add app log to logrotate
+        src: /ansible/logrotate.conf
+        dest: /etc/logrotate.d/
+        mode: '0644'
 
     - name: Final package update before startiing the web server
       shell: apt-get update -y

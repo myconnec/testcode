@@ -16,7 +16,10 @@ resource "aws_instance" "web_app" {
     tech    = "Ruby on Rails"
   }
 
-  user_data = file("./terraform/web_app/ec2_web_app_start.sh") # source https://www.bogotobogo.com/DevOps/Terraform/Terraform-terraform-userdata.php
+  # source https://www.bogotobogo.com/DevOps/Terraform/Terraform-terraform-userdata.php
+  # source https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html
+  # script is saved to /var/lib/cloud/instances/instance-id/
+  # user_data = file("./terraform/web_app/ec2_web_app_start.sh")
 
   security_groups = [
     aws_security_group.mysql.name,

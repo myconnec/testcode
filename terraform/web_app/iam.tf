@@ -17,7 +17,7 @@ resource "aws_iam_role_policy_attachment" "s3_read_only" {
 # IAM Roles
 
 resource "aws_iam_role" "ec2_web_server_role" {
-  assume_role_policy = file("./terraform/web_app/policies/assumerolepolicy.json")
-  name               = "${var.APP_NAME}-ServiceRoleForEC2WithCodeCommitReadOnlyPermission-${var.APP_ENV}"
+  assume_role_policy = file("./terraform/web_app/policies/ec2_web_app_role_policy.json")
+  name               = "${var.APP_NAME}-${var.APP_ENV}-EC2WebAppRolePolicy"
 }
 
