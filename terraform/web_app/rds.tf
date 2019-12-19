@@ -13,7 +13,7 @@ resource "aws_db_instance" "rds" {
   identifier                = "connechub-${var.APP_ENV}"
   instance_class            = "db.t2.small"
   maintenance_window        = "Sun:04:30-Sun:05:00"
-  name                      = "connechub"
+  name                      = "${var.APP_NAME}"
   parameter_group_name      = "default.mariadb10.3"
   password                  = "${var.DB_PASS}"
   publicly_accessible       = true                                                                                             # 'cause lambda can only access public resources!? This needs fixed
@@ -21,13 +21,13 @@ resource "aws_db_instance" "rds" {
   storage_encrypted         = true
   storage_type              = "gp2"
   username                  = "${var.DB_USER}"
-
+  
   lifecycle {
-    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+    create_before_destroy =  true
   }
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "RDS"

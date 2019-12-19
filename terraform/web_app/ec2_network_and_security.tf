@@ -30,7 +30,7 @@ resource "aws_security_group" "http" {
   }
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
@@ -65,7 +65,7 @@ resource "aws_security_group" "https" {
   }
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
@@ -103,7 +103,7 @@ resource "aws_security_group" "ssh" {
   }
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
@@ -138,7 +138,7 @@ resource "aws_security_group" "mysql" {
   }
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"
@@ -182,7 +182,7 @@ resource "aws_security_group" "puma" {
   }
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"

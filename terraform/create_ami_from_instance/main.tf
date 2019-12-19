@@ -3,7 +3,7 @@ resource "aws_ami_from_instance" "web_app_ec2_base_ami" {
   source_instance_id = "${var.web_app_ec2_id}"
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"

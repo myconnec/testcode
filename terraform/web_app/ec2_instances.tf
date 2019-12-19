@@ -9,7 +9,7 @@ resource "aws_instance" "web_app" {
   key_name             = "${var.AWS_PEM_KEY_PAIR}"
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "EC2"

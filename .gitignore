@@ -67,6 +67,7 @@ bower.json
 **/*.rar
 **.*gz
 .passwd*
+**/*id_rsa*
 
 # Vendor provided libraries for TF controlled Lambdas
 /terraform/**/pymysql/

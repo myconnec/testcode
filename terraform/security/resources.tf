@@ -9,7 +9,7 @@ resource "aws_acm_certificate" "cert" {
   validation_method = "DNS"
 
   tags = {
-    app     = "connechub"
+    app     = "${var.APP_NAME}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "acm"
@@ -18,7 +18,7 @@ resource "aws_acm_certificate" "cert" {
   }
 
   lifecycle {
-    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+    create_before_destroy =  true
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_route53_record" "cert_validation" {
   zone_id = "${data.aws_route53_zone.zone.id}"
 
   lifecycle {
-    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+    create_before_destroy =  true
   }
 }
 
@@ -41,7 +41,7 @@ resource "aws_acm_certificate_validation" "cert" {
   validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
 
   lifecycle {
-    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+    create_before_destroy =  true
   }
 }
 
@@ -53,7 +53,7 @@ resource "aws_acm_certificate_validation" "cert" {
 
 
 #   tags = {
-#     app     = "connechub"
+#     app     = "${var.APP_NAME}"
 #     env     = "${var.APP_ENV}"
 #     owner   = "${var.CONTACT_EMAIL}"
 #     service = "acm"
