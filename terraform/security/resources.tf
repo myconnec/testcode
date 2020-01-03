@@ -17,9 +17,9 @@ resource "aws_acm_certificate" "cert" {
     Name    = "${var.APP_ENV}_${var.APP_NAME}_tls_certificate"
   }
 
-  lifecycle {
-    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
-  }
+  # lifecycle {
+  #   prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+  # }
 }
 
 resource "aws_route53_record" "cert_validation" {
@@ -29,9 +29,9 @@ resource "aws_route53_record" "cert_validation" {
   type    = "${aws_acm_certificate.cert.domain_validation_options.0.resource_record_type}"
   zone_id = "${data.aws_route53_zone.zone.id}"
 
-  lifecycle {
-    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
-  }
+  # lifecycle {
+  #   prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+  # }
 }
 
 # https://www.terraform.io/docs/providers/aws/r/acm_certificate_validation.html
@@ -40,9 +40,9 @@ resource "aws_acm_certificate_validation" "cert" {
   provider                = "aws.us_east_1" # because ACM needs to be used in the "us-east-1" region
   validation_record_fqdns = ["${aws_route53_record.cert_validation.fqdn}"]
 
-  lifecycle {
-    prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
-  }
+  # lifecycle {
+  #   prevent_destroy = "${var.APP_ENV == "www" ? true : false}"
+  # }
 }
 
 # CloudFront (cf) TLS cert
