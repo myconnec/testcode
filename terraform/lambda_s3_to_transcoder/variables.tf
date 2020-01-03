@@ -1,20 +1,13 @@
 # APP vars
 
-variable "APP_ENV" {
-}
+variable "APP_ENV" {}
 
-variable "APP_NAME" {
-}
+variable "APP_NAME" {}
 
-variable "AWS_REGION" {
-}
+variable "AWS_REGION" {}
 
-variable "media_source_bucket_id" {
-}
+variable "media_source_bucket_id" {}
 
-variable "transcoder_pipeline_id" {
-}
+variable "transcoder_pipeline_id" {}
 
-variable "video_process_media_source_bucket_arn" {
-}
-
+variable "video_process_media_source_bucket_arn" {}

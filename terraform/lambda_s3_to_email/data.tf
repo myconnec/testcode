@@ -30,4 +30,3 @@ data "aws_iam_policy" "rds_access" {
 data "aws_iam_policy" "basic_exec" {
   arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
-

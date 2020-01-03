@@ -1,3 +1,4 @@
+// source https://read.acloud.guru/easy-video-transcoding-in-aws-7a0abaaab7b8
 'use strict';
 var AWS = require('aws-sdk');
 var s3 = new AWS.S3({
@@ -10,19 +11,18 @@ var eltr = new AWS.ElasticTranscoder({
 exports.handler = function(event, context) {
  console.log('Executing Elastic Transcoder Orchestrator');
  var bucket = event.Records[0].s3.bucket.name;
- var key = event.Records[0].s3.object.key;
+ var Outputkey = decodeURIComponent(event.Records[0].s3.object.key).replace(/[^0-9a-zA-Z\-\.\/]/g, '').toLowerCase();
  var pipelineId = process.env.transcoder_pipeline_id;
  if (bucket !== process.env.media_source_bucket_id) {
   context.fail('Incorrect Video Input Bucket');
   return;
  }
- var srcKey =  decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " ")); //the object may have spaces
- var newKey = key.split('.')[0];
+ //the object may have spaces
+ var sourceKey =  decodeURIComponent(event.Records[0].s3.object.key.replace(/\+/g, " "));
  var params = {
   PipelineId: pipelineId,
-//  OutputKeyPrefix: '',
   Input: {
-   Key: srcKey,
+   Key: sourceKey,
    FrameRate: 'auto',
    Resolution: 'auto',
    AspectRatio: 'auto',
@@ -30,15 +30,9 @@ exports.handler = function(event, context) {
    Container: 'auto'
   },
   Outputs: [{
-   Key: newKey + '.mp4',
-   // Generic 720p in mp4: 1351620000001-000010
-   // Generic 1080p in mp4: 11351620000001-000001
-   PresetId: '1351620000001-000001', //
-//   ThumbnailPattern: 'thumbs-' + newKey + '-{count}',
-//    Watermarks: [{
-//     InputKey: 'watermarks/logo-horiz-large.png',
-//     PresetWatermarkId: 'BottomRight'
-//    }],
+    Key: Outputkey,
+    PresetId: '1351620000001-000001',
+    ThumbnailPattern: Outputkey + '-{count}'
   }]
  };
  console.log('Starting Job');
