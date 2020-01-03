@@ -57,7 +57,7 @@
             <li class="landing_page">
               <%= link_to subcategory.name, category_subcategory_path(@sale, subcategory) %>
               <div class="cat_item_count">
-                <%= @sale_subcat_posting_count[subcategory.id] != 0 ? z@sale_subcat_posting_count[subcategory.id] : '' %>
+                <%= @sale_subcat_posting_count[subcategory.id] != 0 ? @sale_subcat_posting_count[subcategory.id] : '' %>
               </div>
             </li>
             <% end %>
