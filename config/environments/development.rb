@@ -41,7 +41,7 @@ Rails.application.configure do
 
     # action_mailer for email configuration
     config.action_mailer.default_url_options = {
-        :host => ENV['APP_ENV'] + '.' + ENV['APP_NAME'] + '.com'
+        :host => "${ENV['APP_ENV']}.${ENV['APP_NAME']}.com"
     }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
