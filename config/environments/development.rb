@@ -47,12 +47,12 @@ Rails.application.configure do
     config.action_mailer.perform_deliveries = true
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.smtp_settings = {
-        address:      ENV['SES_SMTP_ADDRESS'],
-        port:             ENV['SES_SMTP_PORT'],
-        user_name:ENV["SES_SMTP_USERNAME"],
-        password:   ENV["SES_SMTP_PASSWORD"],
-        authentication:   :login,
-        enable_starttls_auto: true 
+        address:                ENV['SES_SMTP_ADDRESS'],
+        port:                   ENV['SES_SMTP_PORT'],
+        user_name:              ENV["SES_SMTP_USERNAME"],
+        password:               ENV["SES_SMTP_PASSWORD"],
+        authentication:         :login,
+        enable_starttls_auto:   true 
     }
 
     config.web_console.whitelisted_ips = ENV['DEV_NETWORK_CIDR']

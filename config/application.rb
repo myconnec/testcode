@@ -22,5 +22,12 @@ module Workspace
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.before_configuration do
+      tmp = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`.to_s
+      meta_data = JSON.parse(tmp, object_class: OpenStruct)
+      for meta_data do |key, value|
+          puts ENV['key'] = value
+      end
   end
 end
