@@ -25,9 +25,11 @@ module Workspace
 
     config.before_configuration do
       tmp = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`.to_s
-      meta_data = JSON.parse(tmp, object_class: OpenStruct)
-      for meta_data do |key, value|
-          puts ENV['key'] = value
+      meta_data = JSON.parse(tmp)
+      meta_data.each do |key, value|
+        ENV["AWS_META_DATA_#{key.upcase}"] = value 
       end
+      print ENV['AWS_META_DATA_REGION']
+    end
   end
 end
