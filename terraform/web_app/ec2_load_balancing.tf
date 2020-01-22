@@ -6,7 +6,7 @@ resource "aws_lb" "web_app" {
   enable_http2       = true
   internal           = false
   load_balancer_type = "application"
-  name               = "${var.APP_NAME}-load-balancer-${var.APP_ENV}"
+  name               = "${var.STAGE}-load-balancer-${var.APP_ENV}"
 
   # access_logs {
   #   bucket  = "${aws_s3_bucket.web_app_log.bucket}"
@@ -14,7 +14,7 @@ resource "aws_lb" "web_app" {
   # }
 
   tags = {
-    app     = "${var.APP_NAME}"
+    app     = "${var.STAGE}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "load balancer"
@@ -42,7 +42,7 @@ resource "aws_lb_target_group" "web_app" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
+    app     = "${var.STAGE}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "load balancer - target group"

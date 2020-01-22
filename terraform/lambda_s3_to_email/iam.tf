@@ -22,7 +22,7 @@ resource "aws_iam_role_policy_attachment" "basic_exec" {
 ## Policy
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "${var.APP_NAME}_lambda_logging_${var.APP_ENV}"
+  name        = "${var.STAGE}_lambda_logging_${var.APP_ENV}"
   path        = "/"
   description = "IAM policy for logging from a lambda"
 
@@ -70,6 +70,6 @@ EOF
 ## Role
 
 resource "aws_iam_role" "lambda_role" {
-  name               = "${var.APP_NAME}-EventTriggerFromS3-${var.APP_ENV}"
+  name               = "${var.STAGE}-EventTriggerFromS3-${var.APP_ENV}"
   assume_role_policy = "${data.aws_iam_policy_document.iam_assume_role_policy.json}"
 }

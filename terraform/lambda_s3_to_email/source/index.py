@@ -122,12 +122,12 @@ def decrease_promo_counter(sql_host, sql_user, sql_pass, sql_sche,  listing = {}
     return True
 
 def lambda_handler(event, context):
-    smpt_host = os.environ['SMTP_HOST']
-    smpt_port = os.environ['SMTP_PORT']
-    smpt_user = os.environ['SMTP_USER']
-    smpt_pass = os.environ['SMTP_PASS']
+    smpt_host = os.environ['SES_SMTP_HOST']
+    smpt_port = os.environ['SES_SMTP_PORT']
+    smpt_user = os.environ['SES_SMTP_USER']
+    smpt_pass = os.environ['SES_SMTP_PASS']
 
-    mail_from = os.environ['SMTP_FROM']
+    mail_from = os.environ['SES_SMTP_FROM']
 
     sql_host = os.environ['SQL_HOST']
     sql_user = os.environ['SQL_USER']
@@ -135,7 +135,7 @@ def lambda_handler(event, context):
     sql_sche = os.environ['SQL_SCHE']
 
     app_env  = os.environ['APP_ENV']
-    app_name = os.environ['APP_NAME']
+    app_name = os.environ['STAGE']
 
     print('Event data payload.')
     print(event)

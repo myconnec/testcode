@@ -1,20 +1,20 @@
 # APP vars
 variable "APP_ENV" {}
 
-variable "APP_NAME" {}
+variable "STAGE" {}
 
 variable "AWS_REGION" {}
 
 # SMTP vars
-variable "SMTP_FROM" {}
+variable "SES_SMTP_FROM" {}
 
-variable "SMTP_HOST" {}
+variable "SES_SMTP_HOST" {}
 
-variable "SMTP_PASS" {}
+variable "SES_SMTP_PASS" {}
 
-variable "SMTP_PORT" {}
+variable "SES_SMTP_PORT" {}
 
-variable "SMTP_USER" {}
+variable "SES_SMTP_USER" {}
 
 # SQL vars
 variable "SQL_HOST" {}

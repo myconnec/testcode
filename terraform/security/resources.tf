@@ -4,7 +4,7 @@
 
 ## Load balancer HTTPS listener TLS cert
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "${var.APP_ENV}.${var.APP_NAME}.com"
+  domain_name       = "${var.APP_ENV}.${var.STAGE}.com"
   provider          = "aws.us_east_1" # because ACM needs to be used in the "us-east-1" region
   validation_method = "DNS"
 
@@ -14,7 +14,7 @@ resource "aws_acm_certificate" "cert" {
     owner   = "${var.CONTACT_EMAIL}"
     service = "acm"
     tech    = "tls"
-    Name    = "${var.APP_ENV}_${var.APP_NAME}_tls_certificate"
+    Name    = "${var.APP_ENV}_${var.STAGE}_tls_certificate"
   }
 
   # lifecycle {
@@ -47,7 +47,7 @@ resource "aws_acm_certificate_validation" "cert" {
 
 # CloudFront (cf) TLS cert
 # resource "aws_acm_certificate" "cf_cert" {
-#   domain_name       = "${var.APP_ENV}.${var.APP_NAME}.com"
+#   domain_name       = "${var.APP_ENV}.${var.STAGE}.com"
 #   provider          = "aws.us_east_1"
 #   validation_method = "DNS"
 
@@ -58,7 +58,7 @@ resource "aws_acm_certificate_validation" "cert" {
 #     owner   = "${var.CONTACT_EMAIL}"
 #     service = "acm"
 #     tech    = "tls"
-#     Name    = "${var.APP_NAME}_${var.APP_ENV}_cf_tls_certificate"
+#     Name    = "${var.STAGE}_${var.APP_ENV}_cf_tls_certificate"
 #   }
 
 

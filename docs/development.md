@@ -25,7 +25,7 @@ ansible-playbook \
     "ansible_ssh_pass": "ubuntu",
     "ansible_sudo_pass": "ubuntu",
     "APP_ENV": "'${APP_ENV}'",
-    "APP_NAME": "'${APP_NAME}'",
+    "STAGE": "'${STAGE}'",
     "AWS_REGION": "'${AWS_REGION}'",
     "SSH_KEY_ID": "'${SSH_KEY_ID}'",
     "database_address": "'$(terraform output database_address)'",

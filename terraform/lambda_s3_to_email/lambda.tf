@@ -2,11 +2,11 @@ resource "aws_lambda_function" "media_processing_complete_email" {
   environment {
     variables = {
       # SMTP creds and defaults
-      SMTP_FROM = "${var.SMTP_FROM}"
-      SMTP_HOST = "${var.SMTP_HOST}"
-      SMTP_PASS = "${var.SMTP_PASS}"
-      SMTP_PORT = "${var.SMTP_PORT}"
-      SMTP_USER = "${var.SMTP_USER}"
+      SES_SMTP_FROM = "${var.SES_SMTP_FROM}"
+      SES_SMTP_HOST = "${var.SES_SMTP_HOST}"
+      SES_SMTP_PASS = "${var.SES_SMTP_PASS}"
+      SES_SMTP_PORT = "${var.SES_SMTP_PORT}"
+      SES_SMTP_USER = "${var.SES_SMTP_USER}"
 
       # SQL creds
       SQL_HOST = "${var.SQL_HOST}"
@@ -15,13 +15,13 @@ resource "aws_lambda_function" "media_processing_complete_email" {
       SQL_USER = "${var.SQL_USER}"
 
       # APP data
-      APP_NAME = "${var.APP_NAME}"
+      STAGE = "${var.STAGE}"
       APP_ENV  = "${var.APP_ENV}"
     }
   }
 
   filename         = "${data.archive_file.lambda_zip.output_path}"
-  function_name    = "${var.APP_NAME}_media_processing_complete_email_${var.APP_ENV}"
+  function_name    = "${var.STAGE}_media_processing_complete_email_${var.APP_ENV}"
   handler          = "index.lambda_handler"
   role             = "${aws_iam_role.lambda_role.arn}"
   runtime          = "python3.7"

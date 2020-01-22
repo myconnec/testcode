@@ -2,7 +2,7 @@
 
 variable "APP_ENV" {}
 
-variable "APP_NAME" {}
+variable "STAGE" {}
 
 variable "AWS_REGION" {}
 

@@ -2,7 +2,7 @@
 variable "APP_ENV" {
 }
 
-variable "APP_NAME" {
+variable "STAGE" {
 }
 
 variable "AWS_ACCESS_KEY" {
@@ -29,30 +29,30 @@ variable "AWS_SECRET_KEY" {
 variable "CONTACT_EMAIL" {
 }
 
-variable "DB_HOST" {
+variable "RDS_DB_HOST" {
 }
 
-variable "DB_PASS" {
+variable "RDS_DB_PASS" {
 }
 
-variable "DB_SCHE" {
+variable "RDS_DB_SCHE" {
 }
 
-variable "DB_USER" {
+variable "RDS_DB_USER" {
 }
 
-variable "SES_SMTP_ADDRESS" {
+variable "SES_SES_SMTP_ADDRESS" {
 }
 
-variable "SES_SMTP_PORT" {
+variable "SES_SES_SMTP_PORT" {
 }
 
-variable "SES_SMTP_SENDER" {
+variable "SES_SES_SMTP_SENDER" {
 }
 
-variable "SES_SMTP_USERNAME" {
+variable "SES_SES_SMTP_USERNAME" {
 }
 
-variable "SES_SMTP_PASSWORD" {
+variable "SES_SES_SMTP_PASSWORD" {
 }
 

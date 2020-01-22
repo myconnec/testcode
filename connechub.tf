@@ -3,7 +3,7 @@ module "media_storage" {
   version = "0.3.5"
 
   APP_ENV                     = "${var.APP_ENV}"
-  APP_NAME                    = "${var.APP_NAME}"
+  STAGE                    = "${var.STAGE}"
   AWS_REGION                  = "${var.AWS_REGION}"
   AWS_S3_MEDIA_DISPLAY_BUCKET = "${var.AWS_S3_MEDIA_DISPLAY_BUCKET}"
   AWS_S3_MEDIA_SOURCE_BUCKET  = "${var.AWS_S3_MEDIA_SOURCE_BUCKET}"
@@ -17,7 +17,7 @@ module "media_processing" {
 
   # variables
   APP_ENV    = "${var.APP_ENV}"
-  APP_NAME   = "${var.APP_NAME}"
+  STAGE   = "${var.STAGE}"
   AWS_REGION = "${var.AWS_REGION}"
 
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
@@ -29,7 +29,7 @@ module "security" {
   version = "0.4.0"
 
   APP_ENV  = "${var.APP_ENV}"
-  APP_NAME = "${var.APP_NAME}"
+  STAGE = "${var.STAGE}"
   CONTACT_EMAIL = "${var.CONTACT_EMAIL}"
 
   // this var doesn't do anything inside the module, but it does make this module wait for the DNS record is created BEFORE the TLS cert is created
@@ -41,12 +41,12 @@ module "web_app" {
   version = "0.3.5"
 
   APP_ENV          = "${var.APP_ENV}"
-  APP_NAME         = "${var.APP_NAME}"
+  STAGE         = "${var.STAGE}"
   AWS_REGION       = "${var.AWS_REGION}"
   AWS_PEM_KEY_PAIR = "${var.AWS_PEM_KEY_PAIR}"
   CONTACT_EMAIL    = "${var.CONTACT_EMAIL}"
-  DB_USER          = "${var.DB_USER}"
-  DB_PASS          = "${var.DB_PASS}"
+  RDS_DB_USER          = "${var.RDS_DB_USER}"
+  RDS_DB_PASS          = "${var.RDS_DB_PASS}"
 
   media_display_bucket_id = "${module.media_storage.media_display_bucket_id}"
   media_source_bucket_id  = "${module.media_storage.media_source_bucket_id}"
@@ -59,7 +59,7 @@ module "lambda_s3_to_transcoder" {
   version = "0.3.5"
 
   APP_ENV    = "${var.APP_ENV}"
-  APP_NAME   = "${var.APP_NAME}"
+  STAGE   = "${var.STAGE}"
   AWS_REGION = "${var.AWS_REGION}"
 
   media_source_bucket_id                = "${module.media_storage.media_source_bucket_id}"
@@ -74,21 +74,21 @@ module "lambda_s3_to_email" {
 
   # APP vars
   APP_ENV    = "${var.APP_ENV}"
-  APP_NAME   = "${var.APP_NAME}"
+  STAGE   = "${var.STAGE}"
   AWS_REGION = "${var.AWS_REGION}"
 
   # SMTP creds
-  SMTP_FROM = "${var.SES_SMTP_SENDER}"
-  SMTP_HOST = "${var.SES_SMTP_ADDRESS}"
-  SMTP_PASS = "${var.SES_SMTP_PASSWORD}"
-  SMTP_PORT = "${var.SES_SMTP_PORT}"
-  SMTP_USER = "${var.SES_SMTP_USERNAME}"
+  SES_SMTP_FROM = "${var.SES_SES_SMTP_SENDER}"
+  SES_SMTP_HOST = "${var.SES_SES_SMTP_ADDRESS}"
+  SES_SMTP_PASS = "${var.SES_SES_SMTP_PASSWORD}"
+  SES_SMTP_PORT = "${var.SES_SES_SMTP_PORT}"
+  SES_SMTP_USER = "${var.SES_SES_SMTP_USERNAME}"
 
   # SQL creds
   SQL_HOST = "${module.web_app.aws_db_instance_rds_address}"
-  SQL_PASS = "${var.DB_PASS}"
-  SQL_SCHE = "${var.DB_SCHE}"
-  SQL_USER = "${var.DB_USER}"
+  SQL_PASS = "${var.RDS_DB_PASS}"
+  SQL_SCHE = "${var.RDS_DB_SCHE}"
+  SQL_USER = "${var.RDS_DB_USER}"
 
   # AWS Resource
   media_display_bucket_arn = "${module.media_storage.media_display_bucket_arn}"
@@ -99,13 +99,13 @@ module "lambda_s3_to_email" {
 # module "cdn" {
 #   source = "git::https://github.com/cloudposse/terraform-aws-cloudfront-cdn.git?ref=master"
 
-#   attributes = ["${var.APP_NAME}.com"]
-#   name       = "${var.APP_NAME}"
-#   namespace  = "${var.APP_NAME}"
+#   attributes = ["${var.STAGE}.com"]
+#   name       = "${var.STAGE}"
+#   namespace  = "${var.STAGE}"
 #   stage      = "${var.APP_ENV}"
 
 #   acm_certificate_arn    = "${module.security.tls_cf_arn}"
-#   aliases                = ["${var.APP_ENV}.${var.APP_NAME}.com"]
+#   aliases                = ["${var.APP_ENV}.${var.STAGE}.com"]
 #   allowed_methods        = ["HEAD", "DELETE", "POST", "GET", "OPTIONS", "PUT", "PATCH"]
 #   cached_methods         = ["GET", "HEAD"]
 #   compress               = "true"
@@ -116,9 +116,9 @@ module "lambda_s3_to_email" {
 #   forward_query_string   = "true"
 #   max_ttl                = 86400
 #   min_ttl                = 0
-#   origin_domain_name     = "${var.APP_ENV}.${var.APP_NAME}.com"
+#   origin_domain_name     = "${var.APP_ENV}.${var.STAGE}.com"
 #   origin_protocol_policy = "match-viewer"
-#   parent_zone_name       = "${var.APP_NAME}.com"
+#   parent_zone_name       = "${var.STAGE}.com"
 #   price_class            = "PriceClass_All"
 #   viewer_protocol_policy = "redirect-to-https"
 #   geo_restriction_locations = ["US"]

@@ -2,8 +2,8 @@ output "APP_ENV" {
   value = "${var.APP_ENV}"
 }
 
-output "APP_NAME" {
-  value = "${var.APP_NAME}"
+output "STAGE" {
+  value = "${var.STAGE}"
 }
 
 output "AWS_PEM_KEY_PAIR" {

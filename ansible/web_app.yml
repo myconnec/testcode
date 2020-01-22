@@ -2,7 +2,7 @@
 - hosts: all
   vars:
     APP_ENV: APP_ENV
-    APP_NAME: APP_NAME
+    STAGE: STAGE
     AWS_REGION: AWS_REGION
     SSH_KEY_ID: SSH_KEY_ID
 
@@ -159,10 +159,10 @@
       git:
         accept_hostkey: true
         clone: true
-        dest: "/home/{{ local_user }}/{{ APP_NAME }}"
+        dest: "/home/{{ local_user }}/{{ STAGE }}"
         force: true
         remote: origin
-        repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ APP_NAME }}"
+        repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ STAGE }}"
         version: "{{ version }}"
 
     # Copy in configs
@@ -171,7 +171,7 @@
     - name: GET app .env from storage
       become: "{{ local_user }}"
       command: >
-        aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ APP_NAME }}/.env
+        aws s3 cp s3://{{ STAGE }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ STAGE }}/.env
 
     - name: Copy API keys for S3 mounting into EC2 instance
       become: "{{ local_user }}"
@@ -185,11 +185,11 @@
 
     - name: Update RDS host
       command: >
-        sed -i "s/DB_HOST=\"mariadb\"/DB_HOST=\"{{ database_address }}\"/g" /home/{{ local_user }}/{{ APP_NAME }}/.env
+        sed -i "s/RDS_DB_HOST=\"mariadb\"/RDS_DB_HOST=\"{{ database_address }}\"/g" /home/{{ local_user }}/{{ STAGE }}/.env
 
     - name: Update RDS pass
       command: >
-        sed -i "s/DB_PASS=\"password\"/DB_PASS=\"{{ database_password }}\"/g" /home/{{ local_user }}/{{ APP_NAME }}/.env
+        sed -i "s/RDS_DB_PASS=\"password\"/RDS_DB_PASS=\"{{ database_password }}\"/g" /home/{{ local_user }}/{{ STAGE }}/.env
 
     # Configure fusermount to enable "allow_other" s3fs mounting
     # TODO: Consider using the replace, lineinfile or template module rather than running sed.
@@ -203,7 +203,7 @@
 
     - name: Install Ruby Bundler and gems
       shell: |
-        cd /home/{{ local_user }}/{{ APP_NAME }}
+        cd /home/{{ local_user }}/{{ STAGE }}
         gem install bundler -v 2.0.1
         # source https://bundler.io/man/bundle-binstubs.1.html
         bundle --binstubs
@@ -222,13 +222,13 @@
 
     - name: Check if media_profile_bucket_id path exists
       stat:
-        path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
+        path: /home/{{ local_user }}/{{ STAGE }}/public/system
       register: media_profile_bucket_stats
 
     - name: Create media_profile_bucket_id directory if it does not exist
       file:
         state: directory
-        path: /home/{{ local_user }}/{{ APP_NAME }}/public/system
+        path: /home/{{ local_user }}/{{ STAGE }}/public/system
         owner: "{{ local_user }}"
         group: "{{ local_user }}"
         mode: 0755
@@ -239,7 +239,7 @@
         s3fs \
           -d \
           {{ media_profile_bucket_id }} \
-          /home/{{ local_user }}/{{ APP_NAME }}/public/system \
+          /home/{{ local_user }}/{{ STAGE }}/public/system \
           -o endpoint={{ AWS_REGION }} \
           -o use_cache=/home/ubuntu \
           -o multireq_max=5 \
@@ -262,7 +262,7 @@
     - name: Run DB migrations and start the Puma web server
       become: "{{ local_user }}"
       shell: |
-        cd ~/{{ APP_NAME }}
+        cd ~/{{ STAGE }}
         rake db:migrate
         # need sudo to write to S3 bucket for user profile images
         sudo bundle exec puma --bind tcp://0.0.0.0:9293 --daemon

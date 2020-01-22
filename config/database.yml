@@ -1,9 +1,9 @@
 default: &default
   adapter: mysql2
-  host: <%= ENV['DB_HOST'] %>
-  port: <%= ENV['DB_PORT'] %>
-  username: <%= ENV['DB_USER'] %>
-  password: <%= ENV['DB_PASS'] %>
+  host: <%= ENV['RDS_DB_HOST'] %>
+  port: <%= ENV['RDS_DB_PORT'] %>
+  username: <%= ENV['RDS_DB_USER'] %>
+  password: <%= ENV['RDS_DB_PASS'] %>
   encoding: utf8
   pool: 5
   reconnect: true
@@ -13,12 +13,12 @@ default: &default
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: <%= ENV['DB_TST_SCHE'] %>
+  database: <%= ENV['RDS_DB_TST_SCHE'] %>
 
 development:
   <<: *default
-  database: <%= ENV['DB_SCHE'] %>
+  database: <%= ENV['RDS_DB_SCHE'] %>
 
 production:
   <<: *default
-  database: <%= ENV['DB_SCHE'] %>
+  database: <%= ENV['RDS_DB_SCHE'] %>

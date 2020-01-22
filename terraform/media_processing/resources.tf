@@ -8,7 +8,7 @@ resource "aws_elastictranscoder_pipeline" "transcoder_pipeline" {
 
   # input source media
   input_bucket = "${var.media_source_bucket_id}"
-  name         = "${var.APP_NAME}_transcoder_pipeline_${var.APP_ENV}"
+  name         = "${var.STAGE}_transcoder_pipeline_${var.APP_ENV}"
   role         = "${aws_iam_role.transcoder_role.arn}"
 
   # output bucket for thumbnails

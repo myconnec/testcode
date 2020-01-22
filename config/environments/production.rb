@@ -67,8 +67,8 @@ Rails.application.configure do
     # config.action_mailer.delivery_method = :smtp,
     # config.action_mailer.smtp_settings = {
     #     :address => "email-smtp.us-east-1.amazonaws.com",
-    #     :user_name =>  ENV['AWS_SMTP_USER'], # Your SMTP user here.
-    #     :password => ENV['AWS_SMTP_PASSWORD'], # Your SMTP password here.
+    #     :user_name =>  ENV['AWS_SES_SMTP_USER'], # Your SMTP user here.
+    #     :password => ENV['AWS_SES_SMTP_PASSWORD'], # Your SMTP password here.
     #     :authentication => :login,
     #     :enable_starttls_auto => true
     #  }

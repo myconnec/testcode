@@ -12,7 +12,7 @@ resource "aws_lambda_function" "s3_to_transcoder" {
   }
 
   filename         = "${data.archive_file.lambda_zip.output_path}"
-  function_name    = "${var.APP_NAME}_s3_to_transcoder_${var.APP_ENV}"
+  function_name    = "${var.STAGE}_s3_to_transcoder_${var.APP_ENV}"
   handler          = "index.handler"
   role             = "${aws_iam_role.lambda_role.arn}"
   runtime          = "nodejs8.10"

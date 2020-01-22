@@ -15,7 +15,7 @@ resource "aws_iam_role_policy_attachment" "s3_full_access_policy" {
 # Role
 
 resource "aws_iam_role" "transcoder_role" {
-  name        = "${var.APP_NAME}-Transcoder-${var.APP_ENV}"
+  name        = "${var.STAGE}-Transcoder-${var.APP_ENV}"
   description = "Allow AWS ElasticTranscoder access S3, transcoder a video, and save to the target S3 bucket."
 
   assume_role_policy = <<EOF

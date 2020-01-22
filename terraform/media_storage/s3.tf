@@ -1,5 +1,5 @@
 locals {
-  web_host_uri = "https://${var.APP_ENV}.${var.APP_NAME}.com"
+  web_host_uri = "https://${var.APP_ENV}.${var.STAGE}.com"
 }
 
 # Bucket
@@ -41,7 +41,7 @@ resource "aws_s3_bucket" "media_display" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
+    app     = "${var.STAGE}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "S3"
@@ -87,7 +87,7 @@ resource "aws_s3_bucket" "media_source" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
+    app     = "${var.STAGE}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "S3"
@@ -119,7 +119,7 @@ resource "aws_s3_bucket" "media_profile" {
   }
 
   tags = {
-    app     = "${var.APP_NAME}"
+    app     = "${var.STAGE}"
     env     = "${var.APP_ENV}"
     owner   = "${var.CONTACT_EMAIL}"
     service = "S3"

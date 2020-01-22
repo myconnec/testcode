@@ -1,5 +1,5 @@
 variable "APP_ENV" {}
-variable "APP_NAME" {}
+variable "STAGE" {}
 variable "AWS_REGION" {}
 variable "AWS_PEM_KEY_PAIR" {}
 
@@ -9,8 +9,8 @@ variable "COMPUTE_SIZE" {
 }
 
 variable "CONTACT_EMAIL" {}
-variable "DB_USER" {}
-variable "DB_PASS" {}
+variable "RDS_DB_USER" {}
+variable "RDS_DB_PASS" {}
 variable "media_display_bucket_id" {}
 variable "media_source_bucket_id" {}
 
