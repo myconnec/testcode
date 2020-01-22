@@ -1,7 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `connechub`
-/*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `connechub`;
 -- MySQL dump 10.13  Distrib 5.7.27, for Linux (x86_64)
 --
 -- Host: connechub-www.cwjmmgkouws4.us-east-1.rds.amazonaws.com    Database: connechub
