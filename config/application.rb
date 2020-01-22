@@ -42,17 +42,17 @@ module Workspace
     
     ENV['COOKIE_SECRET_KEY_BASE'] = ssm_client.get_parameter(name: '/web_app_cookie_secret_key_base', with_decryption: true).to_h[:parameter][:value]
 
-    ENV['RDS_RDS_DB_HOST'] = ssm_client.get_parameter(name: '/rds_db_host', with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_RDS_DB_PASS'] = ssm_client.get_parameter(name: '/rds_db_pass', with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_RDS_DB_PORT'] = ssm_client.get_parameter(name: '/rds_db_port', with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_RDS_DB_SCHE'] = ssm_client.get_parameter(name: '/rds_db_name', with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_RDS_DB_USER'] = ssm_client.get_parameter(name: '/rds_db_user', with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_HOST'] = ssm_client.get_parameter(name: '/rds_db_host', with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_PASS'] = ssm_client.get_parameter(name: '/rds_db_pass', with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_PORT'] = ssm_client.get_parameter(name: '/rds_db_port', with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_SCHE'] = ssm_client.get_parameter(name: '/rds_db_name', with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_USER'] = ssm_client.get_parameter(name: '/rds_db_user', with_decryption: true).to_h[:parameter][:value]
 
-    ENV['SES_SES_SMTP_FROM'] = ssm_client.get_parameter(name: '/smtp_from', with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SES_SMTP_HOST'] = ssm_client.get_parameter(name: '/smtp_host', with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SES_SMTP_PASS'] = ssm_client.get_parameter(name: '/smtp_pass', with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SES_SMTP_PORT'] = ssm_client.get_parameter(name: '/smtp_port', with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SES_SMTP_USER'] = ssm_client.get_parameter(name: '/smtp_user', with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_FROM'] = ssm_client.get_parameter(name: '/smtp_from', with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_HOST'] = ssm_client.get_parameter(name: '/smtp_host', with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_PASS'] = ssm_client.get_parameter(name: '/smtp_pass', with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_PORT'] = ssm_client.get_parameter(name: '/smtp_port', with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_USER'] = ssm_client.get_parameter(name: '/smtp_user', with_decryption: true).to_h[:parameter][:value]
 
     ENV['STRIPE_SK'] = ssm_client.get_parameter(name: '/stripe_publish_key', with_decryption: true).to_h[:parameter][:value]
     ENV['STRIPE_PK'] = ssm_client.get_parameter(name: '/stripe_secret_key', with_decryption: true).to_h[:parameter][:value]
