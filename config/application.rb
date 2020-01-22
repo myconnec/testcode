@@ -23,13 +23,13 @@ module Workspace
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    # request instance meta data and assign to env varsI
     config.before_configuration do
       tmp = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`.to_s
       meta_data = JSON.parse(tmp)
       meta_data.each do |key, value|
         ENV["AWS_META_DATA_#{key.upcase}"] = value 
       end
-      print ENV['AWS_META_DATA_REGION']
     end
   end
 end
