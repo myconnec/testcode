@@ -38,7 +38,7 @@
 
           <% if !current_user %>
             <p class="lead">First, you need to create your own account
-              <span style='font-size:16.0pt;line-height:106%'><a href="https://<%= ENV['APP_ENV'].downcase %>.connechub.com/users/sign_up">here</a></span>, which will allow you to post video ads.
+              <span style='font-size:16.0pt;line-height:106%'><a href="https://<%= ENV['STAGE'].downcase %>.connechub.com/users/sign_up">here</a></span>, which will allow you to post video ads.
             </p>
           <% else %>
             <p class="lead">Looks like you already have an account; Awesome!</p>
