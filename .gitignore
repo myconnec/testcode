@@ -34,6 +34,7 @@ rerun.txt
 /node_modules
 *.bowerrc
 bower.json
+/public/assets
 
 # ignore logs for repo
 **/*.log

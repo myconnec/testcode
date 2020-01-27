@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   def catch_not_found
     yield
     rescue
-      if ENV['APP_ENV'].downcase != 'dev'
+      if ENV['STAGE'].downcase != 'dev'
         redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
       end
   end
