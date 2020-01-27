@@ -3,11 +3,6 @@ Aws.config.update({
     credentials: Aws::InstanceProfileCredentials.new()
 })
 
-# ssm_client = Aws::SSM::Client.new(region: ENV['AWS_META_DATA_REGION'])
+AWS_S3_MEDIA_SOURCE_BUCKET = Aws::S3::Resource.new.bucket(ENV['AWS_S3_MEDIA_SOURCE_BUCKET'])
 
-# name = ssm_client.get_parameter(
-#     name: '/name',
-#     with_decryption: true
-# ).to_h
-
-# puts name[:parameter][:value]
+AWS_S3_MEDIA_DISPLAY_BUCKET = Aws::S3::Resource.new.bucket(ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'])
