@@ -34,7 +34,7 @@ class Listing < ActiveRecord::Base
     listings = listings.where("media_file_name IS NOT NULL")
     listings = listings.where(category_id: params[:category].to_i) if params[:category].present?
     listings = listings.where(sub_category_id: params[:sub_category].to_i) if params[:sub_category].present?
-    # listings = listings.near(params[:location], 100) if params[:location].present?
+    listings = listings.near(params[:location], 100) if params[:location].present?
     listings = listings.order('created_at DESC')
     listings
   end
