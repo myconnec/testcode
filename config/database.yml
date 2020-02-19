@@ -12,6 +12,10 @@ development:
   <<: *default
   database: <%= ENV['RDS_DB_SCHE'] %>
 
+test:
+  <<: *default
+  database: <%= ENV['RDS_DB_SCHE'] %>
+
 production:
   <<: *default
   database: <%= ENV['RDS_DB_SCHE'] %>
