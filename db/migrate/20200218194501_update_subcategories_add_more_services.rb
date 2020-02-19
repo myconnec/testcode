@@ -1,4 +1,4 @@
-class AddPromoColToUserTable < ActiveRecord::Migration
+class UpdateSubcategoriesAddMoreServices < ActiveRecord::Migration
   def change
     Subcategory.create :name => "tax services", :category_id => 10
     Subcategory.create :name => "funerals service", :category_id => 10
