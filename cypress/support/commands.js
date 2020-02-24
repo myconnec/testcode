@@ -62,7 +62,6 @@ Cypress.Commands.add('login', (userData = false) => {
 })
 
 Cypress.Commands.add('logout', () => {
-
   cy.get('#navbar > ul > li:nth-child(3) > a').contains('Logout').click()
   cy.handle_splash_message('Signed out successfully.', 'notice')
 })
