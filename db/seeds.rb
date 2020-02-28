@@ -1,5 +1,6 @@
 # Source: https://gist.github.com/seyhunak/7843549
-unless Rails.env.prd?
+# DO NOT seed in RAILS production ENVs
+unless Rails.env.production?
   connection = ActiveRecord::Base.connection
   connection.tables.each do |table|
     connection.execute("TRUNCATE #{table}") unless table == "schema_migrations"
