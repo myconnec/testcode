@@ -78,11 +78,11 @@ module "lambda_s3_to_email" {
   AWS_REGION = "${var.AWS_REGION}"
 
   # SMTP creds
-  SES_SMTP_FROM = "${var.SES_SES_SMTP_SENDER}"
-  SES_SMTP_HOST = "${var.SES_SES_SMTP_ADDRESS}"
-  SES_SMTP_PASS = "${var.SES_SES_SMTP_PASSWORD}"
-  SES_SMTP_PORT = "${var.SES_SES_SMTP_PORT}"
-  SES_SMTP_USER = "${var.SES_SES_SMTP_USERNAME}"
+  SES_SMTP_FROM = "${var.SES_SMTP_SENDER}"
+  SES_SMTP_HOST = "${var.SES_SMTP_ADDRESS}"
+  SES_SMTP_PASS = "${var.SES_SMTP_PASSWORD}"
+  SES_SMTP_PORT = "${var.SES_SMTP_PORT}"
+  SES_SMTP_USER = "${var.SES_SMTP_USERNAME}"
 
   # SQL creds
   SQL_HOST = "${module.web_app.aws_db_instance_rds_address}"

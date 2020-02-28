@@ -41,18 +41,18 @@ variable "RDS_DB_SCHE" {
 variable "RDS_DB_USER" {
 }
 
-variable "SES_SES_SMTP_ADDRESS" {
+variable "SES_SMTP_ADDRESS" {
 }
 
-variable "SES_SES_SMTP_PORT" {
+variable "SES_SMTP_PORT" {
 }
 
-variable "SES_SES_SMTP_SENDER" {
+variable "SES_SMTP_SENDER" {
 }
 
-variable "SES_SES_SMTP_USERNAME" {
+variable "SES_SMTP_USERNAME" {
 }
 
-variable "SES_SES_SMTP_PASSWORD" {
+variable "SES_SMTP_PASSWORD" {
 }
 
