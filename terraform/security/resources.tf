@@ -4,7 +4,7 @@
 
 ## Load balancer HTTPS listener TLS cert
 resource "aws_acm_certificate" "cert" {
-  domain_name       = "${var.APP_ENV}.connechub.com"
+  domain_name       = "${var.APP_ENV}.${var.STAGE}.com"
   provider          = "aws.us_east_1" # because ACM needs to be used in the "us-east-1" region
   validation_method = "DNS"
 

@@ -43,7 +43,7 @@
         pkg:
           - autoconf
           - automake
-          # - awslogs
+          - awslogs
           - bison
           - curl
           - git
@@ -72,143 +72,143 @@
           - zlib1g-dev  # error while installing bundler: http://stackoverflow.com/questions/9727908/cannot-load-such-file-zlib-even-after-using-rvm-pkg-install-zlib
         state: present
 
-    # - name: Copy in AWs CloudWatch Log agent configuration
-    #   copy:
-    #     src: awslogs.conf
-    #     dest: /etc/awslogs/awslogs.conf
-    #     owner: "{{ local_user }}"
-    #     group: "{{ local_group }}"
-    #     mode: '0644'
+    - name: Copy in AWs CloudWatch Log agent configuration
+      copy:
+        src: /ansible/awslogs.conf
+        dest: /etc/awslogs/awslogs.conf
+        owner: {{ local_user }}
+        group: {{ local_group }}
+        mode: '0644'
 
-    # - name: AWS Cloud Watch agent start configuration
-    #   shell: |
-    #     sudo chkconfig awslogs on
-    #     sudo service awslogs start
+    - name: AWS Cloud Watch agent start configuration
+      shell: |
+        sudo chkconfig awslogs on
+        sudo service awslogs start
+
 
     # TODO move into a Ansible role
     # Ruby source, build, install, clean up
 
-    # - name: Create a working directory
-    #   file:
-    #     path: /tmp/build_ruby
-    #     state: directory
-    #     mode: "u+rwx"
+    - name: Create a working directory
+      file:
+        path:  /tmp/build_ruby
+        state: directory
+        mode: "u+rwx"
 
-    # - name: Download Ruby 2.3.8
-    #   get_url:
-    #     url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
-    #     dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
+    - name: Download Ruby 2.3.8
+      get_url:
+        url:  https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/ruby-2.3.8.tar.gz
 
-    # - name: Unpack Ruby 2.3.8
-    #   unarchive:
-    #     src: /tmp/build_ruby/ruby-2.3.8.tar.gz
-    #     dest: /tmp/build_ruby/
-    #     remote_src: yes
+    - name: Unpack Ruby 2.3.8
+      unarchive:
+        src: /tmp/build_ruby/ruby-2.3.8.tar.gz
+        dest: /tmp/build_ruby/
+        remote_src: yes
 
-    # - name: Build ruby
-    #   command: >
-    #     {{ item }}
-    #     chdir=/tmp/build_ruby/ruby-2.3.8
-    #     creates=/usr/local/bin/ruby
-    #   with_items:
-    #     - ./configure --enable-shared
-    #     - make
-    #     - make install
+    - name: Build ruby
+      command: >
+        {{ item }}
+        chdir=/tmp/build_ruby/ruby-2.3.8
+        creates=/usr/local/bin/ruby
+      with_items:
+        - ./configure --enable-shared
+        - make
+        - make install
 
-    # - name: Add ruby symlinks
-    #   file:
-    #     src: "/usr/local/bin/{{ item }}"
-    #     dest: "/usr/bin/{{ item }}"
-    #     state: link
-    #     force: yes
-    #   with_items:
-    #     - erb
-    #     - gem
-    #     - irb
-    #     - rake
-    #     - rdoc
-    #     - ruby
+    - name: Add ruby symlinks
+      file:
+        src: "/usr/local/bin/{{ item }}"
+        dest: "/usr/bin/{{ item }}"
+        state: link
+        force: yes
+      with_items:
+        - erb
+        - gem
+        - irb
+        - rake
+        - rdoc
+        - ruby
 
-    # - name: Remove the working directory
-    #   file:
-    #     path: /tmp/build_ruby
-    #     state: absent
+    - name: Remove the working directory
+      file:
+        path: /tmp/build_ruby
+        state: absent
 
     # GiT & SSH Configuration
     # TODO this can be a role
 
-    # - name: Get SSH private key for cloning web app repo
-    #   become: "{{ local_user }}"
-    #   shell: |
-    #     mkdir ~/.ssh
-    #     aws s3 cp s3://{{ APP_NAME }}-configs/{{ STAGE }}/iam_private_key ~/.ssh/iam_private_key
-    #     chmod 0600 ~/.ssh/iam_private_key
+    - name: Get SSH private key for cloning web app repo
+      become: "{{ local_user }}"
+      shell: |
+        mkdir ~/.ssh
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/iam_private_key ~/.ssh/iam_private_key
+        chmod 0600 ~/.ssh/iam_private_key
 
-    # - name: Create SSH config
-    #   become: "{{ local_user }}"
-    #   copy:
-    #     dest: ~/.ssh/config
-    #     content: |
-    #       Host git-codecommit.*.amazonaws.com
-    #       User {{ SSH_KEY_ID }}
-    #       IdentityFile ~/.ssh/iam_private_key
+    - name: Create SSH config
+      become: "{{ local_user }}"
+      copy:
+        dest: ~/.ssh/config
+        content: |
+          Host git-codecommit.*.amazonaws.com
+          User {{ SSH_KEY_ID }}
+          IdentityFile ~/.ssh/iam_private_key
 
-    # - name: Git clone web app repo
-    #   become: "{{ local_user }}"
-    #   git:
-    #     accept_hostkey: true
-    #     clone: true
-    #     dest: "/home/{{ local_user }}/{{ APP_NAME }}"
-    #     force: true
-    #     remote: origin
-    #     repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ APP_NAME }}"
-    #     version: "master"
+    - name: Git clone web app repo
+      become: "{{ local_user }}"
+      git:
+        accept_hostkey: true
+        clone: true
+        dest: "/home/{{ local_user }}/{{ STAGE }}"
+        force: true
+        remote: origin
+        repo: "ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/{{ STAGE }}"
+        version: "{{ version }}"
 
-    # # Copy in configs
-    # # TODO this can be a role
+    # Copy in configs
+    # TODO this can be a role
 
-    # - name: GET app .env from storage
-    #   become: "{{ local_user }}"
-    #   command: >
-    #     aws s3 cp s3://{{ APP_NAME }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ STAGE }}/.env
+    - name: GET app .env from storage
+      become: "{{ local_user }}"
+      command: >
+        aws s3 cp s3://{{ STAGE }}-configs/{{ APP_ENV }}/.env /home/{{ local_user }}/{{ STAGE }}/.env
 
-    # - name: Copy API keys for S3 mounting into EC2 instance
-    #   become: "{{ local_user }}"
-    #   shell: |
-    #     aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
-    #     chmod 0600 /home/{{ local_user }}/.passwd-s3fs
-    #     chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/.passwd-s3fs
+    - name: Copy API keys for S3 mounting into EC2 instance
+      become: "{{ local_user }}"
+      shell: |
+        aws s3 cp s3://connechub-configs/{{ APP_ENV }}/.passwd-s3fs /home/{{ local_user }}/.passwd-s3fs
+        chmod 0600 /home/{{ local_user }}/.passwd-s3fs
+        chown {{ local_user }}:{{ local_user }} /home/{{ local_user }}/.passwd-s3fs
 
-    # # Update RDS connection string
-    # # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+    # Update RDS connection string
+    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
-    # - name: Update RDS host
-    #   command: >
-    #     sed -i "s/RDS_DB_HOST=\"mariadb\"/RDS_DB_HOST=\"{{ database_address }}\"/g" /home/{{ local_user }}/{{ STAGE }}/.env
+    - name: Update RDS host
+      command: >
+        sed -i "s/RDS_DB_HOST=\"mariadb\"/RDS_DB_HOST=\"{{ database_address }}\"/g" /home/{{ local_user }}/{{ STAGE }}/.env
 
-    # - name: Update RDS pass
-    #   command: >
-    #     sed -i "s/RDS_DB_PASS=\"password\"/RDS_DB_PASS=\"{{ database_password }}\"/g" /home/{{ local_user }}/{{ STAGE }}/.env
+    - name: Update RDS pass
+      command: >
+        sed -i "s/RDS_DB_PASS=\"password\"/RDS_DB_PASS=\"{{ database_password }}\"/g" /home/{{ local_user }}/{{ STAGE }}/.env
 
-    # # Configure fusermount to enable "allow_other" s3fs mounting
-    # # TODO: Consider using the replace, lineinfile or template module rather than running sed.
+    # Configure fusermount to enable "allow_other" s3fs mounting
+    # TODO: Consider using the replace, lineinfile or template module rather than running sed.
 
-    # - name: Configure fusermount
-    #   command: >
-    #     sed -i "s/#user_allow_other/user_allow_other/g" /etc/fuse.conf
+    - name: Configure fusermount
+      command: >
+        sed -i "s/#user_allow_other/user_allow_other/g" /etc/fuse.conf
 
-    # # Application deps install
-    # # TODO would like to use the bundler module
+    # Application deps install
+    # TODO would like to use the bundler module
 
-    # - name: Install Ruby Bundler and gems
-    #   become: "{{ local_user }}"
-    #   shell: |
-    #     cd /home/{{ local_user }}/{{ STAGE }}
-    #     sudo gem install bundler -v 2.0.1
-    #     # source https://bundler.io/man/bundle-binstubs.1.html
-    #     bundle --binstubs
-    #     bundle config --global jobs 4
-    #     bundle install -V
+    - name: Install Ruby Bundler and gems
+      shell: |
+        cd /home/{{ local_user }}/{{ STAGE }}
+        gem install bundler -v 2.0.1
+        # source https://bundler.io/man/bundle-binstubs.1.html
+        bundle --binstubs
+        bundle config --global jobs 4
+        bundle install -V
 
     - name: Change ownership of web app dir
       file:
@@ -250,8 +250,7 @@
       when: media_profile_bucket_stats.stat.exists == false
 
     - name: Add app log to logrotate
-      copy:
-        src: logrotate.conf
+        src: /ansible/logrotate.conf
         dest: /etc/logrotate.d/
         mode: '0644'
 
