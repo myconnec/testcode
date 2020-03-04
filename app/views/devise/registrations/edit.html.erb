@@ -14,11 +14,11 @@
                     <% end %>
                     <br>
 
-                    <%# <% <div class="input-group">
+                    <div class="input-group">
                         <span class="input-group-addon">Username</span>
-                        %= f.text_field :username, class: "form-control" %
+                        <%= f.label :username %><br>
                     </div>
-                    <br> %>
+                    <br>
 
                     <div class="input-group">
                         <span class="input-group-addon">Email</span>
@@ -38,12 +38,13 @@
                     </div>
                     <br>
 
+                    <div class = "small-heading", style="color:red">(We need your current password to allow password changes.)</div>
+                    <br>
+
                     <div class="input-group">
                         <span class="input-group-addon">Current Password</span>
                         <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
                     </div>
-                    <br>
-                    <div class = "small-heading", style="color:red">(We need your current password to allow password changes.)</div>
                     <br>
 
                     <div class="input-group">
