@@ -9,11 +9,13 @@
 
             <div class="panel-body">
 
-                <%= simple_form_for(@listing, html: {
-                    authenticity_token: true,
-                    multipart: true,
-                    class: 'form-horizontal ',
-                    presence: true
+                <%= simple_form_for(
+                    @listing,
+                    html: {
+                        authenticity_token: true,
+                        multipart: true,
+                        class: 'form-horizontal ',
+                        presence: true
                 }) do |f| %>
 
                     <div class="input-group">

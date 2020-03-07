@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  around_filter :catch_not_found
+  # around_filter :catch_not_found
+  # before_filter :authenticate_user!
 
   def show
     @user = User.find_by username: params[:username]
@@ -20,22 +21,25 @@ class UsersController < ApplicationController
     end
   end
 
-  def update_resource(resource, params)
+  def update_resource()
+    @user = User.find_by id: params[:id]
+
     if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
-      params.delete(:password)
-      params.delete(:password_confirmation)
-      params.delete(:current_password)
-      resource.update_without_password(params)
+      # params(@user).permit(:email, :bio, :avatar_file_name)
+      # @user.edit(params)
+      # @user.save(params)
+      @user.save(params)
     else
       super
     end
+    redirect_to "/users/edit"
   end
 
-  def catch_not_found
-    yield
-    rescue
-      if ENV['STAGE'].downcase != 'dev'
-        redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
-      end
-  end
+  # def catch_not_found
+  #   yield
+  #   rescue
+  #     if ENV['STAGE'].downcase != 'dev'
+  #       redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
+  #     end
+  # end
 end
