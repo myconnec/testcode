@@ -76,6 +76,20 @@
                     <br>
 
                     <div class="input-group">
+                        <div class="input-group-addon">Condition</div>
+                        <div class="form-control">
+                            <%= f.select :condition_id,
+                                Condition.all.map {|f| [f.name, f.id]},
+                                {
+                                    include_blank: true
+                                },
+                                required: true
+                            %>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
                         <div class="input-group-addon">Posting Title</div>
                         <%= f.text_field :title,
                             class: "form-control",
@@ -183,7 +197,7 @@ $(function () {
           value = min;
         else if(value > max)
           value = max;
-        $(this).val(value.toFixed(2)); 
+        $(this).val(value.toFixed(2));
       });
     });
   };
