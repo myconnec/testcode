@@ -3,65 +3,30 @@
 .vscode/
 .tmp/
 
+# dirs to ignore
+/cypress
+/public/system
+/**/tmp
+/vendor
+/node_modules
+# files to ignore
+*.log
+
 # Test and misc files
 *.rbc
 capybara-*.html
 .rspec
-/public/system
-/coverage/
-/spec/tmp
-**.orig
 rerun.txt
-/cypress/fixtures
-/cypress/screenshots
-/cypress/videos
+.rvmrc
+*.bowerrc
+bower.json
+
 
 # Ignore bundler config.
 /.bundle
 
-# Configs
-
-# Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp
-/**/remote_app
-
-# Ignore rmvrc
-.rvmrc
-
-# If using bower-rails ignore default bower_components path bower.json file
-/vendor
-/node_modules
-*.bowerrc
-bower.json
-/public/assets
-
-# ignore logs for repo
-**/*.log
-
-# ignore ENV file
-.env
-.env.*
-# but not the dist example
-!.env.dist
-
-# *SQL
-/docker/mariadb/data.sql
-/docker/mariadb/data_dir/
-/docs/runbooks/sqlite3_to_mariadb10/**/*.sql
-
 # Ignore generated docs
 /docs/api/*
-
-# Ansible retry
-/**/*.retry
-
-# Terraform meta-data dir
-.terraform
-*.tfvars
-*.tfstate
-*.tfstate.*
-*.plan
 
 # ignore archive files
 **/*.zip
@@ -69,7 +34,3 @@ bower.json
 **.*gz
 .passwd*
 **/*id_rsa*
-
-# Vendor provided libraries for TF controlled Lambdas
-/terraform/**/pymysql/
-
