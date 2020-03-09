@@ -17,9 +17,12 @@ class AddItemCondition < ActiveRecord::Migration
     Condition.create :value => "Average", :id => 4
     Condition.create :value => "Poor", :id => 5
     Condition.create :value => "Terrible", :id => 6
+
+    add_column :listings, :condition, :int, :limit => 1, :null => true, default: 0
   end
 
   def down
     drop_table :condtion
+    remove_column :listings, :condition
   end
 end
