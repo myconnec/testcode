@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-    def  about
+    def  aboutus
     end
 
     def  cookie
@@ -34,6 +34,9 @@ class PagesController < ApplicationController
     end
 
     def  mobile
+    end
+
+    def  newsletter
     end
 
     def  postads

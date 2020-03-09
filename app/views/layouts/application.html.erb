@@ -179,18 +179,19 @@ youtube,
                       <li class="dropup">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">About Us <i class="fa fa-sort"></i></span></a>
                         <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                          <li><%= link_to 'About Us', aboutus_path %></li>
                           <li><%= link_to 'Career With Us', career_path %></a></li>
-                          <li><%= link_to 'About Us', about_path %></li>
-                          <li><%= link_to 'How It Works', '/howitworks/index' %></li>
-                          <li><%= link_to 'Prices', '/prices/index' %></li>
+                          <li><%= link_to 'How It Works', howitworks_path %></li>
+                          <li><%= link_to 'Newsletter', newsletter_path %></li>
+                          <li><%= link_to 'Prices', prices_path %></li>
                         </ul>
                       </li>
                       <li class="dropup">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Legal <i class="fa fa-sort"></i></span></a>
                         <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-                          <li><%= link_to 'Terms of Conditions', terms_path %></li>
-                          <li><%= link_to 'Privacy Policy', privacy_path %></li>
                           <li><%= link_to 'Posting Terms of Use', postterm_path %></li>
+                          <li><%= link_to 'Privacy Policy', privacy_path %></li>
+                          <li><%= link_to 'Terms of Conditions', terms_path %></li>
                         </ul>
                       </li>
                       <li class="dropup">
