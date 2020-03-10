@@ -78,8 +78,8 @@
                     <div class="input-group">
                         <div class="input-group-addon">Condition</div>
                         <div class="form-control">
-                            <%= f.select :condition_id,
-                                Condition.all.map {|f| [f.name, f.id]},
+                            <%= f.select :category_id,
+                                Condition.all.map {|f| [f.value, f.id]},
                                 {
                                     include_blank: true
                                 },

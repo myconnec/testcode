@@ -205,6 +205,7 @@ class ListingsController < ApplicationController
       :ademail,
       :category_id,
       :city,
+      :condition_id,
       :description,
       :id,
       :media_file_name,
