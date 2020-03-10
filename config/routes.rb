@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   root 'categories#index'
 
-  match '/aboutus', to: 'pages#about', via: :get
+  match '/about', to: 'pages#about', via: :get
   match '/career', to: 'pages#career', via: :get
   match '/cookie', to: 'pages#cookie', via: :get
   match '/copyright', to: 'pages#copyright', via: :get
@@ -40,7 +40,6 @@ Rails.application.routes.draw do
   match '/marketing', to: 'pages#marketing', via: :get
   match '/membership', to: 'pages#membership', via: :get
   match '/mobile', to: 'pages#mobile', via: :get
-  match '/newsletter', to: 'pages#newsletter', via: :get
   match '/postads', to: 'pages#postads', via: :get
   match '/postterm', to: 'pages#postterm', via: :get
   match '/prices', to: 'prices#index', via: :get
@@ -55,6 +54,5 @@ Rails.application.routes.draw do
   match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
   match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
 
-  match ':username' => 'users#show', as: 'user', via: get
-  match ':username' => 'users#update', via: put
+  get ':username' => 'users#show', as: 'user'
 end
