@@ -1,6 +1,6 @@
 class AddItemCondition < ActiveRecord::Migration
   def up
-    create_table :condtion do |t|
+    create_table :condtions do |t|
       t.string :value
       t.timestamps
     end
@@ -16,7 +16,7 @@ class AddItemCondition < ActiveRecord::Migration
   end
 
   def down
-    drop_table :condtion
+    drop_table :condtions
     remove_column :listings, :condition
   end
 end
