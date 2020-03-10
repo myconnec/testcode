@@ -16,6 +16,7 @@ class Listing < ActiveRecord::Base
   validates_presence_of :price
   validates_presence_of :category_id
   validates_presence_of :subcategory_id
+  #validates_presence_of :condition_id Contition is optional
   validates_presence_of :title
   validates_presence_of :city
   validates_presence_of :state
