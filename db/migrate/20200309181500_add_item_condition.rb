@@ -2,12 +2,7 @@ class AddItemCondition < ActiveRecord::Migration
   def up
     create_table :condtion do |t|
       t.string :value
-
       t.timestamps
-
-
-      t.int :created_by
-      t.int :updated_by
     end
 
     Condition.create :value => "Not Applicatable", :id => 1
@@ -17,7 +12,7 @@ class AddItemCondition < ActiveRecord::Migration
     Condition.create :value => "Poor", :id => 5
     Condition.create :value => "Terrible", :id => 6
 
-    add_column :listings, :condition, :int, :limit => 1, :null => true, default: 0
+    add_column :listings, :condition, :integer, :limit => 1, :null => true, default: 0
   end
 
   def down
