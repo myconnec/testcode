@@ -12,7 +12,7 @@ class AddItemCondition < ActiveRecord::Migration
     Condition.create :value => "Poor", :id => 5
     Condition.create :value => "Terrible", :id => 6
 
-    add_column :listings, :condition, :integer, :limit => 1, :null => true, default: 0
+    add_column :listings, :condition_id, :integer, :limit => 1, :null => true, default: 0
   end
 
   def down
