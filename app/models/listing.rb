@@ -30,6 +30,7 @@ class Listing < ActiveRecord::Base
 
   def self.search(params)
     listings = Listing.where("ending_at > '#{Time.now.to_i}'")
+    listings = listing.where("sold IS NULL")
     listings = listings.where("title LIKE ? or description LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     listings = listings.where("media_file_name IS NOT NULL")
     listings = listings.where(category_id: params[:category].to_i) if params[:category].present?

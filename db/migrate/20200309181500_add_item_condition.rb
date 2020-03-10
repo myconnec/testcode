@@ -3,12 +3,11 @@ class AddItemCondition < ActiveRecord::Migration
     create_table :condtion do |t|
       t.string :value
 
-      t.timestamps :created_at
-      t.timestamps :updated_at
-      t.timestamps :delete_at
+      t.timestamps
 
-      t.timestamps :created_by
-      t.timestamps :updated_by
+
+      t.int :created_by
+      t.int :updated_by
     end
 
     Condition.create :value => "Not Applicatable", :id => 1

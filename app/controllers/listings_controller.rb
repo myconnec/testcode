@@ -4,7 +4,7 @@ class ListingsController < ApplicationController
 
   before_action :set_s3_direct_post, only: [:upload]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update, :upvote]
-  before_action :is_user?, only: [:payment, :create_payment, :update, :destroy, :upload, :upload_update]
+  before_action :is_user?, only: [:create_payment, :destroy, :payment, :sold, :update, :upload_update, :upload]
 
   def index
     redirect_to '/'
@@ -48,6 +48,15 @@ class ListingsController < ApplicationController
 
   def payment
     @listing = Listing.find(params[:id])
+  end
+
+  def sold
+    @listing = Listing.find(params[:id])
+    @listing.sold = Time.now.to_i
+    if !@listing.save
+      flash[:danger] = 'An error occured while updating your Listing as sold.'
+      redirect_to(:back)
+    end
   end
 
   def create_payment
