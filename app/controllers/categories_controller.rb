@@ -36,10 +36,12 @@ class CategoriesController < ApplicationController
 
         @category = Category.find(params[:id])
 
-        @listings = Listing.where(category_id: params[:id])
+        @listings = Listing
+            .order("created_at DESC")
             .where("ending_at > '#{Time.now.to_i}'")
             .where("media_file_name IS NOT NULL")
-            .order("created_at DESC")
+            .where("sold IS NULL")
+            .where(category_id: params[:id])
 
         # TODO move this to a CNTL helper
         # media_file_name, add -00001.png
