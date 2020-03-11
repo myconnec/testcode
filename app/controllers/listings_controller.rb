@@ -55,7 +55,7 @@ class ListingsController < ApplicationController
     @listing.sold = Time.now.to_i
     if !@listing.save
       flash[:danger] = 'An error occured while updating your Listing as sold.'
-      redirect_to(:back)
+      return redirect_to(:back)
     end
   end
 
