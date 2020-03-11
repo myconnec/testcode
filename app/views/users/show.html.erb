@@ -50,7 +50,7 @@
                             <span class="description"><%= link_to 'Edit Listing', edit_listing_path(listing) %></span>&nbsp;|&nbsp;
                             <span class="description"><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></span>
                             <span class="description"><%= link_to 'Change Video', "/listings/upload/#{listing.id}" %></span>&nbsp;|&nbsp;
-                            <% if listing.sold! %>
+                            <% if listing.sold === nil %>
                             <span class="description"><%= link_to 'SOLD', "/listings/sold/#{listing.id}" %></span>
                             <% else %>
                             <span class="description">IS SOLD</span>
