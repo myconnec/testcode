@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :subcategories
   end
 
+  resources :conditions
+
   resources :listings do
     resources :comments
     collection do
