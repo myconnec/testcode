@@ -47,9 +47,9 @@
                             <small class = "board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
                           <hr>
                             <% if listing.user == current_user %>
-                            <span class="description"><%= link_to 'Edit Listing', edit_listing_path(listing) %></span> |
+                            <span class="description"><%= link_to 'Edit Listing', edit_listing_path(listing) %></span>&nbsp;|&nbsp;
                             <span class="description"><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></span>
-                            <span class="description"><%= link_to 'Change Video', "/listings/upload/#{listing.id}" %></span>
+                            <span class="description"><%= link_to 'Change Video', "/listings/upload/#{listing.id}" %></span>&nbsp;|&nbsp;
                             <span class="description"><%= link_to 'SOLD', "/listings/sold/#{listing.id}" %></span>
                             <% end %>
                           </div>
