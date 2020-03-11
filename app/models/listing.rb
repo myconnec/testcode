@@ -13,16 +13,16 @@ class Listing < ActiveRecord::Base
 
   geocoded_by :full_address
 
-  validates_presence_of :user_id
-  validates_presence_of :price
   validates_presence_of :category_id
-  validates_presence_of :subcategory_id
-  #validates_presence_of :condition_id Contition is optional
-  validates_presence_of :title
   validates_presence_of :city
-  validates_presence_of :state
-  validates_presence_of :zipcode
+  #validates_presence_of :condition_id # not required
   validates_presence_of :description
+  validates_presence_of :price
+  validates_presence_of :state
+  validates_presence_of :subcategory_id
+  validates_presence_of :title
+  validates_presence_of :user_id
+  validates_presence_of :zipcode
 
   has_many :comments, dependent: :destroy
 
