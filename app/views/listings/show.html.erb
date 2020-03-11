@@ -41,7 +41,7 @@
 
     <div class="text-muted">
         <% if @listing.condition_id? %>
-            <small>Condition: <%= "#{@listing.condition_id}" %></small>
+            <small>Condition: <%= "#{@listing.condition.value}" %></small>
         <% end %>
         <small>&nbsp; &nbsp; &nbsp;<i class= "fa fa-eye" aria-hidden="true"></i></small>
         <small><%= "#{@listing.impressionist_count}" %> views</small>
