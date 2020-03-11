@@ -7,6 +7,7 @@ class Listing < ActiveRecord::Base
   after_validation :geocode
 
   belongs_to :category
+  belongs_to :condition
   belongs_to :subcategory
   belongs_to :user
 
