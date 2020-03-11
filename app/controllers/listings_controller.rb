@@ -53,10 +53,14 @@ class ListingsController < ApplicationController
   def sold
     @listing = Listing.find(params[:id])
     @listing.sold = Time.now.to_i
+
     if !@listing.save
       flash[:danger] = 'An error occured while updating your Listing as sold.'
-      return redirect_to(:back)
+      return redirect_to :username
     end
+
+    flash[:success] = 'Listing marked as SOLD. It will not longer be visible to other users.'
+    return redirect_to :username
   end
 
   def create_payment
