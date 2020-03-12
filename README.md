@@ -51,9 +51,12 @@ Please see [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md).
 
 Please see [CONTRIBUTING_GUIDELINES.md](./CONTRIBUTING_GUIDELINES.md).
 
-### Development Documentation
+### Development Documentation - Toolchain
 
-Please see [DEVDOCS.md](./DEVDOCS.md).
+- [AWS CLI](https://aws.amazon.com) CLI interaction
+- [Cypress](https://cypress.io) UAT tool
+- [Puma](https://github.com/puma/puma) webserver
+- [Ruby on Rails](https://rubyonrails.org) Web app framework
 
 ## Requirements
 

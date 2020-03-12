@@ -9,9 +9,8 @@
 
 
 ```sh
-npm install-dev
+npm install cypress --save-dev
 
-export $(grep -v '^#' .env | xargs)
 export CYPRESS_baseUrl=https://dev.connechub.com/
 export CYPRESS_abort_strategy=spec
 

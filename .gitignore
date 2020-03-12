@@ -4,6 +4,7 @@
 .tmp/
 
 # dirs to ignore
+/cypress
 /public/system
 /**/tmp
 /vendor
