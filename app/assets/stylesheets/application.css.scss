@@ -1190,3 +1190,8 @@ li.landing_page {
 .cat_item_count {
   color: #4cae4c
 }
+
+/* Word wrap Listing card long titles */
+div.name > b > a {
+  word-wrap: break-word;
+}
