@@ -3,7 +3,7 @@
 # source https://ldpreload.com/blog/ssh-control
 # source https://unix.stackexchange.com/questions/50508/reusing-ssh-session-for-repeated-rsync-commands
 
-# export SSH_KEY=$1 #"aws-connechub-dev-us-west-1-dje-armor.pem"
+# export SSH_KEY=$1 #"~/.ssh/aws-connechub-dev-us-west-1-dje-armor.pem"
 # export REMOTE_HOST=$2 #"18.144.166.69"
 
 if [[ ! -d $HOME/.ssh/ctl/ ]];then
