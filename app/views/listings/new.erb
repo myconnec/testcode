@@ -9,11 +9,13 @@
 
             <div class="panel-body">
 
-                <%= simple_form_for(@listing, html: {
-                    authenticity_token: true,
-                    multipart: true,
-                    class: 'form-horizontal ',
-                    presence: true
+                <%= simple_form_for(
+                    @listing,
+                    html: {
+                        authenticity_token: true,
+                        multipart: true,
+                        class: 'form-horizontal ',
+                        presence: true
                 }) do |f| %>
 
                     <div class="input-group">
@@ -70,6 +72,19 @@
                             min: "0",
                             step: "any"
                         %>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <div class="input-group-addon">Condition</div>
+                        <div class="form-control">
+                            <%= f.select :condition_id,
+                                Condition.all.map {|f| [f.value, f.id]},
+                                {
+                                    include_blank: true
+                                }
+                            %>
+                        </div>
                     </div>
                     <br>
 
@@ -181,7 +196,7 @@ $(function () {
           value = min;
         else if(value > max)
           value = max;
-        $(this).val(value.toFixed(2)); 
+        $(this).val(value.toFixed(2));
       });
     });
   };

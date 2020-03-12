@@ -11,6 +11,7 @@ class Subcategory < ActiveRecord::Base
             listings = Listing.where("subcategory_id = #{subcategory.id}")
             listings = listings.where("ending_at > '#{Time.now.to_i}'")
             listings = listings.where("media_file_name IS NOT NULL")
+            listings = listings.where("sold IS NULL")
 
             sale_subcat_posting_count.merge!({subcategory.id => listings.count})
         end

@@ -6,9 +6,10 @@ class SubcategoriesController < ApplicationController
         @category = Category.find(params[:category_id])
 
         @listings = Listing
-            .where(subcategory_id: params[:id])
             .where("ending_at > '#{Time.now.to_i}'")
             .where("media_file_name IS NOT NULL")
+            .where("sold IS NULL")
+            .where(subcategory_id: params[:id])
             .order("created_at DESC")
 
         # TODO move this to a CNTL helper

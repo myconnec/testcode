@@ -71,6 +71,19 @@
                     <br>
 
                     <div class="input-group">
+                        <div class="input-group-addon">Condition</div>
+                        <div class="form-control">
+                            <%= f.select :condition_id,
+                                Condition.all.map {|f| [f.value, f.id]},
+                                {
+                                    include_blank: true
+                                }
+                            %>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="input-group">
                         <div class="input-group-addon">Posting Title</div>
                         <%= f.text_field :title,
                             class: "form-control",
@@ -137,7 +150,7 @@
 
                     <div class="input-group">
                         <div class="actions">
-                            <%= f.submit "Submit Listing",
+                            <%= f.submit "Edit Listing",
                                 class: "btn btn-success",
                                 id: "listings_submit"
                             %>

@@ -1,3 +1,9 @@
+<%
+# sources:
+# https://stackoverflow.com/questions/5113248/devise-update-user-without-password
+# https://github.com/heartcombo/devise/wiki/How-To:-Allow-users-to-edit-their-account-without-providing-a-password
+%>
+
 <div class="col-md-8 col-md-offset-2">
     <div class="row">
         <div class="panel panel-default">
@@ -6,19 +12,31 @@
             </div>
 
             <div class="panel-body">
-                <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
+                <%= form_for(
+                    resource,
+                    # as: resource_name,
+                    # url: registration_path(resource_name),
+                    url: '/user/update_resource',
+                    html: {
+                        method: :put,
+                        multipart: true
+                }) do |f| %>
+
                     <%= devise_error_messages! %>
+
+                    <%= f.hidden_field :id %>
 
                     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
                         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
                     <% end %>
                     <br>
 
-                    <%# <% <div class="input-group">
+                    <div class="input-group">
                         <span class="input-group-addon">Username</span>
-                        %= f.text_field :username, class: "form-control" %
+                        <%#= f.input_field :username, class: "form-control", disabled: true %>
+                        <%= f.label :username, class: "form-control", disabled: true %>
                     </div>
-                    <br> %>
+                    <br>
 
                     <div class="input-group">
                         <span class="input-group-addon">Email</span>
@@ -33,17 +51,18 @@
                     <br>
 
                     <div class="input-group">
-                        <span class="input-group-addon">Bio</span>
+                        <span class="input-group-addon">Biography</span>
                         <%= f.text_area :bio, class: "form-control" %>
                     </div>
+                    <br>
+
+                    <div class = "small-heading", style="color:red">* We will need your current password whento allow a password change.</div>
                     <br>
 
                     <div class="input-group">
                         <span class="input-group-addon">Current Password</span>
                         <%= f.password_field :current_password, autocomplete: "off", class: "form-control" %>
                     </div>
-                    <br>
-                    <div class = "small-heading", style="color:red">(We need your current password to allow password changes.)</div>
                     <br>
 
                     <div class="input-group">
@@ -58,8 +77,13 @@
                     </div>
                     <br>
 
-                    <div class="form-group">
-                        <%= f.submit "Update", class: "btn btn-success", id: "profile_submit" %>
+                    <div class="input-group">
+                        <div class="actions">
+                            <%= f.submit "Update Profile",
+                                class: "btn btn-success",
+                                id: "profile_submit"
+                            %>
+                        </div>
                     </div>
                 <% end %>
         </div>
@@ -67,14 +91,3 @@
 </div>
 <br>
 
-<%= render "processing_overlay" %>
-
-<script>
-$(function () {
-    $('#profile_submit').on('click', function(){
-        if (document.getElementById('edit_user').checkValidity() == true){
-            $("#overlay").toggle()
-        }
-    })
-});
-</script>

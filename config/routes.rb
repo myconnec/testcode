@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :subcategories
   end
 
+  resources :conditions
+
   resources :listings do
     resources :comments
     collection do
@@ -21,6 +23,7 @@ Rails.application.routes.draw do
   match '/listings/upload/:id', to: 'listings#upload', via: :get
   match '/listings/create_upload/:id', to: 'listings#create_upload', via: :post
   match '/listings/update_upload/:id', to: 'listings#update_upload', via: :patch
+  match '/listings/sold/:id', to: 'listings#sold', via: :get
 
   match '/prices/index', to: 'prices#index', via: :get
   match '/howitworks/index', to: 'howitworks#index', via: :get

@@ -1041,11 +1041,12 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 .business-header {
     height: 400px;
     background: url("blpic.jpg") center center no-repeat scroll;
-    -webkit-background-size: contain;
-    -moz-background-size: contain;
-    background-size: contain;
-    -o-background-size: contain;
+    // -webkit-background-size: cover;
+    // -moz-background-size: cover;
+    // background-size: cover;
+    // -o-background-size: cover;
 }
+
 .featurette-divider {
     margin: 30px 0;
 }
