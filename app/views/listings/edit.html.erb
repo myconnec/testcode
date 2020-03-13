@@ -59,13 +59,12 @@
                     <div class="input-group">
                         <div class="input-group-addon">Price</div>
                         <%= f.text_field :price,
-                            class:"form-control",
+                            class: "form-control",
                             required: true,
-                            type: "number",
-                            maxlength: "32",
-                            placeholder: "exp. 1234, whole US dollar amount",
-                            min: "1",
-                            step: "any"
+                            type: "regexp",
+                            maxlength: "256",
+                            pattern: "[0-9A-Za-z\s]+",
+                            placeholder: "exp. Text only Listing Title"
                         %>
                     </div>
                     <br>
@@ -169,7 +168,7 @@
 <script>
 $(function () {
     $('#listings_submit').on('click', function(){
-        if (document.getElementById('new_listing').checkValidity() == true){
+        if (document.getElementById('edit_listing_*').checkValidity() == true){
             $("#overlay").toggle()
         }
     })

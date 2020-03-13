@@ -160,6 +160,14 @@ class ListingsController < ApplicationController
     )
   end
 
+  # This is really trash, should be part of the listings#show fn()
+  def show_json
+    # used for Listing edit, need to have the sub_category.id in order to select the Listings subcategory in the form
+    render json: {
+      listing: Listing.where(id: params[:id])
+    }
+  end
+
   def edit
     @listing = Listing.find(params[:id])
     @category = @listing.category
@@ -244,3 +252,4 @@ class ListingsController < ApplicationController
       end
   end
 end
+

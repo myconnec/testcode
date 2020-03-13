@@ -4,42 +4,51 @@ const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2
 })
 
-$(document).on('ready turbolinks:load', function() {
-  if (location.host == 'dev.connechub.com') {
-    // $('select#listing_category_id>option:eq(1)').attr('selected', true);
-    $('#listing_price').val('10');
-    $('#listing_title').val('Test Title');
-    $('#listing_city').val('Tampa');
-    $('#listing_state').val('FL');
-    $('#listing_zipcode').val('33612');
-    $('#listing_description').val('Test Description');
+var getSubcategories = function(category_id){
+  var $subcategories = $('#listing_subcategory_id');
 
-    $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
-    $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
-    $('span.CardField-cvc.CardField-child > span > span > input').val('567');
-    $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
+  if (isNaN(parseInt(category_id))) {
+    $subcategories.empty();
+    return;
   }
 
-  var getSubcategories = function(category_id){
-    var $subcategories = $('#listing_subcategory_id');
-
-    if (isNaN(parseInt(category_id))) {
-      $subcategories.empty();
-      return;
-    }
-
-    $.get('/subcategories/find_by_category', { category_id: category_id }, function(data){
-      $subcategories.empty();
-      $subcategories.append('<option value=""></option>')
-      $.each(data.subcategories, function(index, subcategory) {
-        var option = $('<option />');
-        option.attr('value', subcategory.id);
-        option.text(subcategory.name);
-        option.attr('data-chargable', subcategory.chargable);
-        $subcategories.append(option);
-      })
+  $.get('/subcategories/find_by_category', { category_id: category_id }, function(data){
+    $subcategories.empty();
+    $subcategories.append('<option value=""></option>')
+    $.each(data.subcategories, function(index, subcategory) {
+      var option = $('<option />');
+      option.attr('value', subcategory.id);
+      option.text(subcategory.name);
+      option.attr('data-chargable', subcategory.chargable);
+      $subcategories.append(option);
     })
-  }
+  }).done(function() {
+    select_sub_category()
+  })
+}
+
+var select_sub_category = function() {
+  listing_id = window.location.pathname.split('/')[2]
+  $.get('/listings/show_json/' + listing_id, function(data){
+    $('#listing_subcategory_id').val(data.listing[0].subcategory_id);
+  })
+}
+
+$(document).on('ready turbolinks:load', function() {
+  // if (location.host == 'dev.connechub.com') {
+  //   // $('select#listing_category_id>option:eq(1)').attr('selected', true);
+  //   $('#listing_price').val('10');
+  //   $('#listing_title').val('Test Title');
+  //   $('#listing_city').val('Tampa');
+  //   $('#listing_state').val('FL');
+  //   $('#listing_zipcode').val('33612');
+  //   $('#listing_description').val('Test Description');
+
+  //   $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
+  //   $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
+  //   $('span.CardField-cvc.CardField-child > span > span > input').val('567');
+  //   $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
+  // }
 
   // on change of Category DDL, trigger Sub-category population
   $('#listing_category_id').on('change', function(){
@@ -78,4 +87,8 @@ $(document).on('ready turbolinks:load', function() {
     }
     return;
   });
+});
+
+$(document).on('ready turbolinks:load', function() {
+  getSubcategories($('#listing_category_id').val());
 });

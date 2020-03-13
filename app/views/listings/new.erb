@@ -64,13 +64,12 @@
                     <div class="input-group">
                         <div class="input-group-addon">Price</div>
                         <%= f.text_field :price,
-                            class:"form-control",
+                            class: "form-control",
                             required: true,
-                            type: "number",
-                            maxlength: "9",
-                            placeholder: "exp. 1.23 US Dollar amount",
-                            min: "0",
-                            step: "any"
+                            type: "regexp",
+                            maxlength: "256",
+                            pattern: "[0-9A-Za-z\s]+",
+                            placeholder: "exp. Text only Listing Title"
                         %>
                     </div>
                     <br>
