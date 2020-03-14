@@ -34,7 +34,7 @@ var select_sub_category = function() {
   })
 }
 
-$(document).on('ready turbolinks:load', function() {
+$(document).on('ready turbolinks:load', function(){
   // if (location.host == 'dev.connechub.com') {
   //   // $('select#listing_category_id>option:eq(1)').attr('selected', true);
   //   $('#listing_price').val('10');
@@ -49,7 +49,8 @@ $(document).on('ready turbolinks:load', function() {
   //   $('span.CardField-cvc.CardField-child > span > span > input').val('567');
   //   $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
   // }
-
+  getSubcategories($('#listing_category_id').val());
+  
   // on change of Category DDL, trigger Sub-category population
   $('#listing_category_id').on('change', function(){
     getSubcategories($('#listing_category_id').val());
@@ -87,8 +88,4 @@ $(document).on('ready turbolinks:load', function() {
     }
     return;
   });
-});
-
-$(document).on('ready turbolinks:load', function() {
-  getSubcategories($('#listing_category_id').val());
 });
