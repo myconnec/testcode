@@ -58,5 +58,7 @@ Rails.application.routes.draw do
   match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
   match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
 
+  # User `Device` routes
   get ':username' => 'users#show', as: 'user'
+  match '/user/update_resource' to: 'user#update_resource', via: :post
 end

@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def update_resource()
+  def update_resource
     @user = User.find_by id: params[:id]
 
     if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
