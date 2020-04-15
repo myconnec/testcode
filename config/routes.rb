@@ -60,5 +60,5 @@ Rails.application.routes.draw do
 
   # User `Device` routes
   get ':username' => 'users#show', as: 'user'
-  match '/users/update_resource', to: 'users#update_resource', via: :put
+  match '/users/update', to: 'users#update', via: :put
 end

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  # around_filter :catch_not_found
-  # before_filter :authenticate_user!
+  around_filter :catch_not_found
+  before_filter :authenticate_user!
   
   def show
     @user = User.find_by username: params[:username]
@@ -21,21 +21,20 @@ class UsersController < ApplicationController
     end
   end
 
-  def update_resource
-    if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
-      params[:user].delete(:current_password)
+  def update
+    if params[:user][:password].blank? || params[:user][:password_confirmation].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
-    
+
     @user = User.find(params[:user][:id])
     @user.update(user_params)
-
-    if !@user.save
-      flash[:danger] = @user.errors.full_messages.to_sentence 
+    
+    if !@user.update(user_params)
+      redirect_to action: 'user#edit', :flash => { :danger => @user.errors.full_messages.to_sentence  }
     end
 
-    redirect_to "/users/edit"
+    redirect_to action: 'show', username: @user.username, :flash => { :success => 'Profile updated successfully.' }
   end
 
   private
@@ -52,11 +51,11 @@ class UsersController < ApplicationController
     )
   end
 
-  # def catch_not_found
-  #   yield
-  #   rescue
-  #     if ENV['STAGE'].downcase != 'dev'
-  #       redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
-  #     end
-  # end
+  def catch_not_found
+    yield
+    rescue
+      if ENV['stage'].downcase != 'dev'
+        redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
+      end
+  end
 end

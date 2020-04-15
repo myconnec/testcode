@@ -4,9 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   has_many :listings, dependent: :destroy
 
-  validates_uniqueness_of :username
+  validates_uniqueness_of :username, :email
   validates_presence_of :email
-  validates_presence_of :password
+  # validates_presence_of :password
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "150x150>" }, default_url: "no-photo-available.png"
 
