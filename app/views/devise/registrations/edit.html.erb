@@ -16,7 +16,7 @@
                     resource,
                     # as: resource_name,
                     # url: registration_path(resource_name),
-                    url: '/user/update_resource',
+                    url: '/users/update_resource',
                     html: {
                         method: :put,
                         multipart: true
@@ -33,8 +33,7 @@
 
                     <div class="input-group">
                         <span class="input-group-addon">Username</span>
-                        <%#= f.input_field :username, class: "form-control", disabled: true %>
-                        <%= f.label :username, class: "form-control", disabled: true %>
+                        <%= f.text_area :username, class: "form-control", disabled: true %>
                     </div>
                     <br>
 
@@ -90,4 +89,3 @@
     </div>
 </div>
 <br>
-

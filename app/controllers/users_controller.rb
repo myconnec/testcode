@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   # around_filter :catch_not_found
   # before_filter :authenticate_user!
-
+  
   def show
     @user = User.find_by username: params[:username]
 
@@ -22,17 +22,34 @@ class UsersController < ApplicationController
   end
 
   def update_resource
-    @user = User.find_by id: params[:id]
-
     if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
-      # params(@user).permit(:email, :bio, :avatar_file_name)
-      # @user.edit(params)
-      # @user.save(params)
-      @user.save(params)
-    else
-      super
+      params[:user].delete(:current_password)
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
     end
+    
+    @user = User.find(params[:user][:id])
+    @user.update(user_params)
+
+    if !@user.save
+      flash[:danger] = @user.errors.full_messages.to_sentence 
+    end
+
     redirect_to "/users/edit"
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(
+      :avatar,
+      :bio,
+      :current_password,
+      :email,
+      :id,
+      :password_confirmation,
+      :password,
+    )
   end
 
   # def catch_not_found
