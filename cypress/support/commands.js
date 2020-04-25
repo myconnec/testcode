@@ -58,6 +58,9 @@ Cypress.Commands.add('login', (userData = false) => {
   cy.get('#user_remember_me').check()
   cy.get('form.new_user').submit()
 
+  cy.get('body > div:nth-child(7) > div > div').contains('Invalid Email or password.').should('not.be.visible')
+
+
   cy.handle_splash_message('Signed in successfully.', 'notice')
 })
 
@@ -77,7 +80,7 @@ Cypress.Commands.add('create_new_user', (userData = false) => {
 
   if (userData == false) {
     const rnd = Math.floor(Math.random() * Math.floor(1024));
-    
+
     userData = {
       bio: 'Lorem ipsum dolor sit amet....',
       email: 'test' + rnd + '+admin@connechub.com',

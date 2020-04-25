@@ -13,14 +13,15 @@ describe('User account CRUD...', function () {
         bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         email: 'test@test.com',
         name: 'Test User',
-        password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
+        password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i',
+        new_password: 'Cs^6^*HG$ASDFwIskiwRF*P$lM6y4g*i'
     }
 
     // TODO figure out how to NOT do this for the '...create' eval
     // beforeEach(function () {
     //   cy.login()
     // })
-    
+
     // afterEach(function () {
     //   cy.logout()
     // })
@@ -54,26 +55,25 @@ describe('User account CRUD...', function () {
         cy.login(userData)
         cy.view_user_profile()
 
-        cy.get('#inside_view_left > div:nth-child(7) > a').contains('Edit Your Profile').click()
         // update w/o password
+        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_bio').clear().type(userData.bio)
-        cy.get('#edit_user > div.form-group > input').click()
-        // gets error
-        cy.get('#error_explanation > ul > li').contains('Current password can\'t be blank')
+        cy.get('#profile_submit').click()
 
         // update w/ password
+        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_bio').clear().type(userData.bio)
-        cy.get('#user_current_password').clear().type(userData.password)
-        cy.get('#edit_user > div.form-group > input').click()
-
-        // success
-        cy.handle_splash_message('Your account has been updated successfully.', 'notice')
-
-        cy.logout()
+        cy.get('#user_password').type(userData.new_password)
+        cy.get('#user_password_confirmation').type(userData.new_password)
+        cy.get('#profile_submit').click()
     })
 
     it('...delete.', function () {
+        // use new password
+        userData.password = userData.new_password
+
         cy.login(userData)
+        // TODO: Users should have a way to disable / delete their account.
         cy.logout()
     })
 })
