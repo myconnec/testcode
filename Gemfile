@@ -52,8 +52,6 @@ gem 'jbuilder', '~> 2.0'
 # bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for safely handling passwords.
 gem 'bcrypt', '~> 3.1.12'
 
-
-
 # Easy upload management for ActiveRecord
 gem 'paperclip', '~> 5.1'
 # Audio/Video Transcoder for Paperclip using FFMPEG/Avconv
@@ -62,10 +60,8 @@ gem 'paperclip-av-transcoder', '~> 0.6.4'
 gem 'paperclip-ffmpeg', '~> 1.2'
 # Process your Paperclip attachments in the background with ActiveJob
 gem 'delayed_paperclip', '~> 3.0.1'
-# HTML5 VideoJS plugin
+# VideoJS for Rails Asset Pipeline
 gem 'videojs_rails', '~> 4.12', '>= 4.12.15'
-# Video.js is a JavaScript and CSS library that makes it easier to work with and build on HTML5 video
-gem 'video-js-rails', '~> 4.3.0'
 # Stripe payment processor
 gem 'stripe', '~> 4.17.0'
 

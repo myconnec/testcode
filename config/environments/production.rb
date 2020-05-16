@@ -88,5 +88,5 @@ Rails.application.configure do
     config.active_record.dump_schema_after_migration = false
 
     # Video upload
-    config.assets.precompile += %w( video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff vjs.mp4 vjs.mov)
+    config.assets.precompile += %w( video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff )
 end

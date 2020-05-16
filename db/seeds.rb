@@ -1,8 +1,8 @@
 connection = ActiveRecord::Base.connection
 
-connection.tables.each do |table|
-  connection.execute("TRUNCATE #{table}") unless table == "schema_migrations"
-end
+# connection.tables.each do |table|
+#   connection.execute("TRUNCATE #{table}") unless table == "schema_migrations"
+# end
 
 sql = File.read('./db/sql/database.sql')
 statements = sql.split(/;$/)
