@@ -9,9 +9,7 @@
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w( listings.js )
-Rails.application.config.assets.precompile += %w( video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff )
-
+Rails.application.config.assets.precompile += %w( listings.js video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff )
 require 'paperclip/media_type_spoof_detector'
 module Paperclip
   class MediaTypeSpoofDetector
