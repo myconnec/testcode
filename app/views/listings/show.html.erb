@@ -5,17 +5,14 @@
     <div class="grid_6">
         <p>
             <div>
-                <%= videojs_rails sources: {
-                    avi: @presigned_media_url,
-                    mkv: @presigned_media_url,
-                    mov: @presigned_media_url,
-                    mp4: @presigned_media_url
-                },
-                controls: true,
-                autoplay: false,
-                preload: true,
-                width:"450",
-                height:"450" do%><% end %>
+                <%= videojs_rails
+                    sources: {m3u8: @presigned_media_url},
+                    controls: true,
+                    autoplay: false,
+                    preload: true,
+                    width:"450",
+                    height:"450" do%
+                ><% end %>
             </div>
             <small><b>Posted By: &nbsp;</b><%= @listing.user.email %></small>
             <br><br><br>

@@ -64,8 +64,6 @@ gem 'paperclip-ffmpeg', '~> 1.2'
 gem 'delayed_paperclip', '~> 3.0.1'
 # HTML5 VideoJS plugin
 gem 'videojs_rails', '~> 4.12', '>= 4.12.15'
-# Video.js is a JavaScript and CSS library that makes it easier to work with and build on HTML5 video
-gem 'video-js-rails', '~> 4.3.0'
 # Stripe payment processor
 gem 'stripe', '~> 4.17.0'
 

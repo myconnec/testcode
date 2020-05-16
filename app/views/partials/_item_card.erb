@@ -1,11 +1,8 @@
 <%= link_to (
-    videojs_rails sources: {
-        avi: listing.presigned_media_url,
-        mkv: listing.presigned_media_url,
-        mov: listing.presigned_media_url,
-        mp4: listing.presigned_media_url
-    },
-    controls: false,
-    setup: "{}",
-    class: 'img-responsive'),
-listing %>
+    videojs_rails
+        sources: {m3u8: listing.presigned_media_url},
+        controls: false,
+        setup: "{}",
+        class: 'img-responsive'),
+    listing
+%>
