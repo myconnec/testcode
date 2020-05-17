@@ -5,8 +5,9 @@
     <div class="grid_6">
         <p>
             <div>
-                <%= videojs_rails
-                    sources: {mpd: @presigned_media_url},
+                <%= videojs_rails sources: {
+                        mpd: @presigned_media_url
+                    },
                     controls: true,
                     autoplay: false,
                     preload: true,
