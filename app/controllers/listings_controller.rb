@@ -118,14 +118,18 @@ class ListingsController < ApplicationController
 
     # check file extention is of allowed format
     file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length].downcase
+
     if !['avi', 'mov', 'mp4', 'mkv'].include? file_ext
       flash[:danger] = 'Please provide a video file for your listing. File types .avi, .mov, .mp4, .mkv are accepted.'
       return redirect_to action: "upload", id: @listing.id
     end
 
+    # change ext to match mp4 playlist file extension. mpd or m3u8
+    file_name = File.basename(file_name, File.extname(file_name)) + '.mpd'
+
+    # save listing
     @listing.media_file_name = file_name
     @listing.media_updated_at = Time.now.to_i
-    @listing.save
 
     if !@listing.save
       flash[:danger] = 'An error occured while updating your Listing with the video.'

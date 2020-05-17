@@ -1,6 +1,6 @@
 <%= link_to (
     videojs_rails
-        sources: {m3u8: listing.presigned_media_url},
+        sources: {mpd: listing.presigned_media_url},
         controls: false,
         setup: "{}",
         class: 'img-responsive'),
