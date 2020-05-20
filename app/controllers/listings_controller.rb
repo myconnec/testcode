@@ -125,7 +125,7 @@ class ListingsController < ApplicationController
     end
 
     # change ext to match mp4 playlist file extension. mpd or m3u8
-    file_name[0...-4] + '.mpd'
+    file_name[0...-4] + '.m3u8'
 
     # save listing
     @listing.media_file_name = file_name
