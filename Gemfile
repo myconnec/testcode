@@ -31,8 +31,6 @@ gem 'slide-down-alerts-rails', '~> 0.0.2'
 gem 'imagesLoaded_rails'
 # Cascading grid layout library for Rails
 gem 'masonry-rails', '~> 0.2.4'
-# Inspect and process video or audio files
-gem 'rvideo', '~> 0.9.3'
 # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
 gem 'mini_magick', '~> 4.6'
 # A lightweight literate ruby wrapper for HandBrakeCLI, the command-line interface for the HandBrake video transcoder.
@@ -62,8 +60,6 @@ gem 'paperclip-av-transcoder', '~> 0.6.4'
 gem 'paperclip-ffmpeg', '~> 1.2'
 # Process your Paperclip attachments in the background with ActiveJob
 gem 'delayed_paperclip', '~> 3.0.1'
-# HTML5 VideoJS plugin
-gem 'videojs_rails', '~> 4.12', '>= 4.12.15'
 # Stripe payment processor
 gem 'stripe', '~> 4.17.0'
 

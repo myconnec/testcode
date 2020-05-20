@@ -5,13 +5,24 @@
     <div class="grid_6">
         <p>
             <div>
-                <%= videojs_rails sources: {m3u8: @presigned_media_url},
-                    controls: true,
-                    autoplay: false,
-                    preload: true,
-                    width:"450",
-                    height:"450" do%>
-                <% end %>
+
+            <% # TODO would like to use the rails_videosj GEM but getting VideoJS 7+ is a PITA %>
+            <video
+                class="video-js vjs-default-skin"
+                controls="true"
+                data-setup="{}"
+                height="450"
+                poster=""
+                width="450"
+            >
+                <source
+                    src="<%= @media_url %>"
+                    type="application/x-mpegURL"
+                />
+                <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+            </video>
+            
+
             </div>
             <small><b>Posted By: &nbsp;</b><%= @listing.user.email %></small>
             <br><br><br>
@@ -61,17 +72,7 @@
                 <b>
                     <%= simple_format (@listing.title) %>
                 </b>
-                <% if @user.present? %>
-                    <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
-                        <i class = "fa fa-heart"></i>
-                        <%= @listing.votes_for.size %>
-                    <% end %>
-                <% else %>
-                    <a href="#" class="pull-right">
-                        <i class = "fa fa-heart"></i>
-                        <%= @listing.votes_for.size %>
-                    </a>
-                <% end %>
+                <!-- like logic here -->
             </span>
         </div>
         <br>

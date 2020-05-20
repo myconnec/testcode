@@ -18,7 +18,5 @@
 //= require bootstrap-sprockets
 //= require masonry/jquery.masonry
 //= require imagesloaded
-//= require video
 //= require helpers
 //= require_tree .
-//= require video.js
