@@ -42,16 +42,5 @@ class CategoriesController < ApplicationController
             .where("media_file_name IS NOT NULL")
             .where("sold IS NULL")
             .where(category_id: params[:id])
-
-        # TODO move this to a CNTL helper
-        # media_file_name, add -00001.png
-        signer = Aws::S3::Presigner.new
-        @listings.each do | listing |
-            listing.presigned_media_url = signer.presigned_url(
-              :get_object,
-              bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-              key: (listing.media_file_name + '-00001.png')
-            )
-        end
     end
 end

@@ -12,17 +12,6 @@ class SubcategoriesController < ApplicationController
             .where(subcategory_id: params[:id])
             .order("created_at DESC")
 
-        # TODO move this to a CNTL helper
-        # media_file_name, add -00001.png
-        signer = Aws::S3::Presigner.new
-        @listings.each do | listing |
-            listing.presigned_media_url = signer.presigned_url(
-                :get_object,
-                bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-                key: (listing.media_file_name + '-00001.png')
-            )
-        end
-
         @subcategory = Subcategory.find(params[:id])
     end
 

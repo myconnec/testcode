@@ -5,24 +5,21 @@
     <div class="grid_6">
         <p>
             <div>
-
-            <% # TODO would like to use the rails_videosj GEM but getting VideoJS 7+ is a PITA %>
-            <video
-                class="video-js vjs-default-skin"
-                controls="true"
-                data-setup="{}"
-                height="450"
-                poster=""
-                width="450"
-            >
-                <source
-                    src="<%= @media_url %>"
-                    type="application/x-mpegURL"
-                />
-                <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
-            </video>
-            
-
+                <% # TODO would like to use the rails_videosj GEM but getting VideoJS 7+ is a PITA %>
+                <video
+                    class="video-js vjs-default-skin"
+                    controls="true"
+                    data-setup="{}"
+                    height="450"
+                    poster=""
+                    width="450"
+                >
+                    <source
+                        src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3-<%= ENV['REGION'] %>.amazonaws.com/<%= @listing.media_file_name %>"
+                        type="application/x-mpegURL"
+                    />
+                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                </video>
             </div>
             <small><b>Posted By: &nbsp;</b><%= @listing.user.email %></small>
             <br><br><br>
@@ -72,7 +69,17 @@
                 <b>
                     <%= simple_format (@listing.title) %>
                 </b>
-                <!-- like logic here -->
+                    <% if @user.present? %>
+                        <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
+                            <i class = "fa fa-heart"></i>
+                            
+                        <% end %>
+                    <% else %>
+                        <a href="#" class="pull-right">
+                            <i class = "fa fa-heart"></i>
+                            <%= @listing.votes_for.size %>
+                        </a>
+                    <% end %>
             </span>
         </div>
         <br>

@@ -153,15 +153,6 @@ class ListingsController < ApplicationController
 
     @comments = Comment.where(listing_id: @listing).order("created_at DESC")
     @user = current_user
-
-    # source https://stackoverflow.com/questions/44741473/recommended-way-to-generate-a-presigned-url-to-s3-bucket-in-ruby
-    # source https://docs.aws.amazon.com/sdk-for-ruby/v3/api/Aws/S3/Object.html#presigned_url-instance_method
-    signer = Aws::S3::Presigner.new
-    @presigned_media_url = signer.presigned_url(
-      :get_object,
-      bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-      key: (@listing.media_file_name)
-    )
   end
 
   # This is really trash, should be part of the listings#show fn()
@@ -205,12 +196,6 @@ class ListingsController < ApplicationController
       if !listing.has_attribute?(:media_file_name)
         next
       end
-
-      listing.presigned_media_url = signer.presigned_url(
-        :get_object,
-        bucket: ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'],
-        key: (listing.media_file_name + '-00001.png')
-      )
     end
   end
 

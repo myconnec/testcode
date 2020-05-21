@@ -1,6 +1,4 @@
 class Listing < ActiveRecord::Base
-  attr_accessor :presigned_media_url
-
   acts_as_votable
   is_impressionable
 
