@@ -71,7 +71,17 @@
                 <b>
                     <%= simple_format (@listing.title) %>
                 </b>
-                <!-- listing liking logic here -->
+                <% if @user.present? %>
+                    <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
+                        <i class = "fa fa-heart"></i>
+                        <%= @listing.votes_for.size %>
+                    <% end %>
+                <% else %>
+                    <a href="#" class="pull-right">
+                        <i class = "fa fa-heart"></i>
+                        <%= @listing.votes_for.size %>
+                    </a>
+                <% end %>
             </span>
         </div>
         <br>
