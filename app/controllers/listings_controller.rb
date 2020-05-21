@@ -125,7 +125,7 @@ class ListingsController < ApplicationController
     end
 
     # Remove file extension. The Video player will add .m3u8 and thumbnails will add .jpg
-    file_name[0...-4]
+    file_name = file_name[0...-4]
 
     # save listing
     @listing.media_file_name = file_name

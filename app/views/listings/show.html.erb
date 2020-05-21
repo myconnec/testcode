@@ -8,18 +8,20 @@
                 <% # TODO would like to use the rails_videosj GEM but getting VideoJS 7+ is a PITA %>
                 <video
                     class="video-js vjs-default-skin"
-                    controls="true"
+                    controls
                     data-setup="{}"
                     height="450"
-                    poster=""
+                    poster="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3-<%= ENV['REGION'] %>.amazonaws.com/<%= @listing.media_file_name %>-00001.png"
+                    preload
                     width="450"
                 >
                     <source
-                        src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3-<%= ENV['REGION'] %>.amazonaws.com/<%= @listing.media_file_name %>.m3u8"
+                        src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3-<%= ENV['REGION'] %>.amazonaws.com/<%= @listing.media_file_name + ".m3u8" %>"
                         type="application/x-mpegURL"
                     />
                     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
                 </video>
+
             </div>
             <small><b>Posted By: &nbsp;</b><%= @listing.user.email %></small>
             <br><br><br>

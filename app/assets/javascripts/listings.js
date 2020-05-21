@@ -35,20 +35,22 @@ var select_sub_category = function() {
 }
 
 $(document).on('ready turbolinks:load', function(){
-  // if (location.host == 'dev.connechub.com') {
-  //   // $('select#listing_category_id>option:eq(1)').attr('selected', true);
-  //   $('#listing_price').val('10');
-  //   $('#listing_title').val('Test Title');
-  //   $('#listing_city').val('Tampa');
-  //   $('#listing_state').val('FL');
-  //   $('#listing_zipcode').val('33612');
-  //   $('#listing_description').val('Test Description');
+  if (location.host == 'dev.connechub.com') {
+    $('select#listing_category_id>option:eq(1)').attr('selected', true);
+    $('#listing_price').val('10');
+    $('#listing_condition_id').val('1')
+    $('#listing_title').val('Test Title');
+    $('#listing_city').val('Tampa');
+    $('#listing_state').val('FL');
+    $('#listing_zipcode').val('33612');
+    $('#listing_description').val('Test Description');
 
-  //   $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
-  //   $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
-  //   $('span.CardField-cvc.CardField-child > span > span > input').val('567');
-  //   $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
-  // }
+    $('span.CardField-number.CardField-child > span:nth-child(2) > span > input').val('4242424242424242');
+    $('span.CardField-expiry.CardField-child > span > span > input').val('1234');
+    $('span.CardField-cvc.CardField-child > span > span > input').val('567');
+    $('span.CardField-postalCode.CardField-child > span > span > input').val('89012');
+  }
+
   getSubcategories($('#listing_category_id').val());
   
   // on change of Category DDL, trigger Sub-category population
