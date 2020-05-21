@@ -124,8 +124,8 @@ class ListingsController < ApplicationController
       return redirect_to action: "upload", id: @listing.id
     end
 
-    # change ext to match mp4 playlist file extension. mpd or m3u8
-    file_name[0...-4] + '.m3u8'
+    # Remove file extension. The Video player will add .m3u8 and thumbnails will add .jpg
+    file_name[0...-4]
 
     # save listing
     @listing.media_file_name = file_name

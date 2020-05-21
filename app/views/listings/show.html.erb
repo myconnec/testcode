@@ -15,7 +15,7 @@
                     width="450"
                 >
                     <source
-                        src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3-<%= ENV['REGION'] %>.amazonaws.com/<%= @listing.media_file_name %>"
+                        src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3-<%= ENV['REGION'] %>.amazonaws.com/<%= @listing.media_file_name %>.m3u8"
                         type="application/x-mpegURL"
                     />
                     <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
@@ -69,17 +69,7 @@
                 <b>
                     <%= simple_format (@listing.title) %>
                 </b>
-                    <% if @user.present? %>
-                        <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
-                            <i class = "fa fa-heart"></i>
-                            
-                        <% end %>
-                    <% else %>
-                        <a href="#" class="pull-right">
-                            <i class = "fa fa-heart"></i>
-                            <%= @listing.votes_for.size %>
-                        </a>
-                    <% end %>
+                <!-- listing liking logic here -->
             </span>
         </div>
         <br>
