@@ -8,11 +8,11 @@
                 <% # TODO would like to use the rails_videosj GEM but getting VideoJS 7+ is a PITA %>
                 <video
                     class="video-js vjs-default-skin"
-                    controls
+                    controls=controls
                     data-setup="{}"
                     height="450"
                     poster="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3-<%= ENV['REGION'] %>.amazonaws.com/<%= @listing.media_file_name %>-00001.png"
-                    preload
+                    preload=preload
                     width="450"
                 >
                     <source
