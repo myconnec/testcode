@@ -1,72 +1,72 @@
 <div class="content-fluid">
-  <div class="row">
-    <!-- User profile dataum -->
-    <div class="col-xs-6 col-md-2">
-      <center>
-        <div  id="inside_view_left">
-          <br>
-          <div class="profile-info"><%= image_tag @user.avatar.url(:thumb), class: 'img-responsive', style: 'width: 100px; height: 100px' %></div>
-          <hr style= "width: 100px">
-          <div class="hero-description"><%= @user.username %></div>
-          <div class="hero-description"><%= @user.bio %></div>
-          <div class="hero-description">Joined <%= @user.created_at %></div>
-          <br>
-          <div><%= link_to 'Edit Your Profile', edit_user_registration_path, class: "btn btn-success btn-sm" %></div>
-          <br>
+    <div class="row">
+        <!-- User profile dataum -->
+        <div class="col-xs-6 col-md-2">
+            <center>
+                <div id="inside_view_left">
+                    <br>
+                    <div class="profile-info"><%= image_tag @user.avatar.url(:thumb), class: 'img-responsive', style: 'width: 100px; height: 100px' %></div>
+                    <hr style="width: 100px">
+                    <div class="hero-description"><%= @user.username %></div>
+                    <div class="hero-description"><%= @user.bio %></div>
+                    <div class="hero-description">Joined <%= @user.created_at %></div>
+                    <br>
+                    <div><%= link_to 'Edit Your Profile', edit_user_registration_path, class: "btn btn-success btn-sm" %></div>
+                    <br>
+                </div>
+            </center>
         </div>
-      </center>
-    </div>
 
-    <!-- User postings-->
-    <div style="margin-left: 175px">
-      <div class="hero-wrapper">
-        <div align="left">
-              <div class="">
-              <div class = "small-heading">
-                <b>Active Posts: <%= @listings.count %></b>
-                <% if @user.promo_1 > 0 %>
-                 | <b>Free `Paid` Listings Remaining: <%= @user.promo_1 %></b>
-                <% end %>
-              </div>
-              <hr>
-              <div class = "grid transitions-enabled">
-                <% if @user.listings.present? %>
-                  <% @listings.each do |listing| %>
-                      <div class="panel panel-default pin-item">
-                          <div class="panel-body">
-                            <%= link_to image_tag(
+        <!-- User postings-->
+        <div style="margin-left: 175px">
+            <div class="hero-wrapper">
+                <div align="left">
+                    <div class="">
+                        <div class="small-heading">
+                            <b>Active Posts: <%= @listings.count %></b>
+                            <% if @user.promo_1 > 0 %>
+                            | <b>Free `Paid` Listings Remaining: <%= @user.promo_1 %></b>
+                            <% end %>
+                        </div>
+                        <hr>
+                        <div class="grid transitions-enabled">
+                            <% if @user.listings.present? %>
+                            <% @listings.each do |listing| %>
+                            <div class="panel panel-default pin-item">
+                                <div class="panel-body">
+                                    <%= link_to image_tag(
                               "https://" + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + ".s3-" + ENV['REGION'] +".amazonaws.com/" + listing.media_file_name + "-00001.png",
                               class: "img-responsive",
                               onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
                             ), listing %>
-                          </div>
-                            <div class="panel-footer pin-content">
-                            <div class="price"><b>$<%= listing.price %></b></div>
-                            <div class="name"><b><%= link_to listing.title, listing %></b></div>
-                            <div class="description"><%= listing.city %>, <%= listing.state %></div>
-                            <small class = "board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
-                          <hr>
-                            <% if listing.user == current_user %>
-                              <span class="description"><%= link_to 'Edit Listing', edit_listing_path(listing) %></span>&nbsp;|&nbsp;
-                              <span class="description"><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></span>
-                              <span class="description"><%= link_to 'Change Video', "/listings/upload/#{listing.id}" %></span>
-                              <% if listing.sold === nil %>
-                                <br /><span class="description"><%= link_to 'Mark as Sold', "/listings/sold/#{listing.id}" %></span>
-                              <% else %>
-                                <br /><span class="description"><%= link_to 'Relist item', "/listings/unsold/#{listing.id}" %></span>
-                              <% end %>
+                                </div>
+                                <div class="panel-footer pin-content">
+                                    <div class="price"><b>$<%= listing.price %></b></div>
+                                    <div class="name"><b><%= link_to listing.title, listing %></b></div>
+                                    <div class="description"><%= listing.city %>, <%= listing.state %></div>
+                                    <small class="board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
+                                    <hr>
+                                    <% if listing.user == current_user %>
+                                    <span class="description"><%= link_to 'Edit Listing', edit_listing_path(listing) %></span>&nbsp;|&nbsp;
+                                    <span class="description"><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></span>
+                                    <span class="description"><%= link_to 'Change Video', "/listings/upload/#{listing.id}" %></span>
+                                    <% if listing.sold === nil %>
+                                    <br /><span class="description"><%= link_to 'Mark as Sold', "/listings/sold/#{listing.id}" %></span>
+                                    <% else %>
+                                    <br /><span class="description"><%= link_to 'Relist item', "/listings/unsold/#{listing.id}" %></span>
+                                    <% end %>
+                                    <% end %>
+                                </div>
+                            </div>
                             <% end %>
-                          </div>
-                      </div>
-                  <% end %>
-                <% else %>
-                  <p>No listings found!</>
-                <% end %>
-              </div>
-              <br>
-              </div>
+                            <% else %>
+                            <p>No listings found!</>
+                                <% end %>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-  </div>
 </div>

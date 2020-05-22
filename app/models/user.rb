@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   validates_presence_of :email
   # validates_presence_of :password
 
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :username, format: { with: /\A[a-zA-Z\'\ \-]*\z/ }
+
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "150x150>" }, default_url: "no-photo-available.png"
 
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/

@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   match '/help', to: 'pages#help', via: :get
   match '/marketing', to: 'pages#marketing', via: :get
   match '/membership', to: 'pages#membership', via: :get
+  match '/newsletter', to: 'pages#newsletter', via: :get
   match '/mobile', to: 'pages#mobile', via: :get
   match '/postads', to: 'pages#postads', via: :get
   match '/postterm', to: 'pages#postterm', via: :get

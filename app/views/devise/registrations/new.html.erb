@@ -6,15 +6,15 @@
                     <h3 class="sign-h"><span id="sign-icon"><i class="fa fa-sign-in"></i></span>Sign Up!</h3>
                 </div>
                 <div class="panel-body">
-                        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-                        <%= devise_error_messages! %>
-                        <fieldset>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-10  col-md-offset-1 ">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span> 
-                                            <%= f.text_field :username,
+                    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+                    <%= devise_error_messages! %>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <%= f.text_field :username,
                                                 autofocus: true,
                                                 class: "form-control",
                                                 pattern: "[0-9A-Za-z\s]+",
@@ -22,45 +22,45 @@
                                                 required: true,
                                                 type: "regexp"
                                             %>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                            <%= f.email_field :email,
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                        <%= f.email_field :email,
                                                 autofocus: true,
                                                 class: "form-control",
                                                 placeholder:"Email"
                                             %>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                            <%= f.password_field :password,
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <%= f.password_field :password,
                                                 placeholder:"Password",
                                                 autocomplete: "off",
                                                 class: "form-control"
                                             %>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                            <%= f.password_field :password_confirmation,
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                        <%= f.password_field :password_confirmation,
                                                 placeholder:"Confirm Password",
                                                 autocomplete: "off",
                                                 class: "form-control"
                                             %>
-                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <%= f.submit "Sign up", class: "btn btn-lg btn-success btn-block" %>
-                                    </div>
-                                    <br>
                                 </div>
+                                <div class="form-group">
+                                    <%= f.submit "Sign up", class: "btn btn-lg btn-success btn-block" %>
+                                </div>
+                                <br>
                             </div>
-                        </fieldset>
+                        </div>
+                    </fieldset>
                     <% end %>
                 </div>
                 <div class="panel-footer ">
