@@ -63,6 +63,19 @@ class ListingsController < ApplicationController
     redirect_to(:back)
   end
 
+  def unsold
+    @listing = Listing.find(params[:id])
+    @listing.sold = nil
+
+    if !@listing.save
+      flash[:danger] = 'An error occured while updating your Listing as relist.'
+      redirect_to(:back)
+    end
+
+    flash[:success] = 'Listing marked as re-list. It will now be visible to other users.'
+    redirect_to(:back)
+  end
+
   def create_payment
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here: https://dashboard.stripe.com/account/apikeys

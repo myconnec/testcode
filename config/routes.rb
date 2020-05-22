@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   match '/listings/create_upload/:id', to: 'listings#create_upload', via: :post
   match '/listings/update_upload/:id', to: 'listings#update_upload', via: :patch
   match '/listings/sold/:id', to: 'listings#sold', via: :get
+  match '/listings/unsold/:id', to: 'listings#unsold', via: :get
   match '/listings/show_json/:id', to: 'listings#show_json', via: :get
 
   match '/prices/index', to: 'prices#index', via: :get
