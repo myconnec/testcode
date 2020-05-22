@@ -9,11 +9,12 @@ describe('Bottom menu static page CRUD...', function () {
         cy.get('.nav > .open > .dropdown-menu > li:nth-child(2) > a').click()
         cy.visit('about')
         cy.get('#myNavbar > .row1 > .nav > .dropup:nth-child(1) > .dropdown-toggle').click()
-        cy.get('.nav > .open > .dropdown-menu > li:nth-child(3) > a').click()
+        cy.get('.nav > .open > .dropdown-menu > li:nth-child(4) > a').click()
         cy.visit('howitworks/index')
         cy.get('.row1 > .nav > .dropup:nth-child(1) > .dropdown-toggle > .ts-label').click()
-        cy.get('.nav > .dropup > .dropdown-menu > li:nth-child(4) > a').click()
+        cy.get('.nav > .dropup > .dropdown-menu > li:nth-child(5) > a').click()
         cy.visit('prices/index')
+
         cy.get('#myNavbar > .row1 > .nav > .dropup:nth-child(2) > .dropdown-toggle').click()
         cy.get('.nav > .open > .dropdown-menu > li:nth-child(1) > a').click()
         cy.visit('terms')
@@ -23,6 +24,7 @@ describe('Bottom menu static page CRUD...', function () {
         cy.get('.row1 > .nav > .dropup:nth-child(2) > .dropdown-toggle > .ts-label').click()
         cy.get('.nav > .open > .dropdown-menu > li:nth-child(3) > a').click()
         cy.visit('postterm')
+
         cy.get('.row1 > .nav > .dropup:nth-child(3) > .dropdown-toggle > .ts-label').click()
         cy.get('.nav > .open > .dropdown-menu > li:nth-child(1) > a').click()
         cy.visit('faq')
@@ -32,6 +34,7 @@ describe('Bottom menu static page CRUD...', function () {
         cy.get('#myNavbar > .row1 > .nav > .dropup:nth-child(3) > .dropdown-toggle').click()
         cy.get('.nav > .open > .dropdown-menu > li:nth-child(2) > a').click()
         cy.visit('safetytips')
+
         cy.get('#myNavbar > .row1 > .nav > .li_no_bg > .ts-copy').click()
         cy.get('.navbar > .container > .navbar-header > a > img').click()
         cy.visit('')
