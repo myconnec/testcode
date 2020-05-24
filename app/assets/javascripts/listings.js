@@ -31,6 +31,7 @@ var select_sub_category = function() {
   listing_id = window.location.pathname.split('/')[2]
   $.get('/listings/show_json/' + listing_id, function(data){
     $('#listing_subcategory_id').val(data.listing[0].subcategory_id);
+    $('#listing_subcategory_id > option:nth-child(2)').attr('selected', true);
   })
 }
 

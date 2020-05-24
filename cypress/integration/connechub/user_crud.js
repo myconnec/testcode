@@ -8,72 +8,71 @@
  */
 describe('User account CRUD...', function () {
 
-    const userData = {
-        admin: false,
-        bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        email: 'test@test.com',
-        name: 'Test User',
-        password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i',
-        new_password: 'Cs^6^*HG$ASDFwIskiwRF*P$lM6y4g*i'
-    }
-
-    // TODO figure out how to NOT do this for the '...create' eval
-    // beforeEach(function () {
-    //   cy.login()
-    // })
-
-    // afterEach(function () {
-    //   cy.logout()
-    // })
+    const userData = [
+        {
+            admin: false,
+            bio: 'User CRUD',
+            email: 'test_user_crud@test.com',
+            name: 'Test User CRUD',
+            password: 'T37q1Gm@miyg',
+            new_password: 'cAYCZL60aR01'
+        }
+    ]
 
     it('...create.', function () {
-        const rnd = Math.floor(Math.random() * Math.floor(1024));
-        userData.name = userData.name + ' ' + rnd
-        userData.email= 'test' + rnd + '+admin@connechub.com'
-
         cy.visit('')
-        console.log('userData: ', userData)
-        cy.get('#navbar > ul.nav.navbar-nav.navbar-right > li:nth-child(2) > a').click()
-        cy.get('#user_username').type(userData.name)
-        cy.get('#user_email').type(userData.email)
-        cy.get('#user_password').type(userData.password)
-        cy.get('#user_password_confirmation').type(userData.password)
+        cy.get('#navbar > ul > li > a').contains('Sign Up').click()
+
+        cy.get('#user_username').type(userData[0].name)
+        cy.get('#user_email').type(userData[0].email)
+        cy.get('#user_password').type(userData[0].password)
+        cy.get('#user_password_confirmation').type(userData[0].password)
         cy.get('form.new_user').submit()
+
         cy.get('body > div > div > div').contains('Welcome! You have signed up successfully.')
         cy.logout()
     })
 
     it('...read.', function () {
-        cy.login(userData)
+        cy.login(userData[0])
         cy.view_user_profile()
-        cy.get('#inside_view_left > div:nth-child(4)').contains(userData.name)
+        cy.get('#inside_view_left > div:nth-child(4)').contains(userData[0].name)
         cy.get('#inside_view_left > div:nth-child(5)').should('be.empty') // nothing in the bio for new users
         cy.logout()
     })
 
-    it('...update.', function () {
-        cy.login(userData)
-        cy.view_user_profile()
+    it('...update (w/o password change).', function () {
+        cy.login(userData[0]).view_user_profile()
 
         // update w/o password
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
-        cy.get('#user_bio').clear().type(userData.bio)
+        cy.get('#user_bio').clear().type(userData[0].bio + ' - no password change ')
         cy.get('#profile_submit').click()
 
-        // update w/ password
-        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
-        cy.get('#user_bio').clear().type(userData.bio)
-        cy.get('#user_password').type(userData.new_password)
-        cy.get('#user_password_confirmation').type(userData.new_password)
-        cy.get('#profile_submit').click()
-    })
-
-    it('...delete.', function () {
-        // use new password
-        userData.password = userData.new_password
-
-        cy.login(userData)
-        // TODO: Users should have a way to disable / delete their account.
         cy.logout()
     })
+
+    it('...update (w/ password change).', function () {
+        cy.login(userData[0]).view_user_profile()
+
+        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
+        cy.get('#user_bio').clear().type(userData[0].bio + ' with password change.')
+        cy.get('#user_password').type(userData[0].new_password)
+        cy.get('#user_password_confirmation').type(userData[0].new_password)
+        cy.get('#profile_submit').click()
+
+        // use new password to log in
+        cy.get('body > div > div > div').contains('You need to sign in or sign up before continuing.')
+        cy.login({
+            email: 'test_user_crud@test.com',
+            password: userData[0].new_password,
+        }, false).view_user_profile()
+        cy.logout()
+    })
+
+    // TODO: Users should have a way to disable / delete their account.
+    // it('...delete.', function () {
+    //     cy.login(userData[0])
+    //     cy.logout()
+    // })
 })

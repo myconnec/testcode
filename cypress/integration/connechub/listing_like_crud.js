@@ -71,8 +71,6 @@ describe('Liking like CRUD...', function () {
         cy.get(element).invoke('text').invoke('trim').then((text1) => {
             text1 = Number.parseInt(text1)
             var text2 = text1 + 1
-            console.log('text1: ', text1)
-            console.log('text2: ', text2)
             cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
             cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(text2)
         })
@@ -93,8 +91,6 @@ describe('Liking like CRUD...', function () {
         cy.get(element).invoke('text').invoke('trim').then((text1) => {
             text1 = Number.parseInt(text1)
             var text2 = text1 + 1
-            console.log('text1: ', text1)
-            console.log('text2: ', text2)
             cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
             cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(text2)
         })

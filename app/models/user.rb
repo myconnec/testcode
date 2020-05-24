@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # validates_presence_of :password
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :username, format: { with: /\A[a-zA-Z\'\ \-]*\z/ }
+  validates :username, format: { with: /\A[a-zA-Z0-9\'\ \-]*\z/ }
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "150x150>" }, default_url: "no-photo-available.png"
 

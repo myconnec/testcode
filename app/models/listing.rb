@@ -23,7 +23,6 @@ class Listing < ActiveRecord::Base
   validates_presence_of :zipcode
 
   has_many :comments, dependent: :destroy
-  has_one :condition
 
   def full_address
     [city, state, zipcode].join(', ')

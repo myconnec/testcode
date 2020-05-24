@@ -24,6 +24,17 @@
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+// source https://github.com/palmerhq/cypress-image-snapshot
+import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
+addMatchImageSnapshotCommand();
+
+addMatchImageSnapshotCommand({
+  failureThreshold: 0.03, // threshold for entire image
+  failureThresholdType: 'percent', // percent of image or number of pixels
+  customDiffConfig: { threshold: 0.1 }, // threshold for each pixel
+  capture: 'fullPage', // capture viewport in screenshot
+});
+
 /**
  * TODO Re-load the database after each test. Ensures a known good dataset. This will only work once we have a local version of the app running as we need rake and a working DB connection.
  */
@@ -32,8 +43,7 @@
 //   cy.exec('rake db:migrate').its('code').should('eq', 0)
 // })
 
-
-Cypress.Commands.add('login', (userData = false) => {
+Cypress.Commands.add('login', (userData = false, alert = true) => {
   // this is an example of skipping your UI and logging in programmatically
 
   if (userData == false) {
@@ -47,8 +57,6 @@ Cypress.Commands.add('login', (userData = false) => {
   }
 
   cy.visit('')
-  console.log('userData: ', userData)
-
   // log in using the test user
   cy.get('#navbar > ul > li:nth-child(1) > a').contains('Login').click()
 
@@ -58,8 +66,9 @@ Cypress.Commands.add('login', (userData = false) => {
   cy.get('#user_remember_me').check()
   cy.get('form.new_user').submit()
 
-  cy.get('body > div:nth-child(7) > div > div').contains('Invalid Email or password.').should('not.be.visible')
-
+  if (alert === true) {
+    cy.get('body > div:nth-child(7) > div > div').contains('Invalid Email or password.').should('not.be.visible')
+  }
 
   cy.handle_splash_message('Signed in successfully.', 'notice')
 })
@@ -75,10 +84,9 @@ Cypress.Commands.add('handle_splash_message', (msg, type) => {
   cy.get('body').contains(msg).should('not.be.visible')
 })
 
-
 Cypress.Commands.add('create_new_user', (userData = false) => {
 
-  if (userData == false) {
+  if (userData === false) {
     const rnd = Math.floor(Math.random() * Math.floor(1024));
 
     userData = {
@@ -90,7 +98,6 @@ Cypress.Commands.add('create_new_user', (userData = false) => {
   }
 
   cy.visit('')
-  console.log('userData: ', userData)
   cy.get('#navbar > ul.nav.navbar-nav.navbar-right > li:nth-child(2) > a').click()
   cy.get('#user_username').type(userData.name)
   cy.get('#user_email').type(userData.email)
@@ -119,8 +126,6 @@ Cypress.Commands.add('create_new_listing', (formData = false) => {
       "fileupload": "24fps.mp4"
     }
   }
-
-  console.log('formData: ', formData)
 
   // see top menu item
   cy.get('.container > #navbar > .nav > li > a').contains('POST A VIDEO AD').click()

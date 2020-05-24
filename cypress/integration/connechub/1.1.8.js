@@ -75,7 +75,7 @@ describe('Release 1.1.8 change requests ...', function () {
         "pain specialist"
     ]
 
-    const formData = [
+    const listingData = [
         {
           "category": "Campus",
           "sub_category": "Activities & Events",
@@ -101,7 +101,7 @@ describe('Release 1.1.8 change requests ...', function () {
  * Additional Subcategories under Services
  * https://trello.com/c/k0gmXu0E/25-can-additional-subcategories-be-added
  */
-    it('...creating a new listing.', function () {
+    it('...additional sub-categories under Services.', function () {
         for (var i of service_subcategories) {
             cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(2) > div:nth-child(6)')
                 .contains(i)
@@ -127,16 +127,16 @@ describe('Release 1.1.8 change requests ...', function () {
   
       // step 1 of listing creation
       cy.get('div.panel-heading > h2').contains('Create New Listing')
-      cy.get('#listing_category_id').select(formData[0]['category']).should('have.value', '1')
-      cy.get('#listing_category_id').select(formData[0]['category'])
+      cy.get('#listing_category_id').select(listingData[0]['category']).should('have.value', '1')
+      cy.get('#listing_category_id').select(listingData[0]['category'])
       cy.wait(1000) // wait for ajax response
-      cy.get('#listing_subcategory_id').select(formData[0]['sub_category'])
-      cy.get('#listing_price').clear().type(formData[0]['price'])
-      cy.get('#listing_title').clear().type(formData[0]['title'])
-      cy.get('#listing_city').clear().type(formData[0]['city'])
-      cy.get('#listing_state').clear().type(formData[0]['state'])
-      cy.get('#listing_zipcode').clear().type(formData[0]['zipcode'])
-      cy.get('#listing_description').clear().type(formData[0]['description'])
+      cy.get('#listing_subcategory_id').select(listingData[0]['sub_category'])
+      cy.get('#listing_price').clear().type(listingData[0]['price'])
+      cy.get('#listing_title').clear().type(listingData[0]['title'])
+      cy.get('#listing_city').clear().type(listingData[0]['city'])
+      cy.get('#listing_state').clear().type(listingData[0]['state'])
+      cy.get('#listing_zipcode').clear().type(listingData[0]['zipcode'])
+      cy.get('#listing_description').clear().type(listingData[0]['description'])
       cy.get('#listings_submit').click()
       // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
   
@@ -168,16 +168,14 @@ describe('Release 1.1.8 change requests ...', function () {
       cy.get('body > div:nth-child(8) > div > div.form-group.text-center.row > form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input')
         .click()
       cy.get('body > div:nth-child(8) > div > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-        .contains(formData[0]['title'])
+        .contains(listingData[0]['title'])
     })
 
     it('...deleting a listing.', function () {
       cy.view_user_profile()
-      cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-        .contains(formData[1]['title']).should('be.visible').click()
-      cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(2)')
-        .contains('Delete').click()
+      cy.get('a').contains(listingData[0]['title']).should('be.visible')
+      cy.get('a').contains('Delete').click()
       cy.handle_splash_message('Listing has been deleted.', 'success')
-    })
   })
+})
   
