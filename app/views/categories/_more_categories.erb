@@ -1,5 +1,5 @@
 <div>
-  <div style="padding:10px 0px 0px 1px;" class"small-heading"> More categories </div>
+  <div style="padding:10px 0px 0px 1px;" class="small-heading"> More categories </div>
   <ul class='categories'>
     <% @all_categories.each do |category| %>
       <li><%= link_to(category.name, category_path(category)) %></li>
