@@ -21,7 +21,7 @@
 
     <meta name="viewport" content="width=device-width">
     <meta charset="UTF-8">
-    <meta name="description" content="Community market place for goods and services in your neighborhood.">
+    <meta name="description" content="Buy, Sell, Promote and Watch Local Video Classifieds.">
     <meta name="keywords" content="
 ad posting sites,
 ads,
@@ -135,7 +135,11 @@ youtube,
               </li>
               <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
             <% else %>
-              <li><%= link_to 'Login', new_user_session_path %></li>
+              <li>
+                <a href="<%= new_user_session_path %>">
+                  <button class="btn-primary" style="margin-top: -3px">POST A VIDEO AD</button>
+                </a>
+              </li>
               <li><%= link_to 'Sign Up', new_user_registration_path %></li>
             <% end %>
           </ul>
