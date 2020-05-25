@@ -26,11 +26,31 @@
                   <b><%= link_to listing.user.username, user_path(listing.user.username) %></b>
                 </div>
               </div>
-          </div>
-      <% end %>
-    <% else %>
-      <p>No listings found!</>
+            </div>
+        </div>
     <% end %>
+  <% else %>
+    <p>No listings found!</>
+  <% end %>
+  </div>
+</div>
+<br>
+
+<div class="rightbar0 col-xs-6 col-sm-4 col-md-2">
+  <div class="rightbar">
+    <div align="center" class="rightbar-top">
+      <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
+      <div class="space"><%= text_field_tag :search, nil, placeholder: 'search', class: "form-control", style: 'width: 150px; height: 30px' %></div>
+
+      <div class="space">
+        <%= text_field_tag :location, nil, placeholder: 'near', class: "form-control" , style: 'width: 150px; height: 30px'%>
+      </div>
+
+        <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
+
+      <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 80px; height: 30px'  %>
     </div>
+
+  <% end %>
   </div>
 </div>

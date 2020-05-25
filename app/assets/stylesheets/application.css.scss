@@ -134,7 +134,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
 
-/*  SECTIONS  ============================================================================= */
+/*  SECTIONS  */
 
 .section {
 	clear: both;
@@ -142,7 +142,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 	margin: 0px;
 }
 
-/*  GROUPING  ============================================================================= */
+/*  GROUPING  */
 
 
 .group:before,
@@ -178,7 +178,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 
 
 
-/*  GRID OF FOUR   ============================================================================= */
+/*  GRID OF FOUR   */
 
 
 .span_4_of_4 {
@@ -216,7 +216,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 }
 
 
-/*  USERNAME POST PAGE STYLE  ============================================================================= */
+/*  USERNAME POST PAGE STYLE  */
 
 
 .catg_title{font-size:14px; font-family:Verdana, Arial, Helvetica, sans-serif; color:#707070; padding:3px;}
@@ -1016,16 +1016,8 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   float: left;
   width: 75%;
   margin-right: 18px;
-}
 
-.leftbar0 {
-  float: left;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
 }
-
 .contatcus{
     font-size: 12px;
 }
