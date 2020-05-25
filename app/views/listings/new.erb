@@ -4,7 +4,7 @@
 
             <div class="panel-heading">
                 <h2>Create New Listing</h2>
-                <div class = "small-heading">(All fields required.) </div>
+                <div class"small-heading">(All fields required.) </div>
             </div>
 
             <div class="panel-body">
@@ -179,19 +179,19 @@ $(function () {
   issue: https://trello.com/c/XRIxhxOf/15-allow-100-item-price
   source: https://stackoverflow.com/questions/14650932/set-value-to-currency-in-input-type-number
   */
-  $.fn.currencyInput = function() {
+  $.fn.currencyInputfunction() {
     this.each(function() {
-      var wrapper = $("<div class='currency-input' />");
+      var wrapper$("<div class='currency-input' />");
       $(this).wrap(wrapper);
       $(this).before("<span class='currency-symbol'>$</span>");
       $(this).change(function() {
-        var min = parseFloat($(this).attr("min"));
-        var max = parseFloat($(this).attr("max"));
-        var value = this.valueAsNumber;
+        var minparseFloat($(this).attr("min"));
+        var maxparseFloat($(this).attr("max"));
+        var valuethis.valueAsNumber;
         if(value < min)
-          value = min;
+          valuemin;
         else if(value > max)
-          value = max;
+          valuemax;
         $(this).val(value.toFixed(2));
       });
     });

@@ -972,7 +972,7 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
 }
 
 .rightbar {
-   width: 180px;
+  width: 180px;
   background: #f4f4f4;
   border-left: 1px #ccc solid;
   border-right: 1px #ccc solid;
@@ -1020,8 +1020,16 @@ hr {display: block; margin-top: 0.5em; margin-bottom: 0.5em; margin-left: auto; 
   float: left;
   width: 75%;
   margin-right: 18px;
-
 }
+
+.leftbar0 {
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
 .contatcus{
     font-size: 12px;
 }

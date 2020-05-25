@@ -1,55 +1,36 @@
-<div class = "grid transitions-enabled">
-  <% if @listings.present? %>
-    <% @listings.each do |listing| %>
-        <div class="panel panel-default pin-item">
-            <div class="panel-body">
-              <%= link_to image_tag(
-                "https://" + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + ".s3-" + ENV['REGION'] + ".amazonaws.com/" + listing.media_file_name + "-00001.png",
-                class: "img-responsive",
-                onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
-              ), listing %>
-            </div>
-              <div class="panel-footer pin-content">
-              <div class="price"><b>$<%= listing.price %></b></div>
-              <div class="name"><b><%= link_to listing.title, listing %></b></div>
-              <div class="description"><%= listing.city %>, <%= listing.state %></div>
-              <small class = "board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
-            <hr>
-              <div>
-                <%= image_tag listing.user.avatar.url(:thumb), class: 'pin-avatar'%>
-                <b><%= link_to listing.user.username, user_path(listing.user.username) %></b>
-              </div>
-            </div>
-        </div>
-    <% end %>
-  <% else %>
-    <p>No listings found!</>
-  <% end %>
-  </div>
-</div>
-<br>
-
-<div class="rightbar0 col-xs-6 col-sm-4 col-md-2">
-  <div class="rightbar">
-    <div align="center" class="rightbar-top">
-      <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
-      <div class="space"><%= text_field_tag :search, nil, placeholder: 'search', class: "form-control", style: 'width: 150px; height: 30px' %></div>
-
-      <div class="space">
-        <%= text_field_tag :location, nil, placeholder: 'near', class: "form-control" , style: 'width: 150px; height: 30px'%>
-      </div>
-
-        <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 150px; height: 30px' %></div>
-
-      <%= submit_tag 'SEARCH', class: "btn btn-success", style: 'width: 80px; height: 30px'  %>
-    </div>
-
-  <% end %>
-  </div>
-  <br>
-
+<div class="col-xs-6 col-sm-4 col-md-3">
+  <%= render :partial => 'categories/search' %>
   <%= render :partial => 'categories/more_categories', locals: {all_categories: @all_categories}  %>
-
-  <br>
 </div>
 
+<div class="col-xs-6 col-sm-8 col-md-9">
+  <div class"grid transitions-enabled">
+    <% if @listings.present? %>
+      <% @listings.each do |listing| %>
+          <div class="panel panel-default pin-item">
+              <div class="panel-body">
+                <%= link_to image_tag(
+                  "https://" + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + ".s3-" + ENV['REGION'] + ".amazonaws.com/" + listing.media_file_name + "-00001.png",
+                  class: "img-responsive",
+                  onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
+                ), listing %>
+              </div>
+                <div class="panel-footer pin-content">
+                <div class="price"><b>$<%= listing.price %></b></div>
+                <div class="name"><b><%= link_to listing.title, listing %></b></div>
+                <div class="description"><%= listing.city %>, <%= listing.state %></div>
+                <small class"board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
+              <hr>
+                <div>
+                  <%= image_tag listing.user.avatar.url(:thumb), class: 'pin-avatar'%>
+                  <b><%= link_to listing.user.username, user_path(listing.user.username) %></b>
+                </div>
+              </div>
+          </div>
+      <% end %>
+    <% else %>
+      <p>No listings found!</>
+    <% end %>
+    </div>
+  </div>
+</div>
