@@ -4,6 +4,6 @@
   <%= link_to 'Connechub', root_path %> > <%= link_to @category.name, @category %> > <%= @subcategory.name %>
 <hr>
 
-<div class="leftbar_old col-xs-6 col-sm-8 col-md-10">
+<div>
   <%= render :partial => 'categories/show', locals: {listings: @listings}  %>
 </div>
