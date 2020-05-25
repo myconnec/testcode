@@ -123,9 +123,13 @@ youtube,
           <% end %>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right">          
             <% if user_signed_in? %>
-              <li><%= link_to 'POST A VIDEO AD', new_listing_path, class: "post" %></li>
+              <li>
+                <a href="<%= new_listing_path %>">
+                  <button class="btn-primary" style="margin-top: -3px">POST A VIDEO AD</button>
+                </a>
+              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Account <span class="caret"></span></a>
                 <ul class="dropdown-menu">
