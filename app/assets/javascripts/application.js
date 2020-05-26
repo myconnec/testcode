@@ -16,7 +16,7 @@
 //= require jquery.ui.widget
 //= require jquery.fileupload
 //= require bootstrap-sprockets
-//= require masonry/jquery.masonry
+//= require masonry/masonry.min
 //= require imagesloaded
 //= require helpers
 //= require_tree .
