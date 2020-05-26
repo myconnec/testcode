@@ -1,12 +1,14 @@
-$(document).on('ready', function() {
-    // init Masonry
-    var $grid = $('.grid').masonry({
-        itemSelector: '.pin-item',
-        isFitWidth: '.pin-item'
-    });
+// init Masonry
+var $grid = $('.grid').masonry({
+    itemSelector: '.grid-item',
+    isFitWidth: '.grid-item'
+});
 
+$(document).on('ready', function() {
+    console.log('DOM ready')
     // layout Masonry after each image loads
     $grid.imagesLoaded().progress( function() {
-        $grid.masonry('layout');
+        console.log('progress!')
+        $grid.masonry();
     });
 });

@@ -4,10 +4,10 @@
 </div>
 
 <div class="col-xs-6 col-sm-8 col-md-9">
-  <div class="grid transitions-enabled">
+  <div class="grid">
     <% if @listings.present? %>
       <% @listings.each do |listing| %>
-          <div class="panel panel-default pin-item">
+          <div class="grid-item panel panel-default">
               <div class="panel-body">
                 <%= link_to image_tag(
                   "https://" + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + ".s3-" + ENV['REGION'] + ".amazonaws.com/" + listing.media_file_name + "-00001.png",
@@ -15,12 +15,12 @@
                   onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
                 ), listing %>
               </div>
-                <div class="panel-footer pin-content">
+              <div class="panel-footer pin-content">
                 <div class="price"><b>$<%= listing.price %></b></div>
                 <div class="name"><b><%= link_to listing.title, listing %></b></div>
                 <div class="description"><%= listing.city %>, <%= listing.state %></div>
                 <small class="board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
-              <hr>
+                <hr>
                 <div>
                   <%= image_tag listing.user.avatar.url(:thumb), class: 'pin-avatar'%>
                   <b><%= link_to listing.user.username, user_path(listing.user.username) %></b>
