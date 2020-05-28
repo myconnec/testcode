@@ -28,9 +28,8 @@ describe('Listing CRUD (mov)...', function () {
 
     // step 1 of listing creation
     cy.get('div.panel-heading > h2').contains('Create New Listing')
-    cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(formData[0]['category'])
-    cy.wait(1000) // wait for ajax response
-    cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id').select(formData[0]['sub_category'])
+    cy.get('#listing_category_id').select(formData[0]['category'])
+    cy.get('#listing_subcategory_id', {timeout: 5000}).select(formData[0]['sub_category'])
     cy.get('#listing_price').clear().type(formData[0]['price'])
     cy.get('#listing_title').clear().type(formData[0]['title'])
     cy.get('#listing_city').clear().type(formData[0]['city'])
