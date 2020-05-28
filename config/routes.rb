@@ -18,6 +18,17 @@ Rails.application.routes.draw do
     end
   end
 
+  # Sub/Categories
+  match '/categories/show', to: 'categories#show', via: :get
+  
+  match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
+  match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
+
+  # User (Device)
+  get ':username' => 'users#show', as: 'user'
+  match '/users/update', to: 'users#update', via: :put
+
+  # Listing
   match '/listings/payment/:id', to: 'listings#payment', via: :get
   match '/listings/create_payment/:id', to: 'listings#create_payment', via: :post
   match '/listings/upload/:id', to: 'listings#upload', via: :get
@@ -32,6 +43,7 @@ Rails.application.routes.draw do
 
   root 'categories#index'
 
+  # Static Pages
   match '/about', to: 'pages#about', via: :get
   match '/career', to: 'pages#career', via: :get
   match '/cookie', to: 'pages#cookie', via: :get
@@ -56,11 +68,4 @@ Rails.application.routes.draw do
   match '/scams', to: 'pages#scams', via: :get
   match '/technology', to: 'pages#technology', via: :get
   match '/terms', to: 'pages#terms', via: :get
-
-  match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
-  match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
-
-  # User `Device` routes
-  get ':username' => 'users#show', as: 'user'
-  match '/users/update', to: 'users#update', via: :put
 end

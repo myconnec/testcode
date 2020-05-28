@@ -32,15 +32,8 @@ class CategoriesController < ApplicationController
     end
 
     def show
-        @all_categories = Category.where('1=1')
-
         @category = Category.find(params[:id])
-
-        @listings = Listing
-            .order("created_at DESC")
-            .where("ending_at > '#{Time.now.to_i}'")
-            .where("media_file_name IS NOT NULL")
-            .where("sold IS NULL")
-            .where(category_id: params[:id])
+        @category_menu_items = Category.menu_items()
+        @listings = Listing.active(params[:id])
     end
 end

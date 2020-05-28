@@ -201,7 +201,6 @@ class ListingsController < ApplicationController
 
   def search
     @all_categories = Category.where('1=1')
-
     @listings = Listing.search(params)
   end
 
