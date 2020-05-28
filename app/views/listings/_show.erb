@@ -1,4 +1,4 @@
-<div class = "grid transitions-enabled">
+<div class"grid transitions-enabled">
   <% if @listings.present? %>
     <% @listings.each do |listing| %>
         <div class="panel panel-default pin-item">
@@ -13,7 +13,7 @@
               <div class="price"><b>$<%= listing.price %></b></div>
               <div class="name"><b><%= link_to listing.title, listing %></b></div>
               <div class="description"><%= listing.city %>, <%= listing.state %></div>
-              <small class = "board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
+              <small class"board-name"><%= listing.created_at.strftime('%B %d, %Y') %></small>
             <hr>
               <div>
                 <%= image_tag listing.user.avatar.url(:thumb), class: 'pin-avatar'%>
