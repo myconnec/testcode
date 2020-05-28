@@ -81,7 +81,7 @@ Cypress.Commands.add('logout', () => {
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
   cy.get('body > div:nth-child(7) > div > div').should('have.class', 'alert-' + type).contains(msg)
   cy.get('body > div:nth-child(7) > div > div > button > span').click()
-  cy.get('body').contains(msg).should('not.be.visible')
+  cy.get('body').contains(msg).should('not.be.visible', {timeout: 5000})
 })
 
 Cypress.Commands.add('create_new_user', (userData = false) => {

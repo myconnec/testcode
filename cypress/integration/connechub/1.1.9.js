@@ -110,8 +110,6 @@ describe('Release 1.1.9 changes ...', function () {
 
         cy.get('#fileupload').trigger('change')
         cy.get('#listings_submit').click()
-        // cy.get('#overlay > img').should('be.visible')
-        cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
         cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
     })
 
