@@ -1,17 +1,9 @@
 class SubcategoriesController < ApplicationController
 
     def show
-        @all_categories = Category.where('1=1')
-
         @category = Category.find(params[:category_id])
-
-        @listings = Listing
-            .where("ending_at > '#{Time.now.to_i}'")
-            .where("media_file_name IS NOT NULL")
-            .where("sold IS NULL")
-            .where(subcategory_id: params[:id])
-            .order("created_at DESC")
-
+        @category_menu_items = Category.menu_items()
+        @listings = Listing.active(params[:id])
         @subcategory = Subcategory.find(params[:id])
     end
 

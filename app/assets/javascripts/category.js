@@ -5,10 +5,8 @@ var $grid = $('.grid').masonry({
 });
 
 $(document).on('ready', function() {
-    console.log('DOM ready')
     // layout Masonry after each image loads
     $grid.imagesLoaded().progress( function() {
-        console.log('progress!')
         $grid.masonry();
     });
 });
