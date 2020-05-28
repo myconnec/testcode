@@ -97,10 +97,10 @@ describe('Release 1.1.8 change requests ...', function () {
       cy.logout()
     })
   
-/**
- * Additional Subcategories under Services
- * https://trello.com/c/k0gmXu0E/25-can-additional-subcategories-be-added
- */
+    /**
+     * Additional Subcategories under Services
+     * https://trello.com/c/k0gmXu0E/25-can-additional-subcategories-be-added
+     */
     it('...additional sub-categories under Services.', function () {
         for (var i of service_subcategories) {
             cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(2) > div:nth-child(6)')
@@ -108,19 +108,19 @@ describe('Release 1.1.8 change requests ...', function () {
         }
     })
 
-/**
- * Geo fencing searches
- * https://trello.com/c/7DZ0jyJ3/21-re-enable-geo-fencing-search-distancing
- * 
- * Allow < 1.00 USD priced items
- * https://trello.com/c/XRIxhxOf/15-allow-100-item-price
- * 
- * Allow numbers in Listing title
- * https://trello.com/c/t0eFlPtR/16-allow-numbers-in-listing-title
- * 
- * 256 character Listing title limit
- * https://trello.com/c/qbjJvU0x/17-there-should-be-a-150-character-limit-on-the-category-title
- */
+    /**
+     * Geo fencing searches
+     * https://trello.com/c/7DZ0jyJ3/21-re-enable-geo-fencing-search-distancing
+     * 
+     * Allow < 1.00 USD priced items
+     * https://trello.com/c/XRIxhxOf/15-allow-100-item-price
+     * 
+     * Allow numbers in Listing title
+     * https://trello.com/c/t0eFlPtR/16-allow-numbers-in-listing-title
+     * 
+     * 256 character Listing title limit
+     * https://trello.com/c/qbjJvU0x/17-there-should-be-a-150-character-limit-on-the-category-title
+     */
     it('...creating a new listing.', function () {
       // see top menu item
       cy.get('.container > #navbar > .nav > li > a').contains('POST A VIDEO AD').click()
@@ -129,8 +129,7 @@ describe('Release 1.1.8 change requests ...', function () {
       cy.get('div.panel-heading > h2').contains('Create New Listing')
       cy.get('#listing_category_id').select(listingData[0]['category']).should('have.value', '1')
       cy.get('#listing_category_id').select(listingData[0]['category'])
-      cy.wait(1000) // wait for ajax response
-      cy.get('#listing_subcategory_id').select(listingData[0]['sub_category'])
+      cy.get('#listing_subcategory_id', {timeout: 10000}).select(listingData[0]['sub_category'])
       cy.get('#listing_price').clear().type(listingData[0]['price'])
       cy.get('#listing_title').clear().type(listingData[0]['title'])
       cy.get('#listing_city').clear().type(listingData[0]['city'])
