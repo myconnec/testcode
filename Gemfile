@@ -62,6 +62,8 @@ gem 'paperclip-ffmpeg', '~> 1.2'
 gem 'delayed_paperclip', '~> 3.0.1'
 # Stripe payment processor
 gem 'stripe', '~> 4.17.0'
+# Meta data Title tags
+gem 'meta-tags', '~> 2.13.0'
 
 # [PUMA](https://github.com/puma/puma) web server
 gem 'puma', '~>3.12.1'
