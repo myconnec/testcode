@@ -15,6 +15,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
+
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
@@ -95,6 +96,7 @@ visual ad,
 visual ads,
 youtube,
 ">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
@@ -108,14 +110,34 @@ youtube,
     <%= csrf_meta_tags %>
     <%= render "partials/google_analytics" %>
     
-    <meta property="og:type" content="article" />
-    <meta property="og:url" content="https://beginnersbook.com/2013/09/add-facebook-like-button-website/" />
-    <meta property="article:author" content="" />
-    <meta property="article:publisher" content="https://www.facebook.com/es2bw" />
-    <meta property="og:title" content="How to add facebook like button to website" />
-    <meta property="og:description" content="Adding a Facebook like button to the website is an easy task, however you may need to have an eye on few other performance related issue which may occur while a(...)" />
-    <meta property="og:image" content="https://beginnersbook.com/wp-content/uploads/2013/09/fblike1-150x150.jpg" />
+    <% set_meta_tags og: {
+      title:    ENV["NAME"],
+      type:     'website',
+      url:      'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com',
+      image:    'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/assets/connechub-facebook-share.png',
+      description: 'Buy, Sell, Promote and Watch Local Video Classifieds.',
+    }
 
+    # set_meta_tags twitter: {
+    #   card:  "photo",
+    #   image: {
+    #     _:      'https://'.( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]).ENV["NAME"]+'.com/assets/connechub-twitter-share.png',
+    #     width:  300,
+    #     height: 100,
+    #   }
+    # }
+
+    # set_meta_tags al: {
+    #   ios: {
+    #     url: 'https://'.( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]).ENV["NAME"]+'.com',
+    #     app_store_id: 0,
+    #     app_name: ENV['NAME']
+    #   }
+    # }
+    %>
+    <%= display_meta_tags %>
+
+    <meta property="fb:app_id" content="0" />
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
