@@ -36,11 +36,10 @@ describe('Listing Search CRUD...', function () {
 
   it('...search for listing, as logged in user.', function () {
     cy.visit('')
+    
     cy.get('#search').clear().type(listingData[0]['title'])
-    cy.get('body > div:nth-child(8) > div > div.form-group.text-center.row > form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
-    cy.get('body > div:nth-child(8) > div > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains(listingData[0]['title'])
-      .click()
+    cy.get('form > div > input').click()
+    cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 
     cy.get('div.hero-title > span > b > p').contains('Searching Test Title')
     cy.get('div.comments > small > b').contains('This post has 0 Comments')
@@ -52,13 +51,11 @@ describe('Listing Search CRUD...', function () {
   it('...search for listing, as guest user.', function () {
     // search as a guest user
     cy.logout()
-
     cy.visit('')
+
     cy.get('#search').clear().type(listingData[0]['title'])
-    cy.get('body > div:nth-child(8) > div > div.form-group.text-center.row > form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
-    cy.get('body > div:nth-child(8) > div > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains(listingData[0]['title'])
-      .click()
+    cy.get('form > div > input').click()
+    cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 
     cy.get('div.hero-title > span > b > p').contains('Searching Test Title')
     cy.get('div.comments > small > b').contains('This post has 0 Comments')
@@ -71,10 +68,8 @@ describe('Listing Search CRUD...', function () {
   it('...deleting a listing.', function () {
     cy.view_user_profile()
     
-    cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains(listingData[0]['title']).should('be.visible').click()
-    cy.get('div:nth-child(11) > a:nth-child(2)')
-      .contains('Delete').click()
+    cy.get('div.grid. > div > div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).should('be.visible').click()
+    cy.get('div:nth-child(11) > a:nth-child(2)').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')
   })
 })

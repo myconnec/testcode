@@ -41,7 +41,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div.panel-heading > h2').contains('Create New Listing')
     cy.get('#listing_category_id').select(formData[0]['category']).should('have.value', '1')
     cy.get('#listing_category_id').select(formData[0]['category'])
-    cy.get('#listing_subcategory_id', {timeout: 5000}).select(formData[0]['sub_category'])
+    cy.get('#listing_subcategory_id', {timeout: 10000}).select(formData[0]['sub_category'])
     cy.get('#listing_price').clear().type(formData[0]['price'])
     cy.get('#listing_title').clear().type(formData[0]['title'])
     cy.get('#listing_city').clear().type(formData[0]['city'])
@@ -74,7 +74,7 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...reads a listing.', function () {
     cy.view_user_profile()
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
 
     cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
     cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(formData[0]['category'])
@@ -89,13 +89,13 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...updating a listing data.', function () {
     cy.view_user_profile()
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
 
     // change all the field values to ensure changing them works
     cy.get('div.panel-heading > h2').contains('Edit Listing') // Edit New Listing
     cy.get('#listing_category_id').select(formData[1]['category']).should('have.value', '4')
-    cy.get('#listing_subcategory_id', {timeout: 5000}).select(formData[1]['sub_category'])
+    cy.get('#listing_subcategory_id', {timeout: 10000}).select(formData[1]['sub_category'])
     cy.get('#listing_price').clear().type(formData[1]['price'])
     cy.get('#listing_title').clear().type(formData[1]['title'])
     cy.get('#listing_city').clear().type(formData[1]['city'])
@@ -117,7 +117,7 @@ describe('Listing CRUD (mp4)...', function () {
   it('...updating a listing media.', function () {
     cy.view_user_profile()
 
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
     cy.get('div.panel-heading > h2').contains('Upload Media for Listing').click()
 
@@ -144,7 +144,7 @@ describe('Listing CRUD (mp4)...', function () {
   it('...deleting a listing.', function () {
     cy.view_user_profile()
 
-    cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+    cy.get('div.grid. > div > div.panel-footer.pin-content > div.name > b > a')
       .contains(formData[1]['title']).should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(2)')
       .contains('Delete').click()

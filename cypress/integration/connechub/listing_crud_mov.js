@@ -1,6 +1,6 @@
 describe('Listing CRUD (mov)...', function () {
 
-  const formData = [
+  const listingData = [
     {
       "category": "Campus",
       "sub_category": "Activities & Events",
@@ -28,14 +28,14 @@ describe('Listing CRUD (mov)...', function () {
 
     // step 1 of listing creation
     cy.get('div.panel-heading > h2').contains('Create New Listing')
-    cy.get('#listing_category_id').select(formData[0]['category'])
-    cy.get('#listing_subcategory_id', {timeout: 5000}).select(formData[0]['sub_category'])
-    cy.get('#listing_price').clear().type(formData[0]['price'])
-    cy.get('#listing_title').clear().type(formData[0]['title'])
-    cy.get('#listing_city').clear().type(formData[0]['city'])
-    cy.get('#listing_state').clear().type(formData[0]['state'])
-    cy.get('#listing_zipcode').clear().type(formData[0]['zipcode'])
-    cy.get('#listing_description').clear().type(formData[0]['description'])
+    cy.get('#listing_category_id').select(listingData[0]['category'])
+    cy.get('#listing_subcategory_id', {timeout: 10000}).select(listingData[0]['sub_category'])
+    cy.get('#listing_price').clear().type(listingData[0]['price'])
+    cy.get('#listing_title').clear().type(listingData[0]['title'])
+    cy.get('#listing_city').clear().type(listingData[0]['city'])
+    cy.get('#listing_state').clear().type(listingData[0]['state'])
+    cy.get('#listing_zipcode').clear().type(listingData[0]['zipcode'])
+    cy.get('#listing_description').clear().type(listingData[0]['description'])
     cy.get('#listings_submit').click()
     // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
 
@@ -63,16 +63,14 @@ describe('Listing CRUD (mov)...', function () {
   it('...reads the MOV listing.', function () {
     cy.view_user_profile()
 
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div > div.panel-footer > div.name > b > a').should('be.visible').click()
 
-    cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
-    cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(formData[0]['category'])
-    cy.get('body > div:nth-child(8) > div > a:nth-child(4)').contains(formData[0]['sub_category'])
-
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > b').contains(formData[0]['title'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(formData[0]['description'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(formData[0]['price'])
-
-    cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
+    cy.get('div > a:nth-child(2)').contains('Connechub')
+    cy.get('div > a:nth-child(3)').contains(listingData[0]['category'])
+    cy.get('div > a:nth-child(4)').contains(listingData[0]['sub_category'])
+    cy.get('div > div:nth-child(7) > div.hero-title > span > b').contains(listingData[0]['title'])
+    cy.get('div > div:nth-child(7) > div:nth-child(7) > p').contains(listingData[0]['description'])
+    cy.get('div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(listingData[0]['price'])
+    cy.get('div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
   })
 })

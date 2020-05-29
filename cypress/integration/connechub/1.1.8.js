@@ -103,8 +103,7 @@ describe('Release 1.1.8 change requests ...', function () {
      */
     it('...additional sub-categories under Services.', function () {
         for (var i of service_subcategories) {
-            cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(2) > div:nth-child(6)')
-                .contains(i)
+            cy.get('body').contains(i)
         }
     })
 
@@ -162,10 +161,8 @@ describe('Release 1.1.8 change requests ...', function () {
   
     it('...search a listing.', function () {
       cy.get('#location').type('Orlando, Florida')
-      cy.get('body > div:nth-child(8) > div > div.form-group.text-center.row > form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input')
-        .click()
-      cy.get('body > div:nth-child(8) > div > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-        .contains(listingData[0]['title'])
+      cy.get('input').contains('Search').click()
+      cy.get('div > div.name > b > a').contains(listingData[0]['title'])
     })
 
     it('...deleting a listing.', function () {

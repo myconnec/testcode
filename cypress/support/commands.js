@@ -58,7 +58,7 @@ Cypress.Commands.add('login', (userData = false, alert = true) => {
 
   cy.visit('')
   // log in using the test user
-  cy.get('#navbar > ul > li:nth-child(1) > a').contains('Login').click()
+  cy.get('#navbar > ul > li:nth-child(1) > a > button').contains('POST A VIDEO AD').click()
 
   cy.get('#app_view_devise > div > div > div > div.panel-heading > h3').contains('Log In!')
   cy.get('#user_email').type(userData.email)
@@ -67,7 +67,7 @@ Cypress.Commands.add('login', (userData = false, alert = true) => {
   cy.get('form.new_user').submit()
 
   if (alert === true) {
-    cy.get('body > div:nth-child(7) > div > div').contains('Invalid Email or password.').should('not.be.visible')
+    cy.get('body > div > div > div').contains('Invalid Email or password.').should('not.be.visible')
   }
 
   cy.handle_splash_message('Signed in successfully.', 'notice')
@@ -79,9 +79,9 @@ Cypress.Commands.add('logout', () => {
 })
 
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.get('body > div:nth-child(7) > div > div').should('have.class', 'alert-' + type).contains(msg)
-  cy.get('body > div:nth-child(7) > div > div > button > span').click()
-  cy.get('body').contains(msg).should('not.be.visible', {timeout: 5000})
+  cy.get('body > div > div > div').should('have.class', 'alert-' + type).contains(msg)
+  cy.get('body > div > div > div > button > span').click()
+  cy.get('body').contains(msg).should('not.be.visible')
 })
 
 Cypress.Commands.add('create_new_user', (userData = false) => {
@@ -133,8 +133,7 @@ Cypress.Commands.add('create_new_listing', (formData = false) => {
   // step 1 of listing creation
   cy.get('div.panel-heading > h2').contains('Create New Listing')
   cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(formData.category)
-  cy.wait(1000) // wait for ajax response
-  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id').select(formData.sub_category)
+  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id', { timeout: 10000}).select(formData.sub_category)
   cy.get('#listing_price').clear().type(formData.price)
   cy.get('#listing_title').clear().type(formData.title)
   cy.get('#listing_city').clear().type(formData.city)
@@ -163,9 +162,7 @@ Cypress.Commands.add('create_new_listing', (formData = false) => {
   cy.get('#fileupload').trigger('change')
   cy.get('#listings_submit').click()
   // cy.get('#overlay > img').should('be.visible')
-  cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
   cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
-
   cy.visit('')
 })
 
