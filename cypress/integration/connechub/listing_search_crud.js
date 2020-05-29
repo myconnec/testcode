@@ -37,8 +37,8 @@ describe('Listing Search CRUD...', function () {
   it('...search for listing, as logged in user.', function () {
     cy.visit('')
     cy.get('#search').clear().type(listingData[0]['title'])
-    cy.get('body > div:nth-child(8) > div > div.form-group.text-center.row > form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
-    cy.get('body > div:nth-child(8) > div > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+    cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
+    cy.get('div.grid > div.panel > div.panel-footer > div.name > b > a').contains(listingData[0]['title'])
       .contains(listingData[0]['title'])
       .click()
 
@@ -55,10 +55,8 @@ describe('Listing Search CRUD...', function () {
 
     cy.visit('')
     cy.get('#search').clear().type(listingData[0]['title'])
-    cy.get('body > div:nth-child(8) > div > div.form-group.text-center.row > form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
-    cy.get('body > div:nth-child(8) > div > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains(listingData[0]['title'])
-      .click()
+    cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
+    cy.get('div.grid > div.panel > div.panel-footer > div.name > b > a').contains(listingData[0]['title']).contains(listingData[0]['title']).click()
 
     cy.get('div.hero-title > span > b > p').contains('Searching Test Title')
     cy.get('div.comments > small > b').contains('This post has 0 Comments')
