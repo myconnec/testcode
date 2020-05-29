@@ -111,11 +111,12 @@ youtube,
     <%= render "partials/google_analytics" %>
     
     <% set_meta_tags og: {
-      title:    ENV["NAME"],
-      type:     'website',
-      url:      'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com',
-      image:    'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/assets/connechub-facebook-share.png',
-      description: 'Buy, Sell, Promote and Watch Local Video Classifieds.',
+      description:'Buy, Sell, Promote and Watch Local Video Classifieds.',
+      image:      'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/assets/connechub-facebook-share.jpg',
+      image_src:  'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/assets/connechub-facebook-share.jpg',
+      title:      ENV["NAME"],
+      type:       'website',
+      url:        'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com',
     }
 
     # set_meta_tags twitter: {
