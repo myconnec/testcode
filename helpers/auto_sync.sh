@@ -20,10 +20,18 @@ ssh -i ${1} -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/ctl/%L-%r@%h:%p
 echo "To close connection execute the following:"
 echo "ssh -O exit -o ControlPath=\"$HOME/.ssh/ctl/%L-%r@%h:%p\" ubuntu@${1}"
 
-echo "Stating rsync, waiting ControlPath..."
-while inotifywait -r -e modify,create,delete,move app; do
-    rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" \
+echo "Starting rsync, waiting ControlPath..."
+
+while fswatch -L -r ./app; do
+    rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" \
     ./app/ \
     ubuntu@${2}:/home/ubuntu/connechub/app
     echo "...done."
 done
+
+# while inotifywait -r -e modify,create,delete,move app; do
+#     rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" \
+#     ./app/ \
+#     ubuntu@${2}:/home/ubuntu/connechub/app
+#     echo "...done."
+# done

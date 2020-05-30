@@ -492,7 +492,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_email` (`email`),
   UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -503,7 +503,8 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` VALUES
-(1,'test@test.com','$2a$11$WdmUb4u8JPuzFz7lYpYdWegacGm1VFO/FZfjlfrUpr2hPgr5Nz7Re',NULL,NULL,'2019-02-11 00:49:54',13,'2019-09-23 01:15:10','2019-05-27 04:46:40','47.200.2.224','47.200.23.175','2019-01-09 01:22:02','2019-09-23 01:15:10','test',NULL,NULL,NULL,NULL,NULL);
+(1,'test@test.com',             '$2a$11$hWO3lfLL6p1tAQ1pSyU76uWhM5mIjYMis2i2RnakojHQDeeF7Fwfy',NULL,NULL,NULL,'0','2020-05-30 03:31:06','2020-05-30 03:25:06','47.200.10.80','47.200.10.80','2019-01-09 01:22:02','2020-05-30 03:31:06','Test User',        NULL,NULL,NULL,NULL,NULL),
+(2,'listing_paid_user@test.com','$2a$11$V5z0XUqaUis/WAICpe877uZuW1/KgjpFwHBX/eY3JKDOAGHYXfdj6',NULL,NULL,NULL,'0','2020-05-30 03:39:33','2020-05-30 03:39:33','47.200.10.80','47.200.10.80','2020-05-30 03:39:33','2020-05-30 03:39:33','Listing Paid User',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
