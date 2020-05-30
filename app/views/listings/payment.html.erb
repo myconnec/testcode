@@ -56,10 +56,8 @@
 <script src="https://js.stripe.com/v3/"></script>
 
 <script>
-    console.log('STRIPE_PUBLISHABLE_KEY: ', <%= STRIPE_PUBLISHABLE_KEY %>);
-
     // Create a Stripe client.
-    var stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+    var stripe = Stripe('<%= ENV['STRIPE_PUBLISH_KEY'] %>');
 
     // Create an instance of Elements.
     var elements = stripe.elements();

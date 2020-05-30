@@ -70,9 +70,17 @@ describe('Listing CRUS PAID...', function () {
     // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
 
     // step 2 of paid listing creation
-    body > div:nth-child(8) > div.col-md-8.col-md-offset-2 > div > div > div.panel-heading > h2  .type
-    #listings_submit .click
+    cy.get('div.panel-heading > h2').contains('Pay for Your New Listing')
 
+    // Stripe form elements
+    cy.get('#root > form > div > div.CardField-input-wrapper.is-ready-to-slide > span.CardField-number.CardField-child > span:nth-child(2) > div > div.CardNumberField-input-wrapper > span > input')
+      .type('4242 4242 4242 4242')
+    var today = new Date();
+    cy.get('#root > form > div > div.CardField-input-wrapper.is-ready-to-slide > span.CardField-expiry.CardField-child > span > span > input')
+      .type((today.getMonth() + 3)(today.getYear() + 3))
+    cy.get('#root > form > div > div.CardField-input-wrapper.is-ready-to-slide > span.CardField-cvc.CardField-child > span > span > input')
+      .type('123')
+    cy.get('#listings_submit').click()
 
     // step 3 of paid listing creation
     cy.get('#fileupload').then(subject => {

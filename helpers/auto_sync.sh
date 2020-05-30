@@ -17,21 +17,36 @@ export CONTROL_PATH="$HOME/.ssh/ctl/%L-%r@%h:%p"
 echo "Starting persistance SSH connection..."
 ssh -i ${1} -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/ctl/%L-%r@%h:%p" ubuntu@${2}
 
-echo "To close connection execute the following:"
-echo "ssh -O exit -o ControlPath=\"$HOME/.ssh/ctl/%L-%r@%h:%p\" ubuntu@${1}"
+echo "Stating sync, waiting ControlPath..."
 
-echo "Starting rsync, waiting ControlPath..."
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        # Linux distros
+        echo "$OSTYPE detected..."
+        while inotifywait -r -e modify,create,delete,move app; do
+            rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" ./app/ ubuntu@${2}:/home/ubuntu/connechub/app
+            echo "...synce completed."
+        done
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+        # Mac OSX
+        echo "$OSTYPE detected..."
+        fswatch -o app | xargs -n1 -I{} \
+            rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" ./app/ ubuntu@${2}:/home/ubuntu/connechub/app
+        echo "...synce completed."
+elif [[ "$OSTYPE" == "cygwin" ]]; then
+        # POSIX compatibility layer and Linux environment emulation for Windows
+        echo "$OSTYPE detected..."
+elif [[ "$OSTYPE" == "msys" ]]; then
+        # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
+        echo "$OSTYPE detected..."
+elif [[ "$OSTYPE" == "win32" ]]; then
+        # I'm not sure this can happen.
+        echo "$OSTYPE detected..."
+elif [[ "$OSTYPE" == "freebsd"* ]]; then
+        # ...
+        echo "$OSTYPE detected..."
+else
+        # Unknown.
+        echo "$OSTYPE detected..."
+fi
 
-while fswatch -L -r ./app; do
-    rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" \
-    ./app/ \
-    ubuntu@${2}:/home/ubuntu/connechub/app
-    echo "...done."
-done
-
-# while inotifywait -r -e modify,create,delete,move app; do
-#     rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" \
-#     ./app/ \
-#     ubuntu@${2}:/home/ubuntu/connechub/app
-#     echo "...done."
-# done
+            echo "...done."
