@@ -58,7 +58,7 @@ Cypress.Commands.add('login', (userData = false, alert = true) => {
 
   cy.visit('')
   // log in using the test user
-  cy.get('#navbar > ul > li:nth-child(1) > a').contains('Login').click()
+  cy.get('#navbar > ul > li:nth-child(1) > a').contains('POST A VIDEO AD').click()
 
   cy.get('#app_view_devise > div > div > div > div.panel-heading > h3').contains('Log In!')
   cy.get('#user_email').type(userData.email)

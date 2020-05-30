@@ -66,7 +66,7 @@ describe('Listing CRUD (mov)...', function () {
   it('...reads the MOV listing.', function () {
     cy.view_user_profile()
 
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div > div.panel-body').should('be.visible').click()
 
     cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
     cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(formData[0]['category'])

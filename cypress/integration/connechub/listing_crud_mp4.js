@@ -77,7 +77,7 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...reads a listing.', function () {
     cy.view_user_profile()
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div > div.panel-body').should('be.visible').click()
 
     cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
     cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(formData[0]['category'])
@@ -92,7 +92,7 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...updating a listing data.', function () {
     cy.view_user_profile()
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div > div.panel-body').should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
 
     // change all the field values to ensure changing them works
@@ -121,7 +121,7 @@ describe('Listing CRUD (mp4)...', function () {
   it('...updating a listing media.', function () {
     cy.view_user_profile()
 
-    cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div > div.panel-body').should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
     cy.get('div.panel-heading > h2').contains('Upload Media for Listing').click()
 
@@ -151,10 +151,8 @@ describe('Listing CRUD (mp4)...', function () {
   it('...deleting a listing.', function () {
     cy.view_user_profile()
 
-    cy.get('body > div:nth-child(8) > div > div > div:nth-child(2) > div > div > div > div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-      .contains(formData[1]['title']).should('be.visible').click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(2)')
-      .contains('Delete').click()
+    cy.get('div.grid > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a').contains(formData[1]['title']).should('be.visible').click()
+    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(2)').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')
   })
 })

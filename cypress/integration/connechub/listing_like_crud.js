@@ -50,7 +50,7 @@ describe('Liking like CRUD...', function () {
     it('...like a listing, as a guest.', function () {
         cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(1) > div.category_title > ul > li:nth-child(7) > a')
             .contains(listingData[0]['sub_category']).click()
-        cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
             .contains(listingData[0]['title']).click()
 
         const element = 'body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a'
@@ -64,7 +64,7 @@ describe('Liking like CRUD...', function () {
         cy.login(userData[0])
         cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(1) > div.category_title > ul > li:nth-child(7) > a')
             .contains(listingData[0]['sub_category']).click()
-        cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
             .contains(listingData[0]['title']).click()
 
         const element = 'body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a'
