@@ -109,12 +109,12 @@ Cypress.Commands.add('create_new_user', (userData = false) => {
 
 /**
  * Since so much of ConnecHub revolves around the Listing, make it easier to create one
- * Allow formData and userData to be passed in and override defaults
+ * Allow listingData and userData to be passed in and override defaults
  */
-Cypress.Commands.add('create_new_listing', (formData = false) => {
+Cypress.Commands.add('create_new_listing', (listingData = false) => {
 
-  if (formData == false) {
-    formData = {
+  if (listingData == false) {
+    listingData = {
       "category": "Campus",
       "sub_category": "Activities & Events",
       "price": "12.34",
@@ -132,15 +132,15 @@ Cypress.Commands.add('create_new_listing', (formData = false) => {
 
   // step 1 of listing creation
   cy.get('div.panel-heading > h2').contains('Create New Listing')
-  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(formData.category)
+  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(listingData.category)
   cy.wait(1000) // wait for ajax response
-  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id').select(formData.sub_category)
-  cy.get('#listing_price').clear().type(formData.price)
-  cy.get('#listing_title').clear().type(formData.title)
-  cy.get('#listing_city').clear().type(formData.city)
-  cy.get('#listing_state').clear().type(formData.state)
-  cy.get('#listing_zipcode').clear().type(formData.zipcode)
-  cy.get('#listing_description').clear().type(formData.description)
+  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id').select(listingData.sub_category)
+  cy.get('#listing_price').clear().type(listingData.price)
+  cy.get('#listing_title').clear().type(listingData.title)
+  cy.get('#listing_city').clear().type(listingData.city)
+  cy.get('#listing_state').clear().type(listingData.state)
+  cy.get('#listing_zipcode').clear().type(listingData.zipcode)
+  cy.get('#listing_description').clear().type(listingData.description)
   cy.get('#listings_submit').click()
   // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
 
