@@ -112,7 +112,6 @@ describe('Release 1.1.9 changes ...', function () {
         cy.get('#fileupload').trigger('change')
         cy.get('#listings_submit').click()
         // cy.get('#overlay > img').should('be.visible')
-        cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
         cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
     })
 
@@ -130,7 +129,7 @@ describe('Release 1.1.9 changes ...', function () {
 
         cy.visit('')
         cy.contains('Activities & Events').click()
-        cy.contains('No listings found!')        
+        cy.contains('No listings found!')
         cy.view_user_profile()
         cy.contains('Relist Item').click()
         cy.get('body > div > div > div').handle_splash_message('Listing marked as re-list. It will now be visible to other users.', 'success')

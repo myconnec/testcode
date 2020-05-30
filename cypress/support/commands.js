@@ -26,8 +26,6 @@
 
 // source https://github.com/palmerhq/cypress-image-snapshot
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
-addMatchImageSnapshotCommand();
-
 addMatchImageSnapshotCommand({
   failureThreshold: 0.03, // threshold for entire image
   failureThresholdType: 'percent', // percent of image or number of pixels
@@ -43,6 +41,9 @@ addMatchImageSnapshotCommand({
 //   cy.exec('rake db:migrate').its('code').should('eq', 0)
 // })
 
+/**
+ * Log in user
+ */
 Cypress.Commands.add('login', (userData = false, alert = true) => {
   // this is an example of skipping your UI and logging in programmatically
 
@@ -66,31 +67,37 @@ Cypress.Commands.add('login', (userData = false, alert = true) => {
   cy.get('#user_remember_me').check()
   cy.get('form.new_user').submit()
 
-  if (alert === true) {
-    cy.get('body > div:nth-child(7) > div > div').contains('Invalid Email or password.').should('not.be.visible')
-  }
-
   cy.handle_splash_message('Signed in successfully.', 'notice')
 })
 
+/**
+ * Log out user
+ */
 Cypress.Commands.add('logout', () => {
   cy.get('#navbar > ul > li:nth-child(3) > a').contains('Logout').click()
   cy.handle_splash_message('Signed out successfully.', 'notice')
 })
 
+/**
+ * Handle splash (flash) UI messages
+ */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
+  cy.wait(5000)
   cy.get('body > div:nth-child(7) > div > div').should('have.class', 'alert-' + type).contains(msg)
   cy.get('body > div:nth-child(7) > div > div > button > span').click()
   cy.get('body').contains(msg).should('not.be.visible')
 })
 
+/**
+ * Create a new user. If userData is not provided, create a random on
+ */
 Cypress.Commands.add('create_new_user', (userData = false) => {
 
   if (userData === false) {
     const rnd = Math.floor(Math.random() * Math.floor(1024));
 
     userData = {
-      bio: 'Lorem ipsum dolor sit amet....',
+      bio: 'Lorem ipsum dolor sit amet' + rnd + '.',
       email: 'test' + rnd + '+admin@connechub.com',
       name: 'Test User ' + rnd,
       password: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
@@ -118,11 +125,11 @@ Cypress.Commands.add('create_new_listing', (listingData = false) => {
       "category": "Campus",
       "sub_category": "Activities & Events",
       "price": "12.34",
-      "title": "Test Title",
+      "title": "Test Demo Title",
       "city": "Tampa",
       "state": "FL",
       "zipcode": "33612",
-      "description": "Test Description.",
+      "description": "Test Demo Description.",
       "fileupload": "24fps.mp4"
     }
   }
@@ -133,8 +140,7 @@ Cypress.Commands.add('create_new_listing', (listingData = false) => {
   // step 1 of listing creation
   cy.get('div.panel-heading > h2').contains('Create New Listing')
   cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(listingData.category)
-  cy.wait(1000) // wait for ajax response
-  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id').select(listingData.sub_category)
+  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id', {timeout: 1000}).select(listingData.sub_category)
   cy.get('#listing_price').clear().type(listingData.price)
   cy.get('#listing_title').clear().type(listingData.title)
   cy.get('#listing_city').clear().type(listingData.city)
@@ -163,7 +169,6 @@ Cypress.Commands.add('create_new_listing', (listingData = false) => {
   cy.get('#fileupload').trigger('change')
   cy.get('#listings_submit').click()
   // cy.get('#overlay > img').should('be.visible')
-  cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
   cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
 
   cy.visit('')
@@ -176,13 +181,3 @@ Cypress.Commands.add('view_user_profile', () => {
   cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
   cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
 })
-
-/**
- * Got tired of cy.visit() not working
- * TODO Get this working
- */
-// Cypress.Commands.add('visit', (target = false) => {
-//   cy.visit(
-//     (target != false ? target : '')
-//   )
-// })
