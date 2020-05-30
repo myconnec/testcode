@@ -82,8 +82,8 @@ Cypress.Commands.add('logout', () => {
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.wait(5000)
-  cy.get('body > div:nth-child(7) > div > div').should('have.class', 'alert-' + type).contains(msg)
+  cy.wait(2500)
+  cy.get('body > div:nth-child(7) > div > div',).should('have.class', 'alert-' + type).contains(msg)
   cy.get('body > div:nth-child(7) > div > div > button > span').click()
   cy.get('body').contains(msg).should('not.be.visible')
 })

@@ -99,7 +99,6 @@ describe('Listing CRUS PAID...', function () {
     // cy.get('#listings_submit').click()
 
     // cy.get('#overlay > img').should('be.visible')
-    cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
   })
 
   it('...reads most recent listing.', function () {
