@@ -1,12 +1,11 @@
 # Testing
 
-### RSpec - Unit
+## RSpec - Unit
 
-### Cypress - UAT
+## Cypress - UAT
 
 - [https://www.cypress.io](https://www.cypress.io)
 - [https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements](https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements)
-
 
 ```sh
 npm install cypress --save-dev
@@ -18,4 +17,24 @@ export CYPRESS_abort_strategy=spec
 # `cypress run` to just run the test admin UI
 ./node_modules/cypress/bin/cypress open
 # --reporter cypress-image-snapshot/reporter
+```
+
+OR in a container via
+
+```sh
+cd ./cypress
+docker build -t cypress-test-image:1.0.0 -f cypress.Dockerfile .
+docker run -t cypress-test-image:1.0.0 .
+```
+
+## SQL
+
+Reset DB between runs.
+
+```sql
+truncate listings;
+truncate comments;
+truncate votes;
+delete from users where id > 10;
+update users set promo_1 = 3 where id < 10;
 ```

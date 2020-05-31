@@ -26,7 +26,7 @@ describe('Comment CRUD...', function () {
         cy.view_user_profile()
 
         cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
-            .contains('Test Title').click()
+            .contains('Test Demo Title').click()
 
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
         cy.get('#comment_body').clear().type(commentData.content)
@@ -37,7 +37,7 @@ describe('Comment CRUD...', function () {
         cy.view_user_profile()
 
         cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
-            .contains('Test Title').click()
+            .contains('Test Demo Title').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > small > b').contains('This post has 1 Comment')
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > div > div > small').contains(commentData.content)
     })
@@ -49,7 +49,7 @@ describe('Comment CRUD...', function () {
             .contains('Activities & Events').click()
 
         cy.get('div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-            .contains('Test Title').click()
+            .contains('Test Demo Title').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > small > b').contains('This post has 1 Comment')
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > div > div > small').contains(commentData.content)
         cy.login()

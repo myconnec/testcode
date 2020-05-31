@@ -65,16 +65,14 @@ describe('Listing CRUD (mov)...', function () {
   it('...reads the MOV listing.', function () {
     cy.view_user_profile()
 
-    cy.get('div.grid > div > div.panel-body').should('be.visible').click()
+    cy.get('div.grid > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 
     cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
     cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(listingData[0]['category'])
     cy.get('body > div:nth-child(8) > div > a:nth-child(4)').contains(listingData[0]['sub_category'])
-
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > b').contains(listingData[0]['title'])
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(listingData[0]['description'])
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(listingData[0]['price'])
-
     cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
   })
 })

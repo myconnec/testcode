@@ -39,24 +39,24 @@ describe('Listing CRUS PAID...', function () {
     cy.login(userData[0])
   })
 
-  // afterEach(function () {
-  //   cy.logout()
-  // })
+  afterEach(function () {
+    cy.logout()
+  })
 
-  it('...creating a paid listing (w/o promo_1).', function () {
-
-    // create three normal posts
+  it('...create three paid listings to burn through promo_1 allowance', function () {
     cy.create_new_listing(listingData[0]);
     cy.create_new_listing(listingData[0]);
     cy.create_new_listing(listingData[0]);
+  })
 
+  it('...creating a listing that requires a payment.)', function () {
     // create a paid listing
     cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
 
     // step 1 of paid listing creation
     cy.get('div.panel-heading > h2').contains('Create New Listing')
     cy.get('#listing_category_id').select(listingData[1]['category']).should('have.value', '6')
-    cy.get('#listing_subcategory_id', { timeout: 2500 }).select(listingData[1]['sub_category'])
+    cy.get('#listing_subcategory_id', { timeout: 10000 }).select(listingData[1]['sub_category'])
     cy.get('#listing_condition_id').select(listingData[1]['condition']).should('have.value', '1')
     cy.get('#listing_price').clear().type(listingData[1]['price'])
     cy.get('#listing_title').clear().type(listingData[1]['title'])
@@ -72,7 +72,7 @@ describe('Listing CRUS PAID...', function () {
 
     var date = new Date()
     var card_number = '4242 4242 4242 4242'
-    var expiration = ('0622') //date.getMonth() + 3)(date.getYear() + 3)
+    var expiration = ('0630')
     var cvv = '123'
     var zip = '12345'
 

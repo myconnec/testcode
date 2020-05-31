@@ -82,7 +82,7 @@ Cypress.Commands.add('logout', () => {
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.get('body > div:nth-child(7) > div > div', {timeout: 2500}).should('have.class', 'alert-' + type).contains(msg)
+  cy.get('body > div:nth-child(7) > div > div', {timeout: 60000}).should('have.class', 'alert-' + type).contains(msg)
   cy.get('body > div:nth-child(7) > div > div > button > span').click()
   cy.get('body').contains(msg).should('not.be.visible')
 })
@@ -119,7 +119,7 @@ Cypress.Commands.add('create_new_user', (userData = false) => {
  */
 Cypress.Commands.add('create_new_listing', (listingData = false) => {
 
-  if (listingData == false) {
+  if (listingData === false) {
     listingData = {
       "category": "Campus",
       "sub_category": "Activities & Events",
