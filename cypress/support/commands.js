@@ -59,7 +59,7 @@ Cypress.Commands.add('login', (userData = false, alert = true) => {
 
   cy.visit('')
   // log in using the test user
-  cy.get('#navbar > ul > li:nth-child(1) > a').contains('POST A VIDEO AD').click()
+  cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
 
   cy.get('#app_view_devise > div > div > div > div.panel-heading > h3').contains('Log In!')
   cy.get('#user_email').type(userData.email)
@@ -82,8 +82,7 @@ Cypress.Commands.add('logout', () => {
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.wait(2500)
-  cy.get('body > div:nth-child(7) > div > div',).should('have.class', 'alert-' + type).contains(msg)
+  cy.get('body > div:nth-child(7) > div > div', {timeout: 2500}).should('have.class', 'alert-' + type).contains(msg)
   cy.get('body > div:nth-child(7) > div > div > button > span').click()
   cy.get('body').contains(msg).should('not.be.visible')
 })
@@ -135,7 +134,7 @@ Cypress.Commands.add('create_new_listing', (listingData = false) => {
   }
 
   // see top menu item
-  cy.get('.container > #navbar > .nav > li > a').contains('POST A VIDEO AD').click()
+  cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
 
   // step 1 of listing creation
   cy.get('div.panel-heading > h2').contains('Create New Listing')
@@ -180,4 +179,22 @@ Cypress.Commands.add('create_new_listing', (listingData = false) => {
 Cypress.Commands.add('view_user_profile', () => {
   cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
   cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
+})
+
+/**
+ * Interacting with iframe content
+ * source https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
+ */
+Cypress.Commands.add('getIframeBody', (selector) => {
+  // get the iframe > document > body
+  // and retry until the body element is not empty
+  cy.log('getIframeBody')
+
+  return cy
+  .get(selector, { log: false })
+  .its('0.contentDocument.body', { log: false }).should('not.be.empty')
+  // wraps "body" DOM element to allow
+  // chaining more Cypress commands, like ".find(...)"
+  // https://on.cypress.io/wrap
+  .then((body) => cy.wrap(body, { log: false }))
 })

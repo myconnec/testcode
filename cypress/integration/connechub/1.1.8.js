@@ -123,7 +123,7 @@ describe('Release 1.1.8 change requests ...', function () {
  */
     it('...creating a new listing.', function () {
       // see top menu item
-      cy.get('.container > #navbar > .nav > li > a').contains('POST A VIDEO AD').click()
+      cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
 
       // step 1 of listing creation
       cy.get('div.panel-heading > h2').contains('Create New Listing')
