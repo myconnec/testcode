@@ -88,15 +88,15 @@ describe('Release 1.1.8 change requests ...', function () {
           "fileupload": "24fps.mp4"
         }
     ]
-  
+
     beforeEach(function () {
       cy.login()
     })
-  
+
     afterEach(function () {
       cy.logout()
     })
-  
+
 /**
  * Additional Subcategories under Services
  * https://trello.com/c/k0gmXu0E/25-can-additional-subcategories-be-added
@@ -111,20 +111,20 @@ describe('Release 1.1.8 change requests ...', function () {
 /**
  * Geo fencing searches
  * https://trello.com/c/7DZ0jyJ3/21-re-enable-geo-fencing-search-distancing
- * 
+ *
  * Allow < 1.00 USD priced items
  * https://trello.com/c/XRIxhxOf/15-allow-100-item-price
- * 
+ *
  * Allow numbers in Listing title
  * https://trello.com/c/t0eFlPtR/16-allow-numbers-in-listing-title
- * 
+ *
  * 256 character Listing title limit
  * https://trello.com/c/qbjJvU0x/17-there-should-be-a-150-character-limit-on-the-category-title
  */
     it('...creating a new listing.', function () {
       // see top menu item
       cy.get('.container > #navbar > .nav > li > a').contains('POST A VIDEO AD').click()
-  
+
       // step 1 of listing creation
       cy.get('div.panel-heading > h2').contains('Create New Listing')
       cy.get('#listing_category_id').select(listingData[0]['category']).should('have.value', '1')
@@ -139,7 +139,7 @@ describe('Release 1.1.8 change requests ...', function () {
       cy.get('#listing_description').clear().type(listingData[0]['description'])
       cy.get('#listings_submit').click()
       // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
-  
+
       // step 2 of listing creation
       cy.get('#fileupload').then(subject => {
         return cy.fixture('24fps.mp4', 'base64')
@@ -155,20 +155,17 @@ describe('Release 1.1.8 change requests ...', function () {
             return subject
           })
       })
-  
+
       cy.get('#fileupload').trigger('change')
       cy.get('#listings_submit').click()
-      cy.wait(10000) // TODO find another way to make cypress wait until the XHR request returns a 200
       // cy.get('#overlay > img').should('be.visible')
       cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
     })
-  
+
     it('...search a listing.', function () {
       cy.get('#location').type('Orlando, Florida')
-      cy.get('body > div:nth-child(8) > div > div.form-group.text-center.row > form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input')
-        .click()
-      cy.get('body > div:nth-child(8) > div > div.leftbar_old.col-xs-6.col-sm-8.col-md-10 > div > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
-        .contains(listingData[0]['title'])
+      cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
+      cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title'])
     })
 
     it('...deleting a listing.', function () {
@@ -178,4 +175,3 @@ describe('Release 1.1.8 change requests ...', function () {
       cy.handle_splash_message('Listing has been deleted.', 'success')
   })
 })
-  

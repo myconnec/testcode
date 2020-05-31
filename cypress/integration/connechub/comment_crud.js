@@ -22,10 +22,10 @@ describe('Comment CRUD...', function () {
     it('...creating a new comment.', function () {
         // create a new Listing
         cy.create_new_listing()
-        
+
         cy.view_user_profile()
 
-        cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
             .contains('Test Title').click()
 
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
@@ -36,7 +36,7 @@ describe('Comment CRUD...', function () {
     it('...reads a listing comment.', function () {
         cy.view_user_profile()
 
-        cy.get('div.grid.transitions-enabled.masonry > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a')
+        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
             .contains('Test Title').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > small > b').contains('This post has 1 Comment')
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > div > div > small').contains(commentData.content)
