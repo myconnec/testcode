@@ -14,13 +14,4 @@ class Category < ActiveRecord::Base
       end
       sale_subcat_posting_count
   end
-
-  def self.menu_items
-    Category.where("
-      SELECT categories.name, categories.id, subcategories.name, subcategories.id
-      FROM categories
-      JOIN subcategories ON subcategories.category_id = categories.id
-      ;")
-  end
-
 end
