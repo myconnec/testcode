@@ -1,0 +1,172 @@
+<div>
+  <h4>Categories</h4>
+
+  <div class="section group">
+
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-education"></i>
+      <strong><%= link_to 'Campus', category_path(@campus) %></strong>
+    </div>
+    <% if (!is_subcat and @campus.id == params[:id].to_i) or (is_subcat and @campus.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @campus.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@campus, subcategory) %>
+            <span class="cat_item_count">
+              <%= @campus_subcat_posting_count[subcategory.id] != 0 ? @campus_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-globe"></i>
+      <strong><%= link_to 'Community', category_path(@community) %></strong>
+    </div>
+    <% if (!is_subcat and @community.id == params[:id].to_i) or (is_subcat and @community.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @community.subcategories.each_with_index do |subcategory, index| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@community, subcategory) %>
+            <span class="cat_item_count">
+              <%= @community_subcat_posting_count[subcategory.id] != 0 ? @community_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-home"></i>
+      <strong><%= link_to 'Housing', category_path(@housing) %></strong>
+    </div>
+    <% if (!is_subcat and @housing.id == params[:id].to_i) or (is_subcat and @housing.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @housing.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@housing, subcategory) %>
+            <span class="cat_item_count">
+              <%= @housing_subcat_posting_count[subcategory.id] != 0 ? @housing_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-search"></i>
+      <strong><%= link_to 'Hard to Find', category_path(@h2f) %></strong>
+    </div>
+    <% if (!is_subcat and @h2f.id == params[:id].to_i) or (is_subcat and @h2f.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @h2f.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@h2f, subcategory) %>
+            <span class="cat_item_count">
+              <%= @h2f_subcat_posting_count[subcategory.id] != 0 ? @h2f_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-gift"></i>
+      <strong><%= link_to 'Free', category_path(@free) %></strong>
+    </div>
+    <% if (!is_subcat and @free.id == params[:id].to_i) or (is_subcat and @free.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @free.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@free, subcategory) %>
+            <span class="cat_item_count">
+              <%= @free_subcat_posting_count[subcategory.id] != 0 ? @free_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-briefcase"></i>
+      <strong><%= link_to 'Jobs', category_path(@jobs) %></strong>
+    </div>
+    <% if (!is_subcat and @jobs.id == params[:id].to_i) or (is_subcat and @jobs.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @jobs.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@jobs, subcategory) %>
+            <span class="cat_item_count">
+              <%= @jobs_subcat_posting_count[subcategory.id] != 0 ? @jobs_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-shopping-cart"></i>
+      <strong><%= link_to 'Sale', category_path(@sale) %></strong>
+    </div>
+    <% if (!is_subcat and @sale.id == params[:id].to_i) or (is_subcat and @sale.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @sale.subcategories.each_with_index do |subcategory, index| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@sale, subcategory) %>
+            <span class="cat_item_count">
+              <%= @sale_subcat_posting_count[subcategory.id] != 0 ? @sale_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-cog"></i>
+      <strong><%= link_to 'Services', category_path(@services) %></strong>
+    </div>
+    <% if (!is_subcat and @services.id == params[:id].to_i) or (is_subcat and @services.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @services.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@services, subcategory) %>
+            <span class="cat_item_count">
+              <%= @services_subcat_posting_count[subcategory.id] != 0 ? @services_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="catg_title">
+      <i class="glyphicon glyphicon-eye-open"></i>
+      <strong><%= link_to 'Unboxing', category_path(@unboxing) %></strong>
+    </div>
+    <% if (!is_subcat and @unboxing.id == params[:id].to_i) or (is_subcat and @unboxing.id == params[:category_id].to_i) %>
+      <div class="category_title">
+        <ul>
+          <% @unboxing.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+            <%= link_to subcategory.name, category_subcategory_path(@unboxing, subcategory) %>
+            <span class="cat_item_count">
+              <%= @unboxing_subcat_posting_count[subcategory.id] != 0 ? @unboxing_subcat_posting_count[subcategory.id] : '' %>
+            </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  </div>
+
+</div>
+<br /><br /><br />

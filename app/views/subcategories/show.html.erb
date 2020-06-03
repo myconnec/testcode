@@ -5,5 +5,8 @@
 <hr>
 
 <div>
-  <%= render :partial => 'categories/show', locals: {listings: @listings}  %>
+  <%= render :partial => 'categories/show', locals: {
+    listings: @listings,
+    is_subcat: true
+  }  %>
 </div>

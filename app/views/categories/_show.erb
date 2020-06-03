@@ -1,6 +1,6 @@
 <div class="col-xs-6 col-sm-4 col-md-3">
   <%= render :partial => 'categories/search' %>
-  <%= render :partial => 'categories/side_menu', locals: {
+  <%= render :partial => 'partials/side_menu', locals: {
     campus: @campus,
     community: @community,
     free: @free,
@@ -11,6 +11,7 @@
     sale: @sale,
     services: @services,
     unboxing: @unboxing,
+    is_subcat: is_subcat,
   } %>
 </div>
 
