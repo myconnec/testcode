@@ -1227,6 +1227,7 @@ div.name > b > a {
 }
 
 /* Strip payment form elements */
+
 /**
 * The CSS shown here will not be introduced in the Quickstart guide, but shows
 * how you can use CSS to style your Element's container.
@@ -1258,3 +1259,11 @@ div.name > b > a {
   .StripeElement--webkit-autofill {
   background-color: #fefde5 !important;
   }
+}
+
+/**
+* Category / SubCategory side menu styleing
+*/
+.side-menu {
+  border-right: 1px solid lightgray;
+}

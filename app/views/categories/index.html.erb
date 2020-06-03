@@ -31,5 +31,22 @@
     <% end %>
   </div>
 
+  <hr>
+
+  <div class="col-xs-6 col-sm-4 col-md-3 side-menu">
+    <%= render :partial => 'partials/side_menu', locals: {
+      campus: @campus,
+      community: @community,
+      free: @free,
+      h2f: @h2f,
+      housing: @housing,
+      jobs: @jobs,
+      listings: @listings,
+      sale: @sale,
+      services: @services,
+      unboxing: @unboxing,
+      is_subcat: false,
+    } %>
+  </div>
 </div>
 <div style="height: 45px; width: 100%;"></div>

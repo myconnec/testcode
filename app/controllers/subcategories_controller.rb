@@ -5,6 +5,7 @@ class SubcategoriesController < ApplicationController
         @listings = Listing.active(params[:id])
         @subcategory = Subcategory.find(params[:id])
 
+        # TODO Extracr into a CNTL helper
         @categories = Category.all
 
         @campus = @categories[0]
