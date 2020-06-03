@@ -47,4 +47,13 @@ class Listing < ActiveRecord::Base
     listings = listings.order('created_at DESC')
     listings
   end
+
+  def self.most_recent(count = 15)
+    listings = Listing.where("ending_at > '#{Time.now.to_i}'")
+      .where("media_file_name IS NOT NULL")
+      .where("sold IS NULL")
+      .order("created_at DESC")
+      .limit(count.to_i)
+    listings
+  end
 end

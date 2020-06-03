@@ -30,6 +30,9 @@ class CategoriesController < ApplicationController
 
         @unboxing = @categories[8]
         @unboxing_subcat_posting_count = Subcategory.count_per_subcat(@unboxing)
+
+        # Most Recent 15 Listings for cat#index VS
+        @listings = Listing.most_recent
     end
 
     def show
