@@ -35,7 +35,7 @@ var select_sub_category = function() {
   })
 }
 
-$(document).on('ready turbolinks:load', function() {
+$(document).on('ready', function() {
   if (location.host == 'dev.connechub.com') {
     $('select#listing_category_id>option:eq(1)').attr('selected', true);
     $('#listing_price').val('10');

@@ -4,7 +4,7 @@ var $grid = $('.grid').masonry({
     isFitWidth: '.grid-item'
 });
 
-$(document).on('ready turbolinks:load', function() {
+$(document).on('ready', function() {
     console.log('masonry DOM ready...')
 
     // layout Masonry after each image loads
