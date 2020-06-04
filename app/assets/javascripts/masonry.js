@@ -4,9 +4,12 @@ var $grid = $('.grid').masonry({
     isFitWidth: '.grid-item'
 });
 
-$(document).on('ready', function() {
+$(document).on('ready turbolinks:load', function() {
+    console.log('masonry DOM ready...')
+
     // layout Masonry after each image loads
     $grid.imagesLoaded().progress( function() {
+        console.log('masonry progress...')
         $grid.masonry();
     });
 });
