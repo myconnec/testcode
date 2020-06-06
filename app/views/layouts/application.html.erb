@@ -116,8 +116,8 @@ youtube,
     if @listing and @listing.media_file_name
       set_meta_tags og: {
         description: 'Buy, Sell, Promote and Watch Local Video Classifieds.' + @listing.title,
-        image:       'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-00001.png',
-        image_src:   'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? '' : '-' + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-00001.png',
+        image:       'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-4m-00001.png',
+        image_src:   'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? '' : '-' + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-4m-00001.png',
         title:       @listing.title,
         type:        'website',
         url:         'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/listings/' + params[:id],
