@@ -108,14 +108,21 @@ youtube,
     <%= csrf_meta_tags %>
     <%= render "partials/google_analytics" %>
     
-    <% set_meta_tags og: {
-      description:'Buy, Sell, Promote and Watch Local Video Classifieds.',
-      image:      'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/assets/connechub-facebook-share.jpg',
-      image_src:  'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/assets/connechub-facebook-share.jpg',
-      title:      ENV["NAME"],
-      type:       'website',
-      url:        'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com',
-    }
+    <!-- wrap in an IF to only render on listing pages -->
+    <meta name="name" content="<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>">
+
+    <%
+    # only add OG meta tags if on a Listing VW page. We know this as that is the only view to have a @listing object
+    if @listing and @listing.media_file_name
+      set_meta_tags og: {
+        description: 'Buy, Sell, Promote and Watch Local Video Classifieds.' + @listing.title,
+        image:       'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-00001.png',
+        image_src:   'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? '' : '-' + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-00001.png',
+        title:       @listing.title,
+        type:        'website',
+        url:         'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/listings/' + params[:id],
+      }
+    end
 
     # set_meta_tags twitter: {
     #   card:  "photo",
@@ -137,6 +144,8 @@ youtube,
     <%= display_meta_tags %>
 
     <meta property="fb:app_id" content="0" />
+
+    <title><%= (@listing and @listing.title ? ENV['NAME'] + ' - ' + @listing.title : ENV['NAME']) %></title>
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
