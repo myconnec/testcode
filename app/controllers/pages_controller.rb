@@ -1,5 +1,8 @@
 class PagesController < ApplicationController
 
+    def  about
+    end
+
     def  cookie
     end
 

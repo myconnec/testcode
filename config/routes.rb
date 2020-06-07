@@ -18,31 +18,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # Sub/Categories
-  match '/categories/show', to: 'categories#show', via: :get
-  
-  match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
-  match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
-
-  # User (Device)
-  get ':username' => 'users#show', as: 'user'
-  match '/users/update', to: 'users#update', via: :put
-
-  # Listing
-  match '/listings/payment/:id', to: 'listings#payment', via: :get
-  match '/listings/create_payment/:id', to: 'listings#create_payment', via: :post
-  match '/listings/upload/:id', to: 'listings#upload', via: :get
-  match '/listings/create_upload/:id', to: 'listings#create_upload', via: :post
-  match '/listings/update_upload/:id', to: 'listings#update_upload', via: :patch
-  match '/listings/sold/:id', to: 'listings#sold', via: :get
-  match '/listings/unsold/:id', to: 'listings#unsold', via: :get
-  match '/listings/show_json/:id', to: 'listings#show_json', via: :get
-
-  match '/prices/index', to: 'prices#index', via: :get
-  match '/howitworks/index', to: 'howitworks#index', via: :get
-
-  root 'categories#index'
-
   # Static Pages
   match '/about', to: 'pages#about', via: :get
   match '/career', to: 'pages#career', via: :get
@@ -68,4 +43,29 @@ Rails.application.routes.draw do
   match '/scams', to: 'pages#scams', via: :get
   match '/technology', to: 'pages#technology', via: :get
   match '/terms', to: 'pages#terms', via: :get
+
+  # Sub/Categories
+  match '/categories/show', to: 'categories#show', via: :get
+  
+  match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
+  match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
+
+  # User (Device)
+  get ':username' => 'users#show', as: 'user'
+  match '/users/update', to: 'users#update', via: :put
+
+  # Listing
+  match '/listings/payment/:id', to: 'listings#payment', via: :get
+  match '/listings/create_payment/:id', to: 'listings#create_payment', via: :post
+  match '/listings/upload/:id', to: 'listings#upload', via: :get
+  match '/listings/create_upload/:id', to: 'listings#create_upload', via: :post
+  match '/listings/update_upload/:id', to: 'listings#update_upload', via: :patch
+  match '/listings/sold/:id', to: 'listings#sold', via: :get
+  match '/listings/unsold/:id', to: 'listings#unsold', via: :get
+  match '/listings/show_json/:id', to: 'listings#show_json', via: :get
+
+  match '/prices/index', to: 'prices#index', via: :get
+  match '/howitworks/index', to: 'howitworks#index', via: :get
+
+  root 'categories#index'
 end
