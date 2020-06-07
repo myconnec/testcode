@@ -21,22 +21,11 @@ describe('Liking like CRUD...', function () {
             "category": "Sale",
             "sub_category": "Jewelry & Watches",
             "price": "24.68",
-            "title": "Test Title",
+            "title": "Test Listing Liking Title",
             "city": "Tampa",
             "state": "FL",
             "zipcode": "33612",
-            "description": "Test Description.",
-            "fileupload": "24fps.mp4"
-        },
-        {
-            "category": "Sale",
-            "sub_category": "Sports & Outdoors",
-            "price": "13.57",
-            "title": "Updated Test Title",
-            "city": "Clearwater",
-            "state": "FL",
-            "zipcode": "33612",
-            "description": "Updated Test Description.",
+            "description": "Test Listing Liking Description.",
             "fileupload": "24fps.mp4"
         }
     ]
@@ -48,10 +37,8 @@ describe('Liking like CRUD...', function () {
     })
 
     it('...like a listing, as a guest.', function () {
-        cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(1) > div.category_title > ul > li:nth-child(7) > a')
-            .contains(listingData[0]['sub_category']).click()
-        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
-            .contains(listingData[0]['title']).click()
+        cy.visit('')
+        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 
         const element = 'body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a'
         cy.get(element).invoke('text').invoke('trim').then((text1) => {
@@ -62,10 +49,7 @@ describe('Liking like CRUD...', function () {
 
     it('...like a listing, as user 0.', function () {
         cy.login(userData[0])
-        cy.get('body > div:nth-child(8) > div > div:nth-child(10) > div > div:nth-child(1) > div.category_title > ul > li:nth-child(7) > a')
-            .contains(listingData[0]['sub_category']).click()
-        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
-            .contains(listingData[0]['title']).click()
+        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 
         const element = 'body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a'
         cy.get(element).invoke('text').invoke('trim').then((text1) => {
@@ -82,11 +66,9 @@ describe('Liking like CRUD...', function () {
         // log in as typical test user
         cy.login()
 
-        cy.get('div.category_title > ul > li:nth-child(7) > a').contains(listingData[0]['sub_category']).click()
-        cy.get('div > div > div.panel-footer > div.name > b > a').contains(listingData[0]['title']).click()
+        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 
         const element = 'body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a'
-
         cy.get(element).invoke('text').invoke('trim').then((text1) => {
             text1 = Number.parseInt(text1)
             var text2 = text1 + 1
@@ -94,6 +76,7 @@ describe('Liking like CRUD...', function () {
             cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(text2)
         })
 
-        cy.logout() // log out as typical test user
+        // log out as typical test user
+        cy.logout()
     })
 })

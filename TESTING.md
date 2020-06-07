@@ -1,5 +1,15 @@
 # Testing
 
+Execute the following on the database before running tests.
+
+```sql
+truncate listings;
+truncate comments;
+truncate votes;
+delete from users where id > 10;
+update users set promo_1 = 0 where id < 10;
+```
+
 ## RSpec - Unit
 
 ## Cypress - UAT
@@ -19,7 +29,7 @@ export CYPRESS_abort_strategy=spec
 # --reporter cypress-image-snapshot/reporter
 ```
 
-OR in a container via
+... or in a container
 
 ```sh
 cd ./cypress

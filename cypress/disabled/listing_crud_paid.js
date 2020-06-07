@@ -43,13 +43,8 @@ describe('Listing CRUS PAID...', function () {
     cy.logout()
   })
 
-  it('...create three paid listings to burn through promo_1 allowance', function () {
-    cy.create_new_listing(listingData[0]);
-    cy.create_new_listing(listingData[0]);
-    cy.create_new_listing(listingData[0]);
-  })
-
   it('...creating a listing that requires a payment.)', function () {
+
     // create a paid listing
     cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
 
