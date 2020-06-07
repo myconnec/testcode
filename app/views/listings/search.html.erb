@@ -5,5 +5,17 @@
 <hr>
 
 <div>
-  <%= render :partial => 'listings/show', locals: {listings: @listings}  %>
+  <%= render :partial => 'categories/show', locals: {
+    campus: @campus,
+    community: @community,
+    free: @free,
+    h2f: @h2f,
+    housing: @housing,
+    jobs: @jobs,
+    listings: @listings,
+    sale: @sale,
+    services: @services,
+    unboxing: @unboxing,
+    is_subcat: false,
+  }  %>
 </div>
