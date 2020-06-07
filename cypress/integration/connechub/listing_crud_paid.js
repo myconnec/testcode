@@ -43,11 +43,11 @@ describe('Listing CRUS PAID...', function () {
     cy.logout()
   })
 
-  // it('...create three paid listings to burn through promo_1 allowance', function () {
-  //   cy.create_new_listing(listingData[0]);
-  //   cy.create_new_listing(listingData[0]);
-  //   cy.create_new_listing(listingData[0]);
-  // })
+  it('...create three paid listings to burn through promo_1 allowance', function () {
+    cy.create_new_listing(listingData[0]);
+    cy.create_new_listing(listingData[0]);
+    cy.create_new_listing(listingData[0]);
+  })
 
   it('...creating a listing that requires a payment.)', function () {
     // create a paid listing
@@ -105,7 +105,7 @@ describe('Listing CRUS PAID...', function () {
     cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
   })
 
-  it('...reads most recent listing.', function () {
+  it('...reads most recent paid listing.', function () {
     cy.view_user_profile()
 
     // first listing shown
