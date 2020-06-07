@@ -127,7 +127,7 @@ describe('Release 1.1.9 changes ...', function () {
         // source: https://trello.com/c/iRI7OmSP/6-sold-button
         cy.get('a').contains('Mark as Sold').should('be.visible').click()
 
-        cy.visit('')
+        cy.visit('/categories/1')
         cy.contains('Activities & Events').click()
         cy.contains('No listings found!')
         cy.view_user_profile()
