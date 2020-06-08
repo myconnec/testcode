@@ -7,7 +7,7 @@
       <i class="glyphicon glyphicon-education"></i>
       <strong><%= link_to 'Campus', category_path(@campus) %></strong>
     </div>
-    <% if (!is_subcat and @campus.id == params[:id].to_i) or (is_subcat and @campus.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @campus.id == params[:id].to_i) or (@subcategory and @campus.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @campus.id %>">
         <ul>
           <% @campus.subcategories.each do |subcategory| %>
@@ -25,7 +25,7 @@
       <i class="glyphicon glyphicon-globe"></i>
       <strong><%= link_to 'Community', category_path(@community) %></strong>
     </div>
-    <% if (!is_subcat and @community.id == params[:id].to_i) or (is_subcat and @community.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @community.id == params[:id].to_i) or (@subcategory and @community.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @community.id %>">
         <ul>
           <% @community.subcategories.each_with_index do |subcategory, index| %>
@@ -43,7 +43,7 @@
       <i class="glyphicon glyphicon-home"></i>
       <strong><%= link_to 'Housing', category_path(@housing) %></strong>
     </div>
-    <% if (!is_subcat and @housing.id == params[:id].to_i) or (is_subcat and @housing.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @housing.id == params[:id].to_i) or (@subcategory and @housing.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @housing.id %>">
         <ul>
           <% @housing.subcategories.each do |subcategory| %>
@@ -61,7 +61,7 @@
       <i class="glyphicon glyphicon-search"></i>
       <strong><%= link_to 'Hard to Find', category_path(@h2f) %></strong>
     </div>
-    <% if (!is_subcat and @h2f.id == params[:id].to_i) or (is_subcat and @h2f.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @h2f.id == params[:id].to_i) or (@subcategory and @h2f.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @h2f.id %>">
         <ul>
           <% @h2f.subcategories.each do |subcategory| %>
@@ -79,7 +79,7 @@
       <i class="glyphicon glyphicon-gift"></i>
       <strong><%= link_to 'Free', category_path(@free) %></strong>
     </div>
-    <% if (!is_subcat and @free.id == params[:id].to_i) or (is_subcat and @free.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @free.id == params[:id].to_i) or (@subcategory and @free.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @free.id %>">
         <ul>
           <% @free.subcategories.each do |subcategory| %>
@@ -97,7 +97,7 @@
       <i class="glyphicon glyphicon-briefcase"></i>
       <strong><%= link_to 'Jobs', category_path(@jobs) %></strong>
     </div>
-    <% if (!is_subcat and @jobs.id == params[:id].to_i) or (is_subcat and @jobs.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @jobs.id == params[:id].to_i) or (@subcategory and @jobs.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @jobs.id %>">
         <ul>
           <% @jobs.subcategories.each do |subcategory| %>
@@ -115,7 +115,7 @@
       <i class="glyphicon glyphicon-shopping-cart"></i>
       <strong><%= link_to 'Sale', category_path(@sale) %></strong>
     </div>
-    <% if (!is_subcat and @sale.id == params[:id].to_i) or (is_subcat and @sale.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @sale.id == params[:id].to_i) or (@subcategory and @sale.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @sale.id %>">
         <ul>
           <% @sale.subcategories.each_with_index do |subcategory, index| %>
@@ -133,7 +133,7 @@
       <i class="glyphicon glyphicon-cog"></i>
       <strong><%= link_to 'Services', category_path(@services) %></strong>
     </div>
-    <% if (!is_subcat and @services.id == params[:id].to_i) or (is_subcat and @services.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @services.id == params[:id].to_i) or (@subcategory and @services.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @services.id %>">
         <ul>
           <% @services.subcategories.each do |subcategory| %>
@@ -151,7 +151,7 @@
       <i class="glyphicon glyphicon-eye-open"></i>
       <strong><%= link_to 'Unboxing', category_path(@unboxing) %></strong>
     </div>
-    <% if (!is_subcat and @unboxing.id == params[:id].to_i) or (is_subcat and @unboxing.id == params[:category_id].to_i) %>
+    <% if (!@subcategory and @unboxing.id == params[:id].to_i) or (@subcategory and @unboxing.id == params[:category_id].to_i) %>
       <div class="category_title sub_category_<%= @unboxing.id %>">
         <ul>
           <% @unboxing.subcategories.each do |subcategory| %>

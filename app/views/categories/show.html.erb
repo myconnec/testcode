@@ -1,9 +1,3 @@
-<div style="height: 15px; width: 100%;"></div>
-
-<div class="container_12">
-  <%= link_to 'Connechub', root_path %> > <%= @category.name %>
-<hr>
-
 <div>
   <%= render :partial => 'categories/show', locals: {
     campus: @campus,
@@ -15,7 +9,6 @@
     listings: @listings,
     sale: @sale,
     services: @services,
-    unboxing: @unboxing,
-    is_subcat: false,
+    unboxing: @unboxing
   }  %>
 </div>
