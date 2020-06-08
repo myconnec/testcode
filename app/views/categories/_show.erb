@@ -16,9 +16,9 @@
 </div>
 
 <div class="col-xs-6 col-sm-8 col-md-9">
-  <%= @category ? ((link_to 'Connechub', root_path) + ' > ' + (link_to @category.name, @category)) : '' %>
+  <%= @category ? link_to('Connechub', root_path) + ' > ' + link_to(@category.name, @category) : '' %>
   <%= @subcategory ? ' > ' + @subcategory.name : '' %>
-  <%= @category ? '<hr />' : '' %>  
+  <%= @category || @subcategory ? '<hr />'.html_safe : '' %>
 </div>
 
 <div class="col-xs-6 col-sm-8 col-md-9">
