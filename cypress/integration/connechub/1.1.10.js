@@ -119,4 +119,15 @@ describe('Release 1.1.9 changes ...', function () {
         // subcategory show
         cy.visit('/categories/9/subcategories/167').contains('Test Subcategory and Category Shows Title')
     })
+
+    // Updating a listing title does not allow numbers, but it should
+    // https://trello.com/c/0Dhhn91b/57-updating-a-listing-title-does-not-allow-numbers-but-it-should
+    it('...UPDATE listing, allow numbers in title.', function () {
+        cy.visit('').login().view_user_profile()
+        cy.contains('Edit Listing').click()
+        cy.get('#listing_title').clear().type('Testing Special Characters Title 0123456789!$,.?')
+        cy.get('#listings_submit').click()
+        cy.handle_splash_message('Listing has been updated.', 'success')
+        cy.contains('Testing Special Characters Title 0123456789!$,.?')
+    })
 })
