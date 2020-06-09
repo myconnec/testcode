@@ -17,7 +17,19 @@ describe('Release 1.1.9 changes ...', function () {
           "zipcode": "33612",
           "description": "Test FB Share Description.",
           "fileupload": "24fps.mp4"
-        }
+        },
+        {
+            "category": "Sale",
+            "sub_category": "Home & Garden",
+            "price": "123.00",
+            "condition": "Excellent",
+            "title": "Test Subcategory and Category Shows Title",
+            "city": "Tampa",
+            "state": "FL",
+            "zipcode": "33612",
+            "description": "Test Subcategory and Category Shows Description.",
+            "fileupload": "24fps.mp4"
+          }
       ]
     
     // FIX Stripe value source. Add Listing PAID crud UAT testing.
@@ -97,4 +109,14 @@ describe('Release 1.1.9 changes ...', function () {
     // Google Analytics is not recording session data
     // https://trello.com/c/7JNtSTkZ/29-google-analytics-is-not-recording-session-data
     // not in scope of UAT testing
+
+    // Listings not displaying on Subcategory index views
+    // https://trello.com/c/Plsj5OOw/56-listings-not-displaying-on-subcategory-index-views
+    it('...Listings display in category show AND subcategory show VWs.', function () {
+        cy.visit('').login().create_new_listing(listingData[1]).logout()
+        // category show
+        cy.visit('/categories/9').contains('Test Subcategory and Category Shows Title')
+        // subcategory show
+        cy.visit('/categories/9/subcategories/167').contains('Test Subcategory and Category Shows Title')
+    })
 })

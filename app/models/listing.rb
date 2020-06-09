@@ -28,11 +28,11 @@ class Listing < ActiveRecord::Base
     [city, state, zipcode].join(', ')
   end
 
-  def self.active(subcategory_id)
+  def self.active(id, type)
     Listing.where("ending_at > '#{Time.now.to_i}'")
       .where("media_file_name IS NOT NULL")
       .where("sold IS NULL")
-      .where(subcategory_id: subcategory_id)
+      .where(type + " = " + id)
       .order("created_at DESC")
   end
 

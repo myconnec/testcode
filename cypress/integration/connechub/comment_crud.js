@@ -33,7 +33,7 @@ describe('Comment CRUD...', function () {
 
     it('...reads a listing comment, as a guest.', function () {
         cy.visit('')
-        cy.get('div.main-content > div > div > div.panel-footer > div.name > b > a').click()
+        cy.get('div.main-content > div > div > div.panel-footer > div.name > b > a').contains('Test Demo Title').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > small > b').contains('This post has 1 Comment')
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > div > div > small').contains(commentData.content)
     })

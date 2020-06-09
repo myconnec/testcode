@@ -37,9 +37,9 @@ class CategoriesController < ApplicationController
 
     def show
         @category = Category.find(params[:id])
-        @listings = Listing.active(params[:id])
+        @listings = Listing.active(params[:id], 'category_id')
 
-        # TODO Extracr into a CNTL helper
+        # TODO Extract into a CNTL helper
         @categories = Category.all
 
         @campus = @categories[0]

@@ -2,7 +2,7 @@ class SubcategoriesController < ApplicationController
 
     def show
         @category = Category.find(params[:category_id])
-        @listings = Listing.active(params[:id])
+        @listings = Listing.active(params[:id], 'subcategory_id')
         @subcategory = Subcategory.find(params[:id])
 
         # TODO Extracr into a CNTL helper

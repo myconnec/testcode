@@ -67,7 +67,7 @@ $(document).on('ready', function() {
       return;
     }
 
-    if ($('#listing_subcategory_id :selected').data('chargable') != 0) {
+    if ($('#listing_subcategory_id :selected').data('chargable') != '0') {
       // if sub category has a chargable amount != 0, show message
       $('#listing_price').attr('disabled', false);
       $('#sub_category_cost_container').css("display", "block");
