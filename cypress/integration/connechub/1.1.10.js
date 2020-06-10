@@ -3,7 +3,7 @@
  * 
  * This release involved a major change to the UI; the sub/caregory meny was moved and iterated on as well as the landing page changed. These changes are reflected throughout the Cypress e2e test suite, not simply in here.
  */
-describe('Release 1.1.9 changes ...', function () {
+describe('Release 1.1.10 changes ...', function () {
     
       const listingData = [
         {
@@ -129,5 +129,52 @@ describe('Release 1.1.9 changes ...', function () {
         cy.get('#listings_submit').click()
         cy.handle_splash_message('Listing has been updated.', 'success')
         cy.contains('Testing Special Characters Title 0123456789!$,.?')
+    })
+
+    // Profile image changing not working.
+    // https://trello.com/c/0CWb6GMp/58-profile-image-changing-not-working
+    it('...UPDATE listing, allow numbers in title.', function () {
+        
+        // add profile image
+        cy.visit('').login().view_user_profile()
+        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
+        cy.get('#user_avatar').then(subject => {
+            return cy.fixture('user_profile_0.jpg', 'base64')
+            .then(Cypress.Blob.base64StringToBlob)
+            .then(blob => {
+                const el = subject[0]
+                if (el != null) {
+                    const testFile = new File([blob], 'user_profile_0.jpg')
+                    const dataTransfer = new DataTransfer()
+                    dataTransfer.items.add(testFile)
+                    el.files = dataTransfer.files
+                }
+                return subject
+            })
+        })
+        cy.get('#profile_submit').contains('Update Profile').click()
+        cy.visit('').view_user_profile()
+        cy.get('#inside_view_left > div.profile-info > img', {timeout: 5000}).matchImageSnapshot('1_1_10_user_profile_0');
+
+        // change confirm profile image change
+        cy.visit('').view_user_profile()
+        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
+        cy.get('#user_avatar').then(subject => {
+            return cy.fixture('user_profile_1.png', 'base64')
+            .then(Cypress.Blob.base64StringToBlob)
+            .then(blob => {
+                const el = subject[0]
+                if (el != null) {
+                    const testFile = new File([blob], 'user_profile_1.png')
+                    const dataTransfer = new DataTransfer()
+                    dataTransfer.items.add(testFile)
+                    el.files = dataTransfer.files
+                }
+                return subject
+            })
+        })
+        cy.get('#profile_submit').contains('Update Profile').click()
+        cy.visit('').view_user_profile()
+        cy.get('#inside_view_left > div.profile-info > img', {timeout: 5000}).matchImageSnapshot('1_1_10_user_profile_1');
     })
 })
