@@ -137,7 +137,7 @@ describe('Release 1.1.10 changes ...', function () {
 
     // Profile image changing not working.
     // https://trello.com/c/0CWb6GMp/58-profile-image-changing-not-working
-    it('...UPDATE listing, allow numbers in title.', function () {
+    it('...UPDATE user profile image, then do it again.', function () {
         
         // add profile image
         cy.visit('').login().view_user_profile()

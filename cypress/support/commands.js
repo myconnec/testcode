@@ -192,7 +192,7 @@ Cypress.Commands.add('delete_listing', (listingData = false, userData = false) =
     }
   }
 
-  cy.visit('').login(userData).view_user_profile()
+  cy.visit('').logout().login(userData).view_user_profile()
   cy.contains(listingData['title']).click()
   cy.get('body > div > div > div > div > a').contains('Delete').click()
   cy.handle_splash_message('Listing has been deleted.', 'success')
