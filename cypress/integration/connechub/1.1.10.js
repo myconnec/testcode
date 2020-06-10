@@ -131,7 +131,7 @@ describe('Release 1.1.10 changes ...', function () {
         cy.get('#listing_title').clear().type(listingData[2]['title'])
         cy.get('#listings_submit').click()
         cy.handle_splash_message('Listing has been updated.', 'success')
-        cy.contains(listingData[3]['title'])
+        cy.contains(listingData[2]['title'])
         cy.delete_listing(listingData[2])
     })
 
