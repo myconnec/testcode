@@ -174,6 +174,31 @@ Cypress.Commands.add('create_new_listing', (listingData = false) => {
 })
 
 /**
+ * Delete an existing listing
+ */
+Cypress.Commands.add('delete_listing', (listingData = false, userData = false) => {
+  
+  if (listingData === false) {
+    return false;
+  }
+
+  if (userData === false) {
+    // setup some basic types
+    // and user properties
+    userData = {
+      name: 'Test User',
+      email: 'test@test.com',
+      password: 'testtest'
+    }
+  }
+
+  cy.visit('').login(userData).view_user_profile()
+  cy.contains(listingData['title']).click()
+  cy.get('body > div > div > div > div > a').contains('Delete').click()
+  cy.handle_splash_message('Listing has been deleted.', 'success')
+})
+
+/**
  * This requires a user be logged in. Else is will fail.
  */
 Cypress.Commands.add('view_user_profile', () => {

@@ -29,7 +29,10 @@ describe('Release 1.1.10 changes ...', function () {
             "zipcode": "33612",
             "description": "Test Subcategory and Category Shows Description.",
             "fileupload": "24fps.mp4"
-          }
+        },
+        {
+            "title": "Testing Special Characters Title 0123456789!$,.?"
+        }
       ]
     
     // FIX Stripe value source. Add Listing PAID crud UAT testing.
@@ -125,10 +128,11 @@ describe('Release 1.1.10 changes ...', function () {
     it('...UPDATE listing, allow numbers in title.', function () {
         cy.visit('').login().view_user_profile()
         cy.contains('Edit Listing').click()
-        cy.get('#listing_title').clear().type('Testing Special Characters Title 0123456789!$,.?')
+        cy.get('#listing_title').clear().type(listingData[3]['title'])
         cy.get('#listings_submit').click()
         cy.handle_splash_message('Listing has been updated.', 'success')
-        cy.contains('Testing Special Characters Title 0123456789!$,.?')
+        cy.contains(listingData[3]['title'])
+        cy.delete_listing(listingData[3])
     })
 
     // Profile image changing not working.
