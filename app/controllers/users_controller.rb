@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     @user.update(user_params)
     
     if !@user.update(user_params)
-      redirect_to action: 'user#edit', :flash => { :danger => @user.errors.full_messages.to_sentence  }
+      redirect_to action: 'edit', :flash => { :danger => @user.errors.full_messages.to_sentence  }
     end
 
     redirect_to action: 'show', username: @user.username, :flash => { :success => 'Profile updated successfully.' }
