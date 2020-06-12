@@ -4,13 +4,13 @@ describe('Liking like CRUD...', function () {
     const userData = [
         {
             bio: 'Lorem ipsum dolor sit amet....',
-            email: 'asdf+test@test.com',
+            email: 'asdf+test@connechub.com',
             name: 'Test User ASDF',
             password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
         },
         {
             bio: '...consectetur adipiscing elit.',
-            email: 'zxcv+test@test.com ZXCV',
+            email: 'zxcv+test@connechub.com ZXCV',
             name: 'Test User',
             password: 'ruNK2QRddLk9#cKju#9rZYiu7chEaX0&nE'
         }

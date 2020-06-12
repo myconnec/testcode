@@ -52,7 +52,7 @@ Cypress.Commands.add('login', (userData = false, alert = true) => {
     // and user properties
     userData = {
       name: 'Test User',
-      email: 'test@test.com',
+      email: 'test@connechub.com',
       password: 'testtest'
     }
   }
@@ -187,7 +187,7 @@ Cypress.Commands.add('delete_listing', (listingData = false, userData = false) =
     // and user properties
     userData = {
       name: 'Test User',
-      email: 'test@test.com',
+      email: 'test@connechub.com',
       password: 'testtest'
     }
   }
