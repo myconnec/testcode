@@ -41,7 +41,7 @@ Rails.application.configure do
 
     # action_mailer for email configuration
     config.action_mailer.default_url_options = {
-        :host => "${ENV['STAGE']}.${ENV['NAME']}.com"
+        :host => ENV['NAME'] + '.com'
     }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
@@ -55,8 +55,8 @@ Rails.application.configure do
         enable_starttls_auto:   true
     }
 
-    # config.web_console.whitelisted_ips = [
-    #     '10.0.0.0/24',
-    #     '70.125.10.0/24'
-    # ]
+    config.web_console.whitelisted_ips = [
+        # '10.0.0.0/24',
+        # '70.125.10.0/24'
+    ]
 end

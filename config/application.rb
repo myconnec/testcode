@@ -36,11 +36,6 @@ module Workspace
     ssm_client = Aws::SSM::Client.new(region: ENV['AWS_META_DATA_REGION'])
 
     # Load values from SSM
-    ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] = ssm_client.get_parameter(name: '/media_display_s3_bucket', with_decryption: true).to_h[:parameter][:value]
-    ENV['AWS_S3_MEDIA_SOURCE_BUCKET'] = ssm_client.get_parameter(name: '/media_source_s3_bucket', with_decryption: true).to_h[:parameter][:value]
-    ENV['COOKIE_SECRET_KEY_BASE'] = ssm_client.get_parameter(name: '/web_app_cookie_secret_key_base', with_decryption: true).to_h[:parameter][:value]
-    ENV['GEO_API_KEY'] = ssm_client.get_parameter(name: '/geo_api_key', with_decryption: true).to_h[:parameter][:value]
-    ENV['GOOGLEANALYTICS'] = ssm_client.get_parameter(name: '/google_analytics', with_decryption: true).to_h[:parameter][:value]
     ENV['NAME'] = ssm_client.get_parameter(name: '/name', with_decryption: true).to_h[:parameter][:value]
     ENV['REGION'] = ssm_client.get_parameter(name: '/region', with_decryption: true).to_h[:parameter][:value]
     ENV['STAGE'] = ssm_client.get_parameter(name: '/stage', with_decryption: true).to_h[:parameter][:value]
@@ -57,6 +52,11 @@ module Workspace
     ENV['SES_SMTP_PORT'] = ssm_client.get_parameter(name: '/smtp_port', with_decryption: true).to_h[:parameter][:value]
     ENV['SES_SMTP_USER'] = ssm_client.get_parameter(name: '/smtp_user', with_decryption: true).to_h[:parameter][:value]
 
+    ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] = ssm_client.get_parameter(name: '/media_display_s3_bucket', with_decryption: true).to_h[:parameter][:value]
+    ENV['AWS_S3_MEDIA_SOURCE_BUCKET'] = ssm_client.get_parameter(name: '/media_source_s3_bucket', with_decryption: true).to_h[:parameter][:value]
+    ENV['COOKIE_SECRET_KEY_BASE'] = ssm_client.get_parameter(name: '/web_app_cookie_secret_key_base', with_decryption: true).to_h[:parameter][:value]
+    ENV['GEO_API_KEY'] = ssm_client.get_parameter(name: '/geo_api_key', with_decryption: true).to_h[:parameter][:value]
+    ENV['GOOGLEANALYTICS'] = ssm_client.get_parameter(name: '/google_analytics', with_decryption: true).to_h[:parameter][:value]
     ENV['STRIPE_PUBLISH_KEY'] = ssm_client.get_parameter(name: '/stripe_publish_key', with_decryption: true).to_h[:parameter][:value]
     ENV['STRIPE_SECRET_KEY'] = ssm_client.get_parameter(name: '/stripe_secret_key', with_decryption: true).to_h[:parameter][:value]
   end
