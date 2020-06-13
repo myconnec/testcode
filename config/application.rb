@@ -32,15 +32,21 @@ module Workspace
       end
     end
 
-    # Load SSM data need for app
-    ssm_client = Aws::SSM::Client.new(region: ENV['AWS_META_DATA_REGION'])
-
-    # Load values from SSM
+    # Load values from Instance Tag meta-data
     ENV['NAME'] = ssm_client.get_parameter(name: '/name', with_decryption: true).to_h[:parameter][:value]
     ENV['REGION'] = ssm_client.get_parameter(name: '/region', with_decryption: true).to_h[:parameter][:value]
     ENV['STAGE'] = ssm_client.get_parameter(name: '/stage', with_decryption: true).to_h[:parameter][:value]
+    ENV['RND_STRING'] = ssm_client.get_parameter(name: '/rnd-string', with_decryption: true).to_h[:parameter][:value]
 
-    ENV['RDS_DB_HOST'] = ssm_client.get_parameter(name: '/rds_db_host', with_decryption: true).to_h[:parameter][:value]
+    # Load SSM client
+    ssm_client = Aws::SSM::Client.new(region: ENV['AWS_META_DATA_REGION'])
+
+    # Extract SSM k/v's and set to app. exec. ENVs
+    ENV['RDS_DB_HOST'] = ssm_client.get_parameter(
+      name: (ENV['NAME'] + ENV['REGION'] + 'rds-db-host' + ENV['RND_STRING'],
+      with_decryption: true
+    ).to_h[:parameter][:value]
+
     ENV['RDS_DB_PASS'] = ssm_client.get_parameter(name: '/rds_db_pass', with_decryption: true).to_h[:parameter][:value]
     ENV['RDS_DB_PORT'] = ssm_client.get_parameter(name: '/rds_db_port', with_decryption: true).to_h[:parameter][:value]
     ENV['RDS_DB_SCHE'] = ssm_client.get_parameter(name: '/rds_db_name', with_decryption: true).to_h[:parameter][:value]
@@ -48,7 +54,7 @@ module Workspace
 
     ENV['SES_SMTP_FROM'] = ssm_client.get_parameter(name: '/smtp_from', with_decryption: true).to_h[:parameter][:value]
     ENV['SES_SMTP_HOST'] = ssm_client.get_parameter(name: '/smtp_host', with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_PASS'] = ssm_client.get_parameter(name: '/smtp_pass', with_decryption: true).to_h[:parameter][:value]
+    ENV[''] = ssm_client.get_parameter(name: '/smtp_pass', with_decryption: true).to_h[:parameter][:value]
     ENV['SES_SMTP_PORT'] = ssm_client.get_parameter(name: '/smtp_port', with_decryption: true).to_h[:parameter][:value]
     ENV['SES_SMTP_USER'] = ssm_client.get_parameter(name: '/smtp_user', with_decryption: true).to_h[:parameter][:value]
 
