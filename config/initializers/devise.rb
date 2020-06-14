@@ -1,5 +1,3 @@
-ssm_client = Aws::SSM::Client.new(region: ENV['AWS_META_DATA_REGION'])
-
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
@@ -8,13 +6,13 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  config.secret_key = ssm_client.get_parameter(name: '/web_app_cookie_secret_key_base', with_decryption: true).to_h[:parameter][:value]
+  config.secret_key = ENV['COOKIE_SECRET_KEY_BASE']
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ssm_client.get_parameter(name: '/smtp_from', with_decryption: true).to_h[:parameter][:value]
+  config.mailer_sender = ENV['SES_SMTP_FROM']
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'

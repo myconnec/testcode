@@ -1,5 +1,5 @@
 Aws.config.update({
-    region: ENV['AWS_META_DATA_REGION'],
+    region: ENV['REGION'],
     credentials: Aws::InstanceProfileCredentials.new()
 })
 

@@ -7,6 +7,7 @@
 
 export SSH_KEY=$1 #"~/.ssh/aws-connechub-dev.pem"
 export REMOTE_HOST=$2 #"18.144.166.69"
+export DIR=$3 # app || config || db || public
 
 if [[ ! -d $HOME/.ssh/ctl/ ]];then
     mkdir $HOME/.ssh/ctl/
@@ -22,15 +23,15 @@ echo "Stating sync, waiting ControlPath..."
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         # Linux distros
         echo "$OSTYPE detected..."
-        while inotifywait -r -e modify,create,delete,move app; do
-            rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" ./app/ ubuntu@${2}:/home/ubuntu/connechub/app
+        while inotifywait -r -e modify,create,delete,move $DIR; do
+            rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" $DIR ubuntu@${2}:/home/ubuntu/connechub
             echo "...synce completed."
         done
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         # Mac OSX
         echo "$OSTYPE detected..."
-        fswatch -o app | xargs -n1 -I{} \
-            rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" ./app/ ubuntu@${2}:/home/ubuntu/connechub/app
+        fswatch -o $DIR | xargs -n1 -I{} \
+            rsync -avz -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" $DIR ubuntu@${2}:/home/ubuntu/connechub
         echo "...synce completed."
 elif [[ "$OSTYPE" == "cygwin" ]]; then
         # POSIX compatibility layer and Linux environment emulation for Windows
