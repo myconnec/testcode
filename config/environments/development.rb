@@ -41,16 +41,16 @@ Rails.application.configure do
 
     # action_mailer for email configuration
     config.action_mailer.default_url_options = {
-        :host => ENV['STAGE'] + '.' + ENV['NAME'] + '.com'
+        :host => ENV['NAME'] + '.com'
     }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
     config.action_mailer.raise_delivery_errors = true
     config.action_mailer.smtp_settings = {
-        address:                ENV['SES_SMTP_ADDRESS'],
+        address:                ENV['SES_SMTP_HOST'],
         port:                   ENV['SES_SMTP_PORT'],
-        user_name:              ENV["SES_SMTP_USERNAME"],
-        password:               ENV["SES_SMTP_PASSWORD"],
+        user_name:              ENV["SES_SMTP_USER"],
+        password:               ENV["SES_SMTP_PASS"],
         authentication:         :login,
         enable_starttls_auto:   true
     }

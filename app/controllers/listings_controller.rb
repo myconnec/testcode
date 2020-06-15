@@ -271,9 +271,7 @@ class ListingsController < ApplicationController
     yield
     # TODO maybe more specific errors here?
     rescue
-      if ENV['STAGE'].downcase != 'dev'
-        redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
-      end
+      redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
   end
 end
 
