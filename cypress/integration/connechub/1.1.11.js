@@ -21,6 +21,6 @@ describe('Release 1.1.11 changes ...', function () {
         cy.get('#user_email').clear().type(userData[0]['email'])
         cy.contains('Reset Your Password').click()
 
-        cy.handle_splash_message('You will receive an email with instructions on how to reset your password in a few minutes.', 'success')
+        cy.handle_splash_message('You will receive an email with instructions on how to reset your password in a few minutes.', 'notice')
     })
 })
