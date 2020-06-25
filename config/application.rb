@@ -24,50 +24,57 @@ module Workspace
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
-    # request instance meta data and assign to env varsI
-    config.before_configuration do
-      # request tags from meta data and assign to env vars. Vars required: NAME, REGION, RND, and STAGE
-      instance_ident = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`
-      instance_id    = `curl --silent http://instance-data/latest/meta-data/instance-id`
-      ENV['REGION'] = JSON.parse(instance_ident)['region']
-      
-      tags = `aws ec2 describe-tags --filter 'Name=resource-id, Values=#{instance_id}' --output=json --region #{ENV['REGION']}`
-      tags = JSON.parse(tags)
+    begin
+      # request instance meta data and assign to env varsI
+      config.before_configuration do
+        # request tags from meta data and assign to env vars. Vars required: NAME, REGION, RND, and STAGE
+        instance_ident = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`
+        instance_id    = `curl --silent http://instance-data/latest/meta-data/instance-id`
+        ENV['REGION'] = JSON.parse(instance_ident)['region']
 
-      tags['Tags'].each do |tag|
-        ENV[tag['Key'].upcase] = tag['Value']
+        tags = `aws ec2 describe-tags --filter 'Name=resource-id, Values=#{instance_id}' --output=json --region #{ENV['REGION']}`
+        tags = JSON.parse(tags)
 
-        # only want the applications name from the Name tag
-        if tag['Key'] == 'Name'
-          ENV[tag['Key'].upcase] = tag['Value'].to_s.split("-")[0]
+        tags['Tags'].each do |tag|
+          ENV[tag['Key'].upcase] = tag['Value']
+
+          # only want the applications name from the Name tag
+          if tag['Key'] == 'Name'
+            ENV[tag['Key'].upcase] = tag['Value'].to_s.split("-")[0]
+          end
         end
       end
+
+      # if unable to load SSM values as they are 100% required
+      # Load Ruby SSM client
+      ssm_client = Aws::SSM::Client.new(region: ENV['REGION'])
+
+      # RDS (SQL)
+      ENV['RDS_DB_HOST']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['RDS_DB_PASS']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['RDS_DB_PORT']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-port' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['RDS_DB_SCHE']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-name' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['RDS_DB_USER']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-user' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+
+      # SMTP (Email)
+      ENV['SES_SMTP_FROM'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-from' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['SES_SMTP_HOST'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-host' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['SES_SMTP_PASS'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['SES_SMTP_PORT'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-port' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['SES_SMTP_USER'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-user' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+
+      # Other App vars
+      ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'media-display-s3-bucket'        + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['AWS_S3_MEDIA_SOURCE_BUCKET']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'media-source-s3-bucket'         + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['COOKIE_SECRET_KEY_BASE']      = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'web-app-cookie-secret-key-base' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['GEO_API_KEY']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'geo-api-key'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['GOOGLE_ANALYTICS']            = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'google-analytics'               + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['STRIPE_PUBLISH_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-publish-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+      ENV['STRIPE_SECRET_KEY']           = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-secret-key'              + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    rescue
+      # replace the instance if SSM value loading fails.
+      # the auto-scaling group will launch a new instance
+      `sudo poweroff`
     end
-
-    # Load Ruby SSM client
-    ssm_client = Aws::SSM::Client.new(region: ENV['REGION'])
-
-    # RDS (SQL)
-    ENV['RDS_DB_HOST']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_PASS']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_PORT']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-port' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_SCHE']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-name' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_USER']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-user' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-
-    # SMTP (Email)
-    ENV['SES_SMTP_FROM'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-from' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_HOST'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-host' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_PASS'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_PORT'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-port' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_USER'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-user' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-
-    # Other App vars
-    ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'media-display-s3-bucket'        + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['AWS_S3_MEDIA_SOURCE_BUCKET']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'media-source-s3-bucket'         + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['COOKIE_SECRET_KEY_BASE']      = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'web-app-cookie-secret-key-base' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['GEO_API_KEY']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'geo-api-key'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['GOOGLE_ANALYTICS']            = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'google-analytics'               + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['STRIPE_PUBLISH_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-publish-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['STRIPE_SECRET_KEY']           = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-secret-key'              + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
   end
 end

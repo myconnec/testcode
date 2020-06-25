@@ -18,6 +18,7 @@ update users set promo_1 = 0 where id < 10;
 - [https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements](https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements)
 
 ```sh
+npm i npm
 npm install cypress cypress-image-snapshot --save-dev
 
 export CYPRESS_baseUrl=https://dev.connechub.com/
