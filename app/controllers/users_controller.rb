@@ -39,6 +39,7 @@ class UsersController < ApplicationController
       :id,
       :password_confirmation,
       :password,
+      :reset_password_token,
     )
   end
 
