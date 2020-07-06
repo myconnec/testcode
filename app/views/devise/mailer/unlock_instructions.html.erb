@@ -4,4 +4,4 @@
 
 <p>Click the link below to unlock your account:</p>
 
-<p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
+<p><%= link_to 'Unlock my account', (ENV['BASE_URL'] + '/users/password/edit?unlock_token=' + @token) %></p>
