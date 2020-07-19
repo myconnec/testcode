@@ -41,7 +41,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div.panel-heading > h2').contains('Create New Listing')
     cy.get('#listing_category_id').select(formData[0]['category']).should('have.value', '1')
     cy.get('#listing_category_id').select(formData[0]['category'])
-    cy.get('#listing_subcategory_id', {timeout: 10000}).select(formData[0]['sub_category'])
+    cy.get('#listing_subcategory_id', {timeout: 5000}).select(formData[0]['sub_category'])
     cy.get('#listing_price').clear().type(formData[0]['price'])
     cy.get('#listing_title').clear().type(formData[0]['title'])
     cy.get('#listing_city').clear().type(formData[0]['city'])

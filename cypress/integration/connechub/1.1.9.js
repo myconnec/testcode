@@ -79,7 +79,7 @@ describe('Release 1.1.9 changes ...', function () {
         cy.get('div.panel-heading > h2').contains('Create New Listing')
         cy.get('#listing_category_id').select(listingData[0]['category']).should('have.value', 1)
         cy.get('#listing_category_id').select(listingData[0]['category'])
-        cy.get('#listing_subcategory_id', {timeout: 10000}).select(listingData[0]['sub_category'])
+        cy.get('#listing_subcategory_id', {timeout: 5000}).select(listingData[0]['sub_category'])
         // Condition of the item for sale.
         // source: https://trello.com/c/Vslk0uga/7-condition-of-the-item-for-sale
         cy.get('#listing_condition_id').select(listingData[0]['condition']).should('have.value', 4)
@@ -137,7 +137,7 @@ describe('Release 1.1.9 changes ...', function () {
 
         // the system is not retaining my subcategory when i go to edit
         // source: https://trello.com/c/1dPvSkwe/15-the-system-is-not-retaining-my-subcategory-when-i-go-to-edit
-        cy.get('#listing_subcategory_id > option:nth-child(2)', {timeout: 10000}).should('have.attr', 'selected', 'selected')
+        cy.get('#listing_subcategory_id > option:nth-child(2)', {timeout: 5000}).should('have.attr', 'selected', 'selected')
     })
 
     // Not sure we can UAT these items:
