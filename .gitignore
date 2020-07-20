@@ -12,6 +12,7 @@
 
 # files to ignore
 *.log
+*.tmp
 
 # Test and misc files
 *.rbc
