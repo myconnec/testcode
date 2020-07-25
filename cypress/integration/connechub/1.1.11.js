@@ -2,12 +2,11 @@
  * Release 1.1.11 changes
  */
 describe('Release 1.1.11 changes ...', function () {
-    
-    const listingData = []
+
     const userData = [
         {
-            name: 'Test User',
-            email: 'test@connechub.com',
+            name: 'Test User OneOneEleven',
+            email: 'test+one_one_eleven@connechub.com',
             password: 'testtest'
         }
     ]
@@ -15,6 +14,8 @@ describe('Release 1.1.11 changes ...', function () {
     // Forgot password form submit error
     // https://trello.com/c/bU835RXS/59-forgot-password-form-submit-error
     it('...forgot password form submit error.', function () {
+        cy.create_user(userData[0])
+        cy.logout()
         cy.visit('/users/sign_in')
         cy.contains('Forgot your password?').click()
 

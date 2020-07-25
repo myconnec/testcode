@@ -11,9 +11,17 @@ describe('Comment CRUD...', function () {
         "url": ""
     }
 
+    const userData = [
+        {
+            name: 'Test User Comment Crud',
+            email: 'test+comment_crud@connechub.com',
+            password: 'lsdlkfjasfh@#$%'
+        }
+    ]
+
     it('...creating a new comment.', function () {
         // create a new Listing
-        cy.login().create_new_listing().view_user_profile()
+        cy.login(userData[0]).create_listing().view_user_profile()
 
         cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
             .contains('Test Demo Title').click()
@@ -24,7 +32,7 @@ describe('Comment CRUD...', function () {
     })
 
     it('...reads a listing comment.', function () {
-        cy.login()
+        cy.login(userData[0])
         cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a').contains('Test Demo Title').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > small > b').contains('This post has 1 Comment')
         cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > div > div > small').contains(commentData.content)

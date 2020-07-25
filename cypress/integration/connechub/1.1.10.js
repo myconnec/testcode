@@ -34,7 +34,16 @@ describe('Release 1.1.10 changes ...', function () {
             "title": "Testing Special Characters Title 0123456789!$,.?"
         }
       ]
-    
+
+      const userData = [
+        {
+          bio: 'Lorem ipsum dolor sit amet....',
+          email: 'test+deployment_1_1_8@connechub.com',
+          name: 'Test User Deployment OneOneTen',
+          password: 'H@nt8wZLcn!&RMdua^F#8l3AEJ^H1iDc'
+        }
+      ]
+
     // FIX Stripe value source. Add Listing PAID crud UAT testing.
     // https://trello.com/c/U6pfaJSh/49-fix-stripe-value-source-add-listing-paid-crud-uat-testing
     // see listing_crud_paid.js
@@ -59,7 +68,7 @@ describe('Release 1.1.10 changes ...', function () {
     // 
     // part 1
     // it('...create new listing to as the target of a Facebook share.', function () {
-    //     cy.visit('').login().create_new_listing(listingData[0]).logout()
+    //     cy.visit('').login().create_listing(listingData[0]).logout()
     // })
 
     // part 2
@@ -115,8 +124,8 @@ describe('Release 1.1.10 changes ...', function () {
 
     // Listings not displaying on Subcategory index views
     // https://trello.com/c/Plsj5OOw/56-listings-not-displaying-on-subcategory-index-views
-    it('...Listings display in category show AND subcategory show VWs.', function () {
-        cy.visit('').login().create_new_listing(listingData[1]).logout()
+    it('...Listings display in category show and subcategory show VWs.', function () {
+        cy.create_user(userData[0]).create_listing(listingData[1]).logout()
         // category show
         cy.visit('/categories/9').contains('Test Subcategory and Category Shows Title')
         // subcategory show
@@ -126,7 +135,7 @@ describe('Release 1.1.10 changes ...', function () {
     // Updating a listing title does not allow numbers, but it should
     // https://trello.com/c/0Dhhn91b/57-updating-a-listing-title-does-not-allow-numbers-but-it-should
     it('...UPDATE listing, allow numbers in title.', function () {
-        cy.visit('').login().view_user_profile()
+        cy.login(userData[0]).view_user_profile()
         cy.contains('Edit Listing').click()
         cy.get('#listing_title').clear().type(listingData[2]['title'])
         cy.get('#listings_submit').click()
@@ -138,9 +147,8 @@ describe('Release 1.1.10 changes ...', function () {
     // Profile image changing not working.
     // https://trello.com/c/0CWb6GMp/58-profile-image-changing-not-working
     it('...UPDATE user profile image, then do it again.', function () {
-        
         // add profile image
-        cy.visit('').login().view_user_profile()
+        cy.login(userData[0]).view_user_profile()
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_avatar').then(subject => {
             return cy.fixture('user_profile_0.jpg', 'base64')
@@ -157,11 +165,11 @@ describe('Release 1.1.10 changes ...', function () {
             })
         })
         cy.get('#profile_submit').contains('Update Profile').click()
-        cy.visit('').view_user_profile()
+        cy.view_user_profile()
         cy.get('#inside_view_left > div.profile-info > img', {timeout: 5000}).matchImageSnapshot('1_1_10_user_profile_0');
 
         // change confirm profile image change
-        cy.visit('').view_user_profile()
+        cy.view_user_profile()
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_avatar').then(subject => {
             return cy.fixture('user_profile_1.png', 'base64')
@@ -178,7 +186,7 @@ describe('Release 1.1.10 changes ...', function () {
             })
         })
         cy.get('#profile_submit').contains('Update Profile').click()
-        cy.visit('').view_user_profile()
+        cy.view_user_profile()
         cy.get('#inside_view_left > div.profile-info > img', {timeout: 5000}).matchImageSnapshot('1_1_10_user_profile_1');
     })
 })

@@ -23,7 +23,7 @@ describe('Listing Search CRUD...', function () {
   })
 
   it('...creating a new listing.', function () {
-    cy.create_new_listing(listingData[0])
+    cy.create_listing(listingData[0])
   })
 
   // no need for this in the searching suite

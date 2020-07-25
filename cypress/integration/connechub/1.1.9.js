@@ -53,7 +53,7 @@ describe('Release 1.1.9 changes ...', function () {
         cy.get('#error_explanation > ul > li').contains('Username is invalid')
 
         // Now correctly create the new user
-        cy.create_new_user(userData[0])
+        cy.create_user(userData[0])
     })
 
     // new subcategories recently added in the services category are missing .

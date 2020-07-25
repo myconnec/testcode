@@ -89,13 +89,14 @@ describe('Release 1.1.8 change ...', function () {
     }
   ]
 
-  beforeEach(function () {
-    cy.login()
-  })
-
-  afterEach(function () {
-    cy.logout()
-  })
+  const userData = [
+    {
+      bio: 'Lorem ipsum dolor sit amet....',
+      email: 'test+deployment_1_1_8@connechub.com',
+      name: 'Test User Deployment OneOneEight',
+      password: 'k%p$79SG4&U1@$#u&DwMMV^XqX%4l2&q'
+    }
+  ]
 
   /**
    * Additional Subcategories under Services
@@ -123,44 +124,8 @@ describe('Release 1.1.8 change ...', function () {
    * https://trello.com/c/qbjJvU0x/17-there-should-be-a-150-character-limit-on-the-category-title
    */
   it('...creating a new listing.', function () {
-    // see top menu item
-    cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
-
-    // step 1 of listing creation
-    cy.get('div.panel-heading > h2').contains('Create New Listing')
-    cy.get('#listing_category_id').select(listingData[0]['category']).should('have.value', '1')
-    cy.get('#listing_category_id').select(listingData[0]['category'])
-    cy.wait(1000) // wait for ajax response
-    cy.get('#listing_subcategory_id').select(listingData[0]['sub_category'])
-    cy.get('#listing_price').clear().type(listingData[0]['price'])
-    cy.get('#listing_title').clear().type(listingData[0]['title'])
-    cy.get('#listing_city').clear().type(listingData[0]['city'])
-    cy.get('#listing_state').clear().type(listingData[0]['state'])
-    cy.get('#listing_zipcode').clear().type(listingData[0]['zipcode'])
-    cy.get('#listing_description').clear().type(listingData[0]['description'])
-    cy.get('#listings_submit').click()
-    // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
-
-    // step 2 of listing creation
-    cy.get('#fileupload').then(subject => {
-      return cy.fixture('24fps.mp4', 'base64')
-        .then(Cypress.Blob.base64StringToBlob)
-        .then(blob => {
-          const el = subject[0]
-          if (el != null) {
-            const testFile = new File([blob], '24fps.mp4')
-            const dataTransfer = new DataTransfer()
-            dataTransfer.items.add(testFile)
-            el.files = dataTransfer.files
-          }
-          return subject
-        })
-    })
-
-    cy.get('#fileupload').trigger('change')
-    cy.get('#listings_submit').click()
-    // cy.get('#overlay > img').should('be.visible')
-    cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
+    cy.create_user(userData[0]);
+    cy.create_listing(listingData[0])
   })
 
   it('...search a listing.', function () {

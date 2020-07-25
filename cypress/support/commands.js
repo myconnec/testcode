@@ -44,20 +44,9 @@ addMatchImageSnapshotCommand({
 /**
  * Log in user
  */
-Cypress.Commands.add('login', (userData = false, alert = true) => {
-  // this is an example of skipping your UI and logging in programmatically
-
-  if (userData == false) {
-    // setup some basic types
-    // and user properties
-    userData = {
-      name: 'Test User',
-      email: 'test@connechub.com',
-      password: 'testtest'
-    }
-  }
-
+Cypress.Commands.add('login', (userData) => {
   cy.visit('')
+
   // log in using the test user
   cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
 
@@ -90,7 +79,7 @@ Cypress.Commands.add('handle_splash_message', (msg, type) => {
 /**
  * Create a new user. If userData is not provided, create a random on
  */
-Cypress.Commands.add('create_new_user', (userData = false) => {
+Cypress.Commands.add('create_user', (userData = false) => {
 
   if (userData === false) {
     const rnd = Math.floor(Math.random() * Math.floor(1024));
@@ -117,7 +106,7 @@ Cypress.Commands.add('create_new_user', (userData = false) => {
  * Since so much of ConnecHub revolves around the Listing, make it easier to create one
  * Allow listingData and userData to be passed in and override defaults
  */
-Cypress.Commands.add('create_new_listing', (listingData = false) => {
+Cypress.Commands.add('create_listing', (listingData = false) => {
 
   if (listingData === false) {
     listingData = {
@@ -176,23 +165,8 @@ Cypress.Commands.add('create_new_listing', (listingData = false) => {
 /**
  * Delete an existing listing
  */
-Cypress.Commands.add('delete_listing', (listingData = false, userData = false) => {
-  
-  if (listingData === false) {
-    return false;
-  }
-
-  if (userData === false) {
-    // setup some basic types
-    // and user properties
-    userData = {
-      name: 'Test User',
-      email: 'test@connechub.com',
-      password: 'testtest'
-    }
-  }
-
-  cy.visit('').logout().login(userData).view_user_profile()
+Cypress.Commands.add('delete_listing', (listingData, userData) => {
+  cy.view_user_profile()
   cy.contains(listingData['title']).click()
   cy.get('body > div > div > div > div > a').contains('Delete').click()
   cy.handle_splash_message('Listing has been deleted.', 'success')
@@ -202,8 +176,9 @@ Cypress.Commands.add('delete_listing', (listingData = false, userData = false) =
  * This requires a user be logged in. Else is will fail.
  */
 Cypress.Commands.add('view_user_profile', () => {
+  cy.visit('')
   cy.get('#navbar > ul > li.dropdown > a').contains('Your Account').should('be.visible').click()
-  cy.get('#navbar > ul > li.dropdown.open > ul').contains('Your Profile').should('be.visible').click()
+  cy.get('#navbar > ul > li.dropdown.open > ul > li:nth-child(1) > a').contains('Your Profile').should('be.visible').click()
 })
 
 /**

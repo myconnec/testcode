@@ -31,3 +31,7 @@ export CYPRESS_VERSION='0.0.6'
 ```
 
 Then select the suite you wish to run.
+
+Timing:
+
+As of 1.1.12 the `manual` options takes XmYs to complete. Automation takes XmYs.

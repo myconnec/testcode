@@ -159,7 +159,7 @@ CREATE TABLE `listings` (
   `price` varchar(32) DEFAULT NULL,
   `address1` varchar(32) DEFAULT NULL,
   `address2` varchar(32) DEFAULT NULL,
-  `ademail` varchar(32) DEFAULT NULL,
+  `ademail` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,

@@ -2,7 +2,7 @@ describe('User Management functionality.', function() {
 
     const userData = {
         name: 'Test User',
-        email: 'test@connechub.com',
+        email: 'test+user_mngt@connechub.com',
         password: '~Asdf1234',
         admin: false
     }
