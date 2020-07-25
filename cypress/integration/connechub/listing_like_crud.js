@@ -5,13 +5,13 @@ describe('Liking like CRUD...', function () {
         {
             bio: 'Lorem ipsum dolor sit amet....',
             email: 'asdf+test@connechub.com',
-            name: 'Test User ASDF',
+            name: 'Test User Liking Listing 0',
             password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
         },
         {
             bio: '...consectetur adipiscing elit.',
-            email: 'zxcv+test@connechub.com ZXCV',
-            name: 'Test User',
+            email: 'zxcv+test@connechub.com',
+            name: 'Test User Liking Listing 1',
             password: 'ruNK2QRddLk9#cKju#9rZYiu7chEaX0&nE'
         }
     ]
@@ -63,8 +63,8 @@ describe('Liking like CRUD...', function () {
     })
 
     it('...like a listing, as user 1.', function () {
-        // log in as typical test user
-        cy.login()
+        // create and log in user 1
+        cy.create_new_user(userData[1])
 
         cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 

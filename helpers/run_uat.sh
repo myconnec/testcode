@@ -17,7 +17,7 @@ export DB_USER='dev_ch_rds_user'
 
 echo 'Init clean database...'
 mysql -u $DB_USER -p$DB_PASS -h $DB_HOST $DB_SCHE -e "DROP DATABASE IF EXISTS $DB_SCHE;"
-mysql -u $DB_USER -p$DB_PASS -h $DB_HOST ./db/sql/database.sql
+mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 
 if [[ ! $(docker login) ]]; then
     echo 'You will need to run `docker login` and auth first.'
