@@ -1,39 +1,38 @@
-describe('User Management functionality.', function() {
+describe('User password management functionality.', function() {
 
-    const userData = {
-        name: 'Test User',
-        email: 'test+user_mngt@connechub.com',
-        password: '~Asdf1234',
-        admin: false
-    }
+    const userData = [
+        {
+            name: 'Test User Reset Password',
+            email: 'test+reset_passwordt@connechub.com',
+            password: '~Asdf1234',
+            new_password: '~Asdf5678'
+        }
+    ]
 
     it('...reset password on website.', function() {
-        cy.login()
-        cy.view_user_profile()
+        cy.create_user(userData[0]).view_user_profile()
 
-        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
+        cy.get('#inside_view_left > div > a').contains('Edit Your Profile').click()
 
-        cy.get('#edit_user_1 > div.small-heading').contains('Optional')
-        cy.get('#edit_user_1 > div.small-heading').contains('The following two fields must match to change password.')
-        cy.get('#edit_user_1 > div.small-heading').contains('You will be prompted to log in with your new password after the change.')
+        cy.get('div.small-heading').contains('Optional')
+        cy.get('div.small-heading').contains('The following two fields must match to change password.')
+        cy.get('div.small-heading').contains('You will be prompted to log in with your new password after the change.')
 
-        cy.get('#user_password').clear().type(userData.password)
-        cy.get('#user_password_confirmation').clear().type(userData.password)
+        cy.get('#user_password').clear().type(userData[0].new_password)
+        cy.get('#user_password_confirmation').clear().type(userData[0].new_password)
         cy.get('#profile_submit').click()
-
-        // cy.logout()
     })
 
     it('...confirm new password works.', function() {
-        cy.login(userData)
-        cy.view_user_profile()
+        // use the new password 'cause the prev. it(...) set it to new_password's value
+        userData[0].password = userData[0].new_password
 
-        cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
+        cy.login(userData[0]).view_user_profile()
 
-        cy.get('#user_password').clear().type('testtest')
-        cy.get('#user_password_confirmation').clear().type('testtest')
+        cy.get('#inside_view_left > div > a').contains('Edit Your Profile').click()
+
+        cy.get('#user_password').clear().type('new_test_password')
+        cy.get('#user_password_confirmation').clear().type('new_test_password')
         cy.get('#profile_submit').click()
-
-        // cy.logout()
     })
 })

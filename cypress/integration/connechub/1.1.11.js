@@ -14,9 +14,7 @@ describe('Release 1.1.11 changes ...', function () {
     // Forgot password form submit error
     // https://trello.com/c/bU835RXS/59-forgot-password-form-submit-error
     it('...forgot password form submit error.', function () {
-        cy.create_user(userData[0])
-        cy.logout()
-        cy.visit('/users/sign_in')
+        cy.create_user(userData[0]).logout().visit('/users/sign_in')
         cy.contains('Forgot your password?').click()
 
         cy.get('#user_email').clear().type(userData[0]['email'])
@@ -33,10 +31,11 @@ describe('Release 1.1.11 changes ...', function () {
     })
 
     // UPDATE About Us page with new verbiage
-    it('...UPDATE About Us page with new verbiage.', function () {
-        cy.visit('/about')
-        cy.contains('Connechub is a local classified ad website that allows users to post their video content; to list a job, promote your business, unbox the latest item, or sell your stuff.')
-        cy.contains('With Connechub you can post your video content from any source such as; your cellphone (Android, IOS), DLSR camera, Mirrorless Camera, Video camera and any other video source.')
-        cy.contains('As the old cliche goes, "A picture is worth a thousand words". However, "a video is worth a million more".');
-    })
+    // superceded by 1.1.12 change
+    // it('...UPDATE About Us page with new verbiage.', function () {
+    //     cy.visit('/about')
+    //     cy.contains('Connechub is a local classified ad website that allows users to post their video content; to list a job, promote your business, unbox the latest item, or sell your stuff.')
+    //     cy.contains('With Connechub you can post your video content from any source such as; your cellphone (Android, IOS), DLSR camera, Mirrorless Camera, Video camera and any other video source.')
+    //     cy.contains('As the old cliche goes, "A picture is worth a thousand words". However, "a video is worth a million more".');
+    // })
 })

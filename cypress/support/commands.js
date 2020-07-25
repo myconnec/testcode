@@ -37,6 +37,7 @@ addMatchImageSnapshotCommand({
  * TODO Re-load the database after each test. Ensures a known good dataset. This will only work once we have a local version of the app running as we need rake and a working DB connection.
  */
 // beforeEach(function () {
+//   # mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 //   cy.exec('rake db:setup').its('code').should('eq', 0)
 //   cy.exec('rake db:migrate').its('code').should('eq', 0)
 // })
@@ -45,6 +46,7 @@ addMatchImageSnapshotCommand({
  * Log in user
  */
 Cypress.Commands.add('login', (userData) => {
+  console.log(userData)
   cy.visit('')
 
   // log in using the test user
@@ -55,6 +57,8 @@ Cypress.Commands.add('login', (userData) => {
   cy.get('#user_password').type(userData.password)
   cy.get('#user_remember_me').check()
   cy.get('form.new_user').submit()
+
+  cy.contains('Invalid Email or password.').should('not.be.visible')
 
   cy.handle_splash_message('Signed in successfully.', 'notice')
 })

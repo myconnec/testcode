@@ -7,9 +7,23 @@
 describe('Comment CRUD...', function () {
 
     const commentData = {
-        "content": "This is a comment.",
-        "url": ""
+        "content": "This is a comment."
     }
+
+    const listingData = [
+        {
+            "category": "Campus",
+            "sub_category": "Activities & Events",
+            "condition": 'Average',
+            "price": "90.12",
+            "title": "Test Title Comment CRUD",
+            "city": "Tampa",
+            "state": "FL",
+            "zipcode": "33612",
+            "description": "Test Description Comment CRUD",
+            "fileupload": "24fps.mp4"
+        }
+    ]
 
     const userData = [
         {
@@ -21,29 +35,27 @@ describe('Comment CRUD...', function () {
 
     it('...creating a new comment.', function () {
         // create a new Listing
-        cy.login(userData[0]).create_listing().view_user_profile()
-
-        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a')
-            .contains('Test Demo Title').click()
-
-        cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
-        cy.get('#comment_body').clear().type(commentData.content)
+        cy.create_user(userData[0]).create_listing(listingData[0])
+        cy.get('a').contains(listingData[0].title).click()
+        cy.get('div.comments > h4').contains('Post a Comment')
+        cy.get('#comment_body').type(commentData.content)
         cy.get('#submit-btn').contains('Create Comment').click()
+        cy.logout()
     })
 
     it('...reads a listing comment.', function () {
         cy.login(userData[0])
-        cy.get('div.grid > div > div.panel-footer.pin-content > div.name > b > a').contains('Test Demo Title').click()
-        cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > small > b').contains('This post has 1 Comment')
-        cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > div > div > small').contains(commentData.content)
+        cy.get('a').contains(listingData[0].title).click()
+        cy.get('div.comments > small > b').contains('This post has 1 Comment')
+        cy.get('div.comments > div > div > small').contains(commentData.content)
         cy.logout()
     })
 
     it('...reads a listing comment, as a guest.', function () {
         cy.visit('')
-        cy.get('div.main-content > div > div > div.panel-footer > div.name > b > a').contains('Test Demo Title').click()
-        cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > small > b').contains('This post has 1 Comment')
-        cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > div > div > small').contains(commentData.content)
+        cy.get('a').contains(listingData[0].title).click()
+        cy.get('div.comments > small > b').contains('This post has 1 Comment')
+        cy.get('div.comments > div > div > small').contains(commentData.content)
     })
 
     // currently not able to update a comment

@@ -135,7 +135,7 @@ describe('Release 1.1.8 change ...', function () {
   })
 
   it('...deleting a listing.', function () {
-    cy.view_user_profile()
+    cy.login(userData[0]).view_user_profile()
     cy.get('a').contains(listingData[0]['title']).should('be.visible')
     cy.get('a').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')

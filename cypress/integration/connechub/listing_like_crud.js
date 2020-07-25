@@ -1,6 +1,20 @@
 
 describe('Liking like CRUD...', function () {
 
+    const listingData = [
+        {
+            "category": "Sale",
+            "sub_category": "Jewelry & Watches",
+            "price": "24.68",
+            "title": "Test Listing Liking Title",
+            "city": "Tampa",
+            "state": "FL",
+            "zipcode": "33612",
+            "description": "Test Listing Liking Description.",
+            "fileupload": "24fps.mp4"
+        }
+    ]
+
     const userData = [
         {
             bio: 'Lorem ipsum dolor sit amet....',
@@ -16,24 +30,8 @@ describe('Liking like CRUD...', function () {
         }
     ]
 
-    const listingData = [
-        {
-            "category": "Sale",
-            "sub_category": "Jewelry & Watches",
-            "price": "24.68",
-            "title": "Test Listing Liking Title",
-            "city": "Tampa",
-            "state": "FL",
-            "zipcode": "33612",
-            "description": "Test Listing Liking Description.",
-            "fileupload": "24fps.mp4"
-        }
-    ]
-
     it('...creating a new listing, as user 0.', function () {
-        cy.create_user(userData[0])
-        cy.create_listing(listingData[0])
-        cy.logout()
+        cy.create_user(userData[0]).create_listing(listingData[0]).logout()
     })
 
     it('...like a listing, as a guest.', function () {
