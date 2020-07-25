@@ -6,12 +6,25 @@
 # source https://stackoverflow.com/questions/29568352/using-docker-compose-with-ci-how-to-deal-with-exit-codes-and-daemonized-linked
 # source
 
-export BUILD='false'
-export CYPRESS_baseUrl='https://dev.connechub.com/'
 export CYPRESS_abort_strategy='spec'
-export CYPRESS_VERSION='0.0.5'
+export CYPRESS_baseUrl='https://dev.connechub.com/'
+export CYPRESS_VERSION='0.0.6'
 
-if [ $BUILD != 'false' ];then
+export DB_HOST='connechub-dev-rds-mariadb-5j1m.c8d4gbylpdxg.us-west-2.rds.amazonaws.com'
+export DB_PASS='dev_ch_rds_pass'
+export DB_SCHE='connechub'
+export DB_USER='dev_ch_rds_user'
+
+echo 'Init clean database...'
+mysql -u $DB_USER -p$DB_PASS -h $DB_HOST $DB_SCHE -e "DROP DATABASE IF EXISTS $DB_SCHE;"
+mysql -u $DB_USER -p$DB_PASS -h $DB_HOST ./db/sql/database.sql
+
+if [[ ! $(docker login) ]]; then
+    echo 'You will need to run `docker login` and auth first.'
+    exit $(echo $?)
+fi
+
+if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]];then
     echo "Building base image container..."
     docker build \
     -t cypress-test-image:$CYPRESS_VERSION \
@@ -19,6 +32,7 @@ if [ $BUILD != 'false' ];then
     .
 fi
 
+echo "Resetting cypress_tests.tmp contents..."
 if [ -f cypress_tests.tmp ]; then
     echo "" > cypress_tests.tmp
 fi
@@ -30,25 +44,25 @@ for filename in cypress/integration/connechub/*.js; do
     echo "Iteration $i for $filename"
 
     echo "docker run \
--e CYPRESS_baseUrl="$CYPRESS_baseUrl" \
--e CYPRESS_abort_strategy="$CYPRESS_abort_strategy" \
--e CYPRESS_VERSION="$CYPRESS_VERSION" \
--v $(pwd)/cypress:/app/cypress \
---name "cypress_$i" \
---rm \
-cypress-test-image:$CYPRESS_VERSION \
-./node_modules/cypress/bin/cypress run --browser chrome --headless true --spec $filename" >> cypress_tests.tmp
+    -e CYPRESS_baseUrl="$CYPRESS_baseUrl" \
+    -e CYPRESS_abort_strategy="$CYPRESS_abort_strategy" \
+    -e CYPRESS_VERSION="$CYPRESS_VERSION" \
+    -v $(pwd)/cypress:/app/cypress \
+    --name "cypress_$i" \
+    --rm \
+    cypress-test-image:$CYPRESS_VERSION \
+    ./node_modules/cypress/bin/cypress run --browser chrome --headless true --spec $filename" >> cypress_tests.tmp
 
     ((i++))
 done
 
 echo "Executing parallel Docker containers for testing..."
 parallel \
---bar \
---keep-order \
---halt now,fail=1 \
---max-procs 16 \
-< cypress_tests.tmp
+    --bar \
+    --keep-order \
+    --halt now,fail=1 \
+    --max-procs 16 \
+    < cypress_tests.tmp
 
 EXIT_CODE=$(echo $?)
 echo "Exit code from parallel is $EXIT_CODE"
