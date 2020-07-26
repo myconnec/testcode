@@ -38,6 +38,7 @@ describe('Release 1.1.12 changes ...', function () {
 
         cy.visit('/terms')
         cy.get('body > div:nth-child(8) > div.container').contains('conditions').should('not.exist')
+        cy.get('body > div:nth-child(8) > div.container').contains('TERMS OF SERVICE')
     })
 
     // https://trello.com/c/8gJJhawv/71-enable-concurrent-execution-of-uat-tests

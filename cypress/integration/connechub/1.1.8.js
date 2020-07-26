@@ -124,8 +124,7 @@ describe('Release 1.1.8 change ...', function () {
    * https://trello.com/c/qbjJvU0x/17-there-should-be-a-150-character-limit-on-the-category-title
    */
   it('...creating a new listing.', function () {
-    cy.create_user(userData[0]);
-    cy.create_listing(listingData[0])
+    cy.create_user(userData[0]).create_listing(listingData[0]).logout()
   })
 
   it('...search a listing.', function () {
@@ -139,5 +138,6 @@ describe('Release 1.1.8 change ...', function () {
     cy.get('a').contains(listingData[0]['title']).should('be.visible')
     cy.get('a').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')
+    cy.logout()
   })
 })

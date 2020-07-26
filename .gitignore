@@ -9,6 +9,7 @@
 /vendor
 /node_modules
 /cypress/screenshots
+/cypress/snapshots
 
 # files to ignore
 *.log
@@ -35,3 +36,4 @@ bower.json
 **.*gz
 .passwd*
 **/*id_rsa*
+
