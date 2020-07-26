@@ -28,7 +28,7 @@ describe('Listing CRUD (mp4)...', function () {
   const userData = [
     {
       bio: 'Lorem ipsum dolor sit amet....',
-      email: 'test+listing_crud_mov@connechub.com',
+      email: 'test+listing_crud_mp4@connechub.com',
       name: 'Test User Listing CRUD MP4',
       password: 'H@nt@#$%csdfgwerdua^F#8l3AEJ2asdfc'
     }
