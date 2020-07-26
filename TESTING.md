@@ -17,10 +17,11 @@ Manually:
 
 ```sh
 # set these values as appropriate
-export DB_HOST=''
-export DB_PASS=''
-export DB_SCHE=''
-export DB_USER=''
+export DB_HOST='connechub-dev-rds-mariadb-5j1m.c8d4gbylpdxg.us-west-2.rds.amazonaws.com'
+export DB_PASS='dev_ch_rds_pass'
+export DB_SCHE='connechub'
+export DB_USER='dev_ch_rds_user'
+
 mysql -u $DB_USER -p$DB_PASS -h $DB_HOST $DB_SCHE -e "DROP DATABASE IF EXISTS $DB_SCHE;"
 mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 
@@ -34,4 +35,4 @@ Then select the suite you wish to run.
 
 Timing:
 
-As of 1.1.12 the `manual` options takes 16.2 minutes to complete. Automation takes XmYs.
+As of 1.1.12 the `manual` options takes 16.2 minutes to complete. `Automation` takes ~4 minutes.

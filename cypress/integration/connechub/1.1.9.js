@@ -70,49 +70,7 @@ describe('Release 1.1.9 changes ...', function () {
     })
 
     it('...creating a new listing.', function () {
-        cy.visit('').login(userData[0])
-
-        // see top menu item
-        cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
-
-        // step 1 of listing creation
-        cy.get('div.panel-heading > h2').contains('Create New Listing')
-        cy.get('#listing_category_id').select(listingData[0]['category']).should('have.value', 1)
-        cy.get('#listing_category_id').select(listingData[0]['category'])
-        cy.wait(1000) // wait for ajax response
-        cy.get('#listing_subcategory_id').select(listingData[0]['sub_category'])
-        // Condition of the item for sale.
-        // source: https://trello.com/c/Vslk0uga/7-condition-of-the-item-for-sale
-        cy.get('#listing_condition_id').select(listingData[0]['condition']).should('have.value', 4)
-        cy.get('#listing_price').clear().type(listingData[0]['price'])
-        cy.get('#listing_title').clear().type(listingData[0]['title'])
-        cy.get('#listing_city').clear().type(listingData[0]['city'])
-        cy.get('#listing_state').clear().type(listingData[0]['state'])
-        cy.get('#listing_zipcode').clear().type(listingData[0]['zipcode'])
-        cy.get('#listing_description').clear().type(listingData[0]['description'])
-        cy.get('#listings_submit').click()
-        // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
-
-        // step 2 of listing creation
-        cy.get('#fileupload').then(subject => {
-            return cy.fixture('24fps.mp4', 'base64')
-                .then(Cypress.Blob.base64StringToBlob)
-                .then(blob => {
-                    const el = subject[0]
-                    if (el != null) {
-                        const testFile = new File([blob], '24fps.mp4')
-                        const dataTransfer = new DataTransfer()
-                        dataTransfer.items.add(testFile)
-                        el.files = dataTransfer.files
-                    }
-                    return subject
-                })
-        })
-
-        cy.get('#fileupload').trigger('change')
-        cy.get('#listings_submit').click()
-        // cy.get('#overlay > img').should('be.visible')
-        cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
+        cy.login(userData[0]).create_listing(listingData[0]).logout()
     })
 
     it('...updating a listing data.', function () {
@@ -129,12 +87,12 @@ describe('Release 1.1.9 changes ...', function () {
 
         cy.visit('/categories/1')
         cy.contains('Activities & Events').click()
-        cy.contains('No listings found!')
+        cy.contains(listingData[0].title).should('not.exist')
         cy.view_user_profile()
         cy.contains('Relist Item').click()
         cy.get('body > div > div > div').handle_splash_message('Listing marked as re-list. It will now be visible to other users.', 'success')
 
-        cy.get('a').contains(listingData[0]['title']).should('be.visible').click()
+        cy.get('a').contains(listingData[0].title).should('be.visible').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
         cy.wait(1000) // wait for ajax response
 

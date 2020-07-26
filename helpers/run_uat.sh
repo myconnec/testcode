@@ -6,6 +6,8 @@
 # source https://stackoverflow.com/questions/29568352/using-docker-compose-with-ci-how-to-deal-with-exit-codes-and-daemonized-linked
 # source
 
+export AWS_PROFILE='connechub_dev'
+
 export CYPRESS_abort_strategy='spec'
 export CYPRESS_baseUrl='https://dev.connechub.com/'
 export CYPRESS_VERSION='0.0.6'
@@ -16,7 +18,6 @@ export DB_SCHE='connechub'
 export DB_USER='dev_ch_rds_user'
 
 echo 'Init clean database...'
-mysql -u $DB_USER -p$DB_PASS -h $DB_HOST $DB_SCHE -e "DROP DATABASE IF EXISTS $DB_SCHE;"
 mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 
 if [[ ! $(docker login) ]]; then
@@ -32,10 +33,11 @@ if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]];th
     .
 fi
 
-echo "Resetting cypress_tests.tmp contents..."
+echo "Resetting cypress_tests.tmp and snapshot image contents..."
 if [ -f cypress_tests.tmp ]; then
     echo "" > cypress_tests.tmp
 fi
+aws s3 sync s3://connechub-configs/cypress/snapshots/connechub/ ./cypress/snapshots/connechub/ --profile $AWS_PROFILE
 
 # counter
 i=0
