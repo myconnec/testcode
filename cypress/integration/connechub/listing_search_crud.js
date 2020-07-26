@@ -18,7 +18,7 @@ describe('Listing Search CRUD...', function () {
     {
         bio: 'Lorem ipsum dolor sit amet....',
         email: 'test+listing_search@connechub.com',
-        name: 'Test User Liking Listing 0',
+        name: 'Test User Search Listing 0',
         password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
     }
 ]

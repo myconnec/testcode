@@ -34,4 +34,4 @@ Then select the suite you wish to run.
 
 Timing:
 
-As of 1.1.12 the `manual` options takes XmYs to complete. Automation takes XmYs.
+As of 1.1.12 the `manual` options takes 16.2 minutes to complete. Automation takes XmYs.
