@@ -67,6 +67,8 @@ gem 'meta-tags', '~> 2.13.0'
 
 # [PUMA](https://github.com/puma/puma) web server
 gem 'puma', '~>3.12.1'
+# Skylight APM
+gem 'skylight'
 
 # For Development Only
 group :development do

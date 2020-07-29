@@ -24,6 +24,9 @@ module Workspace
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    # Enable Skylight APM for non-production ENVs
+    config.skylight.environments += ["development"]
+
     # request instance meta data and assign to env varsI
     config.before_configuration do
       # request tags from meta data and assign to env vars. Vars required: NAME, REGION, RND, and STAGE
