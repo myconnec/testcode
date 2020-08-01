@@ -10,7 +10,7 @@ export AWS_PROFILE='connechub_dev'
 
 export CYPRESS_abort_strategy='spec'
 export CYPRESS_baseUrl='https://dev.connechub.com/'
-export CYPRESS_VERSION='0.0.6'
+export CYPRESS_VERSION='0.0.7'
 
 export DB_HOST='connechub-dev-rds-mariadb-5j1m.c8d4gbylpdxg.us-west-2.rds.amazonaws.com'
 export DB_PASS='dev_ch_rds_pass'
@@ -25,6 +25,14 @@ if [[ ! $(docker login) ]]; then
     exit $(echo $?)
 fi
 
+echo "Resetting cypress_tests.tmp..."
+if [ -f cypress_tests.tmp ]; then
+    echo "" > cypress_tests.tmp
+fi
+
+echo "Resetting snapshot images..."
+aws s3 sync s3://connechub-configs/cypress/snapshots/connechub/ ./cypress/snapshots/connechub/ --profile $AWS_PROFILE
+
 if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]];then
     echo "Building base image container..."
     docker build \
@@ -32,12 +40,6 @@ if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]];th
     -f cypress/Dockerfile \
     .
 fi
-
-echo "Resetting cypress_tests.tmp and snapshot image contents..."
-if [ -f cypress_tests.tmp ]; then
-    echo "" > cypress_tests.tmp
-fi
-aws s3 sync s3://connechub-configs/cypress/snapshots/connechub/ ./cypress/snapshots/connechub/ --profile $AWS_PROFILE
 
 # counter
 i=0
