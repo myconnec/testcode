@@ -1,15 +1,15 @@
 <div>
   <%= render :partial => 'categories/show', locals: {
-    campus: @campus,
-    community: @community,
-    free: @free,
-    h2f: @h2f,
-    housing: @housing,
-    jobs: @jobs,
-    listings: @listings,
-    sale: @sale,
-    services: @services,
-    unboxing: @unboxing,
-    listings: @listings
-  }  %>
+    campus: @categories[0],
+    community: @categories[1],
+    free: @categories[4],
+    h2f: @categories[3],
+    housing: @categories[2],
+    jobs: @categories[5],
+    sale: @categories[6],
+    services: @categories[7],
+    unboxing: @categories[8],
+
+    listings: @listings,    
+}  %>
 </div>
