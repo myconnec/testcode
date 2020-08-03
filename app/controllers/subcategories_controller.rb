@@ -5,9 +5,7 @@ class SubcategoriesController < ApplicationController
         @listings = Listing.active(params[:id], 'subcategory_id')
         @subcategory = Subcategory.find(params[:id])
 
-        # TODO Extracr into a CNTL helper
-        @categories = Category.all
-        subcat_listing_count = categories.map { |c| c.count }
+        @subcat_listing_count = Subcategory.get_subcat_listing_counts(@category)
     end
 
     def find_by_category

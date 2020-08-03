@@ -5,6 +5,7 @@ class Subcategory < ActiveRecord::Base
     validates_presence_of :category_id
     validates_presence_of :chargable
 
+    # version <= 1.1.12
     def self.count_per_subcat(parent_cat)
         sale_subcat_posting_count = {}
         parent_cat.subcategories.each do |subcategory|
@@ -17,4 +18,9 @@ class Subcategory < ActiveRecord::Base
         end
         sale_subcat_posting_count
     end
+
+    # version >= 1.1.13
+    # Use the request cat id to limit the sub_cat listing id range
+    def self.get_subcat_listing_counts(@categories)
+        subcat_listing_counts = Category.includes(:subcategory_id).map { |c| c.category_id }
 end

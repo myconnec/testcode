@@ -50,8 +50,6 @@ gem 'jbuilder', '~> 2.0'
 # bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for safely handling passwords.
 gem 'bcrypt', '~> 3.1.12'
 
-
-
 # Easy upload management for ActiveRecord
 gem 'paperclip', '~> 5.1'
 # Audio/Video Transcoder for Paperclip using FFMPEG/Avconv
@@ -67,6 +65,11 @@ gem 'meta-tags', '~> 2.13.0'
 
 # [PUMA](https://github.com/puma/puma) web server
 gem 'puma', '~>3.12.1'
+
+# SemVersion is a gem to help parse, validate, modify, and compare Semantic Versions.
+# source https://github.com/canton7/sem_version
+gem 'sem_version', '~> 1.2.0'
+
 # Skylight APM
 gem 'skylight'
 
