@@ -21,6 +21,8 @@ class Subcategory < ActiveRecord::Base
 
     # version >= 1.1.13
     # Use the request cat id to limit the sub_cat listing id range
-    def self.get_subcat_listing_counts(@categories)
-        subcat_listing_counts = Category.includes(:subcategory_id).map { |c| c.category_id }
+    def self.get_subcat_listing_counts(sub_category)
+        return 0
+        # subcat_listing_counts = Category.includes(:subcategory_id).map { |c| c.category_id }
+    end
 end
