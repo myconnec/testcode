@@ -12,7 +12,5 @@ class CategoriesController < ApplicationController
         @categories = Category.all
         @category = Category.find(params[:id])
         @listings = Listing.active(params[:id], 'category_id')
-
-        @subcat_listing_count = Subcategory.get_subcat_listing_counts(@category)
     end
 end
