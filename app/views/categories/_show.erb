@@ -1,17 +1,7 @@
 <div class="col-xs-6 col-sm-4 col-md-3 side-menu">
   <%= render :partial => 'categories/search' %>
   <%= render :partial => 'partials/side_menu', locals: {
-    campus: @categories[0],
-    community: @categories[1],
-    free: @categories[4],
-    h2f: @categories[3],
-    housing: @categories[2],
-    jobs: @categories[5],
-    sale: @categories[6],
-    services: @categories[7],
-    unboxing: @categories[8],
-
-    subcategory: @subcategory,
+    categories: @categories,
   } %>
 </div>
 

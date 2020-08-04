@@ -6,14 +6,14 @@
     <% @categories.each do |category| %>
       <div class="catg_title">
         <i class="glyphicon glyphicon-<%= category.icon %>"></i>
-        <strong><%= link_to category.name, category_path(category.name.to_s) %></strong>
+        <strong><%= link_to category.name, category_path(category.id) %></strong>
       </div>
       <% if (!@subcategory and category.id == params[:id].to_i) or (@subcategory and category.id == params[:category_id].to_i) %>
         <div class="category_title sub_category_<%= category.id %>">
           <ul>
-            <% campus.subcategories.each do |subcategory| %>
+            <% category.subcategories.each do |subcategory| %>
             <li class="landing_page">
-              <%= link_to subcategory.name, category_subcategory_path(campus, subcategory) %>
+              <%= link_to subcategory.name, category_subcategory_path(category, subcategory) %>
               <span class="cat_item_count">
                 <% # campus_subcat_posting_count[subcategory.id] != 0 ? campus_subcat_posting_count[subcategory.id] : '' %>
               </span>
