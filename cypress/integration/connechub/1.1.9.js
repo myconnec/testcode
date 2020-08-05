@@ -22,7 +22,7 @@ describe('Release 1.1.9 changes ...', function () {
     const userData = [
         {
             admin: false,
-            email: 'ugly_urbu@test.com',
+            email: 'test+deployment_1_1_9@connechub.com',
             name: 'Ugly Urubu',
             password: '2QE8XNwhh9V%',
             new_password: '#0X9OFOetl*B',

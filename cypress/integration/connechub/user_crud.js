@@ -12,7 +12,7 @@ describe('User account CRUD...', function () {
         {
             admin: false,
             bio: 'User CRUD',
-            email: 'test_user_crud@test.com',
+            email: 'test+user_crud@connechub.com',
             name: 'Test User CRUD',
             password: 'T37q1Gm@miyg',
             new_password: 'cAYCZL60aR01'
@@ -64,7 +64,7 @@ describe('User account CRUD...', function () {
         // use new password to log in
         cy.get('body > div > div > div').contains('You need to sign in or sign up before continuing.')
         cy.login({
-            email: 'test_user_crud@test.com',
+            email: userData[0].email,
             password: userData[0].new_password,
         }, false).view_user_profile()
         cy.logout()

@@ -66,12 +66,8 @@ gem 'meta-tags', '~> 2.13.0'
 # [PUMA](https://github.com/puma/puma) web server
 gem 'puma', '~>3.12.1'
 
-# SemVersion is a gem to help parse, validate, modify, and compare Semantic Versions.
-# source https://github.com/canton7/sem_version
-gem 'sem_version', '~> 1.2.0'
-
 # Skylight APM
-gem 'skylight'
+gem 'skylight', '~> 4.1.2'
 
 # For Development Only
 group :development do

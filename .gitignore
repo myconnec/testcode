@@ -17,6 +17,7 @@
 *.log
 *.log.*
 *.tmp
+.env
 
 # Test and misc files
 *.rbc
