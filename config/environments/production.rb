@@ -55,10 +55,5 @@ Rails.application.configure do
         enable_starttls_auto:   true
     }
 
-    # config.web_console.whitelisted_ips = [
-    #     # '10.0.0.0/24',
-    #     # '70.125.10.0/24'
-    # ]
-
     config.log_level = :warn
 end

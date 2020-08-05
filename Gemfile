@@ -69,20 +69,10 @@ gem 'puma', '~>3.12.1'
 # Skylight APM
 gem 'skylight', '~> 4.1.2'
 
-# For Development Only
-group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-  # Byebug is a Ruby debugger. It's implemented using the TracePoint C API for execution control and the Debug Inspector C API for call stack navigation.
-  gem 'byebug'
-  # Preloads your application so things like console, rake and tests run faster
-  # gem 'spring'
-end
-
 # For Test only
 group :test do
 end
 
-# For Development AND Test
-group :development, :test do
+# For Development
+group :development do
 end
