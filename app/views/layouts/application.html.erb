@@ -96,24 +96,19 @@ visual ad,
 visual ads,
 youtube,
 ">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <%= stylesheet_link_tag 'application', media: 'all' %>
-    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
 
-    <%= javascript_include_tag 'application' %>
-    <script src="https://unpkg.com/video.js/dist/video.js"></script>
-    
-    <%= csrf_meta_tags %>
-    <%= render "partials/google_analytics" %>
-    
-    <!-- wrap in an IF to only render on listing pages -->
-    <meta name="name" content="<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>">
+    <% if @listing and @listing.media_file_name %>
+      <!-- header tags for listing views -->
+      <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
 
-    <%
-    # only add OG meta tags if on a Listing VW page. We know this as that is the only view to have a @listing object
-    if @listing and @listing.media_file_name
+      <%= javascript_include_tag 'application' %>
+      <script src="https://unpkg.com/video.js/dist/video.js"></script>
+        
+      <meta name="name" content="<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>">
+
+    <% # add OG meta tags if on a Listing VW page. We know this as that is the only view to have a @listing object
       set_meta_tags og: {
         description: 'Buy, Sell, Promote and Watch Local Video Classifieds.' + @listing.title,
         image:       'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-4m-00001.png',
@@ -122,7 +117,6 @@ youtube,
         type:        'website',
         url:         'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/listings/' + params[:id],
       }
-    end
 
     # set_meta_tags twitter: {
     #   card:  "photo",
@@ -142,8 +136,11 @@ youtube,
     # }
     %>
     <%= display_meta_tags %>
-
     <meta property="fb:app_id" content="0" />
+    <% end %>
+
+    <%= csrf_meta_tags %>
+    <%= render "partials/google_analytics" %>    
 
     <title><%= (@listing and @listing.title ? ENV['NAME'] + ' - ' + @listing.title : ENV['NAME']) %></title>
   </head>
