@@ -10,7 +10,7 @@
 Automation:
 
 ```sh
-./helpers/run_uat.sh
+time ./helpers/run_uat.sh
 ```
 
 Manually:
@@ -26,4 +26,4 @@ Then select the suite you wish to run.
 
 Timing:
 
-As of 1.1.12 the `manual` options takes 16.2 minutes to complete. `Automation` takes ~4 minutes.
+As of 1.1.12 the `manual` options takes 16.2 minutes to complete. `Automation` takes ~4 minutes if all are run in parallel.

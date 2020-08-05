@@ -73,7 +73,7 @@ describe('Release 1.1.9 changes ...', function () {
         cy.login(userData[0]).create_listing(listingData[0]).logout()
     })
 
-    it('...updating a listing data.', function () {
+    it('...mark listing as sold.', function () {
         cy.login(userData[0]).view_user_profile()
 
         // Word wrap Listing title when long titles are used.
@@ -94,7 +94,6 @@ describe('Release 1.1.9 changes ...', function () {
 
         cy.get('a').contains(listingData[0].title).should('be.visible').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
-        cy.wait(1000) // wait for ajax response
 
         // the system is not retaining my subcategory when i go to edit
         // source: https://trello.com/c/1dPvSkwe/15-the-system-is-not-retaining-my-subcategory-when-i-go-to-edit

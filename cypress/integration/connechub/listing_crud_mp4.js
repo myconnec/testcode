@@ -53,7 +53,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.logout()
   })
 
-  it('...updating a listing data.', function () {
+  it('...updating a listing, change related data.', function () {
     cy.login(userData[0]).view_user_profile()
     cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
@@ -61,7 +61,9 @@ describe('Listing CRUD (mp4)...', function () {
     // change all the field values to ensure changing them works
     cy.get('div.panel-heading > h2').contains('Edit Listing') // Edit New Listing
     cy.get('#listing_category_id').select(listingData[1]['category']).should('have.value', '4')
-    cy.wait(1000) // wait for ajax response
+    // wait for ajax response, if we dont set this high enough the test will fail
+    // TODO make Cypress wait until the ajax request returns, the continue.
+    cy.wait(10000)
     cy.get('#listing_subcategory_id').select(listingData[1]['sub_category'])
     cy.get('#listing_price').clear().type(listingData[1]['price'])
     cy.get('#listing_title').clear().type(listingData[1]['title'])

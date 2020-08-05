@@ -61,7 +61,7 @@ parallel \
     --bar \
     --keep-order \
     --halt now,fail=1 \
-    --max-procs 8 \
+    --max-procs $PARALLEL_PROC_COUNT \
     < cypress_tests.tmp
 
 EXIT_CODE=$(echo $?)
