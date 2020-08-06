@@ -16,13 +16,14 @@
     <link rel="preload" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="preload" rel="manifest" href="/manifest.json">
 
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-    <meta name="theme-color" content="#ffffff">
-
-    <meta name="viewport" content="width=device-width">
     <meta charset="UTF-8">
     <meta name="description" content="Buy, Sell, Promote and Watch Local Video Classifieds.">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#fff"/>
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <meta name="keywords" content="
 ad posting sites,
 ads,
@@ -96,14 +97,14 @@ visual ad,
 visual ads,
 youtube,
 ">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
 
     <% if @listing and @listing.media_file_name %>
       <!-- header tags for listing views -->
       <link rel="preload" href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
 
-      <%= javascript_include_tag 'application' %>
       <script src="https://unpkg.com/video.js/dist/video.js"></script>
         
       <meta name="name" content="<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>">
@@ -135,6 +136,7 @@ youtube,
       #   }
       # }
     %>
+
     <%= display_meta_tags %>
     <meta property="fb:app_id" content="0" />
     <% end %>
@@ -142,9 +144,7 @@ youtube,
     <%= csrf_meta_tags %>
     <%= render "partials/google_analytics" %>    
 
-    <title>
-      <%= (@listing and @listing.title ? ENV['NAME'] + ' - ' + @listing.title : ENV['NAME'].capitalize ) %>
-    </title>
+    <title><%= (@listing and @listing.title ? ENV['NAME'] + ' - ' + @listing.title : ENV['NAME'].capitalize ) %></title>
   </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
