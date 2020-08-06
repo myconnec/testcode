@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <link rel="preload" rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="preload" rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
@@ -143,7 +143,7 @@ youtube,
     <%= render "partials/google_analytics" %>    
 
     <title>
-      <%= (@listing and @listing.title ? ENV['NAME'] + ' - ' + @listing.title : ENV['NAME']) %>
+      <%= (@listing and @listing.title ? ENV['NAME'] + ' - ' + @listing.title : ENV['NAME'].capitalize ) %>
     </title>
   </head>
   <body>

@@ -63,12 +63,13 @@ module Workspace
     ENV['SES_SMTP_PASS'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['SES_SMTP_PORT'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-port' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['SES_SMTP_USER'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-user' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-
+    
     # Other App vars
     ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'media-display-s3-bucket'        + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['AWS_S3_MEDIA_SOURCE_BUCKET']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'media-source-s3-bucket'         + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['GEO_API_KEY']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'geo-api-key'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['GOOGLE_ANALYTICS']            = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'google-analytics'               + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['NAME']                        = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'name'                           + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['SKYLIGHT_AUTHENTICATION']     = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'skylight-apm'                   + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['STRIPE_PUBLISH_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-publish-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
     ENV['STRIPE_SECRET_KEY']           = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-secret-key'              + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
