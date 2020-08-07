@@ -69,6 +69,9 @@ gem 'puma', '~>3.12.1'
 # Skylight APM
 gem 'skylight', '~> 4.1.2'
 
+# PWA 
+gem 'serviceworker-rails', '~> 0.6.0'
+
 # For Test only
 group :test do
 end

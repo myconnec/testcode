@@ -28,3 +28,4 @@ if (navigator.serviceWorker) {
         console.log(reg);
     });
 }
+//= require serviceworker-companion
