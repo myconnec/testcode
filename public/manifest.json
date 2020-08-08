@@ -3,9 +3,9 @@
   "name": "Connechub",
   "start_url": "https://dev.connechub.com",
   "background_color": "#fff",
-  "display": "standalone",
+  "display": "fullscreen",
   "scope": "/",
-  "theme_color": "#000",
+  "theme_color": "#2B98C7",
   "icons": [
     {
       "src": "android-icon-36x36.png",
