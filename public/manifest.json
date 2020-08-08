@@ -1,7 +1,7 @@
 {
   "short_name": "Connechub",
   "name": "Connechub",
-  "start_url": "https://www.connechub.com",
+  "start_url": "https://dev.connechub.com",
   "background_color": "#fff",
   "display": "standalone",
   "scope": "/",
