@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="preload" rel="manifest" href="/manifest.json">
+
     <link rel="preload" rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
     <link rel="preload" rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
     <link rel="preload" rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
@@ -14,7 +16,6 @@
     <link rel="preload" rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
     <link rel="preload" rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="preload" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="preload" rel="manifest" href="/manifest.json">
 
     <meta charset="UTF-8">
     <meta name="description" content="Buy, Sell, Promote and Watch Local Video Classifieds.">
@@ -102,14 +103,15 @@ youtube,
     <%= javascript_include_tag 'application' %>
 
     <% if @listing and @listing.media_file_name %>
+
+      <title><%= ENV['NAME'].capitalize + ' - ' + @listing.title %></title>
+      <meta name="name" content="<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>">
+
       <!-- header tags for listing views -->
       <link rel="preload" href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
 
       <script src="https://unpkg.com/video.js/dist/video.js"></script>
-        
-      <meta name="name" content="<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>">
-
-    <% # add OG meta tags if on a Listing VW page. We know this as that is the only view to have a @listing object
+      <% # add OG meta tags if on a Listing VW page. We know this as that is the only view to have a @listing object
       set_meta_tags og: {
         description: 'Buy, Sell, Promote and Watch Local Video Classifieds.' + @listing.title,
         image:       'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-4m-00001.png',
@@ -117,36 +119,18 @@ youtube,
         title:       @listing.title,
         type:        'website',
         url:         'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/listings/' + params[:id],
-      }
-
-      # set_meta_tags twitter: {
-      #   card:  "photo",
-      #   image: {
-      #     _:      'https://'.( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]).ENV["NAME"]+'.com/assets/connechub-twitter-share.png',
-      #     width:  300,
-      #     height: 100,
-      #   }
-      # }
-
-      # set_meta_tags al: {
-      #   ios: {
-      #     url: 'https://'.( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]).ENV["NAME"]+'.com',
-      #     app_store_id: 0,
-      #     app_name: ENV['NAME']
-      #   }
-      # }
-    %>
-
-    <%= display_meta_tags %>
-    <meta property="fb:app_id" content="0" />
+      } %>
+      <%= display_meta_tags %>
+      <meta property="fb:app_id" content="0" />
+    <% else %>
+      <title><%= ENV['NAME'].capitalize %></title>
     <% end %>
 
     <%= csrf_meta_tags %>
-    <%= render "partials/google_analytics" %>    
-
-    <title><%= (@listing and @listing.title ? ENV['NAME'] + ' - ' + @listing.title : ENV['NAME'].capitalize ) %></title>
-  <link rel="manifest" href="/manifest.json" />
-<meta name="apple-mobile-web-app-capable" content="yes"></head>
+    <%= render "partials/google_analytics" %>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head>
   <body>
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">

@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-  # around_filter :catch_not_found
+  around_filter :catch_not_found
   impressionist actions: [:show], unique: [:session_hash]
 
   before_action :set_s3_direct_post, only: [:upload]
@@ -240,10 +240,10 @@ class ListingsController < ApplicationController
     )
   end
 
-  # def catch_not_found
-  #   yield
-  #   # TODO maybe more specific errors here?
-  #   rescue
-  #     redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
-  # end
+  def catch_not_found
+    yield
+    # TODO maybe more specific errors here?
+    rescue
+      redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
+  end
 end

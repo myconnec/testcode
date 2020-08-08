@@ -39,11 +39,6 @@ module Workspace
 
       tags['Tags'].each do |tag|
         ENV[tag['Key'].upcase] = tag['Value']
-
-        # only want the applications name from the Name tag
-        if tag['Key'] == 'Name'
-          ENV[tag['Key'].upcase] = tag['Value'].to_s.split("-")[0]
-        end
       end
     end
 
