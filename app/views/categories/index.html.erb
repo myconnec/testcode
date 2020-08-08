@@ -11,14 +11,17 @@
   <div class="form-group text-center row">
     <%= form_tag search_listings_path, method: :get do |f| %>
       <div class="col-xs-12 col-sm-4">
+        <label for="search">Keywords</label>
         <%= text_field_tag :search, nil, placeholder: 'keywords', class: "form-control"%>
       </div>
 
       <div class="col-xs-12 col-sm-4">
+        <label for="location">Location</label>
         <%= text_field_tag :location, nil, placeholder: 'city, state or zip', class: "form-control"%>
       </div>
 
       <div class="col-xs-12 col-sm-4">
+        <label for="category">Category</label>
         <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control"%>
       </div>
 
