@@ -1,4 +1,4 @@
-var CACHE_VERSION = 'v1';
+var CACHE_VERSION = '<%= ENV['WEB_APP_VERSION'] %>';
 var CACHE_NAME = CACHE_VERSION + ':<%= ENV['NAME'] %>-cache';
 
 function onInstall(event) {
@@ -8,8 +8,15 @@ function onInstall(event) {
       return cache.addAll([
         // make sure serviceworker.js is not required by application.js
         // if you want to reference application.js from here
-        '<%= asset_path "application.css" %>',
         '/offline.html',
+        '<%= asset_path "application.css" %>',
+        '<%= asset_path "bootstrap/glyphicons-halflings-regular.ttf" %>',
+        '<%= asset_path "bootstrap/glyphicons-halflings-regular.woff2" %>',
+        '<%= asset_path "connechub-with-tagline.svg" %>',
+        '<%= asset_path "connechub.svg" %>',
+        '<%= asset_path "font-awesome/fontawesome-webfont.ttf" %>',
+        '<%= asset_path "font-awesome/fontawesome-webfont.woff2" %>',
+        'manifest.json'
       ]);
     })
   );
@@ -33,31 +40,23 @@ function onActivate(event) {
   );
 }
 
-// Borrowed from https://github.com/TalAter/UpUp
 function onFetch(event) {
-  event.respondWith(
-    // try to return untouched request from network first
-    fetch(event.request)
-      .then(function(response) {
-        console.log('store request/response in cache.')
-        // return cache(event.request, response)
-      })
-      .catch(function() {
-      // if it fails, try to return request from the cache
-      return caches.match(event.request)
-        .then(function(response) {
-        if (response) {
-          return response;
-        }
-        // if not found in cache, return default offline content for navigate requests
-        if (event.request.mode === 'navigate' ||
-          (event.request.method === 'GET' && event.request.headers.get('accept').includes('text/html'))) {
-          console.log('[Serviceworker]', "Fetching offline content", event);
-          return caches.match('/offline.html');
-        }
-      })
-    })
-  );
+  event.respondWith(async function() {
+    // Try the cache
+    const cachedResponse = await caches.match(event.request);
+    if (cachedResponse) return cachedResponse;
+
+    try {
+      // Fall back to network
+      return await fetch(event.request);
+    } catch (err) {
+      // If both fail, show a generic fallback:
+      return caches.match('/offline.html');
+      // However, in reality you'd have many different
+      // fallbacks, depending on URL & headers.
+      // Eg, a fallback silhouette image for avatars.
+    }
+  }());
 }
 
 self.addEventListener('install', onInstall);
