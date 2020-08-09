@@ -33,6 +33,8 @@ addMatchImageSnapshotCommand({
   capture: 'fullPage', // capture viewport in screenshot
 });
 
+import "cypress-audit/commands";
+
 /**
  * TODO Re-load the database after each test. Ensures a known good dataset. This will only work once we have a local version of the app running as we need rake and a working DB connection.
  */

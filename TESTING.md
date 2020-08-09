@@ -19,6 +19,8 @@ Manually:
 # set these values as appropriate
 source ./helpers/.env
 mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
+npm update npm
+npm install cypress cypress-audit cypress-image-snapshot --save-dev
 ./node_modules/cypress/bin/cypress open
 ```
 

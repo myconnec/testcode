@@ -18,7 +18,7 @@
 //= require bootstrap-sprockets
 //= require masonry/masonry.min
 //= require imagesloaded
-//= require helpersw
+//= require helpers
 //= require_tree .
 
 // register PWA service worker

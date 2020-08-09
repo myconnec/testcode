@@ -8,4 +8,4 @@ COPY ./package.json ./package.json
 COPY ./package-lock.json ./package-lock.json
 
 RUN npm update npm
-RUN npm install cypress cypress-image-snapshot --save-dev
+RUN npm install cypress cypress-audit cypress-image-snapshot --save-dev
