@@ -41,7 +41,7 @@ Rails.application.configure do
 
     # Compress CSS and JavaScripts.
     config.assets.css_compressor = :sass
-    config.assets.js_compressor = :uglifier
+    config.assets.js_compressor = Uglifier.new(harmony: true)
 
     # action_mailer for email configuration
     config.action_mailer.default_url_options = {
