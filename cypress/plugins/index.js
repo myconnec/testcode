@@ -12,13 +12,13 @@
 // the project's config changing)
 
 // source https://github.com/palmerhq/cypress-image-snapshot
-// const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
+const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
 
 // source https://github.com/mfrachet/cypress-audit
 const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
 
 module.exports = (on, config) => {
-  // addMatchImageSnapshotPlugin(on, config);
+  addMatchImageSnapshotPlugin(on, config);
 
   on("before:browser:launch", (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);
@@ -26,6 +26,6 @@ module.exports = (on, config) => {
 
   on("task", {
     lighthouse: lighthouse(), // calling the function is important
-    // pa11y: pa11y(), // calling the function is important
+    pa11y: pa11y(), // calling the function is important
   });
 };
