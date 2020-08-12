@@ -1,19 +1,20 @@
 <% icon_sizes = Rails.configuration.serviceworker.icon_sizes %>
 {
-  "name": "My Progressive Rails App",
-  "short_name": "Progressive",
-  "start_url": "/",
+  "background_color": "#FFFFFF",
+  "display": "fullscreen",
   "icons": [
   <% icon_sizes.map { |s| "#{s}x#{s}" }.each.with_index do |dim, i| %>
     {
-      "src": "<%= image_path "serviceworker-rails/heart-#{dim}.png" %>",
+      "src": "<%= image_path "icon--#{dim}.png" %>",
       "sizes": "<%= dim %>",
       "type": "image/png"
     }<%= i == (icon_sizes.length - 1) ? '' : ',' %>
   <% end %>
   ],
-  "theme_color": "#000000",
-  "background_color": "#FFFFFF",
-  "display": "fullscreen",
-  "orientation": "portrait"
+  "name": "Connechub",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "Connechub",
+  "start_url": "https://<%= ENV['STAGE'] == 'prd' ? 'www' : ENV['STAGE'] %>.connechub.com",
+  "theme_color": "#2B98C7",
 }

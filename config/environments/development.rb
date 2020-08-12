@@ -62,4 +62,22 @@ Rails.application.configure do
     config.log_level = :debug
 
     config.force_ssl = true
+
+    # config.serviceworker.icon_sizes = [
+    #     36,
+    #     48,
+    #     57,
+    #     60,
+    #     72,
+    #     76,
+    #     96,
+    #     114,
+    #     120,
+    #     144,
+    #     152,
+    #     180,
+    #     192,
+    #     512,
+    # ]
+        
 end

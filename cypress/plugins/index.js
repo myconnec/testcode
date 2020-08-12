@@ -14,30 +14,24 @@
 // source https://github.com/palmerhq/cypress-image-snapshot
 const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
 
-// module.exports = (on, config) => {
-//   // `on` is used to hook into various events Cypress emits
-//   // `config` is the resolved Cypress config
-
-//   // source https://github.com/palmerhq/cypress-image-snapshot
-//   addMatchImageSnapshotPlugin(on, config);
-// }
-
-// https://github.com/mfrachet/cypress-audit
-const { lighthouse, pa11y, prepareAudit } = require("cypress-audit");
-
+// source https://github.com/mfrachet/cypress-audit
+const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
+  
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-
-  // source https://github.com/palmerhq/cypress-image-snapshot
-  addMatchImageSnapshotPlugin(on, config);
-
   on("before:browser:launch", (browser = {}, launchOptions) => {
     prepareAudit(launchOptions);
   });
 
   on("task", {
-    lighthouse: lighthouse(), // calling the function is important
-    // pa11y: pa11y(), // calling the function is important
+    lighthouse: lighthouse((lighthouseReport) => {
+      console.log.bind(console);
+      console.log(lighthouseReport); // raw lighthouse report
+    }),
+    pa11y: pa11y((pa11yReport) => {
+      console.log.bind(console);
+      console.log(pa11yReport); // raw pa11y report
+    }),
   });
+
+  addMatchImageSnapshotPlugin(on, config);
 };
