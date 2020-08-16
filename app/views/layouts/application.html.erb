@@ -115,7 +115,7 @@ youtube,
 
     <%= csrf_meta_tags %>
     <%= render "partials/google_analytics" %>
-    
+
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head>
   <body>
@@ -133,7 +133,7 @@ youtube,
           <% end %>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">          
+          <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
               <li>
                 <a href="<%= new_listing_path %>">

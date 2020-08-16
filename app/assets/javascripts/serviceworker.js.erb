@@ -8,14 +8,16 @@ function onInstall(event) {
       return cache.addAll([
         // make sure serviceworker.js is not required by application.js
         // if you want to reference application.js from here
-        '/offline.html',
+        '/offline',
         '<%= asset_path "application.css" %>',
-        '<%= asset_path "bootstrap/glyphicons-halflings-regular.ttf" %>',
-        '<%= asset_path "bootstrap/glyphicons-halflings-regular.woff2" %>',
+        '<%= asset_path "bootstrap/glyphicons-halflings-regular.ttf?v=4.7.0" %>',
+        '<%= asset_path "bootstrap/glyphicons-halflings-regular.woff?v=4.7.0" %>',
+        '<%= asset_path "bootstrap/glyphicons-halflings-regular.woff2?v=4.7.0" %>',
         '<%= asset_path "connechub-with-tagline.svg" %>',
         '<%= asset_path "connechub.svg" %>',
-        '<%= asset_path "font-awesome/fontawesome-webfont.ttf" %>',
-        '<%= asset_path "font-awesome/fontawesome-webfont.woff2" %>',
+        '<%= asset_path "font-awesome/fontawesome-webfont.ttf?v=4.7.0" %>',
+        '<%= asset_path "font-awesome/fontawesome-webfont.woff?v=4.7.0" %>',
+        '<%= asset_path "font-awesome/fontawesome-webfont.woff2?v=4.7.0" %>',
         'manifest.json'
       ]);
     })
@@ -41,6 +43,7 @@ function onActivate(event) {
 }
 
 function onFetch(event) {
+  console.log('[Serviceworker]', "Fetching!", event);
   event.respondWith(async function() {
     // Try the cache
     const cachedResponse = await caches.match(event.request);
@@ -51,17 +54,13 @@ function onFetch(event) {
       return await fetch(event.request);
     } catch (err) {
       // If both fail, show a generic fallback:
-      return caches.match('/offline.html');
+      return caches.match('/offline');
       // However, in reality you'd have many different
       // fallbacks, depending on URL & headers.
       // Eg, a fallback silhouette image for avatars.
     }
   }());
 }
-
-self.addEventListener('install', onInstall);
-self.addEventListener('activate', onActivate);
-self.addEventListener('fetch', onFetch);
 
 function cache(request, response) {
   if (response.type === "error" || response.type === "opaque") {
@@ -72,3 +71,7 @@ function cache(request, response) {
     .open(CACHE_NAME)
     .then(cache => cache.put(request, response.clone()));
 }
+
+self.addEventListener('install', onInstall);
+self.addEventListener('activate', onActivate);
+self.addEventListener('fetch', onFetch);

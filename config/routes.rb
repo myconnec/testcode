@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   match '/membership', to: 'pages#membership', via: :get
   match '/newsletter', to: 'pages#newsletter', via: :get
   match '/mobile', to: 'pages#mobile', via: :get
+  match '/offline', to: 'pages#offline', via: :get
   match '/postads', to: 'pages#postads', via: :get
   match '/postterm', to: 'pages#postterm', via: :get
   match '/prices', to: 'prices#index', via: :get
@@ -46,7 +47,7 @@ Rails.application.routes.draw do
 
   # Sub/Categories
   match '/categories/show', to: 'categories#show', via: :get
-  
+
   match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
   match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
 

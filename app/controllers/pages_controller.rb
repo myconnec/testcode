@@ -63,4 +63,7 @@ class PagesController < ApplicationController
     def  trademark
     end
 
+    def  offline
+    end
+
 end
