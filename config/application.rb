@@ -27,13 +27,13 @@ module Workspace
     # Enable Skylight APM for non-production ENVs
     config.skylight.environments += ["development"]
 
+    # request tags from meta data and assign to env vars. Vars required: NAME, REGION, RND, and STAGE
+    instance_ident = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`
+    instance_id    = `curl --silent http://instance-data/latest/meta-data/instance-id`
+    ENV['REGION'] = JSON.parse(instance_ident)['region']
+
     # request instance meta data and assign to env varsI
-    config.before_configuration do
-      # request tags from meta data and assign to env vars. Vars required: NAME, REGION, RND, and STAGE
-      instance_ident = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`
-      instance_id    = `curl --silent http://instance-data/latest/meta-data/instance-id`
-      ENV['REGION'] = JSON.parse(instance_ident)['region']
-      
+    config.before_configuration do    
       tags = `aws ec2 describe-tags --filter 'Name=resource-id, Values=#{instance_id}' --output=json --region #{ENV['REGION']}`
       tags = JSON.parse(tags)
 
