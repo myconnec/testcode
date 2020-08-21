@@ -46,8 +46,8 @@ module Workspace
     # Load Ruby SSM client
     ssm_client = Aws::SSM::Client.new(region: ENV['REGION'])
 
-    yield
-      # If any ENV is not accessible...
+    begin
+      # Load run time values
       # RDS (SQL)
       ENV['RDS_DB_HOST']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
       ENV['RDS_DB_PASS']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
@@ -77,7 +77,8 @@ module Workspace
       # Create the FQDN to be used in logic
       ENV['BASE_URL'] = ('https://' + (ENV['STAGE'] == 'prd' ? 'www' : ENV['STAGE']) + '.' + ENV['NAME'] + '.com').downcase
     rescue
-      # ...terminate the insance
-      # `aws ec2 terminate-instances --instance-ids=#{instance_id} --region=#{ENV['REGION']}`
+      # ...or terminate the insance
+      `aws ec2 terminate-instances --instance-ids=#{instance_id} --region=#{ENV['REGION']}`
+    end
   end
 end
