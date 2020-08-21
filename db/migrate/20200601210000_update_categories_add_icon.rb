@@ -9,7 +9,7 @@ class UpdateCategoriesAddIcon < ActiveRecord::Migration
     Category.connection.execute("UPDATE categories SET icon = 'gift' WHERE id = 5;")
     Category.connection.execute("UPDATE categories SET icon = 'briefcase' WHERE id = 6;")
     Category.connection.execute("UPDATE categories SET icon = 'shopping-cart' WHERE id = 9;")
-    Category.connection.execute("UPDATE categories SET icon = 'cog' WHERE id = 9;")
+    Category.connection.execute("UPDATE categories SET icon = 'cog' WHERE id = 10;")
     Category.connection.execute("UPDATE categories SET icon = 'eye-open' WHERE id = 11;")
   end
   
@@ -17,4 +17,3 @@ class UpdateCategoriesAddIcon < ActiveRecord::Migration
     drop_column :categories, :icon
   end
 end
-
