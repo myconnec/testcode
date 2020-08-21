@@ -78,6 +78,6 @@ module Workspace
       ENV['BASE_URL'] = ('https://' + (ENV['STAGE'] == 'prd' ? 'www' : ENV['STAGE']) + '.' + ENV['NAME'] + '.com').downcase
     rescue
       # ...terminate the insance
-      `aws ec2 terminate-instances --instance-ids=#{instance_id} --region=#{ENV['REGION']}`
+      # `aws ec2 terminate-instances --instance-ids=#{instance_id} --region=#{ENV['REGION']}`
   end
 end
