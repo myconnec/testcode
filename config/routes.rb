@@ -68,5 +68,12 @@ Rails.application.routes.draw do
   match '/prices/index', to: 'prices#index', via: :get
   match '/howitworks/index', to: 'howitworks#index', via: :get
 
+  # Device user acct. mngmt
+  devise_for :users, controllers: {
+    passwords: "passwords",
+    registrations: "registrations",
+    sessions: "sessions"
+  }
+
   root 'categories#index'
 end
