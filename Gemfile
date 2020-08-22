@@ -69,8 +69,11 @@ gem 'puma', '~>3.12.1'
 # Skylight APM
 gem 'skylight', '~> 4.1.2'
 
-# PWA 
+# PWA
 gem 'serviceworker-rails', '~> 0.6.0'
+
+# reCaptcha https://github.com/ambethia/recaptcha
+gem 'recaptcha', '~> 5.5.0'
 
 # For Test only
 group :test do
