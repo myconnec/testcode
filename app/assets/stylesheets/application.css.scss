@@ -17,7 +17,8 @@
  *= require 'masonry/gutters'
  *= require 'masonry/infinitescroll'
  *= require 'masonry/right-to-left'
-  */
+ *= require trix
+*/
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
