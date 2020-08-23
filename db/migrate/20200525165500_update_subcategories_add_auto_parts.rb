@@ -1,6 +1,6 @@
 class UpdateSubcategoriesAddAutoParts < ActiveRecord::Migration
   def change
-    Subcategory.create :name => "Auto Parts", :category_id => 9
+    Subcategory.create :name => "Auto Parts", :category_id => 9, :chargeable => 0
   end
 
   def down
