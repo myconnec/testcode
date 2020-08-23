@@ -139,6 +139,7 @@
                     <div class="input-group">
                         <div class="input-group-addon">Description</div>
                         <%= f.text_area :description,
+                            as: :trix_editor,
                             class: "form-control",
                             required: true,
                             type: "text",

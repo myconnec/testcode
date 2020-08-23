@@ -23,3 +23,5 @@
 
 // register PWA service worker
 //= require serviceworker-companion
+
+//= require trix
