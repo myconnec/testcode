@@ -12,8 +12,8 @@ class UpdateCategoriesAddIcon < ActiveRecord::Migration
     Category.connection.execute("UPDATE categories SET icon = 'cog' WHERE id = 10;")
     Category.connection.execute("UPDATE categories SET icon = 'eye-open' WHERE id = 11;")
   end
-  
+
   def down
-    drop_column :categories, :icon
+    remove_column :categories, :icon
   end
 end
