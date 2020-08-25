@@ -72,6 +72,10 @@ gem 'skylight', '~> 4.1.2'
 # PWA 
 gem 'serviceworker-rails', '~> 0.6.0'
 
+# reCaptcha
+
+gem 'recaptcha', '~> 5.5.0'
+
 # For Test only
 group :test do
 end

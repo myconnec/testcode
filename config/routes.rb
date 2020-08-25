@@ -68,5 +68,13 @@ Rails.application.routes.draw do
   match '/prices/index', to: 'prices#index', via: :get
   match '/howitworks/index', to: 'howitworks#index', via: :get
 
+  # devise user acct. management routes
+  devise_for :users, controllers: {
+    passwords: "passwords",
+    registrations: "registrations",
+    sessions: "sessions"
+  }
+
+  # fail through default route
   root 'categories#index'
 end
