@@ -3,11 +3,36 @@
   <head>
     <link rel="manifest" href="/manifest.json">
 
+    <!-- Apple device settings -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
     <!-- Because Apple is bad and does not properly support PWA (2020-08) we gave to do this for icons. -->
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="152x152" href="apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="167x167" href="apple-icon-180x180.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-icon-180x180.png">
+
+    <!-- source https://www.netguru.com/codestories/pwa-on-ios -->
+    <link href="apple_splash_2048.png" sizes="2048x2732" rel="apple-touch-startup-image" />
+    <link href="apple_splash_1668.png" sizes="1668x2224" rel="apple-touch-startup-image" />
+    <link href="apple_splash_1536.png" sizes="1536x2048" rel="apple-touch-startup-image" />
+    <link href="apple_splash_1125.png" sizes="1125x2436" rel="apple-touch-startup-image" />
+    <link href="apple_splash_1242.png" sizes="1242x2208" rel="apple-touch-startup-image" />
+    <link href="apple_splash_750.png" sizes="750x1334" rel="apple-touch-startup-image" />
+    <link href="apple_splash_640.png" sizes="640x1136" rel="apple-touch-startup-image" />
+
+    <!-- Andriod settings source: https://blog.expo.io/enabling-ios-splash-screens-for-progressive-web-apps-34f06f096e5c -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- A2HS library for platforms that do not nativly support such notifactions -->
+    <!-- source https://github.com/docluv/add-to-homescreen -->
+    <link rel="stylesheet" type="text/css" href="addtohomescreen.css">
+    <script src="addtohomescreen.js"></script>
+    <script>
+    addToHomescreen({
+        //options
+    });
+    </script>
 
     <meta charset="UTF-8">
     <meta name="description" content="Buy, Sell, Promote and Watch Local Video Classifieds.">
