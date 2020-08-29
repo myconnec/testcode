@@ -11,7 +11,7 @@ source ./helpers/.env
 
 echo "Setup started..."
 
-echo 'Ensure the Docker daemon is running and `docker login` is successfully completed..../'
+echo 'Ensure the Docker daemon is running and `docker login` is successfully completed...'
 # if [[ ! $(docker login) ]]; then
 #     echo 'You will need to run `docker login` and auth first.'
 #     exit $(echo $?)
@@ -31,10 +31,10 @@ aws s3 sync $CYPRESS_SNAP_SOURCE ./cypress/snapshots/ --profile $AWS_PROFILE
 
 if [[ $DB_HOST ]]; then
     echo 'Importing ./db/sql/database.sql to baseline database...'
-    mysql -u $DB_USER -p$DB_PASS -h $DB_HOST connechub < ./db/sql/database.sql
+    mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 fi
 
-if [ -f cypress_tests.tmp ]; then
+if [[ -f cypress_tests.tmp ]]; then
     echo "Prev. Parallel procfile found, removing..."
     echo "" > cypress_tests.tmp
 fi
@@ -56,6 +56,7 @@ for filename in cypress/integration/*.js; do
     -e CYPRESS_abort_strategy="$CYPRESS_abort_strategy" \
     -e CYPRESS_VERSION="$CYPRESS_VERSION" \
     -v $(pwd)/cypress:/app/cypress \
+    -v $(pwd)/cypress.json:/app/cypress.json \
     --name "cypress_$i" \
     --rm \
     cypress-test-image:$CYPRESS_VERSION \
@@ -64,10 +65,13 @@ for filename in cypress/integration/*.js; do
     ((i++))
 done
 
+echo "Commands to be executed..."
+tail -100 cypress_tests.tmp
+
 echo "Executing parallel Docker container tests..."
+parallel --citation
 parallel \
     --bar \
-    --keep-order \
     --halt now,fail=1 \
     --max-procs $PARALLEL_PROC_COUNT \
     < cypress_tests.tmp
@@ -80,13 +84,8 @@ if [ $EXIT_CODE != 0 ]; then
     docker stop $(docker ps -a -q)
 fi
 
-if [[ $PARALLEL_REMOVE_PROCFILE ]]; then
-    echo "Removing procfile..."
-    rm ./cypress_tests.tmp
-fi
-
 echo "Resetting file permissions due to Docker volume mounting..."
-sudo chown $USER:$USER -R ./cypress/
+sudo chown nogroup:$USER -R ./cypress/
 
 echo "...done."
 

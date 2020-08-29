@@ -6,7 +6,7 @@ describe('Release 1.1.11 changes ...', function () {
     const userData = [
         {
             name: 'Test User OneOneEleven',
-            email: 'test+one_one_eleven@connechub.com',
+            email: 'test+deployment_1_1_11@connechub.com',
             password: 'testtest'
         }
     ]

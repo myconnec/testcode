@@ -3,5 +3,12 @@
   "viewportHeight": 960,
   "projectId": "q357pv",
   "chromeWebSecurity": false,
-  "video": false
+  "video": false,
+  "reporter": "junit",
+  "reporterOptions": {
+    "jenkinsMode": true,
+    "mochaFile": "cypress/results/test-[hash].xml",
+    "testsuitesTitle": true,
+    "toConsole": true
+  }
 }

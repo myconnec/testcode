@@ -3,9 +3,13 @@
  * https://trello.com/c/XOlP7NmQ/64-1113-eerie-eagle
  */
 describe('Release 1.1.13 changes ...', function () {
-    
+
     const listingData = []
-    const userData = []
+    const userData =
+
+    it("... example", function () {
+        cy.visit('')
+    });
 
     // Main: https://trello.com/c/pg8fMjsY/90-add-pwa-capabilities
     // https://trello.com/c/ELCYKDOL/95-add-to-home-screen-a2hs
