@@ -1,7 +1,5 @@
 class UpdateCategoriesAddIcon < ActiveRecord::Migration
   def up
-    add_column :categories, :icon, :string, :null => true
-
     Category.connection.execute("UPDATE categories SET icon = 'education' WHERE id = 1;")
     Category.connection.execute("UPDATE categories SET icon = 'globe' WHERE id = 2;")
     Category.connection.execute("UPDATE categories SET icon = 'home' WHERE id = 3;")

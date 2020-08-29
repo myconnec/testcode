@@ -2,7 +2,8 @@ class InitialSchema < ActiveRecord::Migration
   def change
     create_table :categories do |t|
     t.string :name
-    end 
+    t.string :icon
+    end
 
     create_table :subcategories do |t|
     t.string :name
