@@ -119,20 +119,10 @@ youtube,
     <meta name="apple-mobile-web-app-capable" content="yes">
   </head>
   <body>
+
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <% if request.fullpath != '/' %>
-            <%= link_to image_tag("connechub.svg", :alt => ENV["NAME"], height: 'auto', width: '65%'), root_path, style: "float: left" %>
-          <% end %>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar">
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
               <li>
@@ -190,48 +180,43 @@ youtube,
     <br />
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="myNavbar">
-                <div class="row1">
-                    <ul class="nav navbar-nav">
-                      <li class="dropup">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">About Us <i class="fa fa-sort"></i></span></a>
-                        <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-                          <li><%= link_to 'Career With Us', career_path %></a></li>
-                          <li><%= link_to 'About Us', about_path %></li>
-                          <li><%= link_to 'Newsletter', newsletter_path %></li>
-                          <li><%= link_to 'How It Works', '/howitworks/index' %></li>
-                          <li><%= link_to 'Prices', '/prices/index' %></li>
-                        </ul>
-                      </li>
-                      <li class="dropup">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Legal <i class="fa fa-sort"></i></span></a>
-                        <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-                          <li><%= link_to 'Terms of Service', terms_path %></li>
-                          <li><%= link_to 'Privacy Policy', privacy_path %></li>
-                          <li><%= link_to 'Posting Terms of Use', postterm_path %></li>
-                        </ul>
-                      </li>
-                      <li class="dropup">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Help <i class="fa fa-sort"></i></span></a>
-                        <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
-                          <li><%= link_to 'FAQs', faq_path %></li>
-                          <li><%= link_to 'Safety Tips', safetytips_path %></li>
-                        </ul>
-                      </li>
-                      <li class="li_no_bg">
-                        <span class="ts-copy">© Connechub <%= Date.today.year %></span>
-                      </li>
-                    </ul>
-                </div>
-            </div>
+      <div class="container">
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <div class="row1">
+            <ul class="nav navbar-nav">
+              <li class="dropup">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">About Us <i class="fa fa-sort"></i></span></a>
+                <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                  <li><%= link_to 'Career With Us', career_path %></a></li>
+                  <li><%= link_to 'About Us', about_path %></li>
+                  <li><%= link_to 'Newsletter', newsletter_path %></li>
+                  <li><%= link_to 'How It Works', '/howitworks/index' %></li>
+                  <li><%= link_to 'Prices', '/prices/index' %></li>
+                </ul>
+              </li>
+              <li class="dropup">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Legal <i class="fa fa-sort"></i></span></a>
+                <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                  <li><%= link_to 'Terms of Service', terms_path %></li>
+                  <li><%= link_to 'Privacy Policy', privacy_path %></li>
+                  <li><%= link_to 'Posting Terms of Use', postterm_path %></li>
+                </ul>
+              </li>
+              <li class="dropup">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Help <i class="fa fa-sort"></i></span></a>
+                <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                  <li><%= link_to 'FAQs', faq_path %></li>
+                  <li><%= link_to 'Safety Tips', safetytips_path %></li>
+                </ul>
+              </li>
+              <li class="li_no_bg">
+                <span class="ts-copy">© Connechub <%= Date.today.year %></span>
+              </li>
+            </ul>
           </div>
-      </nav>
-    </body>
+        </div>
+      </div>
+    </nav>
+
+  </body>
 </html>
