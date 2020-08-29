@@ -27,11 +27,11 @@ if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]];th
 fi
 
 echo "Resetting snapshot images..."
-aws s3 sync $CYPRESS_SNAP_SOURCE ./cypress/snapshots/$APP_NAME/ --profile $AWS_PROFILE
+aws s3 sync $CYPRESS_SNAP_SOURCE ./cypress/snapshots/ --profile $AWS_PROFILE
 
 if [[ $DB_HOST ]]; then
     echo 'Importing ./db/sql/database.sql to baseline database...'
-    mariadb -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
+    mysql -u $DB_USER -p$DB_PASS -h $DB_HOST connechub < ./db/sql/database.sql
 fi
 
 if [ -f cypress_tests.tmp ]; then
@@ -39,9 +39,16 @@ if [ -f cypress_tests.tmp ]; then
     echo "" > cypress_tests.tmp
 fi
 
+if [[ ! $(which parallel) ]]; then
+    echo 'Installing `parallel` CLI tool...';
+    apt intall -y parallel | true # debian systems
+    yum intall -y parallel | true # centos systems
+    brew install parallel | true # darwin systems
+fi
+
 echo "Generating new Parallel procfile..."
 i=0
-for filename in cypress/integration/$APP_NAME/*.js; do
+for filename in cypress/integration/*.js; do
     echo "Iteration $i for $filename"
 
     echo "docker run \
