@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 # source https://www.mariedrake.com/post/using-docker-to-run-your-cypress-tests
 # source https://stackoverflow.com/questions/20796200/how-to-loop-over-files-in-directory-and-change-path-and-add-suffix-to-filename
@@ -11,10 +11,11 @@ source ./helpers/.env
 
 echo "Setup started..."
 
-if [[ ! $(docker login) ]]; then
-    echo 'You will need to run `docker login` and auth first.'
-    exit $(echo $?)
-fi
+echo 'Ensure the Docker daemon is running and `docker login` is successfully completed..../'
+# if [[ ! $(docker login) ]]; then
+#     echo 'You will need to run `docker login` and auth first.'
+#     exit $(echo $?)
+# fi
 
 if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]];then
     echo "Building base image container..."
@@ -30,7 +31,7 @@ aws s3 sync $CYPRESS_SNAP_SOURCE ./cypress/snapshots/$APP_NAME/ --profile $AWS_P
 
 if [[ $DB_HOST ]]; then
     echo 'Importing ./db/sql/database.sql to baseline database...'
-    mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
+    mariadb -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 fi
 
 if [ -f cypress_tests.tmp ]; then
