@@ -7,25 +7,28 @@
 - [https://www.cypress.io](https://www.cypress.io)
 - [https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements](https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements)
 
-Automation:
+# Automation
 
 ```sh
-time ./helpers/run_uat.sh
+sudo time ./helpers/run_uat.sh
 ```
 
-Manually:
+## Manually
 
 ```sh
 # set these values as appropriate
 source ./helpers/.env
 mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 npm update npm
-npm install cypress cypress-audit cypress-image-snapshot --save-dev
+npm install
 ./node_modules/cypress/bin/cypress open
 ```
 
-Then select the suite you wish to run.
+Then select the suite you wish to run in the UI.
 
-Timing:
+# Performance
 
-As of 1.1.12 the `manual` options takes 16.2 minutes to complete. `Automation` takes ~4 minutes if all are run in parallel.
+- Version: 1.1.12
+- System: Full spec'd out Macbook Pro 15" 2015.
+- Manual: 16.2 minutes
+- Parallel (export $PARALLEL_PROC_COUNT=8): 4 minutes
