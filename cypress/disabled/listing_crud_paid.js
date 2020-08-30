@@ -72,10 +72,10 @@ describe('Listing CRUS PAID...', function () {
     var zip = '12345'
 
     // Stripe form elements
-    cy.getIframeBody('#card-element > div > iframe').find('div.CardNumberField-input-wrapper > span > input').type(card_number)
-    cy.getIframeBody('#card-element > div > iframe').find('span.CardField-expiry.CardField-child > span > span > input').type(expiration)
-    cy.getIframeBody('#card-element > div > iframe').find('span.CardField-cvc.CardField-child > span > span > input').type(cvv)
-    cy.getIframeBody('#card-element > div > iframe').find('span.CardField-postalCode.CardField-child > span > span > input').type(zip)
+    cy.get_iframe_body('#card-element > div > iframe').find('div.CardNumberField-input-wrapper > span > input').type(card_number)
+    cy.get_iframe_body('#card-element > div > iframe').find('span.CardField-expiry.CardField-child > span > span > input').type(expiration)
+    cy.get_iframe_body('#card-element > div > iframe').find('span.CardField-cvc.CardField-child > span > span > input').type(cvv)
+    cy.get_iframe_body('#card-element > div > iframe').find('span.CardField-postalCode.CardField-child > span > span > input').type(zip)
 
     cy.get('#listings_submit').click()
 

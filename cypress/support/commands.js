@@ -46,7 +46,7 @@ addMatchImageSnapshotCommand({
 // })
 
 /**
- * Log in user
+ * Login user
  */
 Cypress.Commands.add('login', (userData) => {
   console.log(userData)
@@ -67,7 +67,7 @@ Cypress.Commands.add('login', (userData) => {
 })
 
 /**
- * Log out user
+ * Logout user
  */
 Cypress.Commands.add('logout', () => {
   cy.get('#navbar > ul > li:nth-child(3) > a').contains('Logout').click()
@@ -192,10 +192,10 @@ Cypress.Commands.add('view_user_profile', () => {
  * Interacting with iframe content
  * source https://www.cypress.io/blog/2020/02/12/working-with-iframes-in-cypress/
  */
-Cypress.Commands.add('getIframeBody', (selector) => {
+Cypress.Commands.add('get_iframe_body', (selector) => {
   // get the iframe > document > body
   // and retry until the body element is not empty
-  cy.log('getIframeBody')
+  cy.log('get_iframe_body')
 
   return cy
   .get(selector, { log: false })
