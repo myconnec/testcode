@@ -60,7 +60,8 @@ for filename in cypress/integration/*.js; do
     --name "cypress_$i" \
     --rm \
     cypress-test-image:$CYPRESS_VERSION \
-    ./node_modules/cypress/bin/cypress run --browser chrome --headless true --spec $filename" >> cypress_tests.tmp
+    ./node_modules/cypress/bin/cypress run \
+    --spec $filename" >> cypress_tests.tmp
 
     ((i++))
 done
@@ -85,7 +86,7 @@ if [ $EXIT_CODE != 0 ]; then
 fi
 
 echo "Resetting file permissions due to Docker volume mounting..."
-sudo chown nogroup:$USER -R ./cypress/
+sudo chown -R $USER:owner ./cypress
 
 echo "...done."
 
