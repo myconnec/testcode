@@ -12,6 +12,7 @@
 /node_modules
 /public/assets
 /public/system
+/.sass-cache
 /vendor
 
 # files to ignore
