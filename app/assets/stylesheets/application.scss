@@ -41,6 +41,7 @@ div.panel-body > a > img {
   width: 500px;
   max-width: 100%;
 }
+
 .grid-item {
   border-radius: 7px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.22);
@@ -77,13 +78,6 @@ div.panel-body > a > img {
   }
 }
 
-// .grid-item {
-//   float: left;
-//   width: 80px;
-//   height: 60px;
-//   border: 2px solid hsla(0, 0%, 0%, 0.5);
-// }
-
 .row1 {
   margin-right: inherit;
   margin-left: inherit;
@@ -106,6 +100,7 @@ div.panel-body > a > img {
 .dropdown-submenu {
   position: relative;
 }
+
 .dropdown-submenu > .dropdown-menu {
   top: 0;
   left: 100%;
@@ -115,9 +110,11 @@ div.panel-body > a > img {
   -moz-border-radius: 0 6px 6px 6px;
   border-radius: 0 6px 6px 6px;
 }
+
 .dropdown-submenu:hover > .dropdown-menu {
   display: block;
 }
+
 .dropdown-submenu > a:after {
   display: block;
   content: " ";
@@ -131,12 +128,15 @@ div.panel-body > a > img {
   margin-top: 5px;
   margin-right: -10px;
 }
+
 .dropdown-submenu:hover > a:after {
   border-left-color: #5074a4;
 }
+
 .dropdown-submenu.pull-left {
   float: right;
 }
+
 .dropdown-submenu.pull-left > .dropdown-menu {
   left: -100%;
   margin-left: 10px;
@@ -185,9 +185,11 @@ div.panel-body > a > img {
   content: "";
   display: table;
 }
+
 .clearfix:after {
   clear: both;
 }
+
 .clearfix {
   zoom: 1;
 }
@@ -207,9 +209,11 @@ div.panel-body > a > img {
   content: "";
   display: table;
 }
+
 .group:after {
   clear: both;
 }
+
 .group {
   zoom: 1; /* For IE 6/7 (trigger hasLayout) */
 }
@@ -277,20 +281,24 @@ div.panel-body > a > img {
   color: #707070;
   padding: 3px;
 }
+
 .category_title {
   font-size: 11px;
   font-weight: normal;
 }
+
 .category_title ul li a:hover {
   color: #fff; /* white */
   background-color: #3b7e3a; /* green */
   padding: 5px;
 }
+
 .price {
   font: Verdana, Arial, Helvetica, sans-serif;
   color: #3b7e3a;
   font-size: 14px;
 }
+
 .price1 {
   font: Verdana, Arial, Helvetica, sans-serif;
   color: #3b7e3a;
@@ -298,6 +306,7 @@ div.panel-body > a > img {
   padding: 3px;
   width: 150px;
 }
+
 .vertical-center {
   position: relative;
   top: 30%;
@@ -365,6 +374,7 @@ div.panel-body > a > img {
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+
 .button:hover {
   text-decoration: none;
   color: rgba(0, 0, 0, 0.8);
@@ -384,6 +394,7 @@ div.panel-body > a > img {
   bottom: 0;
   right: 100px;
 }
+
 .comments {
   padding: 10px;
   border: 1px solid;
@@ -395,6 +406,7 @@ div.panel-body > a > img {
   background-color: #f4f8fc;
   width: 450px;
 }
+
 .post-title {
   opacity: 1.4;
   font-size: 120%;
@@ -1082,15 +1094,18 @@ div.panel-body > a > img {
   width: 75%;
   margin-right: 18px;
 }
+
 .contatcus {
   font-size: 12px;
 }
+
 .abouttxt {
   font-family: Verdana, Geneva, sans-serif;
   font-size: 13px;
   color: #000000;
   padding: 50px;
 }
+
 .aboutborder {
   border-style: solid;
   border-width: 10px;
@@ -1100,6 +1115,7 @@ div.panel-body > a > img {
   border-radius: 6px 0 6px 6px;
   padding: 5px;
 }
+
 .abouttxt11 ul li {
   list-style: square;
   font-family: Arial, Helvetica, sans-serif;
@@ -1144,6 +1160,7 @@ div.panel-body > a > img {
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+
 #inside_view_left {
   background-color: #585858;
   border: 1px solid #cdcdcd;
@@ -1161,6 +1178,7 @@ div.panel-body > a > img {
   font-size: 12px;
   color: #666666;
 }
+
 #lft_container1 ul {
   list-style-image: none;
   list-style-position: outside;
@@ -1169,6 +1187,7 @@ div.panel-body > a > img {
   padding: 0px 0px;
   display: block;
 }
+
 #lft_container1 ul li {
   float: none;
   padding: 0px 0px;
@@ -1180,6 +1199,7 @@ div.panel-body > a > img {
   padding: 3px;
   list-style-type: none;
 }
+
 #pro_stuff1 {
   padding: 5px 5px;
   font-family: verdana, sans-serif;
@@ -1187,6 +1207,7 @@ div.panel-body > a > img {
   font-size: 11px;
   color: #ffffff;
 }
+
 .prophoto {
   padding-left: 10px;
 }
@@ -1274,13 +1295,6 @@ body > div > div > div > div > ul {
   height: initial;
 }
 
-/* bootstrap 4 colors in bootstrap 3 */
-.alert-notice {
-  color: #31708f;
-  background-color: #d9edf7;
-  border-color: #bce8f1;
-}
-
 /* space items on the landing page */
 li.landing_page {
   padding: 5px 0px;
@@ -1303,18 +1317,14 @@ div.name > b > a {
 * how you can use CSS to style your Element's container.
 */
 .StripeElement {
-  box-sizing: border-box;
-
-  height: 40px;
-
-  padding: 10px 12px;
-
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background-color: white;
-
-  box-shadow: 0 1px 3px 0 #e6ebf1;
   -webkit-transition: box-shadow 150ms ease;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 10px 12px;
   transition: box-shadow 150ms ease;
 }
 
@@ -1335,4 +1345,9 @@ div.name > b > a {
 */
 .side-menu {
   border-right: 1px solid #eeeeee;
+}
+
+/* Override BS3 navbar style */
+.navbar {
+  margin-bottom: 0px;
 }
