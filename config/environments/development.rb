@@ -4,16 +4,16 @@ Rails.application.configure do
     # In the development environment your application's code is reloaded on
     # every request. This slows down response time but is perfect for development
     # since you don't have to restart the web server when you make code changes.
-    config.cache_classes = true
+    config.cache_classes = false
 
     # Eager load code on boot. This eager loads most of Rails and
     # your application in memory, allowing both threaded web servers
     # and those relying on copy on write to perform better.
     # Rake tasks automatically ignore this option for performance.
-    config.eager_load = true
+    config.eager_load = false
 
     # Show full error reports and disable caching.
-    config.consider_all_requests_local       = false
+    config.consider_all_requests_local       = true
     config.action_controller.perform_caching = true
 
     # Raises error for missing translations
@@ -28,7 +28,7 @@ Rails.application.configure do
     # Debug mode disables concatenation and preprocessing of assets.
     # This option may cause significant delays in view rendering with a large
     # number of complex assets.
-    config.assets.debug = false
+    config.assets.debug = true
 
     # Asset digests allow you to set far-future HTTP expiration dates on all assets,
     # yet still be able to expire them through the digest params.
@@ -40,8 +40,8 @@ Rails.application.configure do
     config.assets.raise_runtime_errors = false
 
     # Compress CSS and JavaScripts.
-    config.assets.css_compressor = :sass
-    config.assets.js_compressor = Uglifier.new(harmony: true)
+    # config.assets.css_compressor = :sass
+    # config.assets.js_compressor = Uglifier.new(harmony: true)
 
     # action_mailer for email configuration
     config.action_mailer.default_url_options = {
@@ -63,21 +63,4 @@ Rails.application.configure do
 
     config.force_ssl = true
 
-    # config.serviceworker.icon_sizes = [
-    #     36,
-    #     48,
-    #     57,
-    #     60,
-    #     72,
-    #     76,
-    #     96,
-    #     114,
-    #     120,
-    #     144,
-    #     152,
-    #     180,
-    #     192,
-    #     512,
-    # ]
-        
 end
