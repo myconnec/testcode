@@ -1,3 +1,3 @@
 class Condition < ActiveRecord::Base
-    has_many :listings
+  has_many :listings
 end

@@ -7,7 +7,7 @@ class ListingsController < ApplicationController
   before_action :is_user?, only: [:create_payment, :destroy, :payment, :sold, :update, :upload_update, :upload]
 
   def index
-    redirect_to '/'
+    redirect_to "/"
   end
 
   def new
@@ -42,7 +42,7 @@ class ListingsController < ApplicationController
 
       return redirect_to action: "upload", id: @listing.id
     else
-      return render 'new', :flash => { :danger => @listing.errors.full_messages.to_sentence }
+      return render "new", :flash => { :danger => @listing.errors.full_messages.to_sentence }
     end
   end
 
@@ -55,11 +55,11 @@ class ListingsController < ApplicationController
     @listing.sold = Time.now.to_i
 
     if !@listing.save
-      flash[:danger] = 'An error occured while updating your Listing as sold.'
+      flash[:danger] = "An error occured while updating your Listing as sold."
       redirect_to(:back)
     end
 
-    flash[:success] = 'Listing marked as SOLD. It will not longer be visible to other users.'
+    flash[:success] = "Listing marked as SOLD. It will not longer be visible to other users."
     redirect_to(:back)
   end
 
@@ -68,18 +68,18 @@ class ListingsController < ApplicationController
     @listing.sold = nil
 
     if !@listing.save
-      flash[:danger] = 'An error occured while updating your Listing as relist.'
+      flash[:danger] = "An error occured while updating your Listing as relist."
       redirect_to(:back)
     end
 
-    flash[:success] = 'Listing marked as re-list. It will now be visible to other users.'
+    flash[:success] = "Listing marked as re-list. It will now be visible to other users."
     redirect_to(:back)
   end
 
   def create_payment
     # Set your secret key: remember to change this to your live secret key in production
     # See your keys here: https://dashboard.stripe.com/account/apikeys
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
 
     # Token is created using Checkout or Elements!
     # Get the payment token ID submitted by the form:
@@ -90,10 +90,10 @@ class ListingsController < ApplicationController
 
     # create the charge to Stripe
     charge = Stripe::Charge.create({
-        amount: @listing.charge_amount.to_i,
-        currency: 'usd',
-        description: 'ConnecHub listing.',
-        source: token,
+      amount: @listing.charge_amount.to_i,
+      currency: "usd",
+      description: "ConnecHub listing.",
+      source: token,
     })
 
     if charge.save
@@ -101,7 +101,7 @@ class ListingsController < ApplicationController
       if @listing.save
         return redirect_to action: "upload", id: @listing.id
       end
-      flash[:danger] = 'Your payment was successful; however, an error occured while posting your listing. Please cotacgt support@connechub.com for assistance.'
+      flash[:danger] = "Your payment was successful; however, an error occured while posting your listing. Please cotacgt support@connechub.com for assistance."
     else
       flash[:danger] = charge.errors.full_messages.to_sentence
     end
@@ -127,13 +127,13 @@ class ListingsController < ApplicationController
     # replace ANY file extension with .mp4, that is the ONLY output format we provide
     file_name = params[:media_file_name]
     # file_name = file_name[0...(file_name.length - file_name.reverse.index('.'))] + 'mp4'
-    file_name = file_name.downcase.gsub(/[^0-9a-zA-Z\-\.\/]/, '')
+    file_name = file_name.downcase.gsub(/[^0-9a-zA-Z\-\.\/]/, "")
 
     # check file extention is of allowed format
-    file_ext = file_name[(file_name.length - file_name.reverse.index('.'))...file_name.length].downcase
+    file_ext = file_name[(file_name.length - file_name.reverse.index("."))...file_name.length].downcase
 
-    if !['avi', 'mov', 'mp4', 'mkv'].include? file_ext
-      flash[:danger] = 'Please provide a video file for your listing. File types .avi, .mov, .mp4, .mkv are accepted.'
+    if !["avi", "mov", "mp4", "mkv"].include? file_ext
+      flash[:danger] = "Please provide a video file for your listing. File types .avi, .mov, .mp4, .mkv are accepted."
       return redirect_to action: "upload", id: @listing.id
     end
 
@@ -145,7 +145,7 @@ class ListingsController < ApplicationController
     @listing.media_updated_at = Time.now.to_i
 
     if !@listing.save
-      flash[:danger] = 'An error occured while updating your Listing with the video.'
+      flash[:danger] = "An error occured while updating your Listing with the video."
       return redirect_to action: "upload", id: @listing.id
     end
 
@@ -172,7 +172,7 @@ class ListingsController < ApplicationController
   def show_json
     # used for Listing edit, need to have the sub_category.id in order to select the Listings subcategory in the form
     render json: {
-      listing: Listing.where(id: params[:id])
+      listing: Listing.where(id: params[:id]),
     }
   end
 
@@ -236,14 +236,14 @@ class ListingsController < ApplicationController
   def set_s3_direct_post
     @s3_direct_post = AWS_S3_MEDIA_SOURCE_BUCKET.presigned_post(
       key: "#{SecureRandom.uuid}/${filename}",
-      success_action_status: '201'
+      success_action_status: "201",
     )
   end
 
   def catch_not_found
     yield
     # TODO maybe more specific errors here?
-    rescue
-      redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
+  rescue
+    redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
   end
 end
