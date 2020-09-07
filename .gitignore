@@ -22,13 +22,14 @@
 .env
 
 # Test and misc files
-*.rbc
-capybara-*.html
+.DS_Store
 .rspec
-rerun.txt
 .rvmrc
 *.bowerrc
+*.rbc
 bower.json
+capybara-*.html
+rerun.txt
 
 # Ignore bundler config.
 /.bundle
