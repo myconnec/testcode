@@ -91,11 +91,6 @@ div.panel-body > a > img {
   margin-bottom: 1px;
 }
 
-#footer .nav > li > a:hover,
-#footer .nav > li > a:focus {
-  //background-color: #f1f1f1;
-}
-
 .dropup-menu {
   -webkit-box-shadow: 0 0 12px rgba(0, 0, 0, 0.175);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.175);
@@ -302,14 +297,6 @@ div.panel-body > a > img {
   font-size: 26px;
   padding: 3px;
   width: 150px;
-}
-.topbar {
-  background: #eee;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #ccc;
-  height: 30px;
-  border-radius: 10px 10px 10px 10px;
-  vertical-align: middle;
 }
 .vertical-center {
   position: relative;
@@ -1088,29 +1075,6 @@ div.panel-body > a > img {
 
 .space {
   padding-bottom: 5px;
-}
-
-.rightbar1 {
-  border-left: 1px #ccc solid;
-  border-right: 1px #ccc solid;
-  border-top: 1px #ccc solid;
-  border-bottom: 1px #ccc solid;
-  height: 100px;
-  webkit-border-radius: 6px 6px 6px 6px;
-  moz-border-radius: 6px 6px 6px 6px;
-  border-radius: 6px 6px 6px 6px;
-}
-
-.categories1 {
-  border-left: 1px #ccc solid;
-  border-right: 1px #ccc solid;
-  border-top: 1px #ccc solid;
-  border-bottom: 1px #ccc solid;
-  height: 230px;
-  webkit-border-radius: 6px 6px 6px 6px;
-  moz-border-radius: 6px 6px 6px 6px;
-  border-radius: 6px 6px 6px 6px;
-  font-size: 12px;
 }
 
 .leftbar {
