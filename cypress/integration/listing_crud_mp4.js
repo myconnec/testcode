@@ -91,12 +91,12 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div.panel-heading > h2').contains('Upload Media for Listing').click()
 
     cy.get('#fileupload').then(subject => {
-      return cy.fixture('24 ~!@#$%^&*()_+ fps.MP4', 'base64')
+      return cy.fixture('24fps #$%^().MP4', 'base64')
         .then(Cypress.Blob.base64StringToBlob)
         .then(blob => {
           const el = subject[0]
           if (el != null) {
-            const testFile = new File([blob], '24 ~!@#$%^&*()_+ fps.MP4')
+            const testFile = new File([blob], '24fps #$%^().MP4')
             const dataTransfer = new DataTransfer()
             dataTransfer.items.add(testFile)
             el.files = dataTransfer.files
