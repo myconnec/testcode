@@ -25,7 +25,7 @@ class Listing < ActiveRecord::Base
   has_many :comments, dependent: :destroy
 
   def full_address
-    [city, state, zipcode].join(', ')
+    [city, state, zipcode].join(", ")
   end
 
   def self.active(id, type)
@@ -44,7 +44,7 @@ class Listing < ActiveRecord::Base
     listings = listings.where(category_id: params[:category].to_i) if params[:category].present?
     listings = listings.where(sub_category_id: params[:sub_category].to_i) if params[:sub_category].present?
     listings = listings.near(params[:location], 100) if params[:location].present?
-    listings = listings.order('created_at DESC')
+    listings = listings.order("created_at DESC")
     listings
   end
 

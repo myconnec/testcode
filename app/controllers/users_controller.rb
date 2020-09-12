@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   around_filter :catch_not_found
   before_filter :authenticate_user!
-  
+
   def show
     @user = User.find_by username: params[:username]
 
@@ -20,12 +20,12 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:user][:id])
     @user.update(user_params)
-    
+
     if !@user.update(user_params)
-      redirect_to action: 'edit', :flash => { :danger => @user.errors.full_messages.to_sentence  }
+      redirect_to action: "edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
     end
 
-    redirect_to action: 'show', username: @user.username, :flash => { :success => 'Profile updated successfully.' }
+    redirect_to action: "show", username: @user.username, :flash => { :success => "Profile updated successfully." }
   end
 
   private
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
   def catch_not_found
     yield
-    rescue
-      redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
+  rescue
+    redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
   end
 end
