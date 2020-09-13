@@ -1,7 +1,7 @@
 var CACHE_NAME = '<%= ENV['NAME'] %>:<%= ENV['WEB_APP_VERSION'] %>-cache';
 
 function onInstall(event) {
-  console.log('[Serviceworker]', "Installing!", event);
+  // console.log('[Serviceworker]', "Installing!", event);
   event.waitUntil(
     caches.open(CACHE_NAME).then(function prefill(cache) {
       return cache.addAll([
@@ -24,7 +24,7 @@ function onInstall(event) {
 }
 
 function onActivate(event) {
-  console.log('[Serviceworker]', "Activating!", event);
+  // console.log('[Serviceworker]', "Activating!", event);
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
@@ -42,8 +42,12 @@ function onActivate(event) {
 }
 
 function onFetch(event) {
-  console.log('[Serviceworker]', "Fetching!", event);
   event.respondWith(async function() {
+    // Do not catch POST requests
+    if (event.request.method === 'POST' || event.request.method === 'PATCH') {
+      return;
+    }
+
     // Try the cache
     const cachedResponse = await caches.match(event.request);
     if (cachedResponse) return cachedResponse;
