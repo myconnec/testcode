@@ -44,9 +44,9 @@ function onActivate(event) {
 function onFetch(event) {
   event.respondWith(async function() {
     // Do not catch POST requests
-    if (event.request.method === 'POST' || event.request.method === 'PATCH') {
-      return;
-    }
+    // if (event.request.method === 'POST' || event.request.method === 'PATCH') {
+    //   return;
+    // }
 
     // Try the cache
     const cachedResponse = await caches.match(event.request);

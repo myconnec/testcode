@@ -156,30 +156,6 @@ div.panel-body > a > img {
   height: 30px;
 }
 
-@media (max-width: 767px) {
-  .navbar-nav .open .dropdown-menu {
-    position: inherit;
-    float: inherit;
-    width: inherit;
-    margin-top: inherit;
-    background-color: inherit;
-    border: inherit;
-    box-shadow: inherit;
-    padding: 0px 25px;
-  }
-  .navbar-nav .open .dropdown-menu > li > a,
-  .navbar-nav .open .dropdown-menu .dropdown-header {
-    padding: 10px 0px;
-  }
-  .navbar-nav .open .dropdown-menu > li > a {
-    line-height: inherit;
-  }
-  .navbar-nav .open .dropdown-menu > li > a:hover,
-  .navbar-nav .open .dropdown-menu > li > a:focus {
-    background-image: inherit;
-  }
-}
-
 .clearfix:before,
 .clearfix:after {
   content: "";
@@ -708,4 +684,22 @@ div.g-recaptcha > div {
   margin-bottom: 20px;
   text-align: center;
   width: 100% !important;
+}
+
+/* Do not collapse top menu */
+/* source https://trello.com/c/KGAITL6c/70-remove-the-top-hamburger-from-the-cellphone */
+
+.nav {
+  float: right !important;
+}
+
+.nav > li {
+  position: relative;
+  display: inline-block;
+}
+
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 9px;
 }
