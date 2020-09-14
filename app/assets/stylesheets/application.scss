@@ -691,6 +691,7 @@ div.g-recaptcha > div {
 
 .nav {
   float: right !important;
+  margin-top: 3px;
 }
 
 .nav > li {
@@ -701,5 +702,12 @@ div.g-recaptcha > div {
 .nav > li > a {
   position: relative;
   display: block;
-  padding: 10px 9px;
+  padding: 10px 5px;
+}
+
+@media only screen and (max-width: 530px) {
+  nav > div > div > a {
+    display: block;
+    text-align: center;
+  }
 }

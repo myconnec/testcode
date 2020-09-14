@@ -122,8 +122,16 @@ youtube,
 
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-        <div id="navbar" class="navbar">
-          <ul class="nav navbar-nav navbar-right">
+        <div>
+          <% if request.fullpath != '/' %>
+            <%= link_to image_tag(
+              "connechub.svg",
+              :alt => ENV["NAME"],
+              height: '50px',
+              width: 'auto'),
+            root_path %>
+          <% end %>
+          <ul class="nav navbar-right">
             <% if user_signed_in? %>
               <li>
                 <a href="<%= new_listing_path %>">
@@ -181,7 +189,7 @@ youtube,
 
     <nav class="navbar navbar-default navbar-fixed-bottom">
       <div class="container">
-        <div class="navbar-collapse" id="myNavbar">
+        <div class="navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="dropup">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">About Us <i class="fa fa-sort"></i></span></a>
