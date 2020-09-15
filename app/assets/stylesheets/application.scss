@@ -711,3 +711,9 @@ div.g-recaptcha > div {
     text-align: center;
   }
 }
+
+/* TRIC RTE for listing new/edit form */
+div.form-group.trix_editor.required.listing_description {
+  margin-right: 5px;
+  margin-left: 15px;
+}
