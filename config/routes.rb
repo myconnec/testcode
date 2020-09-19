@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  devise_for :users
+  # # Device user acct. mngmt
+  # devise_for :users, controllers: {
+  #   registrations: "registrations"
+  # }
+  
   resources :categories do
     resources :subcategories
   end
@@ -65,11 +71,6 @@ Rails.application.routes.draw do
 
   match '/prices/index', to: 'prices#index', via: :get
   match '/howitworks/index', to: 'howitworks#index', via: :get
-
-  # Device user acct. mngmt
-  devise_for :users, controllers: {
-    registrations: "registrations"
-  }
 
   root 'categories#index'
 end
