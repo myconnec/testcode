@@ -1,14 +1,15 @@
 class ApplicationController < ActionController::Base
+  # Prevent errors sending to the end user
+  # around_filter :catch_not_found
+
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  before_action :configure_permitted_parameters, if: :devise_controller?
 
-  protected
-
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :bio, :avatar])
+  def catch_not_found
+  yield
+  rescue
+    redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
   end
 
 end

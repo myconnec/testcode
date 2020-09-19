@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  # around_filter :catch_not_found
+  before_action :configure_permitted_parameters, if: :devise_controller?
   before_filter :authenticate_user!
 
   def show
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update(user_params)
     
-    if !@user.update(user_params)
+    if !@user.save(user_params)
       redirect_to action: 'edit', :flash => { :danger => @user.errors.full_messages.to_sentence  }
     end
 
@@ -43,9 +43,10 @@ class UsersController < ApplicationController
     )
   end
 
-  def catch_not_found
-    yield
-  rescue
-    redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :bio, :avatar])
   end
 end
