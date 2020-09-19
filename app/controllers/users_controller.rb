@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  around_filter :catch_not_found
+  # around_filter :catch_not_found
   before_filter :authenticate_user!
 
   def show
@@ -12,20 +12,20 @@ class UsersController < ApplicationController
       .order("created_at DESC")
   end
 
-  def update
+  def edit
     if params[:user][:password].blank? || params[:user][:password_confirmation].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
 
     @user = User.find(params[:user][:id])
-    @user.update(user_params)
+    @user.set(user_params)
 
-    if !@user.update(user_params)
-      redirect_to action: "edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
+    if !@user.save
+      return redirect_to action: "edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
     end
 
-    redirect_to action: "show", username: @user.username, :flash => { :success => "Profile updated successfully." }
+    redirect_to action: "show", username: @user.username, :flash => { :success => "Profile edited successfully." }
   end
 
   private

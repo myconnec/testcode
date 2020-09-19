@@ -68,9 +68,7 @@ Rails.application.routes.draw do
 
   # Device user acct. mngmt
   devise_for :users, controllers: {
-    passwords: "passwords",
-    registrations: "registrations",
-    sessions: "sessions"
+    registrations: "registrations"
   }
 
   root 'categories#index'
