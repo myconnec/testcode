@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
 
-  devise_for :users
-  # # Device user acct. mngmt
-  # devise_for :users, controllers: {
-  #   registrations: "registrations"
-  # }
-  
   resources :categories do
     resources :subcategories
   end
@@ -58,6 +52,11 @@ Rails.application.routes.draw do
   # User (Device)
   get ':username' => 'users#show', as: 'user'
   match '/users/update', to: 'users#update', via: :put
+  devise_for :users
+  # Device user acct. mngmt
+  # devise_for :users, controllers: {
+  #   registrations: "registrations"
+  # }
 
   # Listing
   match '/listings/payment/:id', to: 'listings#payment', via: :get

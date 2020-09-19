@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    # if either password or password_confirmation are blank, remove them from the form data, we do not want to operate on them
     if params[:user][:password].blank? || params[:user][:password_confirmation].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
@@ -20,12 +21,13 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:user][:id])
     @user.update(user_params)
-    
-    if !@user.save(user_params)
-      redirect_to action: 'edit', :flash => { :danger => @user.errors.full_messages.to_sentence  }
+    flash[:success] = 'Profile updated successfully.'
+
+    if !@user.save
+      flash[:danger] = @user.errors.full_messages.to_sentence
     end
 
-    redirect_to action: 'show', username: @user.username, :flash => { :success => 'Profile updated successfully.' }
+    redirect_to(:back)
   end
 
   private
