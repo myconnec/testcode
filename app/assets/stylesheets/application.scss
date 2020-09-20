@@ -703,6 +703,25 @@ div.name > b > a {
   margin-bottom: 0px !important;
 }
 
+.navbar-header {
+  float: left;
+  margin-right: 15px;
+}
+
+@media only screen and (max-width: 625px) {
+  .navbar-header {
+    display: none;
+  }
+}
+
+.navbar-nav {
+  display: inline-block;
+}
+
+.navbar-right {
+  float: right;
+}
+
 /* Align top / bottom menu items in mobiel display */
 .nav > li {
     position: relative;

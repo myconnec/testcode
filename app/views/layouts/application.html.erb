@@ -123,6 +123,11 @@ youtube,
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div id="navbar" class="navbar">
+          <div class="navbar-header">
+            <% if request.fullpath != '/' %>
+              <%= link_to image_tag("connechub.svg", :alt => ENV["NAME"], height: '55px', width: 'auto'), root_path %>
+            <% end %>
+          </div>
           <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
               <li>
