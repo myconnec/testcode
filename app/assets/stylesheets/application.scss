@@ -703,6 +703,12 @@ div.name > b > a {
   margin-bottom: 0px !important;
 }
 
+/* Align top / bottom menu items in mobiel display */
+.nav > li {
+    position: relative;
+    display: inline-block;
+}
+
 /* Google Captcha inline element styling */
 div.g-recaptcha > div {
   margin-bottom: 20px;
