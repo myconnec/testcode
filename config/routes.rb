@@ -49,10 +49,6 @@ Rails.application.routes.draw do
   match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
   match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
 
-  # User (Device)
-  get ':username' => 'users#show', as: 'user'
-  match '/users/update', to: 'users#update', via: :put
-
   # Listing
   match '/listings/payment/:id', to: 'listings#payment', via: :get
   match '/listings/create_payment/:id', to: 'listings#create_payment', via: :post
@@ -66,12 +62,15 @@ Rails.application.routes.draw do
   match '/prices/index', to: 'prices#index', via: :get
   match '/howitworks/index', to: 'howitworks#index', via: :get
 
-  # Device user acct. mngmt
-  devise_for :users, controllers: {
-    passwords: "passwords",
-    registrations: "registrations",
-    sessions: "sessions"
-  }
+  # User (Device)
+  devise_for :users
+  get ':username' => 'users#show', as: 'user'
+  match '/users/update', to: 'users#update', via: :put
+  # devise_for :users, controllers: {
+  #   passwords: "passwords",
+  #   registrations: "registrations",
+  #   sessions: "sessions"
+  # }
 
   root 'categories#index'
 end
