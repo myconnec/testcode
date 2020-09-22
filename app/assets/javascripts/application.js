@@ -24,4 +24,5 @@
 // register PWA service worker
 //= require serviceworker-companion
 
+// Trix rich text editor JS
 //= require trix

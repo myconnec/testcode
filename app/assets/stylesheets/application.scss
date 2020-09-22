@@ -734,3 +734,13 @@ div.g-recaptcha > div {
   text-align: center;
   width: 100% !important;
 }
+
+/* Trix RTE overrides */
+div.form-group.trix_editor {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+trix-toolbar .trix-button-group {
+    display: block;
+}

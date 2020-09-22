@@ -136,14 +136,15 @@
 
                     <div class="input-group">
                         <div class="input-group-addon">Description</div>
-                        <%= f.text_area :description,
+                        <%= f.input :description,
                             as: :trix_editor,
                             class: "form-control",
-                            required: true,
-                            type: "text",
+                            label: false,
                             maxlength: "2048",
-                            pattern: "[A-Za-z\s\!\$\,\.\?]+{2048}",
-                            placeholder: "exp. Describe the item for sale as detailed as possible. Text, numbers, and punctuation are allowed."
+                            pattern: "[A-Za-z\s!$,.?]+{2048}",
+                            placeholder: "exp. Describe the item for sale as detailed as possible. Text, numbers, and punctuation are allowed.",
+                            required: true,
+                            type: "text"
                         %>
                     </div>
                     <br>

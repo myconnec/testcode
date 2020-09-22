@@ -75,8 +75,8 @@ gem 'serviceworker-rails', '~> 0.6.0'
 # reCaptcha https://github.com/ambethia/recaptcha
 gem 'recaptcha', '~> 5.5.0'
 
-# Rich text editor for Listing new/edit
-gem 'trix', '~> 0.11.1'
+# Trix https://github.com/kylefox/trix
+gem 'trix-rails', '~> 0.11.4', require: 'trix'
 
 # For Test only
 group :test do
