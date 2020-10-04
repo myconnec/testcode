@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    # source https://stackoverflow.com/questions/5113248/devise-update-user-without-password/11676957#11676957
     if params[:user][:password].blank? || params[:user][:password_confirmation].blank?
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
@@ -21,8 +22,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update(user_params)
 
-    if !@user.update(user_params)
-      redirect_to action: "edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
+    if !@user.save
+      return redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
     end
 
     redirect_to action: "show", username: @user.username, :flash => { :success => "Profile updated successfully." }
