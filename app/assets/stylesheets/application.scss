@@ -728,6 +728,20 @@ div.name > b > a {
     display: inline-block;
 }
 
+.nav > li > a {
+  padding: 10px 10px;
+}
+
+.nav > li:last-of-type > a {
+  padding-right: 15px;
+}
+
+@media (min-width: 768px) {
+  .navbar-nav {
+      margin: 7.5px 0px;
+  }
+}
+
 /* Google Captcha inline element styling */
 div.g-recaptcha > div {
   margin-bottom: 20px;
