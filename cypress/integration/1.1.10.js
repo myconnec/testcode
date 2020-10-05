@@ -4,19 +4,19 @@
  * This release involved a major change to the UI; the sub/caregory meny was moved and iterated on as well as the landing page changed. These changes are reflected throughout the Cypress e2e test suite, not simply in here.
  */
 describe('Release 1.1.10 changes ...', function () {
-    
-      const listingData = [
+
+    const listingData = [
         {
-          "category": "Unboxing",
-          "sub_category": "Computers",
-          "price": "0.00",
-          "condition": "Excellent",
-          "title": "Test FB Share Title",
-          "city": "Tampa",
-          "state": "FL",
-          "zipcode": "33612",
-          "description": "Test FB Share Description.",
-          "fileupload": "24fps.mp4"
+            "category": "Unboxing",
+            "sub_category": "Computers",
+            "price": "0.00",
+            "condition": "Excellent",
+            "title": "Test FB Share Title",
+            "city": "Tampa",
+            "state": "FL",
+            "zipcode": "33612",
+            "description": "Test FB Share Description.",
+            "fileupload": "24fps.mp4"
         },
         {
             "category": "Sale",
@@ -33,16 +33,16 @@ describe('Release 1.1.10 changes ...', function () {
         {
             "title": "Testing Special Characters Title 0123456789!$,.?"
         }
-      ]
+    ]
 
-      const userData = [
+    const userData = [
         {
-          bio: 'Lorem ipsum dolor sit amet....',
-          email: 'test+deployment_1_1_10@connechub.com',
-          name: 'Test User Deployment OneOneTen',
-          password: 'H@nt8wZLcn!&RMdua^F#8l3AEJ^H1iDc'
+            bio: 'Lorem ipsum dolor sit amet....',
+            email: 'test+deployment_1_1_10@connechub.com',
+            name: 'Test User Deployment OneOneTen',
+            password: 'H@nt8wZLcn!&RMdua^F#8l3AEJ^H1iDc'
         }
-      ]
+    ]
 
     // FIX Stripe value source. Add Listing PAID crud UAT testing.
     // https://trello.com/c/U6pfaJSh/49-fix-stripe-value-source-add-listing-paid-crud-uat-testing
@@ -57,7 +57,7 @@ describe('Release 1.1.10 changes ...', function () {
     // screenshot specifically of the header image    
     it('...new landing page header image.', function () {
         cy.visit('')
-        cy.get('body > div:nth-child(8) > div > div:nth-child(1) > img', {timeout: 5000})
+        cy.get('body > div:nth-child(8) > div > div:nth-child(1) > img', { timeout: 5000 })
             .matchImageSnapshot('1_1_10_new_header_image');
     })
 
@@ -80,29 +80,29 @@ describe('Release 1.1.10 changes ...', function () {
     //     cy.get('#u_0_0 > div:nth-child(2) > div._4-u3._3a8w.noPadding > table > tbody > tr._23m0', {timeout: 5000})
     //         .matchImageSnapshot('1_1_10_facebook_share_debug_output');
     // })
-    
+
     // Website Redesign (www.connechub.com)
     // https://trello.com/c/zgNPmX3D/38-website-redesign-wwwconnechubcom
     // sub/category change, landing page layout change
     it('...new landing page category menu.', function () {
         cy.visit('')
-        cy.get('body > div > div > div.side-menu', {timeout: 5000})
+        cy.get('body > div > div > div.side-menu', { timeout: 5000 })
             .matchImageSnapshot('1_1_10_landing_page_cat_menu');
     })
     // cat: only its own subcats are visible
     it('...new subcategory menu.', function () {
         cy.visit('/categories/1')
-        cy.get('div.sub_category_1', {timeout: 5000})
+        cy.get('div.sub_category_1', { timeout: 5000 })
             .matchImageSnapshot('1_1_10_campus_category_1');
     })
     it('...new subcategory menu.', function () {
         cy.visit('/categories/2')
-        cy.get('div.sub_category_2', {timeout: 5000})
+        cy.get('div.sub_category_2', { timeout: 5000 })
             .matchImageSnapshot('1_1_10_campus_category_2');
     })
     it('...new subcategory menu.', function () {
         cy.visit('/categories/3')
-        cy.get('div.sub_category_3', {timeout: 5000})
+        cy.get('div.sub_category_3', { timeout: 5000 })
             .matchImageSnapshot('1_1_10_campus_category_3');
     })
 
@@ -125,7 +125,7 @@ describe('Release 1.1.10 changes ...', function () {
     // Listings not displaying on Subcategory index views
     // https://trello.com/c/Plsj5OOw/56-listings-not-displaying-on-subcategory-index-views
     it('...Listings display in category show and subcategory show VWs.', function () {
-        cy.create_user(userData[0]).create_listing(listingData[1]).logout()
+        cy.create_user(userData[0]).create_listing(listingData[1])
         // category show
         cy.visit('/categories/9').contains('Test Subcategory and Category Shows Title')
         // subcategory show
@@ -142,6 +142,7 @@ describe('Release 1.1.10 changes ...', function () {
         cy.handle_splash_message('Listing has been updated.', 'success')
         cy.contains(listingData[2]['title'])
         cy.delete_listing(listingData[2])
+        cy.logout()
     })
 
     // Profile image changing not working.
@@ -152,41 +153,42 @@ describe('Release 1.1.10 changes ...', function () {
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_avatar').then(subject => {
             return cy.fixture('user_profile_0.jpg', 'base64')
-            .then(Cypress.Blob.base64StringToBlob)
-            .then(blob => {
-                const el = subject[0]
-                if (el != null) {
-                    const testFile = new File([blob], 'user_profile_0.jpg')
-                    const dataTransfer = new DataTransfer()
-                    dataTransfer.items.add(testFile)
-                    el.files = dataTransfer.files
-                }
-                return subject
-            })
+                .then(Cypress.Blob.base64StringToBlob)
+                .then(blob => {
+                    const el = subject[0]
+                    if (el != null) {
+                        const testFile = new File([blob], 'user_profile_0.jpg')
+                        const dataTransfer = new DataTransfer()
+                        dataTransfer.items.add(testFile)
+                        el.files = dataTransfer.files
+                    }
+                    return subject
+                })
         })
         cy.get('#profile_submit').contains('Update Profile').click()
         cy.view_user_profile()
-        cy.get('#inside_view_left > div.profile-info > img', {timeout: 5000}).matchImageSnapshot('1_1_10_user_profile_0');
+        cy.get('#inside_view_left > div.profile-info > img', { timeout: 5000 }).matchImageSnapshot('1_1_10_user_profile_0');
 
         // change confirm profile image change
         cy.view_user_profile()
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_avatar').then(subject => {
             return cy.fixture('user_profile_1.png', 'base64')
-            .then(Cypress.Blob.base64StringToBlob)
-            .then(blob => {
-                const el = subject[0]
-                if (el != null) {
-                    const testFile = new File([blob], 'user_profile_1.png')
-                    const dataTransfer = new DataTransfer()
-                    dataTransfer.items.add(testFile)
-                    el.files = dataTransfer.files
-                }
-                return subject
-            })
+                .then(Cypress.Blob.base64StringToBlob)
+                .then(blob => {
+                    const el = subject[0]
+                    if (el != null) {
+                        const testFile = new File([blob], 'user_profile_1.png')
+                        const dataTransfer = new DataTransfer()
+                        dataTransfer.items.add(testFile)
+                        el.files = dataTransfer.files
+                    }
+                    return subject
+                })
         })
         cy.get('#profile_submit').contains('Update Profile').click()
         cy.view_user_profile()
-        cy.get('#inside_view_left > div.profile-info > img', {timeout: 5000}).matchImageSnapshot('1_1_10_user_profile_1');
+        cy.get('#inside_view_left > div.profile-info > img', { timeout: 5000 }).matchImageSnapshot('1_1_10_user_profile_1');
+        cy.logout()
     })
 })

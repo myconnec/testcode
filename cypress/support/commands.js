@@ -55,7 +55,6 @@ Cypress.Commands.add('login', (userData) => {
   // log in using the test user
   cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
 
-  cy.get('#app_view_devise > div > div > div > div.panel-heading > h3').contains('Log In!')
   cy.get('#user_email').type(userData.email)
   cy.get('#user_password').type(userData.password)
   cy.get('#user_remember_me').check()
@@ -78,7 +77,7 @@ Cypress.Commands.add('logout', () => {
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.get('body > div:nth-child(7) > div > div', {timeout: 60000}).should('have.class', 'alert-' + type).contains(msg)
+  cy.get('body > div:nth-child(7) > div > div', { timeout: 60000 }).should('have.class', 'alert-' + type).contains(msg)
   cy.get('body > div:nth-child(7) > div > div > button > span').click()
   cy.get('body').contains(msg).should('not.be.visible')
 })
@@ -135,13 +134,13 @@ Cypress.Commands.add('create_listing', (listingData = false) => {
   // step 1 of listing creation
   cy.get('div.panel-heading > h2').contains('Create New Listing')
   cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(listingData.category)
-  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id', {timeout: 1000}).select(listingData.sub_category)
+  cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id', { timeout: 1000 }).select(listingData.sub_category)
   cy.get('#listing_price').clear().type(listingData.price)
   cy.get('#listing_title').clear().type(listingData.title)
   cy.get('#listing_city').clear().type(listingData.city)
   cy.get('#listing_state').clear().type(listingData.state)
   cy.get('#listing_zipcode').clear().type(listingData.zipcode)
-  cy.get('#listing_description').clear().type(listingData.description)
+  cy.get('#new_listing > div:nth-child(20) > div.form-group.trix_editor.required.listing_description > div > trix-editor').clear().type(listingData.description)
   cy.get('#listings_submit').click()
   // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
 
@@ -198,10 +197,10 @@ Cypress.Commands.add('get_iframe_body', (selector) => {
   cy.log('get_iframe_body')
 
   return cy
-  .get(selector, { log: false })
-  .its('0.contentDocument.body', { log: false }).should('not.be.empty')
-  // wraps "body" DOM element to allow
-  // chaining more Cypress commands, like ".find(...)"
-  // https://on.cypress.io/wrap
-  .then((body) => cy.wrap(body, { log: false }))
+    .get(selector, { log: false })
+    .its('0.contentDocument.body', { log: false }).should('not.be.empty')
+    // wraps "body" DOM element to allow
+    // chaining more Cypress commands, like ".find(...)"
+    // https://on.cypress.io/wrap
+    .then((body) => cy.wrap(body, { log: false }))
 })

@@ -9,6 +9,8 @@ clear
 
 source ./helpers/.env
 
+echo 'Checking for tools...'
+
 echo "Setup started..."
 
 echo 'Ensure the Docker daemon is running and `docker login` is successfully completed...'
@@ -34,9 +36,9 @@ if [[ $DB_HOST ]]; then
     mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 fi
 
-if [[ -f cypress_tests.tmp ]]; then
+if [[ -f ./cypress/cypress_tests.tmp ]]; then
     echo "Prev. Parallel procfile found, removing..."
-    echo "" > cypress_tests.tmp
+    echo "" > ./cypress/cypress_tests.tmp
 fi
 
 if [[ ! $(which parallel) ]]; then
@@ -61,13 +63,13 @@ for filename in cypress/integration/*.js; do
     --rm \
     cypress-test-image:$CYPRESS_VERSION \
     ./node_modules/cypress/bin/cypress run \
-    --spec $filename" >> cypress_tests.tmp
+    --spec $filename" >> ./cypress/cypress_tests.tmp
 
     ((i++))
 done
 
 echo "Commands to be executed..."
-tail -100 cypress_tests.tmp
+tail -100 ./cypress/cypress_tests.tmp
 
 echo "Executing parallel Docker container tests..."
 parallel --citation
@@ -75,7 +77,7 @@ parallel \
     --bar \
     --halt now,fail=1 \
     --max-procs $PARALLEL_PROC_COUNT \
-    < cypress_tests.tmp
+    < ./cypress/cypress_tests.tmp
 
 EXIT_CODE=$(echo $?)
 echo "Exit code from parallel is $EXIT_CODE"
@@ -86,7 +88,7 @@ if [ $EXIT_CODE != 0 ]; then
 fi
 
 echo "Resetting file permissions due to Docker volume mounting..."
-sudo chown -R $USER:owner ./cypress
+sudo chown -R $USER:$USER ./cypress
 
 echo "...done."
 
