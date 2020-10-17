@@ -92,7 +92,7 @@ describe('Release 1.1.8 change ...', function () {
   const userData = [
     {
       bio: 'Lorem ipsum dolor sit amet....',
-      email: 'test+deployment_1_1_8@connechub.com',
+      email: 'deployment_1_1_8_uat_test_user+admin@connechub.com',
       name: 'Test User Deployment OneOneEight',
       password: 'k%p$79SG4&U1@$#u&DwMMV^XqX%4l2&q'
     }
@@ -124,13 +124,16 @@ describe('Release 1.1.8 change ...', function () {
    * https://trello.com/c/qbjJvU0x/17-there-should-be-a-150-character-limit-on-the-category-title
    */
   it('...creating a new listing.', function () {
-    cy.create_user(userData[0]).create_listing(listingData[0]).logout()
+    cy.create_user(userData[0])
+    cy.create_listing(listingData[0])
+    cy.logout()
   })
 
   it('...search a listing.', function () {
     cy.get('#location').type('Orlando, Florida')
     cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
     cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title'])
+    cy.logout() // TODO why?
   })
 
   it('...deleting a listing.', function () {

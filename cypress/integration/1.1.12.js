@@ -2,7 +2,7 @@
  * Release 1.1.12 changes
  */
 describe('Release 1.1.12 changes ...', function () {
-    
+
     const listingData = []
     const userData = []
 
@@ -17,7 +17,7 @@ describe('Release 1.1.12 changes ...', function () {
         cy.visit('/about')
         cy.contains('Connechub is a local classified ad website where you can; Buy, Sell, Promote and Watch Local Video Classifieds.')
     })
-    
+
     // https://trello.com/c/YMLb1pw6/10-audit-and-refactor-iam-security-policies
     // If everything continues to work correctly, this is validated
 
@@ -27,20 +27,20 @@ describe('Release 1.1.12 changes ...', function () {
     // https://trello.com/c/5BQUdTkF/35-update-about-us-photo
     it('...UPDATED about us head image.', function () {
         cy.visit('/about')
-        cy.get('header', {timeout: 5000}).matchImageSnapshot('about_us_header');
+        cy.get('header', { timeout: 5000 }).matchImageSnapshot('about_us_header');
     })
-    
+
     // https://trello.com/c/eyFxjmn6/69-replace-terms-of-conditions-with-terms-of-service-throughout
     it('...replace terms of condition with terms of service.', function () {
         cy.visit('/')
-        cy.get('#myNavbar > div > ul > li:nth-child(2) > a > span').click()
-        cy.get('#myNavbar > div > ul > li.dropup.open > ul > li:nth-child(1) > a').contains('Terms of Service')
+        cy.get('#myNavbar > ul > li.dropup > a').contains('Legal').click()
+        cy.get('#myNavbar > ul > li.dropup.open > ul > li:nth-child(1) > a').contains('Terms of Service')
 
         cy.visit('/terms')
         cy.get('body > div:nth-child(8) > div.container').contains('conditions').should('not.exist')
         cy.get('body > div:nth-child(8) > div.container').contains('TERMS OF SERVICE')
         cy.contains('Terms of Service (version 3)')
-        cy.contains('Last Updated: July 26, 2020')        
+        cy.contains('Last Updated: July 26, 2020')
     })
 
     // https://trello.com/c/8gJJhawv/71-enable-concurrent-execution-of-uat-tests
