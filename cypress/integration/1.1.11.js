@@ -6,8 +6,8 @@ describe('Release 1.1.11 changes ...', function () {
     const userData = [
         {
             name: 'Test User OneOneEleven',
-            email: 'test+deployment_1_1_11@connechub.com',
-            password: 'testtest'
+            email: 'deployment_1_1_11_uat_test_user+admin@connechub.com',
+            password: '~Asdf1234'
         }
     ]
 
@@ -26,7 +26,7 @@ describe('Release 1.1.11 changes ...', function () {
     // UPDATE About us photo.
     it('...UPDATE About us photo.', function () {
         cy.visit('/about')
-        cy.get('body > div:nth-child(8) > div.container > header', {timeout: 5000})
+        cy.get('body > div:nth-child(8) > div.container > header', { timeout: 5000 })
             .matchImageSnapshot('1_1_11_update_about_us_header_image');
     })
 

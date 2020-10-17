@@ -22,7 +22,7 @@ describe('Release 1.1.9 changes ...', function () {
     const userData = [
         {
             admin: false,
-            email: 'test+deployment_1_1_9@connechub.com',
+            email: 'deployment_1_1_9_uat_test_user+admin@connechub.com',
             name: 'Ugly Urubu',
             password: '2QE8XNwhh9V%',
             new_password: '#0X9OFOetl*B',
@@ -32,6 +32,7 @@ describe('Release 1.1.9 changes ...', function () {
 
     // email should not be allowed as username
     // source: https://trello.com/c/Sxdqm7Ih/19-email-should-not-be-allowed-as-username
+    // updated in 1.1.14
     it('...create user and email should not be allowed as username', function () {
         cy.visit('')
 
@@ -52,8 +53,9 @@ describe('Release 1.1.9 changes ...', function () {
         // Server side validation
         cy.get('#error_explanation > ul > li').contains('Username is invalid')
 
-        // Now correctly create the new user
+        // Now correctly create the new user then log out
         cy.create_user(userData[0])
+        cy.logout()
     })
 
     // new subcategories recently added in the services category are missing .
@@ -62,17 +64,20 @@ describe('Release 1.1.9 changes ...', function () {
 
     // Create a Connechub newsletter for when we do updates and releases.
     // source: https://trello.com/c/UdxgAoYD/17-create-a-connechub-newsletter-for-when-we-do-updates-and-releases
+    // updated in 1.1.14
     it('...added newsletter static content page.', function () {
         cy.visit('')
-        cy.get('.row1 > .nav > .dropup:nth-child(1) > .dropdown-toggle > .ts-label').click()
-        cy.get('.nav > .open > .dropdown-menu > li:nth-child(3) > a').click()
+        cy.get('a').contains('About Us').click()
+        cy.get('a').contains('Newsletter').click()
         cy.visit('newsletter')
     })
 
     it('...creating a new listing.', function () {
-        cy.login(userData[0]).create_listing(listingData[0]).logout()
+        cy.login(userData[0]).create_listing(listingData[0])
+        cy.logout()
     })
 
+    // updated in 1.1.14
     it('...mark listing as sold.', function () {
         cy.login(userData[0]).view_user_profile()
 
@@ -98,6 +103,7 @@ describe('Release 1.1.9 changes ...', function () {
         // the system is not retaining my subcategory when i go to edit
         // source: https://trello.com/c/1dPvSkwe/15-the-system-is-not-retaining-my-subcategory-when-i-go-to-edit
         cy.get('#listing_subcategory_id > option:nth-child(2)').should('have.attr', 'selected', 'selected')
+        cy.logout()
     })
 
     // Not sure we can UAT these items:
@@ -107,14 +113,11 @@ describe('Release 1.1.9 changes ...', function () {
 
     // Progressive video playback using adaptive video quality
     // source: https://trello.com/c/77240W0Z/21-research-automatic-quality-switching-for-video-playback
-
     it('...deleting a listing.', function () {
         cy.login(userData[0]).view_user_profile()
-
         cy.get('a').contains(listingData[0]['title']).should('be.visible')
         cy.get('a').contains('Delete').click()
         cy.handle_splash_message('Listing has been deleted.', 'success')
-
         cy.logout()
     })
 
