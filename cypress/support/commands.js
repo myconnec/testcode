@@ -49,11 +49,9 @@ addMatchImageSnapshotCommand({
  * Login user
  */
 Cypress.Commands.add('login', (userData) => {
-  console.log(userData)
   cy.visit('')
 
-  // log in using the test user
-  cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
+  cy.get('#navbar').contains('POST A VIDEO AD').click()
 
   cy.get('#user_email').type(userData.email)
   cy.get('#user_password').type(userData.password)
@@ -69,16 +67,17 @@ Cypress.Commands.add('login', (userData) => {
  * Logout user
  */
 Cypress.Commands.add('logout', () => {
-  cy.get('#navbar > ul > li:nth-child(3) > a').contains('Logout').click()
+  cy.get('#navbar > ul > li > a').contains('Logout').click()
   cy.handle_splash_message('Signed out successfully.', 'notice')
+  cy.wait(5000)
 })
 
 /**
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.get('body > div:nth-child(7) > div > div', { timeout: 60000 }).should('have.class', 'alert-' + type).contains(msg)
-  cy.get('body > div:nth-child(7) > div > div > button > span').click()
+  cy.get('div', { timeout: 60000 }).should('have.class', 'alert-' + type).contains(msg)
+  cy.get('div > button > span').click()
   cy.get('body').contains(msg).should('not.be.visible')
 })
 
@@ -140,9 +139,11 @@ Cypress.Commands.add('create_listing', (listingData = false) => {
   cy.get('#listing_city').clear().type(listingData.city)
   cy.get('#listing_state').clear().type(listingData.state)
   cy.get('#listing_zipcode').clear().type(listingData.zipcode)
-  cy.get('#new_listing > div:nth-child(20) > div.form-group.trix_editor.required.listing_description > div > trix-editor').clear().type(listingData.description)
+  cy.get('#new_listing > div:nth-child(20) > div.form-group.trix_editor.required.listing_description > div > trix-editor')
+    .focus()
+    .type('{selectall}{backspace}')
+    .type(listingData.description)
   cy.get('#listings_submit').click()
-  // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
 
   // step 2 of listing creation
   cy.get('#fileupload').then(subject => {
@@ -163,7 +164,7 @@ Cypress.Commands.add('create_listing', (listingData = false) => {
   cy.get('#fileupload').trigger('change')
   cy.get('#listings_submit').click()
   // cy.get('#overlay > img').should('be.visible')
-  cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
+  cy.handle_splash_message('Video has been uploaded. You will receive an email once processing completed.', 'success')
 
   cy.visit('')
 })

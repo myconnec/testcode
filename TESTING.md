@@ -28,6 +28,6 @@ Then select the suite you wish to run in the UI.
 ## Performance
 
 - Version: 1.1.12
-- System: Full spec'd out Macbook Pro 15" 2015.
+- System: Top of the line 2015 Macbook Pro.
 - Manual: 16.2 minutes
 - Parallel (export $PARALLEL_PROC_COUNT=8): 4 minutes

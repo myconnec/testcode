@@ -20,9 +20,9 @@ import './commands'
 // require('./commands')
 
 // cookie allowed to persist between tests
-// Cypress.Cookies.defaults({
-//     preserve: '_workspace_session'
-// })
+Cypress.Cookies.defaults({
+    preserve: '_workspace_session'
+})
 
 // ignore `sharethis` errors
 Cypress.on('uncaught:exception', (err, runnable) => {
