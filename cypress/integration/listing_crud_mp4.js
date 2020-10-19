@@ -40,46 +40,44 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...reads a listing.', function () {
     cy.login(userData[0]).view_user_profile()
-    cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
-
-    cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
-    cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(listingData[0]['category'])
-    cy.get('body > div:nth-child(8) > div > a:nth-child(4)').contains(listingData[0]['sub_category'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > b').contains(listingData[0]['title'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(listingData[0]['description'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(listingData[0]['price'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(6) > div.comments > h4').contains('Post a Comment')
-
+    cy.get('a').contains(listingData[0]['title']).click()
+    cy.get('a').contains('Connechub')
+    cy.get('a').contains(listingData[0]['category'])
+    cy.get('a').contains(listingData[0]['sub_category'])
+    cy.get('div.hero-title > span > b').contains(listingData[0]['title'])
+    cy.get('div').contains(listingData[0]['description'])
+    cy.get('div > b').contains(listingData[0]['price'])
+    cy.get('div.comments > h4').contains('Post a Comment')
     cy.logout()
   })
 
   it('...updating a listing, change related data.', function () {
     cy.login(userData[0]).view_user_profile()
     cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(3)').contains('Edit Listing').click()
+    cy.get('a').contains('Edit Listing').click()
 
-    // change all the field values to ensure changing them works
-    cy.get('div.panel-heading > h2').contains('Edit Listing') // Edit New Listing
-    cy.get('#listing_category_id').select(listingData[1]['category']).should('have.value', '4')
-    // wait for ajax response, if we dont set this high enough the test will fail
-    // TODO make Cypress wait until the ajax request returns, the continue.
-    cy.wait(10000)
-    cy.get('#listing_subcategory_id').select(listingData[1]['sub_category'])
-    cy.get('#listing_price').clear().type(listingData[1]['price'])
-    cy.get('#listing_title').clear().type(listingData[1]['title'])
-    cy.get('#listing_city').clear().type(listingData[1]['city'])
-    cy.get('#listing_state').clear().type(listingData[1]['state'])
-    cy.get('#listing_zipcode').clear().type(listingData[1]['zipcode'])
-    cy.get('#listing_description').clear().type(listingData[1]['description'])
+    // step 1 of listing creation
+    cy.get('div.panel-heading > h2').contains('Edit Listing')
+    cy.get('#listing_category_id').select(listingData.category)
+    cy.get('#listing_subcategory_id', { timeout: 2500 }).select(listingData.sub_category)
+    cy.get('#listing_price').clear().type(listingData.price)
+    cy.get('#listing_title').clear().type(listingData.title)
+    cy.get('#listing_city').clear().type(listingData.city)
+    cy.get('#listing_state').clear().type(listingData.state)
+    cy.get('#listing_zipcode').clear().type(listingData.zipcode)
+    cy.get('#new_listing > div:nth-child(20) > div.form-group.trix_editor.required.listing_description > div > trix-editor')
+      .focus()
+      .type('{selectall}{backspace}')
+      .type(listingData.description)
     cy.get('#listings_submit').click()
 
-    cy.get('body > div:nth-child(8) > div > a:nth-child(2)').contains('Connechub')
-    cy.get('body > div:nth-child(8) > div > a:nth-child(3)').contains(listingData[1]['category'])
-    cy.get('body > div:nth-child(8) > div > a:nth-child(4)').contains(listingData[1]['sub_category'])
+    cy.get('a').contains('Connechub')
+    cy.get('a').contains(listingData[1]['category'])
+    cy.get('a').contains(listingData[1]['sub_category'])
 
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > b').contains(listingData[1]['title'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(7) > p').contains(listingData[1]['description'])
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.post-metadata > div > div > span > div > b').contains(listingData[1]['price'])
+    cy.get('div > b').contains(listingData[1]['title'])
+    cy.get('div div').contains(listingData[1]['description'])
+    cy.get('div > b').contains(listingData[1]['price'])
     cy.handle_splash_message('Listing has been updated.', 'success')
   })
 
@@ -87,7 +85,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.login(userData[0]).view_user_profile()
 
     cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
+    cy.get('div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
     cy.get('div.panel-heading > h2').contains('Upload Media for Listing').click()
 
     cy.get('#fileupload').then(subject => {
@@ -107,14 +105,14 @@ describe('Listing CRUD (mp4)...', function () {
 
     cy.get('#fileupload').trigger('change')
     cy.get('#listings_submit').click()
-    cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
+    cy.handle_splash_message('Video has been uploaded. You will receive an email once processing completed.', 'success')
     cy.logout()
   })
 
   it('...deleting a listing.', function () {
     cy.login(userData[0]).view_user_profile()
     cy.get('div.grid > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a').contains(listingData[1]['title']).should('be.visible').click()
-    cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div:nth-child(11) > a:nth-child(2)').contains('Delete').click()
+    cy.get('div:nth-child(7) > div:nth-child(11) > a:nth-child(2)').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')
     cy.logout()
   })

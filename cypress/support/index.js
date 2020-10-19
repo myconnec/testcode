@@ -21,7 +21,7 @@ import './commands'
 
 // cookie allowed to persist between tests
 Cypress.Cookies.defaults({
-    whitelist: '_workspace_session'
+    preserve: '_workspace_session'
 })
 
 // ignore `sharethis` errors
@@ -53,7 +53,7 @@ switch (Cypress.env('abort_strategy')) {
             }
         });
         Cypress.Cookies.defaults({
-            whitelist: 'has_failed_test',
+            preserve: 'has_failed_test',
         });
         break;
     default:

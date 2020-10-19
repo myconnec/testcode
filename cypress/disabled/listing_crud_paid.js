@@ -2,9 +2,9 @@ describe('Listing CRUS PAID...', function () {
 
   const userData = [
     {
-        email: 'listing_paid_user@test.com',
-        name: 'Listing Paid User',
-        password: '3y%9T*P4eOVwFGrT'
+      email: 'listing_paid_user@test.com',
+      name: 'Listing Paid User',
+      password: '3y%9T*P4eOVwFGrT'
     }
   ]
 
@@ -97,7 +97,7 @@ describe('Listing CRUS PAID...', function () {
     cy.get('#fileupload').trigger('change')
     cy.get('#listings_submit').click()
 
-    cy.handle_splash_message('Video has been uploaded. You will recieve an email once processing completed.', 'success')
+    cy.handle_splash_message('Video has been uploaded. You will receive an email once processing completed.', 'success')
   })
 
   it('...reads most recent paid listing.', function () {
