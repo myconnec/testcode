@@ -25,7 +25,6 @@ describe('Release 1.1.9 changes ...', function () {
             email: 'deployment_1_1_9_uat_test_user+admin@connechub.com',
             name: 'Ugly Urubu',
             password: '2QE8XNwhh9V%',
-            new_password: '#0X9OFOetl*B',
             release: '1.1.9'
         }
     ]

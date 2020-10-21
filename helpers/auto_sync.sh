@@ -5,10 +5,10 @@
 
 # install sudo apt-get install -y inotify-tools
 
-export SSH_KEY=$1 #"~/.ssh/aws-connechub-dev.pem"
+export SSH_KEY=$1     #"~/.ssh/aws-connechub-dev.pem"
 export REMOTE_HOST=$2 #"18.144.166.69"
 
-if [[ ! -d $HOME/.ssh/ctl/ ]];then
+if [[ ! -d $HOME/.ssh/ctl/ ]]; then
     mkdir $HOME/.ssh/ctl/
 fi
 
@@ -24,10 +24,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "$OSTYPE detected..."
     while inotifywait -r -e modify,create,delete,move .; do
         rsync \
-        -avz \
-        --exclude=".git" \
-        --exclude="node_modules" \
-        -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" . ubuntu@${2}:/home/ubuntu/connechub
+            -avz \
+            --exclude=".git" \
+            --exclude="node_modules" \
+            -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" . ubuntu@${2}:/home/ubuntu/connechub
         echo "...synce completed."
     done
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -40,7 +40,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         --exclude=".git" \
         --exclude="node_modules" \
         -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" . ubuntu@${2}:/home/ubuntu/connechub
-        echo "...synce completed."
+    echo "...synce completed."
 elif [[ "$OSTYPE" == "cygwin" ]]; then
     # POSIX compatibility layer and Linux environment emulation for Windows
     echo "$OSTYPE detected..."
