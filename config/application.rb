@@ -73,8 +73,8 @@ module Workspace
     ENV['GOOGLE_ANALYTICS']            = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'google-analytics'               + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
 
     # Google reCaptcha Service
-    ENV['RECAPTCHA_SITE_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-site-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RECAPTCHA_SECRET_KEY']        = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-secret-key'           + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    # ENV['RECAPTCHA_SITE_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-site-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    # ENV['RECAPTCHA_SECRET_KEY']        = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-secret-key'           + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
 
     # Stripe
     ENV['STRIPE_PUBLISH_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-publish-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
