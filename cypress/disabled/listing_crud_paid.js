@@ -2,7 +2,7 @@ describe('Listing CRUS PAID...', function () {
 
   const userData = [
     {
-      email: 'listing_paid_user@test.com',
+      email: 'listing_paid_user+admin@connechub.com',
       name: 'Listing Paid User',
       password: '3y%9T*P4eOVwFGrT'
     }

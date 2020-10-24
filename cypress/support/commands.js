@@ -37,15 +37,6 @@ addMatchImageSnapshotCommand({
 });
 
 /**
- * TODO Re-load the database after each test. Ensures a known good dataset. This will only work once we have a local version of the app running as we need rake and a working DB connection.
- */
-// beforeEach(function () {
-//   # mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
-//   cy.exec('rake db:setup').its('code').should('eq', 0)
-//   cy.exec('rake db:migrate').its('code').should('eq', 0)
-// })
-
-/**
  * Login user
  */
 Cypress.Commands.add('login', (userData) => {
@@ -65,19 +56,27 @@ Cypress.Commands.add('login', (userData) => {
 
 /**
  * Logout user
+ * 
+ * I dont like it, I dont understand it. But when running Cypress functional tests the user will not always log out.
+ * Forcing a page reload 3 times, for whatever reason, corrects the issue.
+ * Really have no idea why.
  */
 Cypress.Commands.add('logout', () => {
   cy.get('#navbar > ul > li > a').contains('Logout').click()
+  cy.clearCookies()
+  cy.clearLocalStorage()
   cy.handle_splash_message('Signed out successfully.', 'notice')
-  cy.wait(5000)
+  cy.reload(true, { timeout: 5000 })
+  cy.reload(true, { timeout: 5000 })
+  cy.reload(true, { timeout: 5000 })
 })
 
 /**
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.get('div', { timeout: 60000 }).should('have.class', 'alert-' + type).contains(msg)
-  cy.get('div > button > span').click()
+  cy.get('div', { timeout: 5000 }).should('have.class', 'alert-' + type).contains(msg)
+  cy.get('body > div > div > div > button > span').click()
   cy.get('body').contains(msg).should('not.be.visible')
 })
 

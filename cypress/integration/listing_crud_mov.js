@@ -17,8 +17,8 @@ describe('Listing CRUD (mov)...', function () {
   const userData = [
     {
       bio: 'Lorem ipsum dolor sit amet....',
-      email: 'test_' + Math.floor(Math.random() * Math.floor(1024)) + '+listing_crud_mov@connechub.com',
-      name: 'Test User Listing CRUD MOV' + Math.floor(Math.random() * Math.floor(1024)),
+      email: 'test_listing_crud_mov+admin@connechub.com',
+      name: 'Test User Listing CRUD MOV',
       password: 'H@nt8wZLcsdfgwerdua^F#8l3AEJ2452345c'
     }
   ]
@@ -27,9 +27,9 @@ describe('Listing CRUD (mov)...', function () {
     cy.create_user(userData[0]).create_listing(listingData[0]).logout()
   })
 
-  it('...reads the MOV listing.', function () {
+  it('...reads a MOV listing.', function () {
     cy.login(userData[0]).view_user_profile()
-    cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
+    cy.get('a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Connechub')
     cy.get('a').contains(listingData[0]['category'])
     cy.get('a').contains(listingData[0]['sub_category'])

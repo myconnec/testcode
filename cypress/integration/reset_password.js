@@ -1,15 +1,15 @@
-describe('User password management functionality.', function() {
+describe('User password management functionality.', function () {
 
     const userData = [
         {
             name: 'Test User Reset Password',
-            email: 'test+reset_passwordt@connechub.com',
+            email: 'reset_password+admin@connechub.com',
             password: '~Asdf1234',
             new_password: '~Asdf5678'
         }
     ]
 
-    it('...reset password on website.', function() {
+    it('...reset password on website.', function () {
         cy.create_user(userData[0]).view_user_profile()
 
         cy.get('#inside_view_left > div > a').contains('Edit Your Profile').click()
@@ -23,7 +23,7 @@ describe('User password management functionality.', function() {
         cy.get('#profile_submit').click()
     })
 
-    it('...confirm new password works.', function() {
+    it('...confirm new password works.', function () {
         // use the new password 'cause the prev. it(...) set it to new_password's value
         userData[0].password = userData[0].new_password
 
