@@ -17,9 +17,13 @@ sudo time ./helpers/run_uat.sh
 
 ```sh
 source ./helpers/.env
-mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
+# mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
+mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./cypress/support/reset-db.sql
 npm update npm
 npm install
+npm audit fix
+# verbose performance output
+# DEBUG=cypress:server:util:process_profiler ./node_modules/cypress/bin/cypress open
 ./node_modules/cypress/bin/cypress open
 ```
 

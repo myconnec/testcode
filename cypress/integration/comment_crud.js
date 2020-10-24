@@ -28,8 +28,8 @@ describe('Comment CRUD...', function () {
     const userData = [
         {
             name: 'Test User Comment Crud',
-            email: 'test+comment_crud@connechub.com',
-            password: 'lsdlkfjasfh@#$%'
+            email: 'comment_crud+admin@connechub.com',
+            password: 'LSDlkfjasfh@#$%123'
         }
     ]
 

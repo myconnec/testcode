@@ -20,16 +20,21 @@ import './commands'
 // require('./commands')
 
 // cookie allowed to persist between tests
-Cypress.Cookies.defaults({
-    preserve: '_workspace_session'
-})
+// Cypress.Cookies.defaults({
+//     preserve: '_workspace_session'
+// })
 
-// ignore `sharethis` errors
+// ignore `share this` errors
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
     return false
 })
+
+// clear all of localStorage before the window loadsd on each test
+Cypress.on('window:before:load', window => {
+    window.localStorage.clear();
+});
 
 // source https://github.com/cypress-io/cypress/issues/518
 switch (Cypress.env('abort_strategy')) {
@@ -51,9 +56,6 @@ switch (Cypress.env('abort_strategy')) {
                 cy.setCookie('has_failed_test', 'true');
                 Cypress.runner.stop();
             }
-        });
-        Cypress.Cookies.defaults({
-            preserve: 'has_failed_test',
         });
         break;
     default:

@@ -16,12 +16,12 @@ describe('Listing Search CRUD...', function () {
 
   const userData = [
     {
-        bio: 'Lorem ipsum dolor sit amet....',
-        email: 'test+listing_search@connechub.com',
-        name: 'Test User Search Listing 0',
-        password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
+      bio: 'Lorem ipsum dolor sit amet....',
+      email: 'listing_search+admin@connechub.com',
+      name: 'Test User Search Listing 0',
+      password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
     }
-]
+  ]
 
   it('...creating a new listing.', function () {
     cy.create_user(userData[0]).create_listing(listingData[0]).logout()

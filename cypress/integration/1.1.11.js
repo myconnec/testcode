@@ -7,7 +7,7 @@ describe('Release 1.1.11 changes ...', function () {
         {
             name: 'Test User OneOneEleven',
             email: 'deployment_1_1_11_uat_test_user+admin@connechub.com',
-            password: '~Asdf1234'
+            password: '~T0V4vhFc*EvulAOWb1ys$jjUv3TCAt7Y'
         }
     ]
 
@@ -31,7 +31,7 @@ describe('Release 1.1.11 changes ...', function () {
     })
 
     // UPDATE About Us page with new verbiage
-    // superceded by 1.1.12 change
+    // superseded by 1.1.12 change
     // it('...UPDATE About Us page with new verbiage.', function () {
     //     cy.visit('/about')
     //     cy.contains('Connechub is a local classified ad website that allows users to post their video content; to list a job, promote your business, unbox the latest item, or sell your stuff.')

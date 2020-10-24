@@ -28,7 +28,7 @@ describe('Listing CRUD (mp4)...', function () {
   const userData = [
     {
       bio: 'Lorem ipsum dolor sit amet....',
-      email: 'test+listing_crud_mp4@connechub.com',
+      email: 'test+listing_crud_mp4+admin@connechub.com',
       name: 'Test User Listing CRUD MP4',
       password: 'H@nt@#$%csdfgwerdua^F#8l3AEJ2asdfc'
     }
@@ -38,7 +38,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.create_user(userData[0]).create_listing(listingData[0]).logout()
   })
 
-  it('...reads a listing.', function () {
+  it('...reads a MP4 listing.', function () {
     cy.login(userData[0]).view_user_profile()
     cy.get('a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Connechub')
@@ -58,24 +58,24 @@ describe('Listing CRUD (mp4)...', function () {
 
     // step 1 of listing creation
     cy.get('div.panel-heading > h2').contains('Edit Listing')
-    cy.get('#listing_category_id').select(listingData.category)
-    cy.get('#listing_subcategory_id', { timeout: 2500 }).select(listingData.sub_category)
-    cy.get('#listing_price').clear().type(listingData.price)
-    cy.get('#listing_title').clear().type(listingData.title)
-    cy.get('#listing_city').clear().type(listingData.city)
-    cy.get('#listing_state').clear().type(listingData.state)
-    cy.get('#listing_zipcode').clear().type(listingData.zipcode)
-    cy.get('#new_listing > div:nth-child(20) > div.form-group.trix_editor.required.listing_description > div > trix-editor')
+    cy.get('#listing_category_id').select(listingData[1].category)
+    cy.get('#listing_subcategory_id', { timeout: 2500 }).select(listingData[1].sub_category)
+    cy.get('#listing_price').clear().type(listingData[1].price)
+    cy.get('#listing_title').clear().type(listingData[1].title)
+    cy.get('#listing_city').clear().type(listingData[1].city)
+    cy.get('#listing_state').clear().type(listingData[1].state)
+    cy.get('#listing_zipcode').clear().type(listingData[1].zipcode)
+    cy.get('div.listing_description > div > trix-editor')
       .focus()
       .type('{selectall}{backspace}')
-      .type(listingData.description)
+      .type(listingData[1].description)
     cy.get('#listings_submit').click()
 
     cy.get('a').contains('Connechub')
     cy.get('a').contains(listingData[1]['category'])
     cy.get('a').contains(listingData[1]['sub_category'])
 
-    cy.get('div > b').contains(listingData[1]['title'])
+    cy.get('div.hero-title > span > b > p').contains(listingData[1]['title'])
     cy.get('div div').contains(listingData[1]['description'])
     cy.get('div > b').contains(listingData[1]['price'])
     cy.handle_splash_message('Listing has been updated.', 'success')
