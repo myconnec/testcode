@@ -79,6 +79,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div div').contains(listingData[1]['description'])
     cy.get('div > b').contains(listingData[1]['price'])
     cy.handle_splash_message('Listing has been updated.', 'success')
+    cy.logout()
   })
 
   it('...updating a listing media.', function () {
