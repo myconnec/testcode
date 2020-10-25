@@ -8,7 +8,7 @@ describe('Ensure header image is the correct size in all viewport sizes...', fun
 
     it('...do see header image in the Sign Up view.', function () {
         cy.visit('/users/sign_up')
-        cy.get('#navbar > div > a > img').should('have.css', 'height')
-        cy.get('#navbar > div > a > img').should('have.css', 'width')
+        cy.get('#navbar > div > a > img').invoke('outerHeight').should('be.gt', 54.9).should('be.lt', 55.1);
+        cy.get('#navbar > div > a > img').invoke('outerWidth').should('be.gt', 194.9).should('be.lt', 195.1);
     })
 })

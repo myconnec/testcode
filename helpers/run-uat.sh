@@ -32,8 +32,8 @@ echo "Resetting snapshot images..."
 aws s3 sync $CYPRESS_SNAP_SOURCE ./cypress/snapshots/ --profile $AWS_PROFILE
 
 if [[ $DB_HOST ]]; then
-    echo 'Importing ./db/sql/database.sql to baseline database...'
-    mysql -u $DB_USER -p$DB_PASS -h $DB_HOST <./db/sql/database.sql
+    echo 'Truncating database tables as needed for functional UAT testing...'
+    mysql -u $DB_USER -p$DB_PASS -h $DB_HOST <./cypress/support/reset-db.sql
 fi
 
 if [[ -f ./cypress/cypress_tests.tmp ]]; then
@@ -44,8 +44,8 @@ fi
 if [[ ! $(which parallel) ]]; then
     echo 'Installing `parallel` CLI tool...'
     apt intall -y parallel | true # debian systems
-    yum intall -y parallel | true # centos systems
     brew install parallel | true  # darwin systems
+    yum intall -y parallel | true # centos systems
 fi
 
 echo "Generating new Parallel procfile..."
