@@ -133,7 +133,6 @@ describe('Release 1.1.8 change ...', function () {
     cy.get('#location').type('Orlando, Florida')
     cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
     cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title'])
-    cy.logout() // TODO why?
   })
 
   it('...deleting a listing.', function () {
