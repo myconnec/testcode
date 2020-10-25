@@ -12,7 +12,7 @@ describe('User account CRUD...', function () {
         {
             admin: false,
             bio: 'User CRUD',
-            email: 'user_crud+admin@connechub.com',
+            email: 'admin+user_crud@connechub.com',
             name: 'Test User CRUD',
             password: 'T37q1Gm@miyg',
             new_password: 'cAYCZL60aR01'

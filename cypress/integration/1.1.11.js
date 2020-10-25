@@ -3,10 +3,13 @@
  */
 describe('Release 1.1.11 changes ...', function () {
 
+
+    // typical user `admin+deployment_1_1_11@connechub.com` causes a FATAL error return from Devise
+    // Source: https://github.com/heartcombo/devise/issues/5304
     const userData = [
         {
             name: 'Test User OneOneEleven',
-            email: 'deployment_1_1_11_uat_test_user+admin@connechub.com',
+            email: 'admin+deployment_1_1_11_test_user@connechub.com',
             password: '~T0V4vhFc*EvulAOWb1ys$jjUv3TCAt7Y'
         }
     ]
@@ -18,7 +21,7 @@ describe('Release 1.1.11 changes ...', function () {
         cy.visit('/users/password/new')
         cy.get('#user_email').clear().type(userData[0]['email'])
         cy.contains('Reset Your Password').click()
-        cy.handle_splash_message('You will receive an email with instructions on how to reset your password in a few minutes.', 'notice')
+        cy.handle_splash_message('If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.', 'notice')
     })
 
     // UPDATE About us photo.

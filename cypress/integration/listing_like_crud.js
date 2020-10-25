@@ -18,13 +18,13 @@ describe('Liking like CRUD...', function () {
     const userData = [
         {
             bio: 'Lorem ipsum dolor sit amet....',
-            email: 'likeing_like_crud_zero+admin@connechub.com',
+            email: 'admin+likeing_like_crud_zero@connechub.com',
             name: 'Test User Liking Listing 0',
             password: 'Cs^6^*HG$AKMowIskiwRF*P$lM6y4g*i'
         },
         {
             bio: '...consectetur adipiscing elit.',
-            email: 'test+liking_like_crud_one+admin@connechub.com',
+            email: 'admin+liking_like_crud_one@connechub.com',
             name: 'Test User Liking Listing 1',
             password: 'ruNK2QRddLk9#cKju#9rZYiu7chEaX0&nE'
         }

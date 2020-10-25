@@ -3,7 +3,7 @@ describe('User password management functionality.', function () {
     const userData = [
         {
             name: 'Test User Reset Password',
-            email: 'reset_password+admin@connechub.com',
+            email: 'admin+reset_password@connechub.com',
             password: '~Asdf1234',
             new_password: '~Asdf5678'
         }
