@@ -92,7 +92,7 @@ describe('Release 1.1.8 change ...', function () {
   const userData = [
     {
       bio: 'Lorem ipsum dolor sit amet....',
-      email: 'deployment_1_1_8_uat_test_user+admin@connechub.com',
+      email: 'admin+deployment_1_1_8@connechub.com',
       name: 'Test User Deployment OneOneEight',
       password: 'k%p$79SG4&U1@$#u&DwMMV^XqX%4l2&q'
     }

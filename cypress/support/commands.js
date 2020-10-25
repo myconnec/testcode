@@ -90,7 +90,7 @@ Cypress.Commands.add('create_user', (userData = false) => {
 
     userData = {
       bio: 'Lorem ipsum dolor sit amet' + rnd + '.',
-      email: 'test' + rnd + '+admin@connechub.com',
+      email: 'admin+test_' + rnd + '@connechub.com',
       name: 'Test User ' + rnd,
       password: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
     }
