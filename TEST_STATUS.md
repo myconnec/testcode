@@ -1,10 +1,7 @@
 # Test Status
 
 1.1.10.js - PASS
-
-1.1.11.js - FAIL - 535 Authentication Credentials Invalid
-When submitting an email that we do have, the sending fails
-
+1.1.11.js - PASS
 1.1.12.js - PASS
 1.1.13.js - PASS
 1.1.14.js - PASS

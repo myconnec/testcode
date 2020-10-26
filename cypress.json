@@ -1,10 +1,11 @@
 {
-  "viewportWidth": 1440,
-  "viewportHeight": 960,
-  "projectId": "q357pv",
   "chromeWebSecurity": false,
-  "video": false,
+  "pageLoadTimeout": 30000,
+  "projectId": "q357pv",
   "reporter": "junit",
+  "video": false,
+  "viewportHeight": 960,
+  "viewportWidth": 1440,
   "reporterOptions": {
     "jenkinsMode": true,
     "mochaFile": "cypress/results/test-[hash].xml",
