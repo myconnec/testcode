@@ -22,12 +22,7 @@ describe('Release 1.1.11 changes ...', function () {
 
         cy.get('#user_email').clear().type(userData[0]['email'])
         cy.contains('Reset Your Password').click()
-<<<<<<< HEAD
-
-        cy.handle_splash_message('You will receive an email with instructions on how to reset your password in a few minutes.', 'notice')
-=======
         cy.handle_splash_message('If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.', 'notice')
->>>>>>> UPDATED all test emails to use {account}+{fake_account}@connechub.com format.
     })
 
     // UPDATE About us photo.
