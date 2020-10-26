@@ -17,17 +17,20 @@ describe('Release 1.1.11 changes ...', function () {
     // Forgot password form submit error
     // https://trello.com/c/bU835RXS/59-forgot-password-form-submit-error
     it('...forgot password form submit error.', function () {
-        cy.create_user(userData[0]).logout().visit('/users/sign_in')
-        cy.contains('Forgot your password?').click()
-
+        cy.create_user(userData[0]).logout()
+        cy.visit('/users/password/new')
         cy.get('#user_email').clear().type(userData[0]['email'])
         cy.contains('Reset Your Password').click()
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         cy.handle_splash_message('You will receive an email with instructions on how to reset your password in a few minutes.', 'notice')
 =======
         cy.handle_splash_message('If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.', 'notice')
 >>>>>>> UPDATED all test emails to use {account}+{fake_account}@connechub.com format.
+=======
+        cy.handle_splash_message('If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.', 'notice')
+>>>>>>> c0dedbdabdbda4b1246bcdf07a81c07caec1ca2d
     })
 
     // UPDATE About us photo.

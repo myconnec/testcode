@@ -72,6 +72,7 @@ echo "Commands to be executed..."
 tail -100 ./cypress/cypress_tests.tmp
 
 echo "Executing parallel Docker container tests..."
+parallel --citation
 parallel \
     --bar \
     --halt now,fail=1 \
