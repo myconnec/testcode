@@ -46,21 +46,20 @@ module Workspace
     # Load Ruby SSM client
     ssm_client = Aws::SSM::Client.new(region: ENV['REGION'])
 
-    # begin
     # Load run time values
     # RDS (SQL)
-    ENV['RDS_DB_HOST']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_PASS']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_PORT']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-port' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_SCHE']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-name' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_USER']  = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-user' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_HOST']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_PASS']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-pass                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_PORT']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-port                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_SCHE']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-name                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_USER']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-user                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
 
     # AWS - SMTP (Email)
-    ENV['SES_SMTP_FROM'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-from' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_HOST'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-host' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_PASS'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-pass' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_PORT'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-port' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['SES_SMTP_USER'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-user' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_FROM']               = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-from'                      + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_HOST']               = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-host'                      + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_PASS']               = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-pass'                      + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_PORT']               = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-port'                      + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['SES_SMTP_USER']               = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-user'                      + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
 
     # AWS - S3 Buckets
     ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'media-display-s3-bucket'        + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
@@ -73,8 +72,8 @@ module Workspace
     ENV['GOOGLE_ANALYTICS']            = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'google-analytics'               + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
 
     # Google reCaptcha Service
-    # ENV['RECAPTCHA_SITE_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-site-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    # ENV['RECAPTCHA_SECRET_KEY']        = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-secret-key'           + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RECAPTCHA_SITE_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-site-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RECAPTCHA_SECRET_KEY']        = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'recaptcha-secret-key'           + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
 
     # Stripe
     ENV['STRIPE_PUBLISH_KEY']          = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'stripe-publish-key'             + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
@@ -90,9 +89,6 @@ module Workspace
 
     # Create the FQDN to be used in logic
     ENV['BASE_URL'] = ('https://' + (ENV['STAGE'] == 'prd' ? 'www' : ENV['STAGE']) + '.' + ENV['NAME'] + '.com').downcase
-    # rescue
-    #   # ...or terminate the insance
-    #   `aws ec2 terminate-instances --instance-ids=#{instance_id} --region=#{ENV['REGION']}`
-    # end
+
   end
 end
