@@ -2,7 +2,7 @@
     <div class="clear"></div>
     <%= link_to 'Connechub', root_path %> > <%= link_to @listing.category.name, category_path(@listing.category) %> > <%= link_to @listing.subcategory.name, category_subcategory_path(@listing.category, @listing.subcategory) %>
     <hr>
-    <div class="grid_6">
+    <div class="col-md-6">
         <p>
             <div>
                 <% # TODO would like to use the rails_videosj GEM but getting VideoJS 7+ is a PITA %>
@@ -30,7 +30,7 @@
         </p>
     </div>
 
-    <div class="grid_6">
+    <div class="col-md-6">
         <div class="post-metadata">
             <%= image_tag @listing.user.avatar.url(:thumb), class: 'avatar' %>
             <div class="post-info">
