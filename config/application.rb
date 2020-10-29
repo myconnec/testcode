@@ -48,11 +48,11 @@ module Workspace
 
     # Load run time values
     # RDS (SQL)
-    ENV['RDS_DB_HOST']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_PASS']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-pass                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_PORT']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-port                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_SCHE']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-name                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
-    ENV['RDS_DB_USER']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-user                     ' + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_HOST']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_NAME']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-name'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_PASS']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-pass'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_PORT']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-port'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
+    ENV['RDS_DB_USER']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-user'                    + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
 
     # AWS - SMTP (Email)
     ENV['SES_SMTP_FROM']               = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'smtp-from'                      + '-' + ENV['RND']), with_decryption: true).to_h[:parameter][:value]
