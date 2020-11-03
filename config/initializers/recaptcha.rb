@@ -1,1 +1,6 @@
-Recaptcha.configuration.skip_verify_env.push("development")
+Recaptcha.configure do |config|
+  config.secret_key = ENV['RECAPTCHA_SECRET_KEY']
+  config.site_key  = ENV['RECAPTCHA_SITE_KEY']
+  # Uncomment the following line if you are using a proxy server:
+  # config.proxy = 'http://myproxy.com.au:8080'
+end

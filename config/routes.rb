@@ -63,7 +63,9 @@ Rails.application.routes.draw do
   match '/howitworks/index', to: 'howitworks#index', via: :get
 
   # User (Device)
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :controllers => {
+    :registrations => "registrations"
+  }
   get ':username' => 'users#show', as: 'user'
   match '/users/update', to: 'users#update', via: :put
 

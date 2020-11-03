@@ -4,7 +4,7 @@ const formatter = new Intl.NumberFormat('en-US', {
   minimumFractionDigits: 2
 })
 
-var getSubcategories = function(category_id){
+var getSubcategories = function (category_id) {
   var $subcategories = $('#listing_subcategory_id');
 
   if (isNaN(parseInt(category_id))) {
@@ -12,32 +12,32 @@ var getSubcategories = function(category_id){
     return;
   }
 
-  $.get('/subcategories/find_by_category', { category_id: category_id }, function(data){
+  $.get('/subcategories/find_by_category', { category_id: category_id }, function (data) {
     $subcategories.empty();
     $subcategories.append('<option value=""></option>')
-    $.each(data.subcategories, function(index, subcategory) {
+    $.each(data.subcategories, function (index, subcategory) {
       var option = $('<option />');
       option.attr('value', subcategory.id);
       option.text(subcategory.name);
       option.attr('data-chargable', subcategory.chargable);
       $subcategories.append(option);
     })
-  }).done(function() {
+  }).done(function () {
     select_sub_category()
   })
 }
 
-var select_sub_category = function() {
+var select_sub_category = function () {
   listing_id = window.location.pathname.split('/')[2]
-  $.get('/listings/show_json/' + listing_id, function(data){
+  $.get('/listings/show_json/' + listing_id, function (data) {
     // $('#listing_subcategory_id').val(data.listing[0].subcategory_id);
     $('#listing_subcategory_id > option:nth-child(2)').attr('selected', true);
   })
 }
 
-$(document).on('ready', function() {
+$(document).on('ready', function () {
   if (location.host == 'dev.connechub.com') {
-    $('select#listing_category_id>option:eq(1)').attr('selected', true);  
+    $('select#listing_category_id>option:eq(1)').attr('selected', true);
     $('#listing_price').val('10');
     $('#listing_condition_id').val('1')
     $('#listing_title').val('Test Title ' + Date.now());
@@ -52,13 +52,13 @@ $(document).on('ready', function() {
   }
 
   getSubcategories($('#listing_category_id').val());
-  
+
   // on change of Category DDL, trigger Sub-category population
-  $('#listing_category_id').on('change', function() {
+  $('#listing_category_id').on('change', function () {
     getSubcategories($('#listing_category_id').val());
   });
 
-  $('#listing_subcategory_id').on('change', function() {
+  $('#listing_subcategory_id').on('change', function () {
 
     if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
       // if 'community' or 'free' category is selected, no cost is valid
@@ -82,7 +82,7 @@ $(document).on('ready', function() {
     $('#sub_category_cost_container').css("display", "none");
   });
 
-  $('#new_listing').submit(function() {
+  $('#new_listing').submit(function () {
     if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
       $('#listing_price').val('0.00').attr('disabled', false);
       $('#sub_category_cost_container').css("display", "none");

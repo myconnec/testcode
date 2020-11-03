@@ -31,7 +31,7 @@ body {
   height: 100%;
 }
 
-/* sub/cateogry image thumbnail size */
+/* sub/category image thumbnail size */
 div.panel-body > a > img {
   width: 100%;
 }
@@ -659,6 +659,21 @@ li.landing_page {
 /* Word wrap Listing card long titles */
 div.name > b > a {
   word-wrap: break-word;
+}
+
+/* bootstrap 4 colors in bootstrap 3 for Devise UI flash messages */
+// BS 4 danger = Devise alert
+.alert-alert {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+// BS 4 primary = Devise notice
+.alert-notice {
+  color: #31708f;
+  background-color: #d9edf7;
+  border-color: #bce8f1;
 }
 
 /* Strip payment form elements */

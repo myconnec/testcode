@@ -7,13 +7,13 @@
 - [https://www.cypress.io](https://www.cypress.io)
 - [https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements](https://docs.cypress.io/guides/getting-started/installing-cypress.html#System-requirements)
 
-### Automation
+## Automation
 
 ```sh
 sudo time ./helpers/run_uat.sh
 ```
 
-### Manually
+## Manually
 
 ```sh
 source ./helpers/.env
