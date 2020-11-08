@@ -3,19 +3,26 @@
 # source https://ldpreload.com/blog/ssh-control
 # source https://unix.stackexchange.com/questions/50508/reusing-ssh-session-for-repeated-rsync-commands
 
+# exmple single use:
+# rsync \
+#     -avz \
+#     --exclude=".git" \
+#     --exclude="node_modules" \
+#     -e "ssh -vvv -i ~/.ssh/aws-connechub-dev.pem -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@35.162.85.43:/home/ubuntu/connechub/app
+
 # install sudo apt-get install -y inotify-tools
 
 export SSH_KEY=$1     #"~/.ssh/aws-connechub-dev.pem"
 export REMOTE_HOST=$2 #"18.144.166.69"
 
-if [[ ! -d $HOME/.ssh/ctl/ ]]; then
-    mkdir $HOME/.ssh/ctl/
+if [[ ! -d $HOME/.ssh/connechub/ ]]; then
+    mkdir $HOME/.ssh/connechub/
 fi
 
-export CONTROL_PATH="$HOME/.ssh/ctl/%L-%r@%h:%p"
+export CONTROL_PATH="$HOME/.ssh/connechub/%L-%r@%h:%p"
 
 echo "Starting persistance SSH connection..."
-ssh -i ${1} -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/ctl/%L-%r@%h:%p" ubuntu@${2}
+ssh -i ${1} -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/connechub/%L-%r@%h:%p" ubuntu@${2}
 
 echo "Stating sync, waiting ControlPath..."
 
@@ -27,7 +34,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             -avz \
             --exclude=".git" \
             --exclude="node_modules" \
-            -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" . ubuntu@${2}:/home/ubuntu/connechub
+            -e "ssh -vvv -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@${2}:/home/ubuntu/connechub
         echo "...synce completed."
     done
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -39,7 +46,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         rsync -avz \
         --exclude=".git" \
         --exclude="node_modules" \
-        -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/ctl/%L-%r@%h:%p'" . ubuntu@${2}:/home/ubuntu/connechub
+        -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@${2}:/home/ubuntu/connechub
     echo "...synce completed."
 elif [[ "$OSTYPE" == "cygwin" ]]; then
     # POSIX compatibility layer and Linux environment emulation for Windows
