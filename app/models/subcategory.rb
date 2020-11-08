@@ -8,6 +8,7 @@ class Subcategory < ActiveRecord::Base
   def listing_count(category_id, subcategory_id)
     Listing
       .where("category_id = '#{category_id}'")
+      .where("ending_at > '#{Time.now.to_i}'")
       .where("subcategory_id = '#{subcategory_id}'")
       .count()
   end
