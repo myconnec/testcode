@@ -16,7 +16,7 @@ describe('Release 1.1.13 changes ...', function () {
     // https://trello.com/c/043WKwV6/63-error-from-google-analytics
     // https://trello.com/c/8VcyCvK7/83-enable-text-compression
     // TODO: Figure out how to read response headers
-    // it("... comfirm text compression is enable", function () {
+    // it("... confirm text compression is enable", function () {
     //   cy.request('').then((response) => {
     //     expect(response.status).to.eq(200)
     //   })
