@@ -102,6 +102,7 @@ Cypress.Commands.add('create_user', (userData = false) => {
   cy.get('#user_email').type(userData.email)
   cy.get('#user_password').type(userData.password)
   cy.get('#user_password_confirmation').type(userData.password)
+  cy.solveGoogleReCAPTCHA()
   cy.get('form.new_user').submit()
   cy.get('body > div > div > div').contains('Welcome! You have signed up successfully.')
 })
@@ -127,7 +128,8 @@ Cypress.Commands.add('create_listing', (listingData = false) => {
   }
 
   // see top menu item
-  cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
+  // cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
+  cy.visit('/listings/new')
 
   // step 1 of listing creation
   cy.get('div.panel-heading > h2').contains('Create New Listing')
@@ -204,3 +206,22 @@ Cypress.Commands.add('get_iframe_body', (selector) => {
     // https://on.cypress.io/wrap
     .then((body) => cy.wrap(body, { log: false }))
 })
+
+/**
+ * Solve Google ReCaptcha
+ * Source https://stackoverflow.com/questions/58684920/cypress-testing-a-contact-form-with-google-recaptcha
+ * Source https://developers.google.com/recaptcha/docs/faq#id-like-to-run-automated-tests-with-recaptcha.-what-should-i-do
+ */
+Cypress.Commands.add('solveGoogleReCAPTCHA', () => {
+  // Wait until the iframe (Google reCAPTCHA) is totally loaded
+  cy.wait(500);
+  cy.get('div.g-recaptcha  * > iframe')
+    .then($iframe => {
+      const $body = $iframe.contents().find('body');
+      cy.wrap($body)
+        .find('.recaptcha-checkbox-border')
+        .should('be.visible')
+        .click();
+    });
+  cy.wait(500);
+});

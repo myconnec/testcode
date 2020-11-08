@@ -55,8 +55,10 @@ describe('Release 1.1.15 changes ...', function () {
     it('...Incorrect ad count', function () {
         cy.create_user(userData[0])
         cy.create_listing(listingData[0]).create_listing(listingData[1]).create_listing(listingData[2])
+        cy.visit('/categories/3')
+        cy.get('ul > li:nth-child(1) > span').contains('3')
         cy.delete_listing(listingData[0]).delete_listing(listingData[2])
-        cy.visit('/categories/1')
+        cy.visit('/categories/3')
         cy.get('ul > li:nth-child(1) > span').contains('1')
         cy.logout()
     })
