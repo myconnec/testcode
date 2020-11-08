@@ -25,7 +25,7 @@ module Workspace
     config.active_record.raise_in_transactional_callbacks = true
 
     # Enable Skylight APM for non-production ENVs
-    config.skylight.environments += ["development"]
+    # config.skylight.environments += ["development"]
 
     # request tags from meta data and assign to env vars. Vars required: NAME, REGION, RND, and STAGE
     instance_ident = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`
