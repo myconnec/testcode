@@ -9,6 +9,12 @@
 
             <div class="panel-body">
 
+            <form
+                action="/file-upload" 
+                class="dropzone" 
+                id="my-awesome-dropzone"
+            ></form>
+
                 <%= simple_form_for(
                     @listing,
                     html: {

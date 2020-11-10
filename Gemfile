@@ -78,6 +78,9 @@ gem 'recaptcha', '~> 5.5.0'
 # Trix https://github.com/kylefox/trix
 gem 'trix-rails', '~> 0.11.4', require: 'trix'
 
+# Image update form element
+gem 'dropzonejs-rails', '~> 0.8.5'
+
 # For Test only
 group :test do
 end

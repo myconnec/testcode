@@ -26,3 +26,6 @@
 
 // Trix rich text editor JS
 //= require trix
+
+// Image update `DropZone`
+//= require dropzone
