@@ -3,22 +3,12 @@
 # source https://ldpreload.com/blog/ssh-control
 # source https://unix.stackexchange.com/questions/50508/reusing-ssh-session-for-repeated-rsync-commands
 
-# exmple single use:
-# rsync \
-#     -avz \
-#     --exclude=".git" \
-#     --exclude="node_modules" \
-#     -e "ssh -vvv -i ~/.ssh/aws-connechub-dev.pem -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@35.162.85.43:/home/ubuntu/connechub/app
-
 # install sudo apt-get install -y inotify-tools
 
-export SSH_KEY=$1    # string~/.ssh/aws-connechub-dev.pem
+export SSH_KEY=$1    # string ~/.ssh/aws-connechub-dev.pem
 export SOURCE=$2     # string $(pwd) is source by default
 export TARGET=$3     # ip 18.144.166.69
-
-if [[ !$3 ]];
-    then SOURCE='/home/ubuntu/connechub'
-fi
+export REVERSE=$4    # bool source from a remote onto local
 
 if [[ ! -d $HOME/.ssh/connechub/ ]]; then
     mkdir $HOME/.ssh/connechub/
@@ -28,7 +18,23 @@ export CONTROL_PATH="$HOME/.ssh/connechub/%L-%r@%h:%p"
 echo "Starting persistance SSH connection..."
 ssh -i ${1} -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/connechub/%L-%r@%h:%p" $TARGET
 
-echo "Stating sync, waiting ControlPath..."
+echo "Stating sync..."
+
+if [[ $REVERSE ]]; then
+    rsync \
+        -avz \
+        --exclude=".git" \
+        --exclude="node_modules" \
+        --exclude="tmp" \
+        --exclude="helpers" \
+        --exclude="public/assets" \
+        -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${1}" \
+        --progress \
+        ubuntu@${SOURCE}:/home/ubuntu/connechub/ \
+        $TARGET
+    echo "...done"
+    exit
+fi
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux distros
@@ -38,7 +44,10 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             -avz \
             --exclude=".git" \
             --exclude="node_modules" \
-            -e "ssh -vvv -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . $SOURCE:$TARGET
+            -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${SSH_KEY}" \
+            --progress \
+            ${SOURCE} \
+            ../
         echo "...synce completed."
     done
 
@@ -49,7 +58,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             -avz \
             --exclude=".git" \
             --exclude="node_modules" \
-            -e "ssh -vvv -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . $SOURCE:$TARGET
+            -e "ssh -vvv -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . $TARGET:$SOURCE
         echo "...synce completed."
     done
 elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -61,7 +70,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         rsync -avz \
         --exclude=".git" \
         --exclude="node_modules" \
-        -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . $SOURCE:$TARGET
+        -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . $TARGET:$SOURCE
     echo "...synce completed."
 elif [[ "$OSTYPE" == "cygwin" ]]; then
     # POSIX compatibility layer and Linux environment emulation for Windows
