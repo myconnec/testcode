@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Flip::Engine => "/flip"
   resources :categories do
     resources :subcategories
   end

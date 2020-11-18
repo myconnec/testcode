@@ -168,4 +168,3 @@ ActiveRecord::Schema.define(version: 20201115223055) do
   add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
 
 end
-

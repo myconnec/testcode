@@ -81,6 +81,9 @@ gem 'trix-rails', '~> 0.11.4', require: 'trix'
 # Image update form element
 gem 'dropzonejs-rails', '~> 0.8.5'
 
+# Feature Flag https://github.com/pda/flip
+gem 'flip', '~> 1.1.0'
+
 # For Test only
 group :test do
 end

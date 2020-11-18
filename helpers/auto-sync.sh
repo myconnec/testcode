@@ -25,10 +25,11 @@ if [[ $REVERSE ]]; then
     rsync \
         -avz \
         --exclude=".git" \
-        --exclude="node_modules" \
-        --exclude="tmp" \
         --exclude="helpers" \
+        --exclude="log" \
+        --exclude="node_modules" \
         --exclude="public/assets" \
+        --exclude="tmp" \
         -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${1}" \
         --progress \
         ubuntu@${SOURCE}:/home/ubuntu/connechub/ \
