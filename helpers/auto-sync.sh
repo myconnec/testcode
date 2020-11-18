@@ -21,7 +21,8 @@ ssh -i ${1} -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/connechub/%L-%r
 echo "Stating sync..."
 
 # exmple: ./helpers/auto-sync.sh ~/.ssh/aws-connechub-dev.pem 54.245.164.44 /mnt/Secondary/Projects/connechub/application true
-if [[ $REVERSE ]]; then
+if [[ $REVERS ]]; then
+    echo "...syncing from remote to local."
     rsync \
         -avz \
         --exclude=".git" \
@@ -50,7 +51,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             --progress \
             ${SOURCE} \
             ../
-        echo "...synce completed."
+        echo "...sync completed."
     done
 
     # Linux distros
@@ -61,7 +62,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             --exclude=".git" \
             --exclude="node_modules" \
             -e "ssh -vvv -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . $TARGET:$SOURCE
-        echo "...synce completed."
+        echo "...sync completed."
     done
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
@@ -73,7 +74,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         --exclude=".git" \
         --exclude="node_modules" \
         -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . $TARGET:$SOURCE
-    echo "...synce completed."
+    echo "...sync completed."
 elif [[ "$OSTYPE" == "cygwin" ]]; then
     # POSIX compatibility layer and Linux environment emulation for Windows
     echo "$OSTYPE detected..."
