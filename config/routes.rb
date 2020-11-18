@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
-  mount Flip::Engine => "/flip"
+  # Flip feature flag Gem
+  namespace :admin do
+    resources :features, only: [ :index ] do
+      resources :strategies, only: [ :update, :destroy ]
+    end
+  end
+  mount Flip::Engine => "/admin/features"
+
   resources :categories do
     resources :subcategories
   end
@@ -70,5 +77,6 @@ Rails.application.routes.draw do
   get ':username' => 'users#show', as: 'user'
   match '/users/update', to: 'users#update', via: :put
 
+  
   root 'categories#index'
 end

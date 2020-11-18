@@ -1,4 +1,4 @@
-class Listing < ActiveRecord::Base
+class Listing < ActiveRecord::Base extend Flip::Cacheable
   acts_as_votable
   is_impressionable
 
