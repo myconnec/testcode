@@ -20,6 +20,7 @@ ssh -i ${1} -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/connechub/%L-%r
 
 echo "Stating sync..."
 
+# exmple: ./helpers/auto-sync.sh ~/.ssh/aws-connechub-dev.pem 54.245.164.44 /mnt/Secondary/Projects/connechub/application true
 if [[ $REVERSE ]]; then
     rsync \
         -avz \
