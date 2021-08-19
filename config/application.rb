@@ -28,8 +28,8 @@ module Workspace
     # config.skylight.environments += ["development"]
 
     # request tags from meta data and assign to env vars. Vars required: NAME, REGION, RND, and STAGE
-    instance_ident = `curl --silent http://169.254.169.254/latest/dynamic/instance-identity/document`
-    instance_id    = `curl --silent http://instance-data/latest/meta-data/instance-id`
+    instance_ident = `curl --silent --header "X-aws-ec2-metadata-token: $(curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")" http://169.254.169.254/latest/dynamic/instance-identity/document`
+    instance_id    = `curl --silent --header "X-aws-ec2-metadata-token: $(curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")" http://instance-data/latest/meta-data/instance-id`
     ENV['REGION'] = JSON.parse(instance_ident)['region']
 
     # request instance meta data and assign to env varsI
