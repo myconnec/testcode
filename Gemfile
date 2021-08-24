@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 #AWS SDK
-gem 'aws-sdk', '~> 2'
+gem 'aws-sdk', '~> 3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', ' ~>4.2.5'
 # Use SCSS for stylesheets

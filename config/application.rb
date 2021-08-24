@@ -34,7 +34,7 @@ module Workspace
 
     # request instance meta data and assign to env varsI
     config.before_configuration do
-      tags = `aws ec2 describe-tags --filter 'Name=resource-id, Values=#{instance_id}' --output=json --region #{ENV['REGION']}`
+      tags = `aws ec2 describe-tags --filter 'Name=resource-id, Values=#{instance_id}' --output=json --region=#{ENV['REGION']}`
       tags = JSON.parse(tags)
 
       tags['Tags'].each do |tag|
@@ -47,6 +47,7 @@ module Workspace
     ssm_client = Aws::SSM::Client.new(region: ENV['REGION'])
 
     # Load run time values
+    # TODO wrap this in a try/catch
     # RDS (SQL)
     ENV['RDS_DB_HOST']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-host'                    + '-' + ENV['RND_STRING']), with_decryption: true).to_h[:parameter][:value]
     ENV['RDS_DB_NAME']                 = ssm_client.get_parameter(name: (ENV['NAME'] + '-' + ENV['STAGE'] + '-' + 'rds-db-name'                    + '-' + ENV['RND_STRING']), with_decryption: true).to_h[:parameter][:value]
