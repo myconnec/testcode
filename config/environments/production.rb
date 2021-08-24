@@ -62,4 +62,5 @@ Rails.application.configure do
     config.log_level = :warn
 
     config.force_ssl = true
+
 end
