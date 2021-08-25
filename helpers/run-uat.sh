@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # source https://www.mariedrake.com/post/using-docker-to-run-your-cypress-tests
 # source https://stackoverflow.com/questions/20796200/how-to-loop-over-files-in-directory-and-change-path-and-add-suffix-to-filename
 # source https://unix.stackexchange.com/questions/344360/collect-exit-codes-of-parallel-background-processes-sub-shells
@@ -7,33 +9,35 @@
 
 clear
 
+# shellcheck disable=SC1091
 source ./helpers/.env
 
 echo 'Checking for tools...'
 
 echo "Setup started..."
 
-echo 'Ensure the Docker daemon is running and `docker login` is successfully completed...'
+echo "Ensure the Docker daemon is running and _docker login_ is successfully completed..."
 if [[ ! $(docker login) ]]; then
-    echo 'You will need to run `docker login` and auth first.'
+    echo "You will need to run _docker login_ and auth first."
+    # shellcheck disable=SC2116 disable=SC2046
     exit $(echo $?)
 fi
 
 if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]]; then
     echo "Building base image container..."
     docker build \
-        -t cypress-test-image:$CYPRESS_VERSION \
+        -t cypress-test-image:"$CYPRESS_VERSION" \
         -t cypress-test-image:latest \
         -f cypress/Dockerfile \
         .
 fi
 
 echo "Resetting snapshot images..."
-aws s3 sync $CYPRESS_SNAP_SOURCE ./cypress/snapshots/ --profile $AWS_PROFILE
+aws s3 sync "$CYPRESS_SNAP_SOURCE" ./cypress/snapshots/ --profile "$AWS_PROFILE"
 
 if [[ $DB_HOST ]]; then
     echo 'Truncating database tables as needed for functional UAT testing...'
-    mysql -u $DB_USER -p$DB_PASS -h $DB_HOST <./cypress/support/reset-db.sql
+    mysql -u "$DB_USER" -p"$DB_PASS" -h "$DB_HOST" <./cypress/support/reset-db.sql
 fi
 
 if [[ -f ./cypress/cypress_tests.tmp ]]; then
@@ -42,10 +46,10 @@ if [[ -f ./cypress/cypress_tests.tmp ]]; then
 fi
 
 if [[ ! $(which parallel) ]]; then
-    echo 'Installing `parallel` CLI tool...'
-    apt intall -y parallel | true # debian systems
-    brew install parallel | true  # darwin systems
-    yum intall -y parallel | true # centos systems
+    echo "Installing _parallel_ CLI tool..."
+    sudo apt install -y parallel || true # debian systems
+    sudo brew install parallel || true  # darwin systems
+    sudo yum install -y parallel || true # centos systems
 fi
 
 echo "Generating new Parallel procfile..."
@@ -53,43 +57,43 @@ i=0
 for filename in cypress/integration/*.js; do
     echo "Iteration $i for $filename"
 
+    # shellcheck disable=SC2154
     echo "docker run \
-    -e CYPRESS_baseUrl="$CYPRESS_baseUrl" \
-    -e CYPRESS_abort_strategy="$CYPRESS_abort_strategy" \
-    -e CYPRESS_VERSION="$CYPRESS_VERSION" \
+    -e CYPRESS_baseUrl=$CYPRESS_baseUrl \
+    -e CYPRESS_abort_strategy=$CYPRESS_abort_strategy \
+    -e CYPRESS_VERSION=$CYPRESS_VERSION \
     -v $(pwd)/cypress:/app/cypress \
     -v $(pwd)/cypress.json:/app/cypress.json \
     --name "cypress_$i" \
     --rm \
     cypress-test-image:$CYPRESS_VERSION \
     ./node_modules/cypress/bin/cypress run \
-    --spec $filename" >>./cypress/cypress_tests.tmp
+    --spec $filename" >> "./cypress/cypress_tests.tmp"
 
-    ((i++))
+    i=$((i+1))
 done
 
 echo "Commands to be executed..."
 tail -100 ./cypress/cypress_tests.tmp
 
 echo "Executing parallel Docker container tests..."
-parallel --citation
 parallel \
-    --bar \
-    --halt now,fail=1 \
-    --max-procs $PARALLEL_PROC_COUNT \
-    <./cypress/cypress_tests.tmp
+--bar \
+--halt now,fail=1 \
+--max-procs "$PARALLEL_PROC_COUNT" \
+< ./cypress/cypress_tests.tmp
 
-EXIT_CODE=$(echo $?)
+EXIT_CODE="echo $?"
 echo "Exit code from parallel is $EXIT_CODE"
 
-if [ $EXIT_CODE != 0 ]; then
+if [[ "$EXIT_CODE" != 0 ]]; then
     echo "Something failed, stopping all other running containers..."
-    docker stop $(docker ps -a -q)
+    docker stop "$(docker ps -a -q)"
 fi
 
 echo "Resetting file permissions due to Docker volume mounting..."
-sudo chown -R $USER:$USER ./cypress
+sudo chown -R "$USER":"$USER" ./cypress
 
 echo "...done."
 
-exit $EXIT_CODE
+exit "$EXIT_CODE"

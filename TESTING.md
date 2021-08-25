@@ -16,15 +16,35 @@ sudo time ./helpers/run_uat.sh
 ## Manually
 
 ```sh
-source ./helpers/.env
-# mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
-mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./cypress/support/reset-db.sql
+# system requirements
+sudo apt-get install -y \
+libasound2 \
+libgbm-dev \
+libgconf-2-4 \
+libgtk-3-0 \
+libgtk2.0-0 \
+libnotify-dev \
+libnss3 \
+libxss1 \
+libxtst6 \
+xauth \
+xvfb
+
+# Node version manager and node install
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source ~/.bashrc
+nvm list-remote
+nvm install v14.17.5
 npm update npm
 npm install
 npm audit fix
+
+source ./helpers/.env
+# mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
+mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./cypress/support/reset-db.sql
 # verbose performance output
 # DEBUG=cypress:server:util:process_profiler ./node_modules/cypress/bin/cypress open
-./node_modules/cypress/bin/cypress open
+$(npm bin)/cypress open
 ```
 
 Then select the suite you wish to run in the UI.
