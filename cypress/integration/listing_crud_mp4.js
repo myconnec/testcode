@@ -112,8 +112,7 @@ describe('Listing CRUD (mp4)...', function () {
 
   it('...deleting a listing.', function () {
     cy.login(userData[0]).view_user_profile()
-    cy.get('div.grid > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a').contains(listingData[1]['title']).should('be.visible').click()
-    cy.get('div:nth-child(7) > div:nth-child(11) > a:nth-child(2)').contains('Delete').click()
+    cy.get('a').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')
     cy.logout()
   })

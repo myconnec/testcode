@@ -1,4 +1,4 @@
-#!/bin/bhas
+#!/bin/bash
 
 echo 'Run these commands on the remote host...'
 

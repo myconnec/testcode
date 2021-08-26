@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # source https://www.mariedrake.com/post/using-docker-to-run-your-cypress-tests
 # source https://stackoverflow.com/questions/20796200/how-to-loop-over-files-in-directory-and-change-path-and-add-suffix-to-filename
 # source https://unix.stackexchange.com/questions/344360/collect-exit-codes-of-parallel-background-processes-sub-shells
@@ -73,20 +71,14 @@ for filename in cypress/integration/*.js; do
     i=$((i+1))
 done
 
-echo "Commands to be executed..."
-tail -100 ./cypress/cypress_tests.tmp
-
 echo "Executing parallel Docker container tests..."
 parallel \
 --bar \
 --halt now,fail=1 \
 --max-procs "$PARALLEL_PROC_COUNT" \
-< ./cypress/cypress_tests.tmp
+< "./cypress/cypress_tests.tmp"
 
-EXIT_CODE="echo $?"
-echo "Exit code from parallel is $EXIT_CODE"
-
-if [[ "$EXIT_CODE" != 0 ]]; then
+if [[ $(echo $?) != 0 ]]; then
     echo "Something failed, stopping all other running containers..."
     docker stop "$(docker ps -a -q)"
 fi
@@ -95,5 +87,3 @@ echo "Resetting file permissions due to Docker volume mounting..."
 sudo chown -R "$USER":"$USER" ./cypress
 
 echo "...done."
-
-exit "$EXIT_CODE"
