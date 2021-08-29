@@ -17,6 +17,27 @@ const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin')
 // source https://github.com/mfrachet/cypress-audit
 const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
 
+// source https://github.com/mysqljs/mysql
+const mysql = require('mysql')
+
+function queryTestDb(query, config) {
+  // creates a new mysql connection using credentials from cypress.json env's
+  const connection = mysql.createConnection(config.env.db)
+  // start connection to db
+  connection.connect()
+  // exec query + disconnect to db as a Promise
+  return new Promise((resolve, reject) => {
+    connection.query(query, (error, results) => {
+      if (error) reject(error)
+      else {
+        connection.end()
+        console.log(results)
+        return resolve(results)
+      }
+    })
+  })
+}
+
 module.exports = (on, config) => {
   addMatchImageSnapshotPlugin(on, config);
 
@@ -27,5 +48,8 @@ module.exports = (on, config) => {
   on("task", {
     lighthouse: lighthouse(), // calling the function is important
     pa11y: pa11y(), // calling the function is important
+    queryDb: query => { // mysql connector
+      return queryTestDb(query, config)
+    },
   });
 };

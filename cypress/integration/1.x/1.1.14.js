@@ -9,6 +9,7 @@ describe('Release 1.1.14 changes ...', function () {
     // iOS PWA support
     // https://trello.com/c/D3FdEbtt/106-add-as-much-ios-pwa-support-as-possible
     it('...UPDATED newsletter data.', function () {
+        cy.task('queryDb', 'SHOW TABLEs;')
         cy.visit('/newsletter')
         cy.contains('Connechub feels that it takes a community of one to provide an experience that is safe and easy to use. As a company, we will listen to the needs of our users and will continue to make changes to improve the environment.')
     })
