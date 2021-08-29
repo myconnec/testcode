@@ -16,10 +16,11 @@
 /vendor
 
 # files to ignore
+*.env
+*.env.*
 *.log
 *.log.*
 *.tmp
-.env
 
 # Test and misc files
 .DS_Store
