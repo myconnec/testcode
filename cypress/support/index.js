@@ -16,14 +16,6 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
-
-// cookie allowed to persist between tests
-// Cypress.Cookies.defaults({
-//     preserve: '_workspace_session'
-// })
-
 // ignore `share this` errors
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
@@ -60,3 +52,12 @@ switch (Cypress.env('abort_strategy')) {
         break;
     default:
 }
+
+// source https://docs.cypress.io/guides/references/best-practices#State-reset-should-go-before-each-test
+beforeEach(() => {
+    cy.task('queryDb', 'TRUNCATE `comments`;')
+    cy.task('queryDb', 'TRUNCATE `impressions`;')
+    cy.task('queryDb', 'TRUNCATE `listings`;')
+    cy.task('queryDb', 'TRUNCATE `users`;')
+    cy.task('queryDb', 'TRUNCATE `votes`;')
+})

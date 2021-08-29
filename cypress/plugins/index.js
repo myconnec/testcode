@@ -20,6 +20,7 @@ const { lighthouse, pa11y, prepareAudit } = require('cypress-audit');
 // source https://github.com/mysqljs/mysql
 const mysql = require('mysql')
 
+// source https://github.com/cypress-io/cypress/issues/3689
 function queryTestDb(query, config) {
   // creates a new mysql connection using credentials from cypress.json env's
   const connection = mysql.createConnection(config.env.db)
@@ -31,7 +32,7 @@ function queryTestDb(query, config) {
       if (error) reject(error)
       else {
         connection.end()
-        console.log(results)
+        // console.log(results)
         return resolve(results)
       }
     })

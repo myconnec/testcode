@@ -11,13 +11,5 @@
     "mochaFile": "cypress/results/test-[hash].xml",
     "testsuitesTitle": true,
     "toConsole": true
-  },
-  "env": {
-    "db": {
-      "database": "connechub",
-      "host": "connechub-dev-rds-mariadb-5rzp.c8d4gbylpdxg.us-west-2.rds.amazonaws.com",
-      "password": "dev_ch_rds_pass",
-      "user": "dev_ch_rds_user"
-    }
   }
 }

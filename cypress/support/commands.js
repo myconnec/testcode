@@ -29,6 +29,7 @@ import "cypress-audit/commands";
 
 // source https://github.com/palmerhq/cypress-image-snapshot
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
+
 addMatchImageSnapshotCommand({
   failureThreshold: 1, // threshold for entire image
   failureThresholdType: 'percent', // percent of image or number of pixels
