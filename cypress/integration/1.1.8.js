@@ -130,13 +130,15 @@ describe('Release 1.1.8 change ...', function () {
   })
 
   it('...search a listing.', function () {
+    cy.create_user(userData[0]).create_listing(listingData[0])
+    cy.visit('')
     cy.get('#location').type('Orlando, Florida')
     cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
     cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title'])
   })
 
   it('...deleting a listing.', function () {
-    cy.login(userData[0]).view_user_profile()
+    cy.create_user(userData[0]).create_listing(listingData[0]).view_user_profile()
     cy.get('a').contains(listingData[0]['title']).should('be.visible')
     cy.get('a').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')

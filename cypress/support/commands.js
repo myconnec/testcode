@@ -29,7 +29,6 @@ import "cypress-audit/commands";
 
 // source https://github.com/palmerhq/cypress-image-snapshot
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
-
 addMatchImageSnapshotCommand({
   failureThreshold: 1, // threshold for entire image
   failureThresholdType: 'percent', // percent of image or number of pixels
@@ -67,18 +66,18 @@ Cypress.Commands.add('logout', () => {
   cy.clearCookies()
   cy.clearLocalStorage()
   cy.handle_splash_message('Signed out successfully.', 'notice')
-  cy.reload(true, { timeout: 5000 })
-  cy.reload(true, { timeout: 5000 })
-  cy.reload(true, { timeout: 5000 })
 })
 
 /**
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.get('div', { timeout: 5000 }).should('have.class', 'alert-' + type).contains(msg)
-  cy.get('body > div > div > div > button > span').click()
-  cy.get('body').contains(msg).should('not.be.visible')
+  cy.get('div > alert-' + type, { timeout: 5000 })
+    .then($el => {
+      cy.get($el).contains(msg)
+      cy.get($el).click()
+      cy.get($el).contains(msg).should('not.be.visible')
+    });
 })
 
 /**

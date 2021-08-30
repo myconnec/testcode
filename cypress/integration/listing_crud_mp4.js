@@ -35,11 +35,13 @@ describe('Listing CRUD (mp4)...', function () {
   ]
 
   it('...creating a new listing.', function () {
-    cy.create_user(userData[0]).create_listing(listingData[0]).logout()
-  })
+    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0]).logout()
+  // })
 
-  it('...reads a MP4 listing.', function () {
-    cy.login(userData[0]).view_user_profile()
+  // it('...reads a MP4 listing.', function () {
+  //   cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
+  //   cy.logout()
+
     cy.get('a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Connechub')
     cy.get('a').contains(listingData[0]['category'])
@@ -48,11 +50,11 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div').contains(listingData[0]['description'])
     cy.get('div > b').contains(listingData[0]['price'])
     cy.get('div.comments > h4').contains('Post a Comment')
-    cy.logout()
   })
 
   it('...updating a listing, change related data.', function () {
-    cy.login(userData[0]).view_user_profile()
+    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
+
     cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('a').contains('Edit Listing').click()
 
@@ -83,7 +85,7 @@ describe('Listing CRUD (mp4)...', function () {
   })
 
   it('...updating a listing media.', function () {
-    cy.login(userData[0]).view_user_profile()
+    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
 
     cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
@@ -111,7 +113,8 @@ describe('Listing CRUD (mp4)...', function () {
   })
 
   it('...deleting a listing.', function () {
-    cy.login(userData[0]).view_user_profile()
+    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
+    cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')
     cy.logout()

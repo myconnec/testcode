@@ -24,11 +24,13 @@ describe('Listing CRUD (mov)...', function () {
   ]
 
   it('...creating the MOV listing.', function () {
-    cy.create_user(userData[0]).create_listing(listingData[0]).logout()
-  })
+    cy.create_user(userData[0]).create_listing(listingData[0])
+  //.logout()
+  // })
 
-  it('...reads a MOV listing.', function () {
-    cy.login(userData[0]).view_user_profile()
+  // it('...reads a MOV listing.', function () {
+  //   cy.create_user(userData[0]).view_user_profile()
+    cy.visit('')
     cy.get('a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Connechub')
     cy.get('a').contains(listingData[0]['category'])

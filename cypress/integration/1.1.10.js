@@ -135,7 +135,7 @@ describe('Release 1.1.10 changes ...', function () {
     // Updating a listing title does not allow numbers, but it should
     // https://trello.com/c/0Dhhn91b/57-updating-a-listing-title-does-not-allow-numbers-but-it-should
     it('...UPDATE listing, allow numbers in title.', function () {
-        cy.login(userData[0]).view_user_profile()
+        cy.create_user(userData[0]).create_listing(listingData[1]).view_user_profile()
         cy.contains('Edit Listing').click()
         cy.get('#listing_title').clear().type(listingData[2]['title'])
         cy.get('#listings_submit').click()
@@ -149,7 +149,7 @@ describe('Release 1.1.10 changes ...', function () {
     // https://trello.com/c/0CWb6GMp/58-profile-image-changing-not-working
     it('...UPDATE user profile image, then do it again.', function () {
         // add profile image
-        cy.login(userData[0]).view_user_profile()
+        cy.create_user(userData[0]).view_user_profile()
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_avatar').then(subject => {
             return cy.fixture('user_profile_0.jpg', 'base64')

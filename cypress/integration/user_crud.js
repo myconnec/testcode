@@ -27,6 +27,7 @@ describe('User account CRUD...', function () {
         cy.get('#user_email').type(userData[0].email)
         cy.get('#user_password').type(userData[0].password)
         cy.get('#user_password_confirmation').type(userData[0].password)
+        cy.solveGoogleReCAPTCHA()
         cy.get('form.new_user').submit()
 
         cy.get('body > div > div > div').contains('Welcome! You have signed up successfully.')
@@ -34,7 +35,7 @@ describe('User account CRUD...', function () {
     })
 
     it('...read.', function () {
-        cy.login(userData[0])
+        cy.create_user(userData[0])
         cy.view_user_profile()
         cy.get('#inside_view_left > div:nth-child(4)').contains(userData[0].name)
         cy.get('#inside_view_left > div:nth-child(5)').should('be.empty') // nothing in the bio for new users
@@ -42,7 +43,7 @@ describe('User account CRUD...', function () {
     })
 
     it('...update (w/o password change).', function () {
-        cy.login(userData[0]).view_user_profile()
+        cy.create_user(userData[0]).view_user_profile()
 
         // update w/o password
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
@@ -53,7 +54,7 @@ describe('User account CRUD...', function () {
     })
 
     it('...update (w/ password change).', function () {
-        cy.login(userData[0]).view_user_profile()
+        cy.create_user(userData[0]).view_user_profile()
 
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
         cy.get('#user_bio').clear().type(userData[0].bio + ' with password change.')
@@ -72,7 +73,7 @@ describe('User account CRUD...', function () {
 
     // TODO: Users should have a way to disable / delete their account.
     // it('...delete.', function () {
-    //     cy.login(userData[0])
+    //     cy.create_user(userData[0])
     //     cy.logout()
     // })
 })

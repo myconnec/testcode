@@ -27,12 +27,13 @@ describe('User password management functionality.', function () {
         // use the new password 'cause the prev. it(...) set it to new_password's value
         userData[0].password = userData[0].new_password
 
-        cy.login(userData[0]).view_user_profile()
+        cy.create_user(userData[0]).view_user_profile()
 
         cy.get('#inside_view_left > div > a').contains('Edit Your Profile').click()
 
         cy.get('#user_password').clear().type('new_test_password')
         cy.get('#user_password_confirmation').clear().type('new_test_password')
         cy.get('#profile_submit').click()
+        cy.logout()
     })
 })

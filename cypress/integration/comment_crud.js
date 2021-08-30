@@ -40,18 +40,19 @@ describe('Comment CRUD...', function () {
         cy.get('div.comments > h4').contains('Post a Comment')
         cy.get('#comment_body').type(commentData.content)
         cy.get('#submit-btn').contains('Create Comment').click()
-        cy.logout()
-    })
+        // cy.logout()
+    // })
 
-    it('...reads a listing comment.', function () {
-        cy.login(userData[0])
+    // it('...reads a listing comment.', function () {
+        // cy.login(userData[0])
+        cy.visit('')
         cy.get('a').contains(listingData[0].title).click()
         cy.get('div.comments > small > b').contains('This post has 1 Comment')
         cy.get('div.comments > div > div > small').contains(commentData.content)
         cy.logout()
-    })
+    // })
 
-    it('...reads a listing comment, as a guest.', function () {
+    // it('...reads a listing comment, as a guest.', function () {
         cy.visit('')
         cy.get('a').contains(listingData[0].title).click()
         cy.get('div.comments > small > b').contains('This post has 1 Comment')

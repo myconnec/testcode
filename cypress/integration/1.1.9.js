@@ -72,13 +72,12 @@ describe('Release 1.1.9 changes ...', function () {
     })
 
     it('...creating a new listing.', function () {
-        cy.login(userData[0]).create_listing(listingData[0])
-        cy.logout()
+        cy.create_user(userData[0]).create_listing(listingData[0]).logout()
     })
 
     // updated in 1.1.14
     it('...mark listing as sold.', function () {
-        cy.login(userData[0]).view_user_profile()
+        cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0]).
 
         // Word wrap Listing title when long titles are used.
         // source: https://trello.com/c/NXfzZ9Vh/30-word-wrap-listing-title-when-long-titles-are-used
@@ -113,7 +112,7 @@ describe('Release 1.1.9 changes ...', function () {
     // Progressive video playback using adaptive video quality
     // source: https://trello.com/c/77240W0Z/21-research-automatic-quality-switching-for-video-playback
     it('...deleting a listing.', function () {
-        cy.login(userData[0]).view_user_profile()
+        cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0]).
         cy.get('a').contains(listingData[0]['title']).should('be.visible')
         cy.get('a').contains('Delete').click()
         cy.handle_splash_message('Listing has been deleted.', 'success')

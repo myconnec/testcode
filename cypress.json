@@ -11,5 +11,9 @@
     "mochaFile": "cypress/results/test-[hash].xml",
     "testsuitesTitle": true,
     "toConsole": true
+  },
+  "retries": {
+    "runMode": 2,
+    "openMode": 2
   }
 }
