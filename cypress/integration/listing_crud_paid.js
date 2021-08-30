@@ -36,31 +36,11 @@ describe('Listing CRUS PAID...', function () {
   ]
 
   beforeEach(function () {
-    cy.login(userData[0])
-  })
-
-  afterEach(function () {
-    cy.logout()
+    cy.create_user(userData[0])
   })
 
   it('...creating a listing that requires a payment.)', function () {
-
-    // create a paid listing
-    cy.get('#navbar > ul > li > a > button').contains('POST A VIDEO AD').click()
-
-    // step 1 of paid listing creation
-    cy.get('div.panel-heading > h2').contains('Create New Listing')
-    cy.get('#listing_category_id').select(listingData[1]['category']).should('have.value', '6')
-    cy.get('#listing_subcategory_id', { timeout: 10000 }).select(listingData[1]['sub_category'])
-    cy.get('#listing_condition_id').select(listingData[1]['condition']).should('have.value', '1')
-    cy.get('#listing_price').clear().type(listingData[1]['price'])
-    cy.get('#listing_title').clear().type(listingData[1]['title'])
-    cy.get('#listing_city').clear().type(listingData[1]['city'])
-    cy.get('#listing_state').clear().type(listingData[1]['state'])
-    cy.get('#listing_zipcode').clear().type(listingData[1]['zipcode'])
-    cy.get('#listing_description').clear().type(listingData[1]['description'])
-    cy.get('#listings_submit').click()
-    // cy.get('div#overlay').should('be.not.visible') // TODO get this to work
+    cy.create_listing(listingData[0])
 
     // step 2 of paid listing creation
     cy.get('div.panel-heading > h2').contains('Pay for Your New Listing')
@@ -101,7 +81,7 @@ describe('Listing CRUS PAID...', function () {
   })
 
   it('...reads most recent paid listing.', function () {
-    cy.view_user_profile()
+    cy.create_listing(listingData[1]).view_user_profile()
 
     // first listing shown
     cy.get('div.grid > div:nth-child(1) > div.panel-footer.pin-content > div.name > b > a').should('be.visible').click()

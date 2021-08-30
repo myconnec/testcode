@@ -35,13 +35,11 @@ describe('Listing CRUD (mp4)...', function () {
   ]
 
   it('...creating a new listing.', function () {
-    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0]).logout()
-  // })
+    cy.create_user(userData[0]).create_listing(listingData[0]).logout()
+  })
 
-  // it('...reads a MP4 listing.', function () {
-  //   cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
-  //   cy.logout()
-
+  it('...reads a MP4 listing.', function () {
+    cy.create_user(userData[0]).create_listing(listingData[0])
     cy.get('a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Connechub')
     cy.get('a').contains(listingData[0]['category'])
@@ -50,6 +48,7 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div').contains(listingData[0]['description'])
     cy.get('div > b').contains(listingData[0]['price'])
     cy.get('div.comments > h4').contains('Post a Comment')
+    cy.logout()
   })
 
   it('...updating a listing, change related data.', function () {
@@ -107,7 +106,7 @@ describe('Listing CRUD (mp4)...', function () {
     })
 
     cy.get('#fileupload').trigger('change')
-    cy.get('#listings_submit').click()
+    cy.waitForPageLoadAfter(() => cy.get('#listings_submit').click())
     cy.handle_splash_message('Video has been uploaded. You will receive an email once processing completed.', 'success')
     cy.logout()
   })

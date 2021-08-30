@@ -62,7 +62,7 @@ Cypress.Commands.add('login', (userData) => {
  * Really have no idea why.
  */
 Cypress.Commands.add('logout', () => {
-  cy.get('#navbar > ul > li > a').contains('Logout').click()
+  cy.get('#navbar > ul > li > a', { timeout: 5000 }).contains('Logout').click()
   cy.clearCookies()
   cy.clearLocalStorage()
   cy.handle_splash_message('Signed out successfully.', 'notice')
@@ -72,12 +72,14 @@ Cypress.Commands.add('logout', () => {
  * Handle splash (flash) UI messages
  */
 Cypress.Commands.add('handle_splash_message', (msg, type) => {
-  cy.get('div > alert-' + type, { timeout: 5000 })
-    .then($el => {
+  cy.get('body > div > div > div').then(($el, type) => {
+    if ($el.hasClass('alert-' + type)) {
+      cy.get($el).should('be-visible')
       cy.get($el).contains(msg)
-      cy.get($el).click()
+      cy.get('button').click()
       cy.get($el).contains(msg).should('not.be.visible')
-    });
+    }
+  })
 })
 
 /**
@@ -104,7 +106,7 @@ Cypress.Commands.add('create_user', (userData = false) => {
   cy.get('#user_password_confirmation').type(userData.password)
   cy.solveGoogleReCAPTCHA()
   cy.get('form.new_user').submit()
-  cy.get('body > div > div > div').contains('Welcome! You have signed up successfully.')
+  cy.handle_splash_message('Welcome! You have signed up successfully.', 'success')
 })
 
 /**
@@ -163,11 +165,10 @@ Cypress.Commands.add('create_listing', (listingData = false) => {
   })
 
   cy.get('#fileupload').trigger('change')
-  cy.get('#listings_submit').click()
   // cy.get('#overlay > img').should('be.visible')
+  
+  cy.waitForPageLoadAfter(() => cy.get('#listings_submit').click())
   cy.handle_splash_message('Video has been uploaded. You will receive an email once processing completed.', 'success')
-
-  cy.visit('')
 })
 
 /**
@@ -224,4 +225,30 @@ Cypress.Commands.add('solveGoogleReCAPTCHA', () => {
         .click();
     });
   cy.wait(500);
+});
+
+/**
+ * Given a function with some commands that cause the page to change or even
+ * just reload, this command runs the command then waits for that page load.
+ *
+ * Ideally this command should be used sparingly, instead preferring to use
+ * matching functionality to wait for reload.
+ *
+ * Adapted from:
+ * https://github.com/cypress-io/cypress/issues/1805#issuecomment-525482440
+ */
+Cypress.Commands.add("waitForPageLoadAfter", block => {
+  // mark our window object to "know" when it gets reloaded
+  cy.window().then(win => {
+    // eslint-disable-next-line no-param-reassign
+    win.beforeReload = true;
+  });
+  // initially the new property is there
+  cy.window().should("have.prop", "beforeReload", true);
+
+  // Run the code that triggers the page reload/change
+  block();
+
+  // after reload the property should be gone
+  cy.window().should("not.have.prop", "beforeReload");
 });

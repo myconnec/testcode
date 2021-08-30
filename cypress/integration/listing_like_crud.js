@@ -36,10 +36,9 @@ describe('Liking like CRUD...', function () {
 
     // only signed in users can like a listing
     it('...like a listing, as user 0.', function () {
-        cy.login(userData[0])
+        cy.create_user(userData[0]).create_listing(listingData[0]).visit('')
 
         cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
-
         cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span').contains(1)
 
@@ -47,22 +46,23 @@ describe('Liking like CRUD...', function () {
     })
 
     it('...like a listing, as a guest.', function () {
+        cy.create_user(userData[0]).create_listing(listingData[0]).logout()
+
         cy.visit('')
-
         cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
-
         cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
         cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(1)
     })
 
-    it('...like a listing, as user 1.', function () {
-        cy.create_user(userData[1])
+    // it('...like a listing, as user 1.', function () {
+    //     cy.create_user(userData[0]).create_listing(listingData[0]).logout()
+    //     cy.create_user(userData[1])
 
-        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
+    //     cy.visit('')
+    //     cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
+    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(2)
 
-        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(2)
-
-        cy.logout()
-    })
+    //     cy.logout()
+    // })
 })
