@@ -38,6 +38,8 @@ describe('Comment CRUD...', function () {
         cy.create_user(userData[0]).create_listing(listingData[0])
         cy.get('a').contains(listingData[0].title).click()
         cy.get('div.comments > h4').contains('Post a Comment')
+        // Must use `type`. `invoke` does not trigger `create` button enablement
+        //cy.get('#comment_body').invoke('val', commentData.content)
         cy.get('#comment_body').type(commentData.content)
         cy.get('#submit-btn').contains('Create Comment').click()
         // cy.logout()

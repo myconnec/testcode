@@ -37,10 +37,10 @@ describe('Release 1.1.9 changes ...', function () {
 
         cy.get('#navbar > ul.nav.navbar-nav.navbar-right > li:nth-child(2) > a').click()
 
-        cy.get('#user_username').type(userData[0].email)
-        cy.get('#user_email').type(userData[0].email)
-        cy.get('#user_password').type(userData[0].password)
-        cy.get('#user_password_confirmation').type(userData[0].password)
+        cy.get('#user_username').invoke('val', userData[0].email)
+        cy.get('#user_email').invoke('val', userData[0].email)
+        cy.get('#user_password').invoke('val', userData[0].password)
+        cy.get('#user_password_confirmation').invoke('val', userData[0].password)
         cy.get('form.new_user').submit()
 
         // client side validation

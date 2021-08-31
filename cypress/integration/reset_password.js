@@ -18,13 +18,13 @@ describe('User password management functionality.', function () {
         cy.get('div.small-heading').contains('The following two fields must match to change password.')
         cy.get('div.small-heading').contains('You will be prompted to log in with your new password after the change.')
 
-        cy.get('#user_password').clear().type(userData[0].new_password)
-        cy.get('#user_password_confirmation').clear().type(userData[0].new_password)
+        cy.get('#user_password').clear().invoke('val', userData[0].new_password)
+        cy.get('#user_password_confirmation').clear().invoke('val', userData[0].new_password)
         cy.get('#profile_submit').click()
         
         cy.handle_splash_message('You need to sign in or sign up before continuing.', 'alert')
-        cy.get('#user_email').clear().type(userData[0].email)
-        cy.get('#user_password').clear().type(userData[0].new_password)
+        cy.get('#user_email').clear().invoke('val', userData[0].email)
+        cy.get('#user_password').clear().invoke('val', userData[0].new_password)
         cy.get('#new_user > fieldset > div:nth-child(2) > div > div:nth-child(3) > input').click()
         cy.handle_splash_message('Signed in successfully.', 'notice')
 

@@ -34,12 +34,18 @@ describe('Listing CRUD (mp4)...', function () {
     }
   ]
 
-  it('...creating a new listing.', function () {
-    cy.create_user(userData[0]).create_listing(listingData[0]).logout()
+  beforeEach(() => {
+    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
   })
 
+  // Done as part of beforeEach()
+  // it('...creating a new listing.', function () {
+  //   cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
+  // })
+
   it('...reads a MP4 listing.', function () {
-    cy.create_user(userData[0]).create_listing(listingData[0])
+    cy.logout()
+
     cy.get('a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Connechub')
     cy.get('a').contains(listingData[0]['category'])
@@ -48,11 +54,10 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div').contains(listingData[0]['description'])
     cy.get('div > b').contains(listingData[0]['price'])
     cy.get('div.comments > h4').contains('Post a Comment')
-    cy.logout()
   })
 
   it('...updating a listing, change related data.', function () {
-    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
+    cy.view_user_profile()
 
     cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('a').contains('Edit Listing').click()
@@ -80,11 +85,10 @@ describe('Listing CRUD (mp4)...', function () {
     cy.get('div div').contains(listingData[1]['description'])
     cy.get('div > b').contains(listingData[1]['price'])
     cy.handle_splash_message('Listing has been updated.', 'success')
-    cy.logout()
   })
 
   it('...updating a listing media.', function () {
-    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
+    cy.view_user_profile()
 
     cy.get('div.grid > div:nth-child(1) > div.panel-body').should('be.visible').click()
     cy.get('div:nth-child(7) > div:nth-child(11) > a:nth-child(1)').contains('Change Video').click()
@@ -106,16 +110,14 @@ describe('Listing CRUD (mp4)...', function () {
     })
 
     cy.get('#fileupload').trigger('change')
-    cy.waitForPageLoadAfter(() => cy.get('#listings_submit').click())
+    cy.get('#listings_submit').click()
     cy.handle_splash_message('Video has been uploaded. You will receive an email once processing completed.', 'success')
-    cy.logout()
   })
 
   it('...deleting a listing.', function () {
-    cy.create_user(userData[0]).view_user_profile().create_listing(listingData[0])
+    cy.view_user_profile()
     cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
     cy.get('a').contains('Delete').click()
     cy.handle_splash_message('Listing has been deleted.', 'success')
-    cy.logout()
   })
 })

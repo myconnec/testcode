@@ -30,40 +30,44 @@ describe('Liking like CRUD...', function () {
         }
     ]
 
+    beforeEach(() => {
+        cy.create_user(userData[0]).create_listing(listingData[0])
+    })
+
+    // Done via beforeEach()
     // it('...creating a new listing, as user 0.', function () {
     //     cy.create_user(userData[0]).create_listing(listingData[0]).logout()
     // })
 
-    // // only signed in users can like a listing
-    // it('...like a listing, as user 0.', function () {
-    //     cy.create_user(userData[0]).create_listing(listingData[0]).visit('')
+    it('...like a listing, as user 0.', function () {
+        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span').contains(1)
+    })
 
-    //     cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span').contains(1)
+    it('...like a listing, as a guest.', function () {
+        cy.logout()
 
-    //     cy.logout()
-    // })
-
-    // it('...like a listing, as a guest.', function () {
-    //     cy.create_user(userData[0]).create_listing(listingData[0]).logout()
-
-    //     cy.visit('')
-    //     cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-    //     cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(1)
-    // })
+        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(1)
+    })
 
     it('...like a listing, as user 1.', function () {
-        cy.create_user(userData[0]).logout()
-        //.create_listing(listingData[0])
-        // cy.create_user(userData[1])
+        cy.create_user(userData[0]).create_listing(listingData[0])
 
-        // cy.visit('')
-        // cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
-        // cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
-        // cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(2)
+        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(1)
+        
+        cy.logout({ timeout:  5000})
+        
+        cy.create_user(userData[1])
 
-        // cy.logout()
+        cy.get('div.main-content > div > div > div.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').click()
+        cy.get('body > div:nth-child(8) > div > div:nth-child(7) > div.hero-title > span > a').contains(2)
+
+        cy.logout({ timeout: 5000 })
     })
 })

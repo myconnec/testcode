@@ -44,8 +44,8 @@ Cypress.Commands.add('login', (userData) => {
 
   cy.get('#navbar').contains('POST A VIDEO AD').click()
 
-  cy.get('#user_email').type(userData.email)
-  cy.get('#user_password').type(userData.password)
+  cy.get('#user_email').invoke('val', userData.email)
+  cy.get('#user_password').invoke('val', userData.password)
   cy.get('#user_remember_me').check()
   cy.get('form.new_user').submit()
 
@@ -63,11 +63,13 @@ Cypress.Commands.add('login', (userData) => {
  */
 Cypress.Commands.add('logout', () => {
   cy.waitForPageLoadAfter(() => 
-    cy.get('#navbar > ul > li > a').contains('Logout').click()
+    cy.get('a').contains('Logout').click()
   )
   cy.handle_splash_message('Signed out successfully.', 'notice')
   cy.clearCookies()
   cy.clearLocalStorage()
+  // confirm log out
+  cy.visit('/categories/1').get('#navbar > ul > li > a').contains('Sign Up').visit('')
 })
 
 /**
@@ -102,10 +104,10 @@ Cypress.Commands.add('create_user', (userData = false) => {
 
   cy.visit('')
   cy.get('#navbar > ul.nav.navbar-nav.navbar-right > li:nth-child(2) > a').click()
-  cy.get('#user_username').type(userData.name)
-  cy.get('#user_email').type(userData.email)
-  cy.get('#user_password').type(userData.password)
-  cy.get('#user_password_confirmation').type(userData.password)
+  cy.get('#user_username').invoke('val', userData.name)
+  cy.get('#user_email').invoke('val', userData.email)
+  cy.get('#user_password').invoke('val', userData.password)
+  cy.get('#user_password_confirmation').invoke('val', userData.password)
   cy.solveGoogleReCAPTCHA()
   cy.get('form.new_user').submit()
   cy.handle_splash_message('Welcome! You have signed up successfully.', 'success')
@@ -139,15 +141,15 @@ Cypress.Commands.add('create_listing', (listingData = false) => {
   cy.get('div.panel-heading > h2').contains('Create New Listing')
   cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_category_id').select(listingData.category)
   cy.get('.panel > .panel-body > #new_listing > .input-group > .form-control > #listing_subcategory_id', { timeout: 1000 }).select(listingData.sub_category)
-  cy.get('#listing_price').clear().type(listingData.price)
-  cy.get('#listing_title').clear().type(listingData.title)
-  cy.get('#listing_city').clear().type(listingData.city)
-  cy.get('#listing_state').clear().type(listingData.state)
-  cy.get('#listing_zipcode').clear().type(listingData.zipcode)
+  cy.get('#listing_price').clear().invoke('val', listingData.price)
+  cy.get('#listing_title').clear().invoke('val', listingData.title)
+  cy.get('#listing_city').clear().invoke('val', listingData.city)
+  cy.get('#listing_state').clear().invoke('val', listingData.state)
+  cy.get('#listing_zipcode').clear().invoke('val', listingData.zipcode)
   cy.get('#new_listing > div:nth-child(20) > div.form-group.trix_editor.required.listing_description > div > trix-editor')
     .focus()
-    .type('{selectall}{backspace}')
-    .type(listingData.description)
+    .invoke('val', '{selectall}{backspace}')
+    .invoke('val', listingData.description)
   cy.get('#listings_submit').click()
 
   // step 2 of listing creation

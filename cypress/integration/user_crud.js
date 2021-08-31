@@ -1,11 +1,3 @@
-/**
- * ConnecHub User Stories
- *
- * Test phases:
- * Arrange - Setup Init application state
- * Act - Do some action
- * Assert - make an assertion
- */
 describe('User account CRUD...', function () {
 
     const userData = [
@@ -23,10 +15,10 @@ describe('User account CRUD...', function () {
         cy.visit('')
         cy.get('#navbar > ul > li > a').contains('Sign Up').click()
 
-        cy.get('#user_username').type(userData[0].name)
-        cy.get('#user_email').type(userData[0].email)
-        cy.get('#user_password').type(userData[0].password)
-        cy.get('#user_password_confirmation').type(userData[0].password)
+        cy.get('#user_username').invoke('val', userData[0].name)
+        cy.get('#user_email').invoke('val', userData[0].email)
+        cy.get('#user_password').invoke('val', userData[0].password)
+        cy.get('#user_password_confirmation').invoke('val', userData[0].password)
         cy.solveGoogleReCAPTCHA()
         cy.get('form.new_user').submit()
 
@@ -47,7 +39,7 @@ describe('User account CRUD...', function () {
 
         // update w/o password
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
-        cy.get('#user_bio').clear().type(userData[0].bio + ' - no password change ')
+        cy.get('#user_bio').clear().invoke('val', userData[0].bio + ' - no password change ')
         cy.get('#profile_submit').click()
 
         cy.logout()
@@ -57,9 +49,9 @@ describe('User account CRUD...', function () {
         cy.create_user(userData[0]).view_user_profile()
 
         cy.get('#inside_view_left > div:nth-child(8) > a').contains('Edit Your Profile').click()
-        cy.get('#user_bio').clear().type(userData[0].bio + ' with password change.')
-        cy.get('#user_password').type(userData[0].new_password)
-        cy.get('#user_password_confirmation').type(userData[0].new_password)
+        cy.get('#user_bio').clear().invoke('val', userData[0].bio + ' with password change.')
+        cy.get('#user_password').invoke('val', userData[0].new_password)
+        cy.get('#user_password_confirmation').invoke('val', userData[0].new_password)
         cy.get('#profile_submit').click()
 
         // use new password to log in

@@ -75,7 +75,7 @@ describe('Release 1.1.10 changes ...', function () {
     // it('...confirm output of Facebook share via debugger.', function() {
     //     // wait / sleep 60s?
     //     cy.visit('https://developers.facebook.com/tools/debug/')
-    //     cy.contains('#u_0_6').type('https://dev.connechub.com/listings/1')
+    //     cy.contains('#u_0_6').invoke('val', 'https://dev.connechub.com/listings/1')
     //     cy.click('#u_0_5 > div._2pis > button', {timeout: 5000})
     //     cy.get('#u_0_0 > div:nth-child(2) > div._4-u3._3a8w.noPadding > table > tbody > tr._23m0', {timeout: 5000})
     //         .matchImageSnapshot('1_1_10_facebook_share_debug_output');
@@ -137,7 +137,7 @@ describe('Release 1.1.10 changes ...', function () {
     it('...UPDATE listing, allow numbers in title.', function () {
         cy.create_user(userData[0]).create_listing(listingData[1]).view_user_profile()
         cy.contains('Edit Listing').click()
-        cy.get('#listing_title').clear().type(listingData[2]['title'])
+        cy.get('#listing_title').clear().invoke('val', listingData[2]['title'])
         cy.get('#listings_submit').click()
         cy.handle_splash_message('Listing has been updated.', 'success')
         cy.contains(listingData[2]['title'])

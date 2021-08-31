@@ -19,7 +19,7 @@ describe('Release 1.1.11 changes ...', function () {
     it('...forgot password form submit error.', function () {
         cy.create_user(userData[0]).logout()
         cy.visit('/users/password/new')
-        cy.get('#user_email').clear().type(userData[0]['email'])
+        cy.get('#user_email').clear().invoke('val', userData[0]['email'])
         cy.contains('Reset Your Password').click()
 
         cy.handle_splash_message('If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.', 'notice')

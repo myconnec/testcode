@@ -36,7 +36,6 @@ describe('Listing Search CRUD...', function () {
   //  })
 
   it('...search for listing, as logged in user.', function () {
-    // cy.get('#search').clear().value(listingData[0]['title'])
     cy.get('#search').clear().invoke('val', listingData[0]['title'])
     cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
     cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
@@ -51,7 +50,7 @@ describe('Listing Search CRUD...', function () {
   it('...search for listing, as guest user.', function () {
     cy.logout()
 
-    cy.get('#search').clear().type(listingData[0]['title'])
+    cy.get('#search').clear().invoke('val', listingData[0]['title'])
     cy.get('form > div.col-xs-12.col-sm-4.col-sm-offset-4 > input').click()
     cy.get('div.panel-footer.pin-content > div.name > b > a').contains(listingData[0]['title']).click()
 

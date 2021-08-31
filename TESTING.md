@@ -56,7 +56,7 @@ Then select the suite you wish to run in the UI.
 - Manual: 16.2 minutes
 - Parallel (export $PARALLEL_PROC_COUNT=8): 4 minutes
 
-- Version: 1.1.15
+- Version: 1.1.12
 - System: AMD® Ryzen 7 3700x 8-core processor × 16, 64Gb RAM, Ubuntu 20.04.3 LTS
 - Manual: 
-- Parallel (export $PARALLEL_PROC_COUNT=16): 4 minutes
+- Parallel (export $PARALLEL_PROC_COUNT=16): - Can not run due to `Truncate ${table}`
