@@ -35,8 +35,8 @@ describe('User account CRUD...', function () {
     })
 
     it('...read.', function () {
-        cy.create_user(userData[0])
-        cy.view_user_profile()
+        cy.create_user(userData[0]).view_user_profile()
+
         cy.get('#inside_view_left > div:nth-child(4)').contains(userData[0].name)
         cy.get('#inside_view_left > div:nth-child(5)').should('be.empty') // nothing in the bio for new users
         cy.logout()

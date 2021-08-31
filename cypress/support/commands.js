@@ -62,10 +62,12 @@ Cypress.Commands.add('login', (userData) => {
  * Really have no idea why.
  */
 Cypress.Commands.add('logout', () => {
-  cy.get('#navbar > ul > li > a', { timeout: 5000 }).contains('Logout').click()
+  cy.waitForPageLoadAfter(() => 
+    cy.get('#navbar > ul > li > a').contains('Logout').click()
+  )
+  cy.handle_splash_message('Signed out successfully.', 'notice')
   cy.clearCookies()
   cy.clearLocalStorage()
-  cy.handle_splash_message('Signed out successfully.', 'notice')
 })
 
 /**

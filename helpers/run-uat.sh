@@ -7,8 +7,14 @@
 
 clear
 
-# shellcheck disable=SC1091
-source ./helpers/.env
+APP_VERSION=2.0.0
+AWS_PROFILE=connechub-dev
+CYPRESS_SNAP_SOURCE=
+
+export APP_VERSION
+export AWS_PROFILE
+export CYPRESS_SNAP_SOURCE
+# -----
 
 echo 'Checking for tools...'
 
@@ -21,22 +27,17 @@ if [[ ! $(docker login) ]]; then
     exit $(echo $?)
 fi
 
-if [[ ! $(docker images | grep cypress-test-image | grep $CYPRESS_VERSION) ]]; then
+if [[ ! $(docker images | grep cypress-test-image | grep $APP_VERSION) ]]; then
     echo "Building base image container..."
     docker build \
-        -t cypress-test-image:"$CYPRESS_VERSION" \
+        -t cypress-test-image:"$APP_VERSION" \
         -t cypress-test-image:latest \
-        -f cypress/Dockerfile \
+        -f helpers/Dockerfile \
         .
 fi
 
 echo "Resetting snapshot images..."
 aws s3 sync "$CYPRESS_SNAP_SOURCE" ./cypress/snapshots/ --profile "$AWS_PROFILE"
-
-if [[ $DB_HOST ]]; then
-    echo 'Truncating database tables as needed for functional UAT testing...'
-    mysql -u "$DB_USER" -p"$DB_PASS" -h "$DB_HOST" <./cypress/support/reset-db.sql
-fi
 
 if [[ -f ./cypress/cypress_tests.tmp ]]; then
     echo "Prev. Parallel procfile found, removing..."
@@ -57,14 +58,10 @@ for filename in cypress/integration/*.js; do
 
     # shellcheck disable=SC2154
     echo "docker run \
-    -e CYPRESS_baseUrl=$CYPRESS_baseUrl \
-    -e CYPRESS_abort_strategy=$CYPRESS_abort_strategy \
-    -e CYPRESS_VERSION=$CYPRESS_VERSION \
     -v $(pwd)/cypress:/app/cypress \
-    -v $(pwd)/cypress.json:/app/cypress.json \
     --name "cypress_$i" \
     --rm \
-    cypress-test-image:$CYPRESS_VERSION \
+    cypress-test-image:$APP_VERSION \
     ./node_modules/cypress/bin/cypress run \
     --spec $filename" >> "./cypress/cypress_tests.tmp"
 
@@ -75,7 +72,7 @@ echo "Executing parallel Docker container tests..."
 parallel \
 --bar \
 --halt now,fail=1 \
---max-procs "$PARALLEL_PROC_COUNT" \
+--max-procs 16 \
 < "./cypress/cypress_tests.tmp"
 
 if [[ $(echo $?) != 0 ]]; then
@@ -84,6 +81,6 @@ if [[ $(echo $?) != 0 ]]; then
 fi
 
 echo "Resetting file permissions due to Docker volume mounting..."
-sudo chown -R "$USER":"$USER" ./cypress
+sudo chown -R "$(whoami)":"$(whoami)" ./cypress
 
 echo "...done."
