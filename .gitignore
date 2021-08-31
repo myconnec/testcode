@@ -29,6 +29,7 @@
 *.bowerrc
 *.rbc
 bower.json
+cypress.json
 capybara-*.html
 rerun.txt
 

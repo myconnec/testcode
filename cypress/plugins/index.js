@@ -22,6 +22,7 @@ const mysql = require('mysql')
 
 // source https://github.com/cypress-io/cypress/issues/3689
 function queryTestDb(query, config) {
+
   // creates a new mysql connection using credentials from cypress.json env's
   const connection = mysql.createConnection(config.env.db)
   // start connection to db
