@@ -1,0 +1,33 @@
+<div>
+  <h4>Categories</h4>
+
+  <div class="section group">
+
+    <% @categories.each do |category| %>
+      <div class="catg_title">
+        <i class="glyphicon glyphicon-<%= category.icon %>"></i>
+        <strong><%= link_to category.name, category_path(category.id) %></strong>
+      </div>
+
+      <% if (!@subcategory and category.id == params[:id].to_i) or (@subcategory and category.id == params[:category_id].to_i) %>
+      <div class="category_title sub_category_<%= category.id %>">
+          <ul>
+          <% category.subcategories.each do |subcategory| %>
+          <li class="landing_page">
+              <%= link_to subcategory.name, category_subcategory_path(category, subcategory) %>
+              <span class="cat_item_count">
+              <% count = subcategory.listing_count(category.id, subcategory.id) %>
+              <%= count > 0 ? count : '' %>
+              </span>
+          </li>
+          <% end %>
+          </ul>
+      </div>
+      <% end %>
+
+    <% end %>
+
+  </div>
+
+</div>
+<br /><br /><br />

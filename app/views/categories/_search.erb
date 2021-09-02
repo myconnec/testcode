@@ -1,4 +1,4 @@
-<div class="rightbar">
+<!--<div class="rightbar">
   <div align="center" class="rightbar-top">
     <%= form_tag search_listings_path, class:"form-inline", method: :get do |f| %>
       <div class="space"><%= text_field_tag :search, nil, placeholder: 'search', class: "form-control", style: 'width: 100%' %></div>
@@ -6,5 +6,57 @@
       <div class="space"><%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control", style: 'width: 100%' %></div>
       <%= submit_tag 'Search', class: "btn btn-success" %>
     <% end %>
+  </div>
+</div>-->
+
+<div id="hero-area">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-12 col-lg-9 col-xs-12 text-center">
+        <div class="contents-ctg">
+          <div class="search-bar">
+            <div class="search-inner">
+              <form class="search-form">
+                <div class="form-group inputwithicon">
+                  <i class="lni-tag"></i>
+                  <input type="text" name="customword" class="form-control" placeholder="Enter Product Keyword">
+                </div>
+                <div class="form-group inputwithicon">
+                  <i class="lni-target"></i>
+                  <div class="select">
+                    <select>
+                      <option value="none">All Locations</option>
+                      <option value="none">Tampa</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group inputwithicon">
+                  <i class="lni-menu"></i>
+                  <div class="select">
+                    <select>
+                      <option value="none">Select Categories</option>
+                      <option value="none">Automotive</option>
+                      <option value="none">Beauty and Health</option>
+                      <option value="none">Books, Music, Toys</option>
+                      <option value="none">Clothing and Accessories</option>
+                      <option value="none">Electronics</option>
+                      <option value="none">Home and Garden</option>
+                      <option value="none">Jobs</option>
+                      <option value="none">Pets</option>
+                      <option value="none">Real Estate</option>
+                            <option value="none">Services</option>
+                            <option value="none">Sports and Outdoors</option>
+                            <option value="none">Weddings and Parties</option>
+                          </select>
+                        </div>
+                </div>
+                <button class="btn btn-common" type="button"><i class="lni-search"></i> Search Now</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
