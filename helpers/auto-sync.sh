@@ -44,7 +44,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
             -avz \
             --exclude=".git" \
             --exclude="node_modules" \
-            -e "ssh -vvv -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@"${2}":/home/ubuntu/connechub
+            -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@"${2}":/home/ubuntu/connechub
         echo "...synce completed."
     done
 elif [[ "$OSTYPE" == "darwin"* ]]; then

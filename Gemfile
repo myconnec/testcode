@@ -32,8 +32,6 @@ gem 'slide-down-alerts-rails', '~> 0.0.2'
 
 # imagesLoaded.js Wrapper for Rails 3.1+ Asset Pipeline
 gem 'imagesLoaded_rails'
-# Cascading grid layout library for Rails
-gem 'masonry-rails', '~> 0.2.4'
 # Manipulate images with minimal use of memory via ImageMagick / GraphicsMagick
 gem 'mini_magick', '~> 4.6'
 # A lightweight literate ruby wrapper for HandBrakeCLI, the command-line interface for the HandBrake video transcoder.

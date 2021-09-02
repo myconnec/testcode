@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Buy, Sell, Promote and Watch Local Video Classifieds.">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#fff"/>
+    <meta name="theme-color" content="#ffffff">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="keywords" content="
+ad posting sites,
+ads,
+advertising,
+auto classifieds,
+auto dealers,
+auto,
+business,
+buy,
+campus,
+capture ad,
+cars,
+classified ads,
+classified video ads,
+classified,
+classifieds,
+community,
+connechub,
+easy,
+ebay,
+email,
+employment,
+events,
+film,
+free ads,
+free advertising,
+free classified ads online,
+free classified posting sites,
+free classified sites list,
+free classified websites list,
+free classified websites,
+free classified,
+free classifieds,
+free online classifieds,
+free,
+hard to find,
+housing,
+images,
+internet advertising,
+jobs,
+list,
+listings,
+local,
+marketing,
+on film,
+online classifieds,
+online,
+personals,
+pets,
+place free classified ads,
+post free ads,
+post free classified ads,
+post,
+posts,
+real-estate,
+real,
+realestate,
+record,
+sale,
+search,
+sell,
+services,
+tickets,
+to post free ad,
+to post free ads in classifieds,
+trade,
+unboxing,
+video ads,
+video,
+visual ad,
+visual ads,
+youtube,
+">
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+
+    <% if @listing and @listing.media_file_name %>
+
+      <title><%= ENV['NAME'].capitalize + ' - ' + @listing.title %></title>
+      <meta name="name" content="<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>">
+
+      <!-- VideoJs assets -->
+      <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+      <script src="https://unpkg.com/video.js/dist/video.js"></script>
+
+      <% # add OG meta tags if on a Listing VW page. We know this as that is the only view to have a @listing object
+      set_meta_tags og: {
+        description: 'Buy, Sell, Promote and Watch Local Video Classifieds.' + @listing.title,
+        image:       'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-4m-00001.png',
+        image_src:   'https://' + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + '.s3' + (ENV['REGION'] == 'us-east-1' ? '' : '-' + ENV['REGION']) + '.amazonaws.com/' + URI::encode(@listing.media_file_name) + '-4m-00001.png',
+        title:       @listing.title,
+        type:        'website',
+        url:         'https://' + ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com/listings/' + params[:id],
+      } %>
+      <%= display_meta_tags %>
+      <meta property="fb:app_id" content="0" />
+    <% else %>
+      <title><%= ENV['NAME'].capitalize %></title>
+    <% end %>
+
+    <%= csrf_meta_tags %>
+    <%= render "partials/google_analytics" %>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+  </head>
+  <body>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div id="navbar" class="navbar">
+          <div class="navbar-header">
+            <% if request.fullpath != '/' %>
+              <%= link_to image_tag("connechub.svg", :alt => ENV["NAME"], height: '55px', width: 'auto'), root_path %>
+            <% end %>
+          </div>
+          <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+              <li>
+                <a href="<%= new_listing_path %>">
+                  <button class="btn-primary" style="margin-top: -3px">POST A VIDEO AD</button>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Your Account<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to 'Your Profile', user_path(current_user.username) %></li>
+                  <li><%= link_to 'Edit Your Account', edit_user_registration_path %></li>
+                </ul>
+              </li>
+              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+            <% else %>
+              <li>
+                <a href="<%= new_user_session_path %>">
+                  <button class="btn-primary" style="margin-top: -3px">POST A VIDEO AD</button>
+                </a>
+              </li>
+              <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <div class="container">
+      <div class="flash">
+          <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %> alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <%= value %>
+            </div>
+          <% end %>
+      </div>
+    </div>
+
+    <div class="container">
+      <%= yield %>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <div class="navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="dropup">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">About Us <i class="fa fa-sort"></i></span></a>
+              <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                <li><%= link_to 'Career With Us', career_path %></a></li>
+                <li><%= link_to 'About Us', about_path %></li>
+                <li><%= link_to 'Newsletter', newsletter_path %></li>
+                <li><%= link_to 'How It Works', '/howitworks/index' %></li>
+                <li><%= link_to 'Prices', '/prices/index' %></li>
+              </ul>
+            </li>
+            <li class="dropup">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Legal <i class="fa fa-sort"></i></span></a>
+              <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                <li><%= link_to 'Terms of Service', terms_path %></li>
+                <li><%= link_to 'Privacy Policy', privacy_path %></li>
+                <li><%= link_to 'Posting Terms of Use', postterm_path %></li>
+              </ul>
+            </li>
+            <li class="dropup">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="ts-label">Help <i class="fa fa-sort"></i></span></a>
+              <ul class="dropdown-menu dropup dropup-menu" role="menu" aria-labelledby="dLabel">
+                <li><%= link_to 'FAQs', faq_path %></li>
+                <li><%= link_to 'Safety Tips', safetytips_path %></li>
+              </ul>
+            </li>
+            <li class="li_no_bg">
+              <span class="ts-copy">© Connechub <%= Date.today.year %></span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+  </body>
+</html>

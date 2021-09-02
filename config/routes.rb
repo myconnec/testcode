@@ -17,29 +17,21 @@ Rails.application.routes.draw do
   end
 
   # Static Pages
+  # TODO removed unused
   match '/about', to: 'pages#about', via: :get
   match '/career', to: 'pages#career', via: :get
-  match '/cookie', to: 'pages#cookie', via: :get
-  match '/copyright', to: 'pages#copyright', via: :get
-  match '/corporate', to: 'pages#corporate', via: :get
-  match '/customersupport', to: 'pages#customersupport', via: :get
-  match '/design', to: 'pages#design', via: :get
+  match '/contact', to: 'pages#contact', via: :get
   match '/faq', to: 'pages#faq', via: :get
-  match '/following', to: 'pages#following', via: :get
-  match '/help', to: 'pages#help', via: :get
+  match '/howitworks', to: 'pages#howitworks', via: :get
   match '/marketing', to: 'pages#marketing', via: :get
-  match '/membership', to: 'pages#membership', via: :get
-  match '/newsletter', to: 'pages#newsletter', via: :get
   match '/mobile', to: 'pages#mobile', via: :get
+  match '/newsletter', to: 'pages#newsletter', via: :get
   match '/offline', to: 'pages#offline', via: :get
-  match '/postads', to: 'pages#postads', via: :get
   match '/postterm', to: 'pages#postterm', via: :get
-  match '/prices', to: 'prices#index', via: :get
+  match '/pricing', to: 'pages#pricing', via: :get
   match '/privacy', to: 'pages#privacy', via: :get
-  match '/safety', to: 'pages#safety', via: :get
   match '/safetytips', to: 'pages#safetytips', via: :get
   match '/sales', to: 'pages#sales', via: :get
-  match '/scams', to: 'pages#scams', via: :get
   match '/technology', to: 'pages#technology', via: :get
   match '/terms', to: 'pages#terms', via: :get
 
@@ -58,9 +50,6 @@ Rails.application.routes.draw do
   match '/listings/sold/:id', to: 'listings#sold', via: :get
   match '/listings/unsold/:id', to: 'listings#unsold', via: :get
   match '/listings/show_json/:id', to: 'listings#show_json', via: :get
-
-  match '/prices/index', to: 'prices#index', via: :get
-  match '/howitworks/index', to: 'howitworks#index', via: :get
 
   # User (Device)
   devise_for :users, :controllers => {

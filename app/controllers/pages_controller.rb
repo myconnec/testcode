@@ -2,66 +2,38 @@ class PagesController < ApplicationController
   def about
   end
 
-  def cookie
+  def career
   end
 
-  def copyright
-  end
-
-  def corporate
-  end
-
-  def customersupport
-  end
-
-  def design
+  def contact
   end
 
   def faq
   end
 
-  def following
+  def howitworks
   end
 
-  def help
+  def newsletter
   end
 
-  def marketing
+  def offline
   end
 
-  def membership
+  def prostterm
   end
 
-  def mobile
-  end
-
-  def postads
+  def pricing
+    @chargable_sub_cat = Subcategory.includes(:category).where("chargable <> 0")
   end
 
   def privacy
   end
 
-  def safety
-  end
-
   def safetytips
-  end
-
-  def sales
-  end
-
-  def scams
-  end
-
-  def technology
   end
 
   def terms
   end
 
-  def trademark
-  end
-
-  def offline
-  end
 end

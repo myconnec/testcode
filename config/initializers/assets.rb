@@ -1,21 +1,4 @@
 # Be sure to restart your server when you modify this file.
 
 # Version of your assets, change this if you want to expire all your assets.
-#Rails.application.config.assets.version = '1.0'
-
-# Add additional assets to the asset load path
-# Rails.application.config.assets.paths << Emoji.images_path
-
-# Precompile additional assets.
-# application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-# Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w( masonry.js listings.js stripe.js video-js.swf vjs.eot vjs.svg vjs.ttf vjs.woff )
-require 'paperclip/media_type_spoof_detector'
-module Paperclip
-  class MediaTypeSpoofDetector
-    def spoofed?
-      false
-    end
-  end
-end
-Rails.configuration.assets.precompile += %w[serviceworker.js manifest.json]
+Rails.application.config.assets.version = '2.0'
