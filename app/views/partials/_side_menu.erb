@@ -10,8 +10,8 @@
             <i class="fas fa-<%= category.icon %>"></i>
             <%= category.name %>
             <span class="category-counter">
-              <% count = category.listing_count(category.id) %>
-              <%= count > 0 ? count : '' %>
+              <% cat_item_count = category.listing_count(category.id) %>
+              <%= cat_item_count > 0 ? '(' + cat_item_count + ')' : '' %>
             </span>
           <% end %>
 
@@ -23,8 +23,8 @@
                   <i class="fas fa-<%= category.icon %>"></i>
                   <%= subcategory.name %>
                   <span class="category-counter">
-                    <% count = subcategory.listing_count(category.id, subcategory.id) %>
-                    <%= count > 0 ? count : '' %>
+                    <% subcat_item_count = subcategory.listing_count(category.id, subcategory.id) %>
+                    <%= subcat_item_count > 0 ? '(' + subcat_item_count + ')' : '' %>
                   </span>
                 <% end %>
               </li>

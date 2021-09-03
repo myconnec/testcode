@@ -1,9 +1,13 @@
-<!-- Product filter Start -->
+<!-- Breadcrumb Start -->
 <div class="breadcrumb-wrapper"></div>
     <ol class="breadcrumb">
     <li><a href="index.html">Home</a></li>
-    <li><span> / </span> Category </li>
-    <li><span> / </span> Sub-Category</li>
+    <% if (@category) %>
+        <li><span>&nbsp;&nbsp;/&nbsp;&nbsp;</span> <%= category.name %></li>
+    <% end %>
+    <% if (@subcategory) %>
+        <li><span>&nbsp;&nbsp;/&nbsp;&nbsp;</span> <%= subcategory.name %></li>
+    <% end %>
     </ol>
 </div>
-<!-- Product filter End -->
+<!-- Breadcrumb End -->
