@@ -1,0 +1,20 @@
+<!-- Page Header Start -->
+<div class="page-header" style="background: url(/assets/img/coffeecup.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb-wrapper">
+                    <% if defined?(title) %>
+                        <h2 class="product-title"><%= title %></h2>
+                    <% end %>
+                    <% if defined?(bread_crumb_path) %>
+                        <ol class="breadcrumb">
+                            <li><%= bread_crumb_path %></li>
+                        <ol>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page Header End -->  
