@@ -4,32 +4,32 @@
     <div class="widget categories">
       <h4 class="widget-title">All Categories</h4>
       <ul class="categories-list">
-    
         <% @categories.each do |category| %>
         <li>
           <%= link_to category_path(category.id) do %>
             <i class="fas fa-<%= category.icon %>"></i>
             <%= category.name %>
-            <span class="category-counter">(
+            <span class="category-counter">
               <% count = category.listing_count(category.id) %>
-              <%= count > 0 ? count : '' %>)
+              <%= count > 0 ? count : '' %>
             </span>
           <% end %>
 
           <% if (!@subcategory and category.id == params[:id].to_i) or (@subcategory and category.id == params[:category_id].to_i) %>
-          <ul>
+          <ul style="padding-left: 25px;">
             <% category.subcategories.each do |subcategory| %>
-            <li>
-                <%= link_to category_path(category, subcategory) do %>
+              <li>
+                <%= link_to category_subcategory_path(category.id, subcategory.id) do %>
                   <i class="fas fa-<%= category.icon %>"></i>
-                  <%= sub_category.name %>
-                <span class="cat_item_count">
-                  <% count = category.listing_count(category.id, subcategory.id) %>
-                  <%= count > 0 ? count : '' %>
-                </span>
-              <% end %>
-            </li>
+                  <%= subcategory.name %>
+                  <span class="category-counter">
+                    <% count = subcategory.listing_count(category.id, subcategory.id) %>
+                    <%= count > 0 ? count : '' %>
+                  </span>
+                <% end %>
+              </li>
             <% end %>
+            
           </ul>
           <% end %>
 
