@@ -13,10 +13,7 @@
                             resource,
                             as: resource_name,
                             url: user_registration_path,
-                            html: {
-                                class: "login-form"
-                                role: "form"
-                            }
+                            html: { class: "login-form" }
                         ) do |f| %>
                         <div class="form-group">
                             <%= devise_error_messages! %>
