@@ -3,24 +3,42 @@
 } %>
 
 <!-- Content section Start --> 
-<section class="devise section-padding">
+<section class="login section-padding">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-12 col-xs-12">
-                <div class="devise-form devise-area">
+                <div class="login-form login-area">
                     <h3>Sign In</h3>
-                    <%= form_for( resource, as: resource_name, url: user_session_path(resource_name), html: {class: "devise-form", role: "form"}) do |f| %>
-                        <%= devise_error_messages! %>
+                    <%= form_for(
+                        resource,
+                        as: resource_name,
+                        url: user_session_path(resource_name),
+                        html: { class: "login-form", role: "form"}
+                    ) do |f| %>
+                        <div class="form-group">
+                            <%= devise_error_messages! %>
+                        </div>
                         <div class="form-group">
                             <div class="input-icon">
-                            <i class="lni-envelope"></i>
-                            <%= f.email_field :email, placeholder:"Email", class: "form-control", autofocus: true, name: "email" %>
+                                <i class="lni-envelope"></i>
+                                <%= f.email_field :email,
+                                    autofocus: true,
+                                    class: "form-control",
+                                    id: "sender-email",
+                                    name: "email",
+                                    placeholder:"Email Address"
+                                %>
                             </div>
                         </div> 
                         <div class="form-group">
                             <div class="input-icon">
-                            <i class="lni-lock"></i>
-                            <%= f.password_field :password, placeholder:"Password", class: "form-control",name: "emai", autocomplete: "off" %>
+                                <i class="lni-lock"></i>
+                                <%= f.password_field :password,
+                                    autocomplete: "off" ,
+                                    class: "form-control",
+                                    name: "password",
+                                    placeholder:"Password"
+                                %>
                             </div>
                         </div>
                         <div class="form-group mb-3">
@@ -34,11 +52,10 @@
                         <div class="text-center">
                             <%= f.submit "Log in", class: "btn btn-common log-btn" %>
                         </div>
-
                         <div class="form-group mt-4">
                             <ul class="form-links">
                             <li class="float-left">
-                                <%= link_to "Don't have an account?", '/users/sign_up' %><br>
+                                <%= link_to "Don't have an account?", '/users/sign_up' %>
                             </li>
                             <li class="float-right">
                                 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
@@ -47,6 +64,7 @@
                             </li>
                             </ul>
                         </div> 
+                
                     <% end %>
                 </div>
             </div>
