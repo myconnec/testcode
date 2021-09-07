@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validate :password, :password_complexity
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :username, format: { with: /\A[a-zA-Z0-9\'\ \-]*\z/ }
+  validates :username, format: { with: /\A[a-zA-Z0-9\'\ \-_]*\z/ }
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "150x150>" }, default_url: "no-photo-available.png"
 
@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
     # source https://stackoverflow.com/questions/13759091/does-ruby-regular-expression-have-a-not-match-operator-like-in-perl#13759167
     # source https://stackoverflow.com/questions/19478173/validating-presence-of-has-secure-password-only-when-password-is-in-params
     if !password.nil? and password !~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~!@#$%^&*()_+-=]).{8,128}$/
-      errors.add :password, "Complexity requirement not met. Length should be 8-128 characters and include: 1 uppercase (A-Z), 1 lowercase (a-z), 1 digit (0-9) and 1 special character (~!@#$%^&*()_+`-=)."
+      errors.add :password, "Password complexity requirement not met. Length should be 8-128 characters and include: 1 uppercase (A-Z), 1 lowercase (a-z), 1 digit (0-9) and 1 special character (~!@#$%^&*()_+`-=)."
     end
   end
 end
