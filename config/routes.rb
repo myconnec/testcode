@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   end
 
   # Static Pages
-  # TODO removed unused
   match '/about', to: 'pages#about', via: :get
   match '/career', to: 'pages#career', via: :get
   match '/contact', to: 'pages#contact', via: :get
