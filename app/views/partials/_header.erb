@@ -14,6 +14,7 @@
             </button>
             <a href="/" class="navbar-brand"><img src="/assets/img/ch_small_grey.png" alt=""></a>
         </div>
+
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav mr-auto w-100 justify-content-left">
                 <li class="nav-item dropdown">
@@ -32,20 +33,22 @@
                 </a>
             </li>
             </ul>
+
             <% if user_signed_in? %>
             <div class="header-top-right float-right">
-            <%= link_to 'Your Profile', user_path(current_user.username) %>
-            <%= link_to 'Edit Your Account', edit_user_registration_path %>
-            <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+                <%= link_to 'Your Profile', user_path(current_user.username) %>
+                <%= link_to 'Edit Your Account', edit_user_registration_path %>
+                <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
             </div>
             <% else %>
             <div class="header-top-right float-right">
-            <a href="/users/sign_in" class="header-top-button"><i class="lni-lock"></i> Sign In</a> |
-            <a href="/users/sign_up" class="header-top-button"><i class="lni-pencil"></i> Sign Up</a>
+                <a href="/users/sign_in" class="header-top-button"><i class="lni-lock"></i> Sign In</a> |
+                <a href="/users/sign_up" class="header-top-button"><i class="lni-pencil"></i> Sign Up</a>
             </div>
             <% end %>
+
             <div class="post-btn">
-            <a class="btn btn-common" href="<%= new_listing_path %>"><i class="lni-pencil-alt"></i> Post an Ad</a>
+                <a class="btn btn-common" href="<%= new_listing_path %>"><i class="lni-pencil-alt"></i> Post an Ad</a>
             </div>
         </div>
         </div>

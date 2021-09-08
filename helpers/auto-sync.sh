@@ -15,9 +15,7 @@ export CONTROL_PATH="$HOME/.ssh/connechub/%L-%r@%h:%p"
 export REMOTE_HOST=$2 #"18.144.166.69"
 export SSH_KEY=$1     #"~/.ssh/aws-connechub-dev.pem"
 
-if [[ ! -d "$HOME/.ssh/connechub/" ]]; then
-    mkdir "$HOME/.ssh/connechub/"
-fi
+rm -rf "$HOME/.ssh/connechub/" || true
 
 echo "INFO: Confirm tooling installed..."
 if [[ "$OSTYPE" == "linux-gnu"* && ! $(which inotify-tools) ]]
