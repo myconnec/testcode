@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   # :lockable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
   has_many :listings, dependent: :destroy
@@ -6,14 +7,13 @@ class User < ActiveRecord::Base
   validates_acceptance_of :tos_agreement, :allow_nil => false, :accept => true, :on => :create
   validates_uniqueness_of :username, :email
   validates_presence_of :email
-  # validates_presence_of :password
+  validates_presence_of :password
   validate :password, :password_complexity
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, format: { with: /\A[a-zA-Z0-9\'\ \-_]*\z/ }
 
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "150x150>" }, default_url: "no-photo-available.png"
-
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   def password_complexity

@@ -14,7 +14,6 @@
             </button>
             <a href="/" class="navbar-brand"><img src="/assets/img/ch_small_grey.png" alt=""></a>
         </div>
-
         <div class="collapse navbar-collapse" id="main-navbar">
             <ul class="navbar-nav mr-auto w-100 justify-content-left">
                 <li class="nav-item dropdown">
@@ -36,9 +35,8 @@
 
             <% if user_signed_in? %>
             <div class="header-top-right float-right">
-                <%= link_to 'Your Profile', user_path(current_user.username) %>
-                <%= link_to 'Edit Your Account', edit_user_registration_path %>
-                <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+                <%= link_to(user_path(current_user.username), class: "header-top-button") do %><i class="lni-lock"></i> Your Profile<% end %>
+                <%= link_to(destroy_user_session_path, method: :delete, class: "header-top-button") do %><i class="lni-exit"></i> Logout<% end %>
             </div>
             <% else %>
             <div class="header-top-right float-right">

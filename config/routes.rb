@@ -51,7 +51,11 @@ Rails.application.routes.draw do
   match '/listings/show_json/:id', to: 'listings#show_json', via: :get
 
   # User (Device)
-  devise_for :users
+  devise_for :users, :controllers => {
+  :registrations => "registrations"
+  }
+  get ':username' => 'users#show', as: 'user'
+  match '/users/update', to: 'users#update', via: :put
 
   root 'categories#index'
 end
