@@ -52,7 +52,7 @@ Rails.application.routes.draw do
 
   # User (Device)
   devise_for :users, :controllers => {
-  :registrations => "registrations"
+    :registrations => "registrations"
   }
   get ':username' => 'users#show', as: 'user'
   match '/users/update', to: 'users#update', via: :put

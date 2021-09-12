@@ -4,8 +4,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
   has_many :listings, dependent: :destroy
 
-  # validates_acceptance_of :tos_agreement, :allow_nil => false, :accept => true, :on => :create
-  validates :agreement, acceptance: { accept: true }, :on => :create
+  # validates :agreement, acceptance: { accept: true }, :on => :create
 
   validates_uniqueness_of :username, :email
   validates_presence_of :email

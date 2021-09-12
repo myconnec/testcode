@@ -33,13 +33,13 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/contact"> Contact </a>
-                        Z</li>
+                        </li>
                         <% if user_signed_in? %>
                         <li class="nav-item">
-                            <%= link_to(user_path(current_user.username), class: "header-top-button" ) do %><i class="lni-lock"></i>Your Profile<% end %>
+                            <%= link_to(user_path(current_user.username), class: "nav-link" ) do %> <i class="lni-lock"></i> Your Profile<% end %>
                         </li>
                         <li class="nav-item">
-                            <%= link_to(destroy_user_session_path, method: :delete, class: "header-top-button" ) do %><i class="lni-exit"></i> Logout<% end %>
+                            <%= link_to(destroy_user_session_path, method: :delete, class: "nav-link" ) do %> <i class="lni-exit"></i> Logout<% end %>
                         </li>
                         <% else %>
                         <li class="nav-item">
