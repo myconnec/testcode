@@ -22,15 +22,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update(user_params)
 
-    logger.debug user.errors.full_messages
+    if !@user.save
+      return redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
+    end
 
-    return
-
-    # if !@user.save
-    #   return redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
-    # end
-
-    # redirect_to action: "show", username: @user.username, :flash => { :success => "Profile updated successfully." }
+    return redirect_to "/users/edit", :flash => { :success => "Profile updated successfully." }
   end
 
   private
