@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
 
   validates_uniqueness_of :username, :email
   validates_presence_of :email
-  validates_presence_of :password
   validate :password, :password_complexity
 
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }

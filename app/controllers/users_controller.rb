@@ -20,13 +20,14 @@ class UsersController < ApplicationController
     end
   
     @user = User.find(params[:user][:id])
-    @user.update(user_params)
+    @user.update_attributes(user_params)
 
     if !@user.save
-      return redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
+      redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
+      return
     end
 
-    return redirect_to "/users/edit", :flash => { :success => "Profile updated successfully." }
+    redirect_to "/users/edit", :flash => { :success => "Profile updated successfully." }
   end
 
   private
@@ -47,6 +48,6 @@ class UsersController < ApplicationController
   def catch_not_found
     yield
   rescue
-    redirect_to root_url, :flash => { :danger => "Sorry, a problem occured while loading your profile." }
+    redirect_to request.referer, :flash => { :danger => "Sorry, a problem has occured. Please let an admin know about this." }
   end
 end
