@@ -23,11 +23,12 @@ class UsersController < ApplicationController
     @user.update_attributes(user_params)
 
     if !@user.save
-      redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
-      return
+      flash[:danger] = @user.errors.full_messages.to_sentence
+    else
+      flash[:success] = "Profile updated successfully."
     end
 
-    redirect_to "/users/edit", :flash => { :success => "Profile updated successfully." }
+    redirect_to(:back)
   end
 
   private
@@ -48,6 +49,7 @@ class UsersController < ApplicationController
   def catch_not_found
     yield
   rescue
+    # source https://stackoverflow.com/questions/2139996/how-to-redirect-to-previous-page-in-ruby-on-rails
     redirect_to request.referer, :flash => { :danger => "Sorry, a problem has occured. Please let an admin know about this." }
   end
 end

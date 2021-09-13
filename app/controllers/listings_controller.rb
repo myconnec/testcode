@@ -56,10 +56,10 @@ class ListingsController < ApplicationController
 
     if !@listing.save
       flash[:danger] = "An error occured while updating your Listing as sold."
-      redirect_to(:back)
+    else
+      flash[:success] = "Listing marked as SOLD. It will not longer be visible to other users."
     end
 
-    flash[:success] = "Listing marked as SOLD. It will not longer be visible to other users."
     redirect_to(:back)
   end
 
