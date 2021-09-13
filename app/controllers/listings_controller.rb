@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-  around_filter :catch_not_found
+#  around_filter :catch_not_found
   impressionist actions: [:show], unique: [:session_hash]
 
   before_action :set_s3_direct_post, only: [:upload]
