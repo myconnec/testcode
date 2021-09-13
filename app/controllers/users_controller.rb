@@ -18,15 +18,19 @@ class UsersController < ApplicationController
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
-
+  
     @user = User.find(params[:user][:id])
     @user.update(user_params)
 
-    if !@user.save
-      return redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
-    end
+    logger.debug user.errors.full_messages
 
-    redirect_to action: "show", username: @user.username, :flash => { :success => "Profile updated successfully." }
+    return
+
+    # if !@user.save
+    #   return redirect_to "/users/edit", :flash => { :danger => @user.errors.full_messages.to_sentence }
+    # end
+
+    # redirect_to action: "show", username: @user.username, :flash => { :success => "Profile updated successfully." }
   end
 
   private

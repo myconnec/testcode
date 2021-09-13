@@ -97,7 +97,7 @@ JS INDEX
   /*====================================
   Tooltip Toggle
   ======================================*/
-  $('[data-toggle="tooltip"]').tooltip()
+  // $('[data-toggle="tooltip"]').tooltip()
 
   /*====================================
   Testimonials Carousel 
