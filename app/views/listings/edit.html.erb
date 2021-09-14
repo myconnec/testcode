@@ -136,8 +136,8 @@
 
                     <div class="input-group">
                         <div class="input-group-addon">Description</div>
-                        <%= f.input :description,
-                            as: :trix_editor,
+                        <%= f.text_field :description,
+                            # as: :trix_editor,
                             class: "form-control",
                             label: false,
                             maxlength: "2048",
