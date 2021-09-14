@@ -8,7 +8,7 @@
 
             <div class="panel-body">
 
-                <%= simple_form_for(@listing,
+                <%= form_for(@listing,
                     :url => url_for(:action => 'create_payment', :controller => 'listings'),
                     :method => 'post',
                     html: {

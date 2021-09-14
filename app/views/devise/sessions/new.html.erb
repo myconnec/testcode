@@ -13,7 +13,7 @@
                     <%= form_for(
                         resource,
                         as: resource_name,
-                        url: user_session_path,
+                        url: session_path(resource_name),
                         html: { class: "login-form", role: "form"}
                     ) do |f| %>
                         <div class="form-group">

@@ -9,7 +9,7 @@
 
             <div class="panel-body">
 
-                <%= simple_form_for(@listing, html: {
+                <%= form_for(@listing, html: {
                     authenticity_token: true,
                     data: {
                         'form-data' => (@s3_direct_post.fields),

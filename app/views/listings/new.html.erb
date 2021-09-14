@@ -18,7 +18,7 @@
                             </div>
                             <div class="dashboard-wrapper">
                                 <%= render :partial=> 'partials/flash_msg' %>
-                                <%= simple_form_for(
+                                <%= form_for(
                                     @listing,
                                     html: {
                                         authenticity_token: true,

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  around_filter :catch_not_found
+  # around_filter :catch_not_found
   before_filter :authenticate_user!
 
   def show

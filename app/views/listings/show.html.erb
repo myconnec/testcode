@@ -69,7 +69,7 @@
             <hr>
             <span>
                 <b>
-                    <%= simple_format (@listing.title) %>
+                    <%= form_for (@listing.title) %>
                 </b>
                 <% if @user.present? %>
                     <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
@@ -87,7 +87,7 @@
         <br>
 
         <div>
-            <%= simple_format (@listing.description) %>
+            <%= form_for (@listing.description) %>
         </div>
         <hr>
 
