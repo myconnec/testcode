@@ -1,11 +1,9 @@
 class User < ActiveRecord::Base
 
-  # :lockable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :timeoutable
   has_many :listings, dependent: :destroy
 
-  # validates :agreement, acceptance: { accept: true }, :on => :create
-
+  # TODO validates :agreement, acceptance: { accept: true }, :on => :create
   validates_uniqueness_of :username, :email
   validates_presence_of :email
   validate :password, :password_complexity
