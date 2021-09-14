@@ -8,8 +8,9 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:agreement, :username, :email])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :bio, :avatar])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :email, :password, :agreement])
+    devise_parameter_sanitizer.permit(:log_in, keys: [:email, :password, :remember_me])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :bio, :avatar, :password])
   end
 
   def get_categories

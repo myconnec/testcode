@@ -17,6 +17,7 @@
                                 <h2 class="dashbord-title">Create A New Listing</h2>
                             </div>
                             <div class="dashboard-wrapper">
+                                <%= render :partial=> 'partials/flash_msg' %>
                                 <%= simple_form_for(
                                     @listing,
                                     html: {

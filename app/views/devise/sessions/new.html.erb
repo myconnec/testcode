@@ -9,6 +9,7 @@
             <div class="col-lg-5 col-md-12 col-xs-12">
                 <div class="login-form login-area">
                     <h3>Sign In</h3>
+                    <%= render :partial=> 'partials/flash_msg' %>
                     <%= form_for(
                         resource,
                         as: resource_name,
@@ -26,7 +27,8 @@
                                     class: "form-control",
                                     id: "sender-email",
                                     name: "email",
-                                    placeholder:"Email Address"
+                                    placeholder:"Email Address",
+                                    value: "testuser@testemail.com"
                                 %>
                             </div>
                         </div> 
@@ -37,7 +39,8 @@
                                     autocomplete: "off" ,
                                     class: "form-control",
                                     name: "password",
-                                    placeholder:"Password"
+                                    placeholder:"Password",
+                                    value: "~Asdf1234"
                                 %>
                             </div>
                         </div>

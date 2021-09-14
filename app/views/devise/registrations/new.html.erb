@@ -9,6 +9,7 @@
             <div class="col-lg-5 col-md-12 col-xs-12">
                 <div class="register-form login-area">
                     <h3>Sign Up</h3>
+                        <%= render :partial=> 'partials/flash_msg' %>
                         <%= form_for(
                             resource,
                             as: resource_name,
@@ -70,7 +71,7 @@
                         </div>
                         <div class="form-group mt-4">
                             <ul class="form-links">
-                                <li class="float-right"><a href="/users/sign_in">Back to Login</a></li>
+                                <li class="float-right"><a href="/users/sign_in">Back to Sign In</a></li>
                             </ul>
                         </div> 
                     <% end %>
