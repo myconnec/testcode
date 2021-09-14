@@ -41,7 +41,7 @@
                             <%= link_to(user_path(current_user.username), class: "nav-link" ) do %> <i class="lni-lock"></i> Your Profile<% end %>
                         </li>
                         <li class="nav-item">
-                            <%= link_to(destroy_user_session_path, method: :delete, class: "nav-link" ) do %> <i class="lni-exit"></i> Logout<% end %>
+                            <%= link_to(destroy_user_session_path, class: "nav-link" ) do %> <i class="lni-exit"></i> Sign Out<% end %>
                         </li>
                         <% else %>
                         <li class="nav-item">
