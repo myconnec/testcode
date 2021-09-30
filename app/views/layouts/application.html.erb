@@ -25,6 +25,11 @@
     <!-- Responsive Style -->
     <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
 
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/popper.js"></script>
+    <script src="/assets/js/bootstrap.js"></script>
+
     <%= render "partials/header_meta" %>
 
     <% if @listing and @listing.media_file_name %>
@@ -65,10 +70,6 @@
     <%= render "partials/footer" %>
 
     <%= javascript_include_tag 'application' %>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/assets/js/jquery.js"></script>
-    <script src="/assets/js/popper.js"></script>
-    <script src="/assets/js/bootstrap.js"></script>
 
     <script src="/assets/js/jquery.counterup.js"></script>
     <script src="/assets/js/waypoints.js"></script>
