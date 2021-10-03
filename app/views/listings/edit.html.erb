@@ -166,13 +166,3 @@
 </div>
 
 <%= render :partial => 'partials/processing_overlay' %>
-
-<script>
-$(function () {
-    $('#listings_submit').on('click', function(){
-        if (document.getElementById('edit_listing_*').checkValidity() == true){
-            $("#overlay").toggle()
-        }
-    })
-})
-<script>

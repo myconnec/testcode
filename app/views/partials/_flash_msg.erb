@@ -5,7 +5,12 @@ flash.each do |key, value|
     if key == 'alert'
         key = 'danger'
     end
-
+    if key == 'notice'
+        key = 'info'
+    end
+    if key == 'success'
+        key = 'success'
+    end
 %>
 
 <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">

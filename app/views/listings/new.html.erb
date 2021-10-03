@@ -87,7 +87,7 @@
                                             required: true,
                                             type: "regexp",
                                             maxlength: "256",
-                                            pattern: "[A-Za-z0-9!$,.?\ ]+{256}",
+                                            pattern: "[A-Za-z0-9!$,.? ]+{256}",
                                             placeholder: "Name of the item you want to sell."
                                         %>
                                     </div>
@@ -98,7 +98,7 @@
                                             required: true,
                                             type: "text",
                                             maxlength: "32",
-                                            pattern: "[A-Za-z\s]+",
+                                            pattern: "[A-Za-z]+",
                                             placeholder: "exp. Sometown"
                                         %>
                                     </div>
@@ -131,7 +131,7 @@
                                             class: "form-control",
                                             label: false,
                                             maxlength: "2048",
-                                            pattern: "[A-Za-z\s!$,.?]+{2048}",
+                                            pattern: "[A-Za-z!$,.?]+{2048}",
                                             placeholder: "exp. Describe the item for sale as detailed as possible. Text, numbers, and punctuation are allowed.",
                                             required: true,
                                             type: "text"

@@ -1,9 +1,13 @@
 <script>
 $(function () {
-    $('#listings_submit').on('click', function(){
+    $("form").submit(function () {
+        console.log('Form submit detected.')
         if (document.getElementById('edit_listing_*').checkValidity() == true){
             $("#overlay").toggle()
         }
     })
 })
 </script>
+<div id="overlay">
+    <%= image_tag("loading_spinner.gif", :alt => ENV['NAME']) %>
+</div>
