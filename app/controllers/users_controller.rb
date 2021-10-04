@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  # around_filter :catch_not_found
   before_filter :authenticate_user!
 
   def show
@@ -44,12 +43,5 @@ class UsersController < ApplicationController
       :password,
       :reset_password_token,
     )
-  end
-
-  def catch_not_found
-    yield
-  rescue
-    # source https://stackoverflow.com/questions/2139996/how-to-redirect-to-previous-page-in-ruby-on-rails
-    redirect_to request.referer, :flash => { :danger => "Sorry, a problem has occured. Please let an admin know about this." }
   end
 end

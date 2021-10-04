@@ -1,10 +1,11 @@
 class ListingsController < ApplicationController
-#  around_filter :catch_not_found
   impressionist actions: [:show], unique: [:session_hash]
 
   before_action :set_s3_direct_post, only: [:upload]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update, :upvote]
   before_action :is_user?, only: [:create_payment, :destroy, :payment, :sold, :update, :upload_update, :upload]
+
+  skip_before_action :verify_authenticity_token
 
   def index
     redirect_to "/"
@@ -238,12 +239,5 @@ class ListingsController < ApplicationController
       key: "#{SecureRandom.uuid}/${filename}",
       success_action_status: "201",
     )
-  end
-
-  def catch_not_found
-    yield
-    # TODO maybe more specific errors here?
-  rescue
-    redirect_to root_url, :flash => { :danger => "Sorry, that was not found. Maybe it has already gone away?" }
   end
 end

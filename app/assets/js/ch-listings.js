@@ -39,7 +39,7 @@ $(document).on('ready', function () {
     if (location.host == 'dev.connechub.com') {
         $('select#listing_category_id>option:eq(1)').attr('selected', true);
         $('#listing_price').val('10');
-        $('#listing_condition_id').val('1')
+        $('#listing_condition_id').val('3');
         $('#listing_title').val('Test Title ' + Date.now());
         $('#listing_city').val('Tampa');
         $('#listing_state').val('FL');

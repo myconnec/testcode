@@ -1,5 +1,5 @@
 <%= render :partial => 'partials/header_page_title', locals: {
-    title: 'Post an Ad'
+    title: 'Post an Ad - Add Media'
 } %>
 
 <!-- Start Content -->
@@ -53,7 +53,7 @@
 
                                 <div class="input-group">
                                     <div class="actions">
-                                        <button class="btn btn-success" id="listings_submit">Complete Listing</button>
+                                        <button class="btn btn-success" id="listings_submit">Add Media</button>
                                     </div>
                                 </div>
 
@@ -65,6 +65,7 @@
         </div>
     </div>
 </div>
+<!-- End Content -->
 
 <%= render :partial => 'partials/processing_overlay' %>
 
@@ -92,7 +93,6 @@ $(function () {
             var infos = document.getElementById('listing_media_info');
             infos.textContent = "";
             for (var i = 0; i < media_file.length; i++) {
-                // infos.textContent += media_file[i].name + " duration: " + media_file[i].duration + '\n';
                 infos.textContent = "Duration: " + sec2time(media_file[i].duration) + '\n';
             }
         }
@@ -132,7 +132,6 @@ $(function () {
             replaceFileInput: false,
             add: function (e, data) {
                 $('button#listings_submit').off('click').on('click', function () {
-                    $("#overlay").toggle()
                     data.submit();
                 });
             },
@@ -141,6 +140,7 @@ $(function () {
                 progressBar.css('width', progress + '%')
             },
             start: function (e) {
+                $("#overlay").toggle('on')
                 submitButton.prop('disabled', true);
                 progressBar.
                     css('background', 'green').
@@ -168,15 +168,19 @@ $(function () {
                     dataType: 'json',
                     statusCode: {
                         200: function() {
-                            window.location.href = "//" + window.location.hostname
+                            window.location.href = "//" + window.location.hostname + "/<%= current_user.username %>"
                         },
                         404: function() {
+                            location.reload();
+                        },
+                        422: function() {
                             location.reload();
                         }
                     }
                 })
             },
             fail: function(e, data) {
+                $("#overlay").toggle('off')
                 submitButton.prop('disabled', false);
                 progressBar.
                     css("background", "red").
