@@ -56,4 +56,30 @@ class Listing < ActiveRecord::Base
       .limit(count.to_i)
     listings
   end
+
+  def self.user_active(user_id)
+    listings = Listing.where(user_id: user_id.to_i)
+      .where("ending_at > '#{Time.now.to_i}'")
+      .where("media_file_name IS NOT NULL")
+      .order("created_at ASC")
+    listings
+  end
+
+  def self.user_free(user_id)
+    Listing.where("user_id = '#{user_id.to_i}'")
+      .where("ending_at > '#{Time.now.to_i}'")
+      .where("media_file_name IS NOT NULL")
+      .where("sold IS NULL")
+      .where("charge_amount = 0")
+      .count()
+  end
+
+  def self.user_paid(user_id)
+    Listing.where("user_id = '#{user_id.to_i}'")
+      .where("ending_at > '#{Time.now.to_i}'")
+      .where("media_file_name IS NOT NULL")
+      .where("sold IS NULL")
+      .where("charge_amount <> 0")
+      .count()
+  end
 end

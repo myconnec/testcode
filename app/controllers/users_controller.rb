@@ -4,11 +4,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by username: params[:username]
 
-    @listings = Listing
-      .where(user_id: @user.id)
-      .where("ending_at > '#{Time.now.to_i}'")
-      .where("media_file_name IS NOT NULL")
-      .order("created_at DESC")
+    @user_listings_user_active = Listing.user_active(@user.id)
+    @user_listing_header_free  = Listing.user_free(@user.id)
+    @user_listing_header_paid  = Listing.user_paid(@user.id)
+    @user_listing_header_cmmt  = Comment.user_count(@user.id)
   end
 
   def update

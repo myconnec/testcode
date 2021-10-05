@@ -6,15 +6,21 @@
 <div id="content" class="section-padding">
     <div class="container">
         <div class="row">
-            <%= render :partial=> 'users/partials/side_menu', locals: {
+            <%= render :partial => 'users/partials/side_menu', locals: {
                 current_user: current_user
             } %>
             <div class="col-sm-12 col-md-8 col-lg-9">
                 <div class="page-content">
                     <div class="inner-box">
                         <div class="dashboard-wrapper">
-                            <%= render :partial => 'users/partials/item_summary' %>
-                            <%= render :partial => 'users/partials/item_card_mini' %>
+                            <%= render :partial => 'users/partials/item_summary', locals: {
+                                user_listing_header_free: @user_listing_header_free,
+                                user_listing_header_paid: @user_listing_header_paid,
+                                user_listing_header_cmmt: @user_listing_header_cmmt,
+                            } %>
+                            <%= render :partial => 'users/partials/item_card_mini', locals: {
+                                user_listings_user_active: @user_listings_user_active
+                            } %>
                         </div>
                     </div>
                 </div>

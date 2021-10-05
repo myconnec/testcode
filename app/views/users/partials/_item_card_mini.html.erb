@@ -1,69 +1,35 @@
-<table class="table table-responsive dashboardtable tablemyads">
+
+<table class="table table-responsive dashboardtable tablemyads" width="100%">
     <thead>
         <tr>
-        <th>
-            <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="checkedall">
-            <label class="custom-control-label" for="checkedall"></label>
-            </div>
-        </th>
-        <th>Photo</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Ad Status</th>
-        <th>Price</th>
-        <th>Action</th>
+            <th>Thumbnail</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
+        <% @user_listings_user_active.each do |listing| %>
         <tr data-category="active">
-            <td>
-                <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="adone">
-                <label class="custom-control-label" for="adone"></label>
-                </div>
+            <td class="photo">
+                <img
+                    alt="<%= listing.title %>"
+                    class="img-fluid"
+                    src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3<%= (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION'])  %>.amazonaws.com/<%= URI::encode(listing.media_file_name) %>-2m-00001.png"
+                >
             </td>
-            <td class="photo"><img class="img-fluid" src="assets/img/product/img1.jpg" alt=""></td>
-            <td data-title="Title">
-                <h3>Item 1</h3>
-            </td>
-            <td data-title="Category"><span class="adcategories">Laptops & PCs</span></td>
-            <td data-title="Ad Status"><span class="adstatus adstatusactive">active</span></td>
-            <td data-title="Price">
-                <h3>139.00</h3>
-            </td>
+            <td data-title="Title"><h3><%= listing.title %></h3></td>
+            <td data-title="Category"><span class="adcategories"><%= listing.description %></span></td>
+            <td data-title="Price"><h3><%= listing.charge_amount %></h3></td>
             <td data-title="Action">
                 <div class="btns-actions">
-                <a class="btn-action btn-view" href="#"><i class="lni-eye"></i></a>
-                <a class="btn-action btn-edit" href="#"><i class="lni-pencil"></i></a>
-                <a class="btn-action btn-delete" href="#"><i class="lni-trash"></i></a>
+                <a class="btn-action btn-view"   href="./listings/<%= listing.id %>"><i class="lni-eye"></i></a>
+                <a class="btn-action btn-edit"   href="./listings/<%= listing.id %>"><i class="lni-pencil"></i></a>
+                <a class="btn-action btn-delete" href="./listings/<%= listing.id %>"><i class="lni-trash"></i></a>
                 </div>
             </td>
         </tr>
-        <tr data-category="active">
-            <td>
-                <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="adone">
-                <label class="custom-control-label" for="adone"></label>
-                </div>
-            </td>
-            <td class="photo"><img class="img-fluid" src="assets/img/product/img1.jpg" alt=""></td>
-            <td data-title="Title">
-                <h3>Item 2</h3>
-            </td>
-            <td data-title="Category"><span class="adcategories">Laptops & PCs</span></td>
-            <td data-title="Ad Status"><span class="adstatus adstatusactive">active</span></td>
-            <td data-title="Price">
-                <h3>139.00</h3>
-            </td>
-            <td data-title="Action">
-                <div class="btns-actions">
-                <a class="btn-action btn-view" href="#"><i class="lni-eye"></i></a>
-                <a class="btn-action btn-edit" href="#"><i class="lni-pencil"></i></a>
-                <a class="btn-action btn-delete" href="#"><i class="lni-trash"></i></a>
-                </div>
-            </td>
-        </tr>
-        <!-- Repeat TR per item-->
+        <% end %>
     </tbody>
 </table>
