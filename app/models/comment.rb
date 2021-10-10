@@ -7,8 +7,6 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body
   
   def self.user_count(user_id)
-    return 1234
-    # need listing_id -> listing.user_id
     Listing.where("user_id = '#{user_id.to_i}'")
       .where("ending_at > '#{Time.now.to_i}'")
       .where("media_file_name IS NOT NULL")

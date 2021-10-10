@@ -82,4 +82,12 @@ class Listing < ActiveRecord::Base
       .where("charge_amount <> 0")
       .count()
   end
+
+  def self.listing_views(listing_id)
+    sql = "SELECT count(id) AS value
+    FROM impressions
+    WHERE impressionable_type = 'Listing'
+    AND impressionable_id = '#{listing_id.to_i}';"
+    ActiveRecord::Base.connection.execute(sql).first[0]
+  end
 end

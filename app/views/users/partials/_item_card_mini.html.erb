@@ -24,9 +24,15 @@
             <td data-title="Price"><h3><%= listing.charge_amount %></h3></td>
             <td data-title="Action">
                 <div class="btns-actions">
-                <a class="btn-action btn-view"   href="./listings/<%= listing.id %>"><i class="lni-eye"></i></a>
-                <a class="btn-action btn-edit"   href="./listings/<%= listing.id %>"><i class="lni-pencil"></i></a>
-                <a class="btn-action btn-delete" href="./listings/<%= listing.id %>"><i class="lni-trash"></i></a>
+                    <%= link_to listing_path(listing.id), method: :get, class: 'btn-action btn-view' do %>
+                        <i class="lni-eye"></i>
+                    <% end %>
+                    <%= link_to listing_path(listing.id), method: :put, class: 'btn-action btn-edit' do %>
+                        <i class="lni-pencil"></i>
+                    <% end %>
+                    <%= link_to listing_path(listing.id), method: :delete, class: 'btn-action btn-delete' do %>
+                        <i class="lni-trash"></i>
+                    <% end %>
                 </div>
             </td>
         </tr>

@@ -1,17 +1,25 @@
-<div class="container_12">
-    <div class="clear"></div>
-    <%= link_to 'Connechub', root_path %> > <%= link_to @listing.category.name, category_path(@listing.category) %> > <%= link_to @listing.subcategory.name, category_subcategory_path(@listing.category, @listing.subcategory) %>
-    <hr>
-    <div class="col-md-6">
-        <p>
-            <div>
+<%= render :partial=> 'partials/header_search_bar', locals: {
+  title: @listing.title
+  } %>
+
+<!-- Ads Details Start -->
+<div class="section-padding">
+  <div class="container">
+
+    <!-- Search Widget -->
+    <div class="col-md-12">
+      <!-- Product Info Start -->
+      <div class="product-info row">
+        <div class="col-lg-8 col-md-12 col-xs-12">
+          <div class="ads-details-wrapper">
+            <div class="product-img">
                 <% # TODO would like to use the rails_videosj GEM but getting VideoJS 7+ is a PITA %>
                 <video
                     class="video-js vjs-default-skin"
                     controls=controls
                     data-setup="{}"
                     height="450"
-                    poster="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3<%= (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION'])  %>.amazonaws.com/<%= URI::encode(@listing.media_file_name) %>-2m-00001.png"
+                    poster="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3<%= (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) %>.amazonaws.com/<%= URI::encode(@listing.media_file_name) %>-2m-00001.png"
                     preload=preload
                     width="450"
                 >
@@ -19,91 +27,117 @@
                         src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3<%= (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) %>.amazonaws.com/<%= URI::encode(@listing.media_file_name) + "_playlist.m3u8" %>"
                         type="application/x-mpegURL"
                     />
-                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+                    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video.</a></p>
                 </video>
-
             </div>
-            <small><b>Posted By: &nbsp;</b><%= @listing.user.email %></small>
-            <br><br><br>
-            <%= @media_url %>
-            <%= render 'comments/comment' %>
-        </p>
-    </div>
-
-    <div class="col-md-6">
-        <div class="post-metadata">
-            <%= image_tag @listing.user.avatar.url(:thumb), class: 'avatar' %>
-            <div class="post-info">
-                <div class="post-title">
-                    <span>
-                        <%= link_to @listing.user.username, user_path(@listing.user.username) %>
-                        <div class= "pull-right price1" ><b>$<%= @listing.price %></b></div>
-                    </span>
-                </div>
-            <i class="fa fa-map-marker" aria-hidden="true"></i> <small class="post-creation"><%= @listing.city %>, <%= @listing.state %> <%= @listing.zipcode %></small>
-        </div>
-    </div>
-    <hr>
-
-    <div class="text-muted">
-        <% if @listing.condition_id? %>
-            <small>Condition: <%= "#{@listing.condition.value}" %></small>
-        <% end %>
-        <small>&nbsp;&nbsp;&nbsp;<i class= "fa fa-eye" aria-hidden="true"></i></small>
-        <small><%= "#{@listing.impressionist_count}" %> views</small>
-        <small>&nbsp;&nbsp;&nbsp;<i class="fa fa-calendar" aria-hidden="true"></i></small>
-        <small><%= time_ago_in_words(@listing.created_at) %></small> @ <small><%= @listing.created_at.to_formatted_s(:short) %></small>
-        <% if params[:action] === 'show' %>
-        <br />
-        <small>&nbsp; &nbsp; &nbsp;<a
-            href="mailto:admin@connechub.com?subject=Reporting%20Post%20<%= @listing.id %>&body=I%20would%20like%20to%20report%20this%20ConnecHub%20post%20for%20violating%20the%20TOS%20/%20EULA%20or%20other%20reason%20(please explain)."
-            style="color:red"
-            target="_new"
-            ><i class="fa fa-flag"></i>Report Post
-        </a></small>
-        <% end %>
-    </div>
-
-    <p>
-        <div class="hero-title">
-            <hr>
-            <span>
-                <b>
-                    <%= form_for (@listing.title) %>
-                </b>
-                <% if @user.present? %>
-                    <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
-                        <i class="fa fa-heart"></i>
-                        <%= @listing.votes_for.size %>
-                    <% end %>
-                <% else %>
-                    <a class="pull-right">
-                        <i class="fa fa-heart"></i>
-                        <%= @listing.votes_for.size %>
+            <span class="price">$<%= @listing.price %></span>
+          </div>
+          <!-- Ad Details will be placed here -->
+          <div class="details-box">
+            <div class="ads-details-info">
+              <h2><%= @listing.title %></h2>
+              <div class="details-meta">
+                <span><i class="lni-alarm-clock"></i> <%= @listing.created_at %></span>
+                <span><i class="lni-map-marker"></i> <%= @listing.city %>, <%= @listing.state %> <%= @listing.zipcode %></span>
+                <span><i class="lni-eye"></i> <%= Listing.listing_views(@listing.id) %> View</span>
+                <span>
+                <% if params[:action]==='show' %>
+                    <a
+                        href="mailto:admin@connechub.com?subject=Reporting%20Post%20<%= @listing.id %>&body=I%20would%20like%20to%20report%20this%20ConnecHub%20post%20for%20violating%20the%20TOS%20/%20EULA%20or%20other%20reason%20(please explain)."
+                        style="color:red"
+                        target="_new"
+                    >
+                        <i class="fa fa-flag"></i> Report This Listing
                     </a>
                 <% end %>
-            </span>
+                </span>
+              </div>
+              <p class="mb-4">
+                <%= @listing.description %>
+              </p>
+            </div>
+            <div class="tag-bottom">
+              <div class="float-left">
+                <ul class="advertisement">
+                  <li>
+                    <p><strong><i class="lni-folder"></i> Categories:</strong>
+                        <%= link_to @listing.subcategory.name, category_subcategory_path(@listing.category, @listing.subcategory) %>
+                    </p>
+                  </li>
+                  <li>
+                    <p><strong><i class="lni-archive"></i> Condition:</strong> <%= "#{@listing.condition.value}" %></p>
+                  </li>
+                  <li>
+
+                    <% if @user.present? %>
+                        <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
+                            <p><strong><i class="lni-heart"></i> Likes:</strong> <%= @listing.votes_for.size %></p>
+                        <% end %>
+                    <% else %>
+                        <p><strong><i class="lni-heart"></i> Likes:</strong> <%= @listing.votes_for.size %></p>
+                    <% end %>
+
+                  </li>
+                </ul>
+              </div>
+              <div class="float-right">
+                <div class="share">
+                  <div class="social-link">
+                    <a class="facebook" data-toggle="tooltip" data-placement="top" title="facebook" href="#"><i
+                        class="lni-facebook-filled"></i></a>
+                    <a class="twitter" data-toggle="tooltip" data-placement="top" title="twitter" href="#"><i
+                        class="lni-twitter-filled"></i></a>
+                    <a class="linkedin" data-toggle="tooltip" data-placement="top" title="linkedin" href="#"><i
+                        class="lni-linkedin-fill"></i></a>
+                    <a class="google" data-toggle="tooltip" data-placement="top" title="google plus" href="#"><i
+                        class="lni-google-plus"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <br>
+        <div class="col-lg-4 col-md-6 col-xs-12">
+          <!--Sidebar-->
+          <aside class="details-sidebar">
+            <div class="widget">
+              <h4 class="widget-title">Ad Posted By</h4>
+              <div class="agent-inner">
+                <div class="agent-title">
+                  <div class="agent-photo">
+                    <a href="viewads.html">
+                        <img src="/assets/img/no-photo-available.png" alt="<%= @listing.user.username %>">
+                    </a>
+                  </div>
+                  <div class="agent-details">
+                    <h3><a href="viewads.html"><%= @listing.user.username %></a></h3>
+                    <span><i class="lni lni-envelope"></i> <%= @listing.user.email %></span>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <object style="border:0; height: 230px; width: 100%;"
+                    data="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d34015.943594576835!2d-106.43242624069771!3d31.677719472407432!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86e75d90e99d597b%3A0x6cd3eb9a9fcd23f1!2sCourtyard+by+Marriott+Ciudad+Juarez!5e0!3m2!1sen!2sbd!4v1533791187584"></object>
+                </div>
+                <div style="text-align:center;"><a class="btn btn-success btn-sm"
+                    href="mailto:davis.ron@hotmail.com?body=Reach%20out%20to%20message%20the%20seller%20about%20their%20ad.&amp;subject=test%20ad">Message
+                    the Seller</a> </div>
+                <br>
 
-        <div>
-            <%= form_for (@listing.description) %>
+                <hr>
+                <div class="comments">
+                  <h4 class="widget-title"> <i class="lni lni-comments-alt"></i> Post a Comment </h4>
+                    <%= render :partial=> 'comments/comment' %>
+                </div>
+              </div>
+            </div>
+
+          </aside>
+          <!--End sidebar-->
         </div>
-        <hr>
-
-        <div class="pull-right"><%= mail_to(@listing.user.email, "Message the Seller", class: 'btn btn-success btn-sm', subject: @listing.title, body: 'Reach out to message the seller about their ad.') %> </div>
-        <br>
-
-        <div>
-            <% if @listing.user == current_user %>
-                <%= link_to 'Change Video', "upload/#{@listing.id}" %> |
-                <%= link_to 'Delete', @listing, method: :delete, data: {confirm: "Are you sure you want to delete this listing?"} %> |
-                <%= link_to 'Edit Listing', edit_listing_path(@listing) %></span>
-            <% end %>
-        </div>
-        <br>
-
-        <script type='text/javascript' src='//platform-api.sharethis.com/js/sharethis.js#property=592c9b0955350600125cfef2&product=sticky-share-buttons' async='async'></script> </p>
+      </div>
+      <!-- Product Info End -->
 
     </div>
+  </div>
 </div>
+  <!-- Listing Details End -->

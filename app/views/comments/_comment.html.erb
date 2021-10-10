@@ -5,7 +5,10 @@
         <hr>
     <% end %>
 
+    <hr>
+
     <small><b>This post has <%= pluralize(@comments.count, "Comment") %></b></small>
+
     <% @comments.each do |comment| %>
     <div class="post-metadata">
         <%= image_tag comment.user.avatar.url(:thumb), class: 'avatar' %>
