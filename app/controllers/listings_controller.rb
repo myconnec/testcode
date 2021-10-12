@@ -1,9 +1,9 @@
 class ListingsController < ApplicationController
   impressionist actions: [:show], unique: [:session_hash]
 
-  before_action :set_s3_direct_post, only: [:upload]
+  before_action :set_s3_direct_post, only: [:upload, :upload_update]
   before_action :authenticate_user!, only: [:new, :create, :edit, :payment, :upload, :upload_update, :upvote]
-  before_action :is_user?, only: [:create_payment, :destroy, :payment, :sold, :update, :upload_update, :upload]
+  before_action :is_user?, only: [:create_payment, :payment, :sold, :update, :upload_update, :upload]
 
   skip_before_action :verify_authenticity_token
 

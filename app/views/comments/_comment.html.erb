@@ -1,23 +1,25 @@
-<div align="left" class="comments">
+<div class="comments">
     <% if user_signed_in? %>
-        <h4>Post a Comment</h4>
-    <%= render 'comments/form' %>
+        <h4 class="widget-title"> <i class="lni lni-comments-alt"></i> Post a Comment </h4>
+        <%= render :partial => 'comments/form' %>
         <hr>
     <% end %>
 
-    <hr>
+    <div>
+        <small><b>This post has <%= pluralize(@comments.count, "Comment") %></b></small>
+    </div>
 
-    <small><b>This post has <%= pluralize(@comments.count, "Comment") %></b></small>
+    <hr>
 
     <% @comments.each do |comment| %>
     <div class="post-metadata">
-        <%= image_tag comment.user.avatar.url(:thumb), class: 'avatar' %>
-        <div class="post-info">
-            <div class="post-title">
-                <span>
+        <div class="agent-title">
+            <div class="agent-photo">>
+                <%= image_tag comment.user.avatar.url(:thumb) %>
                 <%= link_to comment.user.username, user_path(comment.user.username) %>
-                </span>
             </div>
+            <br />
+            <div class="post-info">
                 <small><%= comment.body %></small>
             </div>
         </div>

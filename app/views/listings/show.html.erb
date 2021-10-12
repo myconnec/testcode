@@ -112,9 +112,9 @@
               <div class="agent-inner">
                 <div class="agent-title">
                   <div class="agent-photo">
-                    <a href="viewads.html">
-                        <img src="/assets/img/no-photo-available.png" alt="<%= @listing.user.username %>">
-                    </a>
+                    <%= link_to user_path(current_user.username) do %>
+                      <%= image_tag @listing.user.avatar.url(:thumb), class: 'avatar' %>
+                    <% end %>
                   </div>
                   <div class="agent-details">
                     <h3><a href="viewads.html"><%= @listing.user.username %></a></h3>
@@ -126,17 +126,17 @@
                     data="https://maps.google.com/maps?q=<%= @listing.latitude %>,<%= @listing.longitude %>&hl=en&z=11&output=embed">
                   </object>
                 </div>
-                <% if @user.present? %>
-                
-                <div style="text-align:center;"><a class="btn btn-success btn-sm"
-                    href="mailto:davis.ron@hotmail.com?body=Reach%20out%20to%20message%20the%20seller%20about%20their%20ad.&amp;subject=test%20ad">Email to seller</a> </div>
-                <br>
-                <hr>
-                <div class="comments">
-                  <h4 class="widget-title"> <i class="lni lni-comments-alt"></i> Post a Comment </h4>
-                    <%= render :partial=> 'comments/comment' %>
+                <% # enumerate communication options only if user is signed in %>
+                <div style="text-align:center;">
+                  <% if user_signed_in? %>
+                  <a
+                    class="btn btn-success btn-sm"
+                    href="mailto:<%= @listing.user.email %>?body=Reach%20out%20to%20message%20the%20seller%20about%20their%20ad.&amp;subject=test%20ad"
+                  >Email to seller</a>
+                  <% end%>
                 </div>
-                <% end %>
+                <hr>
+                <%= render :partial => 'comments/comment' %>
               </div>
             </div>
 
