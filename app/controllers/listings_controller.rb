@@ -201,7 +201,7 @@ class ListingsController < ApplicationController
   end
 
   def search
-    # TODO Extracr into a CNTL helper
+    # TODO Extract into a CNTL helper
     @categories = Category.all
 
     # Most Recent 15 Listings for cat#index VS
