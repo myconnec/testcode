@@ -10,7 +10,7 @@
 ## Automation
 
 ```sh
-sudo time ./helpers/run_uat.sh
+sudo time ./libs/run_uat.sh
 ```
 
 ## Manually
@@ -39,7 +39,7 @@ npm update npm
 npm install
 npm audit fix
 
-source ./helpers/.env
+source ./libs/.env
 # mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./db/sql/database.sql
 mysql -u $DB_USER -p$DB_PASS -h $DB_HOST < ./cypress/support/reset-db.sql
 # verbose performance output

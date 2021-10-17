@@ -32,7 +32,7 @@ if [[ ! $(docker images | grep cypress-test-image | grep $APP_VERSION) ]]; then
     docker build \
         -t cypress-test-image:"$APP_VERSION" \
         -t cypress-test-image:latest \
-        -f helpers/Dockerfile \
+        -f libs/Dockerfile \
         .
 fi
 
