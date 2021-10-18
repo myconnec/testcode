@@ -57,5 +57,5 @@ Rails.application.routes.draw do
   get ':username' => 'users#show', as: 'user'
   match '/users/update', to: 'users#update', via: :put
 
-  root 'categories#index'
+  root 'layouts#index'
 end

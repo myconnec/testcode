@@ -1,0 +1,31 @@
+<!-- Categories item Start -->
+<section id="categories" class="section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <div class="heading">
+          <h1 class="section-title">Ad Categories</h1>
+          <h4 class="sub-title">Find what you want</h4>
+        </div>
+      </div>
+
+      <% @categories.each do |category| %>
+      <div class="col-lg-2 col-md-3 col-xs-12">
+        <a href="categories/<%= category.id %>">
+          <div class="category-icon-item" style="background: #<%= category.color %>">
+            <div class="icon-box">
+              <div class="icon">
+                <i class="fas fa-<%= category.icon %>"></i>
+              </div>
+              <h4><%= category.name %></h4>
+                <!-- <p class="categories-listing">11 Listing</p>  -->
+            </div>
+          </div>
+        </a>
+      </div>
+      <% end %>
+
+    </div>
+  </div>
+</section>
+<!-- Categories item End -->

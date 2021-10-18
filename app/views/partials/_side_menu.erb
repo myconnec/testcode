@@ -4,38 +4,36 @@
     <div class="widget categories">
       <h4 class="widget-title">All Categories</h4>
       <ul class="categories-list">
-        <% @categories.each do |category| %>
+
+      <% @categories.each do |category| %>
         <li>
-          <%= link_to category_path(category.id) do %>
+            <%= link_to category_path(category.id) do %>
             <i class="fas fa-<%= category.icon %>"></i>
             <%= category.name %>
             <span class="category-counter">
-              <% cat_item_count = category.listing_count(category.id) %>
-              <%= cat_item_count > 0 ? '(' + cat_item_count + ')' : '' %>
+                <%# cat_item_count = category.listing_count(category.id) %>
+                <%# cat_item_count > 0 ? '(' + cat_item_count + ')' : '' %>
             </span>
-          <% end %>
-
-          <% if (!@subcategory and category.id == params[:id].to_i) or (@subcategory and category.id == params[:category_id].to_i) %>
-          <ul style="padding-left: 25px;">
-            <% category.subcategories.each do |subcategory| %>
-              <li>
-                <%= link_to category_subcategory_path(category.id, subcategory.id) do %>
-                  <i class="fas fa-<%= category.icon %>"></i>
-                  <%= subcategory.name %>
-                  <span class="category-counter">
-                    <% subcat_item_count = subcategory.listing_count(category.id, subcategory.id) %>
-                    <%= subcat_item_count > 0 ? '(' + subcat_item_count + ')' : '' %>
-                  </span>
-                <% end %>
-              </li>
             <% end %>
-            
-          </ul>
-          <% end %>
 
+            <% if (!@subcategory and category.id == params[:id].to_i) or (@subcategory and category.id == params[:category_id].to_i) %>
+            <ul style="padding-left: 25px;">
+            <% category.subcategories.each do |subcategory| %>
+                <li>
+                <%= link_to category_subcategory_path(category.id, subcategory.id) do %>
+                    <i class="fas fa-<%= category.icon %>"></i>
+                    <%= subcategory.name %>
+                    <span class="category-counter">
+                    <%# subcat_item_count = subcategory.listing_count(category.id, subcategory.id) %>
+                    <%#= subcat_item_count > 0 ? '(' + subcat_item_count + ')' : '' %>
+                    </span>
+                <% end %>
+                </li>
+            <% end %>
+            </ul>
+            <% end %>
         </li>
-        <% end %>
-
+      <% end %>
       </ul>
     </div>
   </aside>
