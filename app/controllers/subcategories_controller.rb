@@ -8,7 +8,7 @@ class SubcategoriesController < ApplicationController
 
   def find_by_category
     render json: {
-             subcategories: Subcategory.where(category_id: params[:category_id]),
-           }
+      subcategories: Subcategory.where(category_id: params[:category_id]),
+    }
   end
 end

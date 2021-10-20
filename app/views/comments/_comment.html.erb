@@ -14,11 +14,14 @@
     <% @comments.each do |comment| %>
     <div class="post-metadata">
         <div class="agent-title">
-            <div class="agent-photo">>
-                <%= image_tag comment.user.avatar.url(:thumb) %>
+            <div class="agent-photo">
+                <%= image_tag(
+                    comment.user.avatar.url(:thumb),
+                    alt: comment.user.username,
+                    onerror: "this.onerror=null;this.src='/assets/no-photo-available.png';"
+                ) %>
                 <%= link_to comment.user.username, user_path(comment.user.username) %>
             </div>
-            <br />
             <div class="post-info">
                 <small><%= comment.body %></small>
             </div>

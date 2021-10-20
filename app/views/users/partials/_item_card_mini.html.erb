@@ -13,11 +13,14 @@
         <% @user_listings_user_active.each do |listing| %>
         <tr data-category="active">
             <td class="photo">
-                <img
-                    alt="<%= listing.title %>"
-                    class="img-fluid"
-                    src="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3<%= (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION'])  %>.amazonaws.com/<%= URI::encode(listing.media_file_name) %>-2m-00001.png"
-                >
+                <%= link_to listing_path(listing.id) do %>
+                    <%= image_tag(
+                        "https://" + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + ".s3" + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + ".amazonaws.com/" +  URI::encode(listing.media_file_name) + "-2m-00001.png",
+                        alt: current_user.username,
+                        class: "img-fluid",
+                        onerror: "this.onerror=null;this.src='/assets/no-photo-available.png';"
+                    ) %>
+                <% end %>
             </td>
             <td data-title="Title"><h3><%= listing.title %></h3></td>
             <td data-title="Category"><span class="adcategories"><%= listing.description %></span></td>

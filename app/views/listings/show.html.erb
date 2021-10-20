@@ -112,8 +112,12 @@
               <div class="agent-inner">
                 <div class="agent-title">
                   <div class="agent-photo">
-                    <%= link_to user_path(current_user.username) do %>
-                      <%= image_tag @listing.user.avatar.url(:thumb), class: 'avatar' %>
+                    <%= link_to user_path(@listing.user.username) do %>
+                      <%= image_tag(
+                        @listing.user.avatar.url(:thumb),
+                        class: "avatar",
+                        onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
+                      ) %>
                     <% end %>
                   </div>
                   <div class="agent-details">

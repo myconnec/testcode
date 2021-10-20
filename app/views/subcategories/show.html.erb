@@ -1,8 +1,61 @@
-<div>
-  <%= render :partial => 'categories/show', locals: {
-    categories: @categories,
-    category: @category,
-    listings: @listings,
-    subcategory: @subcategory,
-  }  %>
+<%= render :partial => 'partials/header_search_bar', locals: {
+    title: 'Subcategory'
+} %>
+
+<!-- Start Content -->
+<div id="content" class="section-padding">
+  <div class="container">
+
+     <div class="row">
+        <%= render :partial=> 'partials/side_menu', locals: {
+            categories: @categories,
+            cubcategory: @subcategory
+        } %>
+
+      <div class="col-lg-9 col-md-12 col-xs-12 page-content">
+
+        <%= render :partial=> 'partials/breadcrumb', locals: {
+            category: @category,
+            subcategory: @subcategory
+        } %>
+
+        <%= render :partial=> 'partials/listing_counter', locals: {
+            category: @category,
+            subcategory: @subcategory
+        } %>
+
+        <!-- Adds wrapper Start -->
+        <div class="adds-wrapper">
+          <div class="tab-content">
+            <div id="grid-view" class="tab-pane fade active show">
+              <div class="row">
+                <% @listings.each do |listing| %>
+                  <%= render :partial=> 'categories/partials/item_card', locals: {
+                    listing: listing,
+                    size: '6'
+                  } %>
+                <% end %>
+            </div>
+          </div>
+          <div id="list-view" class="tab-pane fade">
+            <div class="row">
+                <% @listings.each do |listing| %>
+                  <%= render :partial=> 'categories/partials/item_card', locals: {
+                    listing: listing,
+                    size: '12'
+                  } %>
+                <% end %>
+            </div>
+          </div>
+        </div>
+        <!-- Adds wrapper End -->
+
+        <%= render :partial=> 'partials/pagination', locals: {
+          listings: @listings
+        } %>
+
+      </div>
+    </div>
+  </div>
 </div>
+<!-- Main container End -->  

@@ -1,0 +1,45 @@
+
+<div class="col-xs-12 col-sm-12 col-md-<%= size.to_i %> col-lg-<%= size.to_i %>">
+    <div class="featured-box">
+    <figure>
+        <div class="homes-tag featured"><%= listing.subcategory.name %></div>
+        <div class="homes-tag rent"><i class="lni-heart"></i> <%= listing.get_likes.size %></div>
+        <span class="price-save">
+            $<%= listing.price %>
+        </span>
+        <%= link_to listing_path(listing.id) do %>
+            <%= image_tag(
+                "https://" + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + ".s3" + (ENV['REGION'] != 'us-east-1' ? '-' + ENV['REGION'] : '') + ".amazonaws.com/" + listing.media_file_name + "-1m-00001.png",
+                class: "img-fluid",
+                onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
+            ) %>
+        <% end %>
+    </figure>
+    <div class="content-wrapper">
+        <div class="feature-content">
+            <h4>
+                <%= link_to listing_path(listing.id) do %>
+                    <%= listing.title %>
+                <% end %>
+            </h4>
+            <p class="listing-tagline"><%= listing.description %></p>
+            <div class="meta-tag">
+                <div class="user-name">
+                    <i class="lni-user"></i> <%= listing.user.username %>
+                </div>
+                <div class="listing-category">
+                    <%= link_to categories_path(listing.category.id) do %>
+                        <i class="lni-<%= listing.category.icon %>"></i><%= listing.category.name %>
+                    <% end %>
+                </div>
+            </div>
+            </div>
+            <div class="listing-bottom clearfix">
+                <i class="lni-map-marker"></i> <%= listing.city %>, <%= listing.state %>
+                <%= link_to listing_path(listing.id) do %>
+                    <span class="float-right">view details</span>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
