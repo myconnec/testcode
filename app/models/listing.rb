@@ -70,7 +70,7 @@ class Listing < ActiveRecord::Base
       .where("ending_at > '#{Time.now.to_i}'")
       .where("media_file_name IS NOT NULL")
       .where("sold IS NULL")
-      .where("charge_amount = 0")
+      .where("price = 0")
       .count()
   end
 
@@ -79,7 +79,7 @@ class Listing < ActiveRecord::Base
       .where("ending_at > '#{Time.now.to_i}'")
       .where("media_file_name IS NOT NULL")
       .where("sold IS NULL")
-      .where("charge_amount <> 0")
+      .where("price != 0")
       .count()
   end
 

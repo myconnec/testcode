@@ -11,7 +11,11 @@
     </thead>
     <tbody>
         <% @user_listings_user_active.each do |listing| %>
+        <% if listing.price.to_s != "0" %>
+        <tr style="background-color:#C7EED4">
+        <% else %>
         <tr>
+        <% end %>
             <td class="photo">
                 <%= link_to listing_path(listing.id) do %>
                     <%= image_tag(
