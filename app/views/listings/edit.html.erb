@@ -1,168 +1,31 @@
-<div class="col-md-8 col-md-offset-2">
-    <div class="row">
-        <div class="panel panel-default">
+<%= render :partial => 'partials/header_page_title', locals: {
+    title: 'Listing - Edit'
+} %>
 
-            <div class="panel-heading">
-                <h2>Edit Listing</h2>
-                <div class="small-heading">(All fields required.) </div>
-            </div>
-
-            <div class="panel-body">
-
-                <%= form_form_for(@listing, html: {
-                    authenticity_token: true,
-                    multipart: true,
-                    class: 'form-horizontal ',
-                    presence: true
-                }) do |f| %>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">Main Category</div>
-                        <div class="form-control">
-                            <%= f.select :category_id,
-                                Category.all.map {|f| [f.name, f.id]},
-                                {
-                                  include_blank: true
-                                },
-                                required: true
-                            %>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">Sub Category</div>
-                        <div class="form-control">
-                            <%= f.select :subcategory_id,
-                                [],
-                                {
-                                    id: "listing_subcategory_id",
-                                    include_blank: true,
-                                    name: "listing[subcategory_id]",
-                                },
-                                required: true
-                            %>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div id="sub_category_cost_container" style="display: none">
-                        <div class="input-group">
-                            <div class="input-group-addon" style="color: red">Fee required</div>
-                            <div class="form-control fee_amount_message">
-                                Selected category requires a payment of <span id="fee_amount" style="font-weight: bolder"></span> on the next step.
+<!-- Start Content -->
+<div id="content" class="section-padding">
+    <div class="container">
+        <div class="row">
+            <%= render :partial=> 'users/partials/side_menu', locals: {
+                current_user: current_user
+            } %>
+            <div class="col-sm-12 col-md-8 col-lg-9">
+                <div class="page-content">
+                    <div class="inner-box">
+                        <div class="tg-contactdetail">
+                            <div class="dashboard-box">
+                                <h2 class="dashbord-title">Edit a Listing</h2>
+                            </div>
+                            <div class="dashboard-wrapper">
+                                <%= render :partial => 'listings/partials/form' %>
                             </div>
                         </div>
-                        <br>
                     </div>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">Price</div>
-                        <%= f.text_field :price,
-                            class: "form-control",
-                            required: true,
-                            type: "regexp",
-                            maxlength: "256",
-                            pattern: "[0-9.]+",
-                            placeholder: "exp. Price in US dollar and cents."
-                        %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">Condition</div>
-                        <div class="form-control">
-                            <%= f.select :condition_id,
-                                Condition.all.map {|f| [f.value, f.id]},
-                                {
-                                    include_blank: true
-                                }
-                            %>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">Posting Title</div>
-                        <%= f.text_field :title,
-                            class: "form-control",
-                            required: true,
-                            type: "regexp",
-                            maxlength: "256",
-                            pattern: "[A-Za-z0-9!$,.?\ ]+{256}",
-                            placeholder: "exp. Text only Listing Title"
-                        %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">City</div>
-                        <%= f.text_field :city,
-                            class: "form-control",
-                            required: true,
-                            type: "text",
-                            maxlength: "32",
-                            pattern: "[A-Za-z\s]+",
-                            placeholder: "exp. Sometown"
-                        %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">State</div>
-                        <%= f.text_field :state,
-                            class: "form-control",
-                            required: true,
-                            type: "text",
-                            maxlength: "2",
-                            pattern: "[A-Z]{2}",
-                            placeholder: "exp. FL"
-                        %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">Zip</div>
-                        <%= f.text_field :zipcode,
-                            class: "form-control",
-                            required: true,
-                            type: "number",
-                            maxlength: "5",
-                            pattern: "[0-9]{5}",
-                            placeholder: "exp. 12345"
-                        %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="input-group-addon">Description</div>
-                        <%= f.text_field :description,
-                            # as: :trix_editor,
-                            class: "form-control",
-                            label: false,
-                            maxlength: "2048",
-                            pattern: "[A-Za-z\s!$,.?]+{2048}",
-                            placeholder: "exp. Describe the item for sale as detailed as possible. Text, numbers, and punctuation are allowed.",
-                            required: true,
-                            type: "text"
-                        %>
-                    </div>
-                    <br>
-
-                    <div class="input-group">
-                        <div class="actions">
-                            <%= f.submit "Edit Listing",
-                                class: "btn btn-success",
-                                id: "listings_submit"
-                            %>
-                        </div>
-                    </div>
-
-                <% end %>
-
+                </div>
             </div>
         </div>
     </div>
 </div>
+<!-- End Content -->
 
 <%= render :partial => 'partials/processing_overlay' %>

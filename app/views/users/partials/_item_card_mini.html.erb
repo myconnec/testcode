@@ -1,5 +1,5 @@
 
-<table class="table table-responsive dashboardtable tablemyads" width="100%">
+<table class="table table-responsive dashboardtable tablemyads">
     <thead>
         <tr>
             <th>Thumbnail</th>
@@ -11,7 +11,7 @@
     </thead>
     <tbody>
         <% @user_listings_user_active.each do |listing| %>
-        <tr data-category="active">
+        <tr>
             <td class="photo">
                 <%= link_to listing_path(listing.id) do %>
                     <%= image_tag(
@@ -24,16 +24,19 @@
             </td>
             <td data-title="Title"><h3><%= listing.title %></h3></td>
             <td data-title="Category"><span class="adcategories"><%= listing.description %></span></td>
-            <td data-title="Price"><h3><%= listing.charge_amount %></h3></td>
+            <td data-title="Price"><h3>$<%= listing.price %></h3></td>
             <td data-title="Action">
                 <div class="btns-actions">
                     <%= link_to listing_path(listing.id), method: :get, class: 'btn-action btn-view' do %>
                         <i class="lni-eye"></i>
                     <% end %>
-                    <%= link_to listing_path(listing.id), method: :put, class: 'btn-action btn-edit' do %>
+                    <%= link_to listing_path(listing.id)+"/edit", method: :put, class: 'btn-action btn-edit' do %>
                         <i class="lni-pencil"></i>
                     <% end %>
-                    <%= link_to listing_path(listing.id), method: :delete, class: 'btn-action btn-delete' do %>
+                    <%= link_to "/listings/upload/#{listing.id}", class: 'btn-action btn-edit' do %>
+                        <i class="lni-video"></i>
+                    <% end %>
+                    <%= link_to listing_path(listing.id)+"/delete", method: :delete, class: 'btn-action btn-delete' do %>
                         <i class="lni-trash"></i>
                     <% end %>
                 </div>
