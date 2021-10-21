@@ -27,16 +27,20 @@
             <td data-title="Price"><h3>$<%= listing.price %></h3></td>
             <td data-title="Action">
                 <div class="btns-actions">
-                    <%= link_to listing_path(listing.id), method: :get, class: 'btn-action btn-view' do %>
-                        <i class="lni-eye"></i>
-                    <% end %>
                     <%= link_to listing_path(listing.id)+"/edit", method: :put, class: 'btn-action btn-edit' do %>
                         <i class="lni-pencil"></i>
                     <% end %>
                     <%= link_to "/listings/upload/#{listing.id}", class: 'btn-action btn-edit' do %>
                         <i class="lni-video"></i>
                     <% end %>
-                    <%= link_to listing_path(listing.id)+"/delete", method: :delete, class: 'btn-action btn-delete' do %>
+                    <%= link_to listing_path(listing.id), method: :patch, data: { confirm: 'Did this listing sell?' }, class: 'btn-action btn-edit' do %>
+                        <i class="lni-amex"></i> 
+                    <% end %>
+                    <br />
+                    <%= link_to listing_path(listing.id), method: :get, class: 'btn-action btn-view' do %>
+                        <i class="lni-eye"></i>
+                    <% end %>
+                    <%= link_to listing_path(listing.id), method: :delete, data: { confirm: 'Delete this listing?' }, class: 'btn-action btn-delete' do %>
                         <i class="lni-trash"></i>
                     <% end %>
                 </div>
