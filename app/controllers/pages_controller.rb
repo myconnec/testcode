@@ -24,7 +24,6 @@ class PagesController < ApplicationController
   end
 
   def pricing
-    @chargable_sub_cat = Subcategory.includes(:category).where("chargable <> 0")
   end
 
   def privacy
