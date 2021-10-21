@@ -58,7 +58,7 @@ $(document).on('ready', function () {
         getSubcategories($('#listing_category_id').val());
     });
 
-    $('#listing_subcategory_id').on('change', function () {
+    $('#listing_category_id').add('#listing_subcategory_id').on('change', function () {
 
         if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
             // if 'community' or 'free' category is selected, no cost is valid
