@@ -37,8 +37,10 @@
         <div class="input-group">
             <div class="input-group-addon" style="color: red"><h5>Fee required</h5>
                 <div>
-                    Selected category requires a payment of <span id="fee_amount" style="font-weight: bolder"></span> on the next step.
-                    However, you have 26 promotional paid postings remaining. One will be used and no payment will be necessary.
+                    Selected category requires a payment of <span id="fee_amount" style="font-weight: bolder"></span> on the next step.<br />
+                    <% if current_user.promo_1 > 0 %>
+                    However, you have <%= current_user.promo_1 %> promotional paid postings remaining. One will be used and no payment will be necessary.
+                    <% end %>
                 </div>
             </div>
         </div>
