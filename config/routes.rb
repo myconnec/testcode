@@ -33,7 +33,6 @@ Rails.application.routes.draw do
 
   # Sub/Categories
   match '/categories/show', to: 'categories#show', via: :get
-  match '/categories/search', to: 'categories#search', via: :get
 
   match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
   match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
@@ -47,6 +46,9 @@ Rails.application.routes.draw do
   match '/listings/sold/:id', to: 'listings#sold', via: :get
   match '/listings/unsold/:id', to: 'listings#unsold', via: :get
   match '/listings/show_json/:id', to: 'listings#show_json', via: :get
+
+  # Search
+  match '/search/show', to: 'search#show', via: :get
 
   # User (Device)
   devise_for :users, :controllers => {

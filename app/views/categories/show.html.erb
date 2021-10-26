@@ -27,7 +27,7 @@
             <div id="grid-view" class="tab-pane fade active show">
               <div class="row">
                 <% @listings.each do |listing| %>
-                  <%= render :partial=> 'categories/partials/item_card', locals: {
+                  <%= render :partial=> 'listings/partials/item_card', locals: {
                     listing: listing,
                     size: '6'
                   } %>
@@ -37,7 +37,7 @@
           <div id="list-view" class="tab-pane fade">
             <div class="row">
                 <% @listings.each do |listing| %>
-                  <%= render :partial=> 'categories/partials/item_card', locals: {
+                  <%= render :partial=> 'listings/partials/item_card', locals: {
                     listing: listing,
                     size: '12'
                   } %>
