@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :listings do
     resources :comments
     member do
-      put "like", to: "listings#upvote"
+      get "like", to: "listings#upvote"
     end
   end
 

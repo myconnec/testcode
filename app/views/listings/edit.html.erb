@@ -1,31 +1,5 @@
-<%= render :partial => 'partials/header_page_title', locals: {
-    title: 'Listing - Edit'
+<%= render :partial => 'listings/partials/form', locals: {
+    action: 'Create',
+    listing: @listing,
+    title: 'Listing'
 } %>
-
-<!-- Start Content -->
-<div id="content" class="section-padding">
-    <div class="container">
-        <div class="row">
-            <%= render :partial=> 'users/partials/side_menu', locals: {
-                current_user: current_user
-            } %>
-            <div class="col-sm-12 col-md-8 col-lg-9">
-                <div class="page-content">
-                    <div class="inner-box">
-                        <div class="tg-contactdetail">
-                            <div class="dashboard-box">
-                                <h2 class="dashbord-title">Edit a Listing</h2>
-                            </div>
-                            <div class="dashboard-wrapper">
-                                <%= render :partial => 'listings/partials/form' %>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End Content -->
-
-<%= render :partial => 'partials/processing_overlay' %>

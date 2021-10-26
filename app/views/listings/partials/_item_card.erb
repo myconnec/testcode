@@ -28,7 +28,7 @@
                     <i class="lni-user"></i> <%= listing.user.username %>
                 </div>
                 <div class="listing-category">
-                    <%= link_to categories_path(listing.category.id) do %>
+                    <%= link_to category_path(listing.category_id) do %>
                         <i class="lni-<%= listing.category.icon %>"></i><%= listing.category.name %>
                     <% end %>
                 </div>

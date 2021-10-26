@@ -77,7 +77,7 @@
                   <li>
 
                     <% if @user.present? %>
-                        <%= link_to like_listing_path(@listing), method: :put, class: 'pull-right' do %>
+                        <%= link_to like_listing_path(@listing), class: 'pull-right' do %>
                             <p><strong><i class="lni-heart"></i> Likes:</strong> <%= @listing.votes_for.size %></p>
                         <% end %>
                     <% else %>
@@ -98,16 +98,20 @@
               <div class="agent-inner">
                 <div class="agent-title">
                   <div class="agent-photo">
-                    <%= link_to user_path(@listing.user.username) do %>
+                    <% #= link_to user_path(@listing.user.username) do %>
                       <%= image_tag(
                         @listing.user.avatar.url(:thumb),
                         class: "avatar",
                         onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
                       ) %>
-                    <% end %>
+                    <% #end %>
                   </div>
                   <div class="agent-details">
-                    <h3><a href="viewads.html"><%= @listing.user.username %></a></h3>
+                    <h3>
+                      <% #= link_to user_path(@listing.user.username) do %>
+                        <%= @listing.user.username %>
+                      <% #end %>
+                    </h3>
                   </div>
                 </div>
                 <div class="mb-4">
@@ -121,7 +125,8 @@
                   <% if user_signed_in? %>
                   <a
                     class="btn btn-success btn-sm"
-                    href="mailto:<%= @listing.user.email %>?body=Reach%20out%20to%20message%20the%20seller%20about%20their%20ad.&amp;subject=test%20ad"
+                    href="mailto:<%= @listing.user.email %>?subject=<%= URI.encode(@listing.title) %>"
+                    target="_blank"
                   >Email to seller</a>
                   <% end%>
                 </div>

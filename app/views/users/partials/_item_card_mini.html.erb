@@ -37,9 +37,18 @@
                     <%= link_to "/listings/upload/#{listing.id}", class: 'btn-action btn-edit' do %>
                         <i class="lni-video"></i>
                     <% end %>
-                    <%= link_to listing_path(listing.id), method: :patch, data: { confirm: 'Did this listing sell?' }, class: 'btn-action btn-edit' do %>
-                        <i class="lni-amex"></i> 
+
+                    <% if listing.sold.nil? %>
+                        <%= link_to "/listings/sold/#{listing.id}", method: :patch, data: { confirm: 'Did this listing sell?' }, class: 'btn-action btn-view' do %>
+                            <i class="lni-thumbs-up"></i> 
+                        <% end %>
                     <% end %>
+                    <% if listing.sold %>
+                        <%= link_to "/listings/unsold/#{listing.id}", method: :patch, data: { confirm: 'Re-enable this list using original expiration date?' }, class: 'btn-action btn-view' do %>
+                            <i class="lni-thumbs-down"></i> 
+                        <% end %>
+                    <% end %>
+
                     <br />
                     <%= link_to listing_path(listing.id), method: :get, class: 'btn-action btn-view' do %>
                         <i class="lni-eye"></i>
