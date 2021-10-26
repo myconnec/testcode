@@ -1,19 +1,21 @@
 <div class="search-bar">
     <div class="search-inner">
-        <%= form_tag search_listings_path, class: "search-form", method: :get do |f| %>
-        <div class="form-group">
-            <%= text_field_tag :search, nil, placeholder: 'What are you looking for?', class: "form-control"%>
-        </div>
-        <div class="form-group">
-            <%= text_field_tag :location, nil, placeholder: 'City, State, Zip', class: "form-control"%>
-        </div>
-        <div class="form-group inputwithicon">
-            <div class="select">
-            <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control"%>
+        <%= form_tag categories_search_path, class: "search-form", method: :get do |f| %>
+            <div class="form-group">
+                <%= text_field_tag :search, nil, placeholder: 'What are you looking for?', class: "form-control"%>
             </div>
-            <i class="lni-menu"></i>
-        </div>
-        <button class="btn btn-common" type="button"><i class="lni-search"></i> Search Now</button>
+            <div class="form-group">
+                <%= text_field_tag :location, nil, placeholder: 'City, State, Zip', class: "form-control"%>
+            </div>
+            <div class="form-group inputwithicon">
+                <div class="select">
+                <%= select_tag :category, options_for_select(Category.all.map{ |c| [c.name, c.id]}), class: "form-control"%>
+                </div>
+                <i class="lni-menu"></i>
+            </div>
+            <button class="btn btn-common" type="submit">
+                <i class="lni-search"></i> Search Now
+            </button>
         <% end %>
     </div>
 </div>

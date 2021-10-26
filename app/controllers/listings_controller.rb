@@ -200,14 +200,6 @@ class ListingsController < ApplicationController
     redirect_to :back
   end
 
-  def search
-    # TODO Extract into a CNTL helper
-    @categories = Category.all
-
-    # Most Recent 15 Listings for cat#index VS
-    @listings = Listing.search(params)
-  end
-
   private
 
   def listing_params

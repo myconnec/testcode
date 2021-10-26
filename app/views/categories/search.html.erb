@@ -1,0 +1,52 @@
+<%= render :partial => 'partials/header_search_bar', locals: {
+    title: 'Category Search'
+} %>
+
+<!-- Start Content -->
+<div id="content" class="section-padding">
+  <div class="container">
+
+     <div class="row">
+        <%= render :partial=> 'partials/side_menu', locals: {
+            categories: @categories
+        } %>
+
+      <div class="col-lg-9 col-md-12 col-xs-12 page-content">
+
+        <!-- no breadcrumbs on search results -->
+
+        <!-- Adds wrapper Start -->
+        <div class="adds-wrapper">
+          <div class="tab-content">
+            <div id="grid-view" class="tab-pane fade active show">
+              <div class="row">
+                <% @listings.each do |listing| %>
+                  <%= render :partial=> 'categories/partials/item_card', locals: {
+                    listing: listing,
+                    size: '6'
+                  } %>
+                <% end %>
+            </div>
+          </div>
+          <div id="list-view" class="tab-pane fade">
+            <div class="row">
+                <% @listings.each do |listing| %>
+                  <%= render :partial=> 'categories/partials/item_card', locals: {
+                    listing: listing,
+                    size: '12'
+                  } %>
+                <% end %>
+            </div>
+          </div>
+        </div>
+        <!-- Adds wrapper End -->
+
+        <%= render :partial=> 'partials/pagination', locals: {
+          listings: @listings
+        } %>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Main container End -->  

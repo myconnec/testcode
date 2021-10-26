@@ -8,11 +8,8 @@ Rails.application.routes.draw do
 
   resources :listings do
     resources :comments
-    collection do
-      get 'search'
-    end
     member do
-    put "like", to: "listings#upvote"
+      put "like", to: "listings#upvote"
     end
   end
 
@@ -36,6 +33,7 @@ Rails.application.routes.draw do
 
   # Sub/Categories
   match '/categories/show', to: 'categories#show', via: :get
+  match '/categories/search', to: 'categories#search', via: :get
 
   match '/subcategories/chargable', to: 'subcategories#chargable', via: :get
   match '/subcategories/find_by_category', to: 'subcategories#find_by_category', via: :get
