@@ -6,7 +6,7 @@
     <% end %>
 
     <div>
-        <small><b>This post has <%= pluralize(@comments.count, "Comment") %></b></small>
+        <small><b>This post has <%= pluralize(@comments.count, "Comment") %>.</b></small>
     </div>
 
     <hr>
@@ -22,9 +22,9 @@
                 ) %>
                 <%= link_to comment.user.username, user_path(comment.user.username) %>
             </div>
-            <div class="post-info">
-                <small><%= comment.body %></small>
-            </div>
+        </div>
+        <div class="post-info">
+            <small><%= comment.body %></small>
         </div>
     <% end %>
 </div>
