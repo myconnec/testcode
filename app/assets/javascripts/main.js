@@ -16,7 +16,7 @@ JS INDEX
 9. wow js
 7. Testimonial owl carousel
 8. New Products owl carouse
-9. Categories Iocn owl Carousel
+9. Categories Icon owl Carousel
 ================================================*/
 
 (function($) {

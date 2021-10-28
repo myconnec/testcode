@@ -188,10 +188,10 @@ class ListingsController < ApplicationController
     redirect_to @listing, :flash => { :success => "Listing has been updated." }
   end
 
-  def destroy
+  def delete
     @listing = Listing.find(params[:id])
-    @listing.destroy
-    redirect_to @listing, :flash => { :success => "Listing has been deleted." }
+    @listing.delete
+    redirect_to :back, :flash => { :success => "Listing has been deleted." }
   end
 
   def upvote

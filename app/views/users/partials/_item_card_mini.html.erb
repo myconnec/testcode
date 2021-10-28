@@ -50,10 +50,10 @@
                     <% end %>
 
                     <br />
-                    <%= link_to listing_path(listing.id), method: :get, class: 'btn-action btn-view' do %>
+                    <%= link_to listing_path(listing.id), class: 'btn-action btn-view' do %>
                         <i class="lni-eye"></i>
                     <% end %>
-                    <%= link_to listing_path(listing.id), method: :delete, data: { confirm: 'Delete this listing?' }, class: 'btn-action btn-delete' do %>
+                    <%= link_to listing_path(listing.id)+'/delete', class: 'btn-action btn-delete' do %>
                         <i class="lni-trash"></i>
                     <% end %>
                 </div>

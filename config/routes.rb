@@ -46,6 +46,7 @@ Rails.application.routes.draw do
   match '/listings/sold/:id', to: 'listings#sold', via: :get
   match '/listings/unsold/:id', to: 'listings#unsold', via: :get
   match '/listings/show_json/:id', to: 'listings#show_json', via: :get
+  match '/listings/:id/delete', to: 'listings#delete', via: :get
 
   # Search
   match '/search/show', to: 'search#show', via: :get
