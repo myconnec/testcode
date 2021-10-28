@@ -98,19 +98,19 @@
               <div class="agent-inner">
                 <div class="agent-title">
                   <div class="agent-photo">
-                    <% #= link_to user_path(@listing.user.username) do %>
+                    <%= link_to user_path(@listing.user.username) do %>
                       <%= image_tag(
                         @listing.user.avatar.url(:thumb),
                         class: "avatar",
                         onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
                       ) %>
-                    <% #end %>
+                    <% end %>
                   </div>
                   <div class="agent-details">
                     <h3>
-                      <% #= link_to user_path(@listing.user.username) do %>
+                      <%= link_to user_path(@listing.user.username) do %>
                         <%= @listing.user.username %>
-                      <% #end %>
+                      <% end %>
                     </h3>
                   </div>
                 </div>

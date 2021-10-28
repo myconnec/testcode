@@ -25,7 +25,9 @@
             <p class="listing-tagline"><%= listing.description %></p>
             <div class="meta-tag">
                 <div class="user-name">
-                    <i class="lni-user"></i> <%= listing.user.username %>
+                    <%= link_to user_path(listing.user.username) do %>
+                        <i class="lni-user"></i> <%= listing.user.username %>
+                    <% end %>
                 </div>
                 <div class="listing-category">
                     <%= link_to category_path(listing.category_id) do %>

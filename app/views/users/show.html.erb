@@ -13,11 +13,13 @@
                 <div class="page-content">
                     <div class="inner-box">
                         <div class="dashboard-wrapper">
-                            <%= render :partial => 'users/partials/item_summary', locals: {
-                                user_listing_header_free: @user_listing_header_free,
-                                user_listing_header_paid: @user_listing_header_paid,
-                                user_listing_header_cmmt: @user_listing_header_cmmt,
-                            } %>
+                            <% if current_user.username == params['username'] %>
+                                <%= render :partial => 'users/partials/item_summary', locals: {
+                                    user_listing_header_free: @user_listing_header_free,
+                                    user_listing_header_paid: @user_listing_header_paid,
+                                    user_listing_header_cmmt: @user_listing_header_cmmt,
+                                } %>
+                            <% end %>
                             <%= render :partial => 'users/partials/item_card_mini', locals: {
                                 user_listings_user_active: @user_listings_user_active
                             } %>

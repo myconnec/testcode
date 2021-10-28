@@ -6,7 +6,9 @@
             <th>Title</th>
             <th>Description</th>
             <th>Price</th>
+            <% if current_user.username == params['username'] %>
             <th>Action</th>
+            <% end %>
         </tr>
     </thead>
     <tbody>
@@ -27,8 +29,9 @@
                 <% end %>
             </td>
             <td data-title="Title"><h3><%= listing.title %></h3></td>
-            <td data-title="Category"><span class="adcategories"><%= listing.description %></span></td>
+            <td data-title="Category"><span class="adcategories"><%= listing.description.truncate(128) %></span></td>
             <td data-title="Price"><h3>$<%= listing.price %></h3></td>
+            <% if current_user.username == params['username'] %>
             <td data-title="Action">
                 <div class="btns-actions">
                     <%= link_to listing_path(listing.id)+"/edit", method: :put, class: 'btn-action btn-edit' do %>
@@ -58,6 +61,7 @@
                     <% end %>
                 </div>
             </td>
+            <% end %>
         </tr>
         <% end %>
     </tbody>
