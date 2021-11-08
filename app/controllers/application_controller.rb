@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  # pagination
+  include Pagy::Backend
+
   # around_filter :catch_not_found
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.

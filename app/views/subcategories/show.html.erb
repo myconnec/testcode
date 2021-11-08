@@ -32,7 +32,7 @@
                 <% @listings.each do |listing| %>
                   <%= render :partial=> 'listings/partials/item_card', locals: {
                     listing: listing,
-                    size: '6'
+                    size: '4'
                   } %>
                 <% end %>
             </div>
@@ -50,9 +50,7 @@
         </div>
         <!-- Adds wrapper End -->
 
-        <%= render :partial=> 'partials/pagination', locals: {
-          listings: @listings
-        } %>
+        <%= pagy_t(@pagy).html_safe %>
 
       </div>
     </div>

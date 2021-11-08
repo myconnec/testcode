@@ -77,6 +77,10 @@ gem 'recaptcha', '~> 5.5.0'
 # Trix https://github.com/kylefox/trix
 gem 'trix-rails', '~> 0.11.4', require: 'trix'
 
+# Pagy for pagination
+# source https://github.com/ddnexus/pagy/tree/pagy3
+gem 'pagy', '~> 3.14.0'
+
 # For Test only
 group :test do
 end

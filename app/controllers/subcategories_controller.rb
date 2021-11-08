@@ -2,8 +2,10 @@ class SubcategoriesController < ApplicationController
   def show
     @categories = Category.all
     @category = Category.find(params[:category_id])
-    @listings = Listing.active(params[:id], "subcategory_id")
     @subcategory = Subcategory.find(params[:id])
+
+    # paginated listings
+    @pagy, @listings = pagy(Listing.active(params[:id], "subcategory_id"))
   end
 
   def find_by_category
