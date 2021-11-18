@@ -8,13 +8,12 @@
 
     <!-- Search Widget -->
     <div class="col-md-12">
-        <div class="breadcrumb-wrapper"></div>
-            <ol class="breadcrumb">
-                <%= link_to 'Connechub' , root_path %>&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
-                <%= @listing.category.name %>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
-                <%= @listing.subcategory.name %>
-            </ol>
-        </div>
+
+        <%= render :partial=> 'partials/breadcrumb', locals: {
+            category: @category,
+            subcategory: @subcategory
+        } %>
+
       <!-- Product Info Start -->
       <div class="product-info row">
         <div class="col-lg-8 col-md-12 col-xs-12">

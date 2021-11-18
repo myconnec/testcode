@@ -22,7 +22,7 @@
                     <%= listing.title %>
                 <% end %>
             </h4>
-            <p class="listing-tagline"><%= listing.description %></p>
+            <p class="listing-tagline"><%= listing.description.truncate(128) %></p>
             <div class="meta-tag">
                 <div class="user-name">
                     <%= link_to user_path(listing.user.username) do %>

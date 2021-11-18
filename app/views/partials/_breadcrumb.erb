@@ -4,10 +4,16 @@
     <ol class="breadcrumb">
     <li><a href="/">Home</a></li>
     <% if (@category) %>
-        <li><span>&nbsp;&nbsp;/&nbsp;&nbsp;</span> <%= category.name %></li>
+        <li>
+            <span>&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+            <%= link_to category_path(category.id) do %><%= category.name %><% end %>
+        </li>
     <% end %>
     <% if (@subcategory) %>
-        <li><span>&nbsp;&nbsp;/&nbsp;&nbsp;</span> <%= subcategory.name %></li>
+        <li>
+            <span>&nbsp;&nbsp;/&nbsp;&nbsp;</span>
+            <a href="../categories/<%= category.id %>/subcategories/<%= subcategory.id %>"><%= subcategory.name %></a>
+        </li>
     <% end %>
     </ol>
 </div>

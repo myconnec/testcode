@@ -160,6 +160,9 @@ class ListingsController < ApplicationController
       .where("ending_at > '#{Time.now.to_i}'")
       .first
 
+    @category = @listing.category
+    @subcategory = @listing.subcategory
+
     # if not listing found (ie deleted) redirect back to landing view w/ message
     if @listing.blank?
       return redirect_to root_url, :flash => { :danger => "Sorry, that Listing was not found." }
