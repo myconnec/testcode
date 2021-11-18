@@ -24,17 +24,17 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     # Add new content to category and subcategory tables
     # Categories
     Category.create :id => 1, :name => "Automotive", :icon => "fas fa-car", :color => "03A9F4"
-    Category.create :id => 4, :name => "Electronics", :icon => "fas fa-laptop-house", :color => "048AF1"
-    Category.create :id => 2, :name => "Jobs", :icon => "fas fa-briefcase", :color => "40E0CF"
-    Category.create :id => 8, :name => "Pets", :icon => "fas fa-paw", :color => "1D65B4"
-    Category.create :id => 2, :name => "Real Estate", :icon => "fas fa-sign", :color => "F4c837"
-    Category.create :id => 2, :name => "Services", :icon => "fas fa-tools", :color => "26AE61"
-    Category.create :id => 4, :name => "Beauty & Health", :icon => "fas fa-heartbeat", :color => "26AE61"
-    Category.create :id => 10, :name => "Books, Music, Toys", :icon => "fas fa-book-open", :color => "7F27FB"
-    Category.create :id => 2, :name => "Clothing and Accessories", :icon => "fas fa-tshirt", :color => "FF7F15"
-    Category.create :id => 6, :name => "Home and Garden", :icon => "fas fa-couch", :color => "AB47BC"
-    Category.create :id => 6, :name => " and Outdoors", :icon => "fas fa-quidditch", :color => "03A9F4"
-    Category.create :id => 12, :name => "Weddings and Photographers", :icon => "fas fa-glass-cheers", :color => "048AF1"
+    Category.create :id => 2, :name => "Electronics", :icon => "fas fa-laptop-house", :color => "40E0CF"
+    Category.create :id => 3, :name => "Jobs", :icon => "fas fa-briefcase", :color => "1D65B4"
+    Category.create :id => 4, :name => "Pets", :icon => "fas fa-paw", :color => "AB47BC"
+    Category.create :id => 5, :name => "Real Estate", :icon => "fas fa-sign", :color => "f4c837"
+    Category.create :id => 6, :name => "Services", :icon => "fas fa-tools", :color => "09c097"
+    Category.create :id => 7, :name => "Beauty & Health", :icon => "fas fa-heartbeat", :color => "26AE61"
+    Category.create :id => 8, :name => "Books, Music, Toys", :icon => "fas fa-book-open", :color => "048AF1"
+    Category.create :id => 9, :name => "Clothing and Accessories", :icon => "fas fa-tshirt", :color => "7F27FB"
+    Category.create :id => 10, :name => "Home and Garden", :icon => "fas fa-couch", :color => "FF7F15"
+    Category.create :id => 11, :name => "Sports and Outdoors", :icon => "fas fa-quidditch", :color => "c56dfb"
+    Category.create :id => 12, :name => "Weddings and Photographers", :icon => "fas fa-glass-cheers", :color => "57dc90"
 
     # Subcategories
     # Automotive
@@ -276,7 +276,7 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     Subcategory.create :category_id => 10, :name => "Lining", :chargable => 0
     Subcategory.create :category_id => 10, :name => "Other Items", :chargable => 0
 
-    #  and Outdoors
+    # Sports and Outdoors
     Subcategory.create :category_id => 6, :name => "Golf", :chargable => 0
     Subcategory.create :category_id => 6, :name => "Football", :chargable => 0
     Subcategory.create :category_id => 6, :name => "Bikes & Cycling", :chargable => 0
