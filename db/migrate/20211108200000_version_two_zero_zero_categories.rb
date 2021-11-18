@@ -64,67 +64,67 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     Subcategory.create :category_id => 2, :name => "Other Electronics", :chargable => 0
 
     # Jobs
-    Subcategory.create :category_id => 2, :name => "Accounting", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Admin/Clerical", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Automotive", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Banking", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Biotech", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Business Development", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Business Opportunity", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Construction", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Consultant", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Customer Service", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Design", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Distribution/Shipping", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Education", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Engineering", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Entry Level", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "executive", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Facilities", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Finance", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Franchise", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "General Business", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "General Labor", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Government/Federal", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Grocery Stores", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Health Care", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Hospitality/Hotel", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Human Resources", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Journalism/Newspaper", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Information Technology", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Installation", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Insurance", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Inventory", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Legal", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Legal Admin", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Maintenance/Repair", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Management", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Manufacturing", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Marketing", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Media", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Nonprofit", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Nurse", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Other", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Pharmaceutical", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Procurement", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Professional Services", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Purchasing", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "QA/Quality Control", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Real Estate", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Research", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Restaurant", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Retail", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Sales", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Science", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Skilled Labor - Trades", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Social Services", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Strategy/Planning", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Supply Chain", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Telecommunications", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Training", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Transportation", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Veterinary Services", :chargable => 2500
-    Subcategory.create :category_id => 2, :name => "Warehouse", :chargable => 2500
+    Subcategory.create :category_id => 3, :name => "Accounting", :chargable => 2500
+    Subcategory.create :category_id => 3, :name => "Admin/Clerical", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Automotive", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Banking", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Biotech", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Business Development", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Business Opportunity", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Construction", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Consultant", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Customer Service", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Design", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Distribution/Shipping", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Education", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Engineering", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Entry Level", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "executive", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Facilities", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Finance", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Franchise", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "General Business", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "General Labor", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Government/Federal", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Grocery Stores", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Health Care", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Hospitality/Hotel", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Human Resources", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Journalism/Newspaper", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Information Technology", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Installation", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Insurance", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Inventory", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Legal", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Legal Admin", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Maintenance/Repair", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Management", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Manufacturing", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Marketing", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Media", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Nonprofit", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Nurse", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Other", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Pharmaceutical", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Procurement", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Professional Services", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Purchasing", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "QA/Quality Control", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Real Estate", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Research", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Restaurant", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Retail", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Sales", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Science", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Skilled Labor - Trades", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Social Services", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Strategy/Planning", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Supply Chain", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Telecommunications", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Training", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Transportation", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Veterinary Services", :chargable => 3500
+    Subcategory.create :category_id => 3, :name => "Warehouse", :chargable => 3500
 
     # Pets
     Subcategory.create :category_id => 4, :name => "Birds", :chargable => 0
@@ -141,18 +141,18 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     Subcategory.create :category_id => 4, :name => "Other Items", :chargable => 0
 
     # Real Estate
-    Subcategory.create :category_id => 2, :name => "Apartments", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Commercial", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Homes", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Rentals", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Vacation", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Condos", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Farms", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Lands", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Ranches", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Manufactured Homes", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Townhomes", :chargable => 600
-    Subcategory.create :category_id => 2, :name => "Other Real Estate", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Apartments", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Commercial", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Homes", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Rentals", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Vacation", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Condos", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Farms", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Lands", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Ranches", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Manufactured Homes", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Townhomes", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Other Real Estate", :chargable => 600
 
     # Services
     Subcategory.create :category_id => 6, :name => "Accountant", :chargable => 0
@@ -226,14 +226,14 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     Subcategory.create :category_id => 6, :name => "Auto Parts", :chargable => 0
 
     # Beauty & Health
-    Subcategory.create :category_id => 4, :name => "Hair Care", :chargable => 0
-    Subcategory.create :category_id => 4, :name => "Bath & Body", :chargable => 0
-    Subcategory.create :category_id => 4, :name => "Cosmetics", :chargable => 0
-    Subcategory.create :category_id => 4, :name => "Skincare", :chargable => 0
-    Subcategory.create :category_id => 4, :name => "Fragrance", :chargable => 0
-    Subcategory.create :category_id => 4, :name => "Personal care", :chargable => 0
-    Subcategory.create :category_id => 4, :name => "Gyms", :chargable => 0
-    Subcategory.create :category_id => 4, :name => "Other Items", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Hair Care", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Bath & Body", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Cosmetics", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Skincare", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Fragrance", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Personal care", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Gyms", :chargable => 0
+    Subcategory.create :category_id => 7, :name => "Other Items", :chargable => 0
 
     # Books, Music, Toys
     Subcategory.create :category_id => 8, :name => "Toys", :chargable => 0
@@ -250,17 +250,17 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     Subcategory.create :category_id => 8, :name => "Other Items", :chargable => 0
 
     # Clothing and Accessories 
-    Subcategory.create :category_id => 2, :name => "Woman’s Clothing", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Woman’s Shoes", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Men’s Clothing", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Men’s Shoes", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Kid’s Clothing", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Kid’s Shoes", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Baby Clothing", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Big and Tall Men’s", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Jewelry & Accessories", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Baby Accessories", :chargable => 0
-    Subcategory.create :category_id => 2, :name => "Other Clothing", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Woman’s Clothing", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Woman’s Shoes", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Men’s Clothing", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Men’s Shoes", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Kid’s Clothing", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Kid’s Shoes", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Baby Clothing", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Big and Tall Men’s", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Jewelry & Accessories", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Baby Accessories", :chargable => 0
+    Subcategory.create :category_id => 9, :name => "Other Clothing", :chargable => 0
 
     # Home and Garden
     Subcategory.create :category_id => 10, :name => "Appliances", :chargable => 0
@@ -277,21 +277,21 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     Subcategory.create :category_id => 10, :name => "Other Items", :chargable => 0
 
     # Sports and Outdoors
-    Subcategory.create :category_id => 6, :name => "Golf", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Football", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Bikes & Cycling", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Skateboarding", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Water ", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Camping & Hiking", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Lawn Care & Accessories", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Snow Equipment", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Fishing", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Baseball", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Basketball", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Boxing/ MMA", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Exercise Equipment", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Soccer", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Other ", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Golf", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Football", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Bikes & Cycling", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Skateboarding", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Water ", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Camping & Hiking", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Lawn Care & Accessories", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Snow Equipment", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Fishing", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Baseball", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Basketball", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Boxing/ MMA", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Exercise Equipment", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Soccer", :chargable => 0
+    Subcategory.create :category_id => 11, :name => "Other ", :chargable => 0
 
     # Weddings and Photographers 
     Subcategory.create :category_id => 12, :name => "Gifts", :chargable => 0
