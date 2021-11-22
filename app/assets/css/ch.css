@@ -23,3 +23,21 @@
 .pagy-padding {
   padding-bottom: 20px;
 }
+
+H1 > span.section-title-white {
+  color: #ffff;
+}
+
+H1 > span.section-title-blue {
+  color: #03A9F4;
+}
+
+H1 > span.section-title-green {
+  color: #00E676;
+}
+
+h6.section-sub-header {
+  font-weight: bolder;
+  float: right;
+  padding-bottom: 20px;
+}
