@@ -75,7 +75,7 @@ gem 'serviceworker-rails', '~> 0.6.0'
 gem 'recaptcha', '~> 5.5.0'
 
 # Trix https://github.com/kylefox/trix
-gem 'trix-rails', '~> 0.11.4', require: 'trix'
+gem 'trix-rails', '~> 0.11.4.1', require: 'trix'
 
 # Pagy for pagination
 # source https://github.com/ddnexus/pagy/tree/pagy3

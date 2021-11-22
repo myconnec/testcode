@@ -22,15 +22,12 @@ var getSubcategories = function (category_id) {
             option.attr('data-chargable', subcategory.chargable);
             $subcategories.append(option);
         })
-    }).done(function () {
-        select_sub_category()
     })
 }
 
 var select_sub_category = function () {
     listing_id = window.location.pathname.split('/')[2]
     $.get('/listings/show_json/' + listing_id, function (data) {
-        // $('#listing_subcategory_id').val(data.listing[0].subcategory_id);
         $('#listing_subcategory_id > option:nth-child(2)').attr('selected', true);
     })
 }
@@ -56,16 +53,13 @@ $(document).on('ready', function () {
     // on change of Category DDL, trigger Sub-category population
     $('#listing_category_id').on('change', function () {
         getSubcategories($('#listing_category_id').val());
+
+        // if not a free category and not a fee sub category, return to default state
+        $('#listing_price').attr('disabled', false);
+        $('#sub_category_cost_container').css("display", "none");
     });
 
-    $('#listing_category_id').add('#listing_subcategory_id').on('change', function () {
-
-        if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
-            // if 'community' or 'free' category is selected, no cost is valid
-            $('#listing_price').val('0.00').attr('disabled', true);
-            $('#sub_category_cost_container').css("display", "none");
-            return;
-        }
+    $('#listing_subcategory_id').on('change', function () {
 
         if ($('#listing_subcategory_id :selected').data('chargable') != '0') {
             // if sub category has a chargable amount != 0, show message
@@ -73,21 +67,8 @@ $(document).on('ready', function () {
             $('#sub_category_cost_container').css("display", "block");
 
             // display fee that will be required
-            $('#fee_amount ').text(formatter.format($('#listing_subcategory_id :selected').data('chargable') / 100) + ' USD ')
+            $('#fee_amount').text(formatter.format($('#listing_subcategory_id :selected').data('chargable') / 100) + ' USD ')
             return
         }
-
-        // if not a free category and not a fee sub category, return to default state
-        $('#listing_price').attr('disabled', false);
-        $('#sub_category_cost_container').css("display", "none");
-    });
-
-    $('#new_listing').submit(function () {
-        if ($('#listing_category_id').val() == '2' || $('#listing_category_id').val() == '5') {
-            $('#listing_price').val('0.00').attr('disabled', false);
-            $('#sub_category_cost_container').css("display", "none");
-            return;
-        }
-        return;
     });
 });

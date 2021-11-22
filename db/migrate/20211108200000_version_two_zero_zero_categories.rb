@@ -38,17 +38,17 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
 
     # Subcategories
     # Automotive
-    Subcategory.create :category_id => 1, :name => "Cars & Trucks", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Motorcycles", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Campers & RVs", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Boats & Marine", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Power vehicles", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Trailers", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Commercial vehicles", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Times & Rims", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Auto Parts Store", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Transportation", :chargable => 0
-    Subcategory.create :category_id => 1, :name => "Other Vehicles", :chargable => 0
+    Subcategory.create :category_id => 1, :name => "Cars & Trucks", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Motorcycles", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Campers & RVs", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Boats & Marine", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Power vehicles", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Trailers", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Commercial vehicles", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Times & Rims", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Auto Parts Store", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Transportation", :chargable => 500
+    Subcategory.create :category_id => 1, :name => "Other Vehicles", :chargable => 500
 
     # Electronics
     Subcategory.create :category_id => 2, :name => "Audio & Speakers", :chargable => 0
@@ -141,89 +141,89 @@ class VersionTwoZeroZeroCategories < ActiveRecord::Migration
     Subcategory.create :category_id => 4, :name => "Other Items", :chargable => 0
 
     # Real Estate
-    Subcategory.create :category_id => 5, :name => "Apartments", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Commercial", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Homes", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Rentals", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Vacation", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Condos", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Farms", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Lands", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Ranches", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Manufactured Homes", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Townhomes", :chargable => 600
-    Subcategory.create :category_id => 5, :name => "Other Real Estate", :chargable => 600
+    Subcategory.create :category_id => 5, :name => "Apartments", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Commercial", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Homes", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Rentals", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Vacation", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Condos", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Farms", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Lands", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Ranches", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Manufactured Homes", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Townhomes", :chargable => 1000
+    Subcategory.create :category_id => 5, :name => "Other Real Estate", :chargable => 1000
 
     # Services
-    Subcategory.create :category_id => 6, :name => "Accountant", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Architecture", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Artists", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Barber", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Beauty Salons", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Building Remodeling", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Business Planner", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Taxicab/UBER/Ride Services", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Car Rental", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Chef", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Cleaning Services / Maids", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Home Decor", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Fitness Instructor", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Elderly Care", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "IT / Programmer", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Grant Writer", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Health Spa", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Lawn Care", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Legal Services", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Limousine", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Repair / Handyman", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Marketing Firm", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "nonprofit", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Home Security", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Structural Engineering", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Home Remodeling", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Auto Repair", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Tutoring/Education", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Website Designer", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Plumber", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Appliance Repair", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Dog Walker", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Pressure Washing", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Computer Repair", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Auto Insurance", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Small Construction", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Life Insurance", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Mortgage Refinance", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Photographers", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Financial Planner", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Music Dj & Bands", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Moving Company", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Dentist", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Doctors", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Party Bus", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Pawn Shops", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Gun Shops", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Laundromat", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Massage Therapists", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Garbage Collection", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Churches", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Pet Grooming", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Restaurants", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Pest Control Services", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Dumpster Rental", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Reception Halls", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Roofing Contractors", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Tow Truck Service", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Cash Services", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Tax services", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Funerals service", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Feal estate investor", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Real estate agents", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Grocery stores", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Retailers", :chargable => 0
+    Subcategory.create :category_id => 6, :name => "Accountant", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Architecture", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Artists", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Barber", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Beauty Salons", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Building Remodeling", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Business Planner", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Taxicab/UBER/Ride Services", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Car Rental", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Chef", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Cleaning Services / Maids", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Home Decor", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Fitness Instructor", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Elderly Care", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "IT / Programmer", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Grant Writer", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Health Spa", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Lawn Care", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Legal Services", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Limousine", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Repair / Handyman", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Marketing Firm", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "nonprofit", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Home Security", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Structural Engineering", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Home Remodeling", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Auto Repair", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Tutoring/Education", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Website Designer", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Plumber", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Appliance Repair", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Dog Walker", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Pressure Washing", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Computer Repair", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Auto Insurance", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Small Construction", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Life Insurance", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Mortgage Refinance", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Photographers", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Financial Planner", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Music Dj & Bands", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Moving Company", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Dentist", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Doctors", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Party Bus", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Pawn Shops", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Gun Shops", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Laundromat", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Massage Therapists", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Garbage Collection", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Churches", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Pet Grooming", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Restaurants", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Pest Control Services", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Dumpster Rental", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Reception Halls", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Roofing Contractors", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Tow Truck Service", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Cash Services", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Tax services", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Funerals service", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Feal estate investor", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Real estate agents", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Grocery stores", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Retailers", :chargable => 500
     Subcategory.create :category_id => 6, :name => "Food trucks/mobile food", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Internet firm", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Pain specialist/CBD Oils", :chargable => 0
-    Subcategory.create :category_id => 6, :name => "Auto Parts", :chargable => 0
+    Subcategory.create :category_id => 6, :name => "Internet firm", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Pain specialist/CBD Oils", :chargable => 500
+    Subcategory.create :category_id => 6, :name => "Auto Parts", :chargable => 500
 
     # Beauty & Health
     Subcategory.create :category_id => 7, :name => "Hair Care", :chargable => 0
