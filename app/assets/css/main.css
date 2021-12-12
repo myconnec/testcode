@@ -79,15 +79,15 @@ p {
   font-size: 14px;
 }
 
-ul, ol {
+/* ul, ol {
   list-style: outside none none;
   margin: 0;
   padding: 0;
-}
+} */
 
-ul li, ol li {
+/* ul li, ol li {
   list-style: none;
-}
+} */
 
 .hero-heading {
   font-size: 40px;

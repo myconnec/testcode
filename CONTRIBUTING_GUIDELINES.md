@@ -24,9 +24,7 @@
 
 - Ask any question about how to use the code base via the following forms of communication:
 
-  - [Email]()
-  - [Gitter]()
-  - [Slack]()
+  - [Email](mailto:admin@connechub.com?subject=CONTRIBUTE)
 
 ### **Do you want to contribute to the documentation?**
 

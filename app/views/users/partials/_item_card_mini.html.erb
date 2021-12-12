@@ -29,7 +29,7 @@
                 <% end %>
             </td>
             <td data-title="Title"><h3><%= listing.title %></h3></td>
-            <td data-title="Category"><span class="adcategories"><%= listing.description.truncate(128) %></span></td>
+            <td data-title="Category"><span class="adcategories"><%= strip_tags(listing.description.truncate(128)) %></span></td>
             <td data-title="Price"><h3>$<%= listing.price %></h3></td>
             <% if current_user.username == params['username'] %>
             <td data-title="Action">
