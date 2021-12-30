@@ -3,6 +3,9 @@
 # source https://ldpreload.com/blog/ssh-control
 # source https://unix.stackexchange.com/questions/50508/reusing-ssh-session-for-repeated-rsync-commands
 
+# usage
+# ./libs/auto-sync.sh "~/.ssh/aws-connechub-deb.pem" 1.2.3.4
+
 # exmple single use:
 # rsync \
 #     -avz \
