@@ -1,12 +1,13 @@
 default: &default
   adapter: mysql2
+  collation: utf8mb4_unicode_ci
+  encoding: utf8mb4
   host: <%= ENV['RDS_DB_HOST'] %>
-  port: <%= ENV['RDS_DB_PORT'] %>
-  username: <%= ENV['RDS_DB_USER'] %>
   password: <%= ENV['RDS_DB_PASS'] %>
-  encoding: utf8
   pool: 5
+  port: <%= ENV['RDS_DB_PORT'] %>
   reconnect: true
+  username: <%= ENV['RDS_DB_USER'] %>
 
 development:
   <<: *default
