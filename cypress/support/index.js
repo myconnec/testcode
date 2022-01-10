@@ -60,4 +60,17 @@ beforeEach(() => {
     cy.task('queryDb', 'TRUNCATE `listings`;')
     cy.task('queryDb', 'TRUNCATE `users`;')
     cy.task('queryDb', 'TRUNCATE `votes`;')
+
+    /*
+    unregister service workers before each test
+    source https://github.com/cypress-io/cypress/issues/702
+    */
+    if (window.navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.getRegistrations()
+            .then((registrations) => {
+                registrations.forEach((registration) => {
+                    registration.unregister()
+                })
+            })
+    }
 })
