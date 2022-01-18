@@ -36,14 +36,18 @@ class Listing < ActiveRecord::Base
       .order("created_at DESC")
   end
 
+  # Search logic:
+  # Search title and description, lowercased using MySQL `LIKE` command
+  # AND IF the parmater is present AND not empty
+  # add to the `where` clause of the SQL statement
   def self.search(params)
     listings = Listing.where("ending_at > '#{Time.now.to_i}'")
     listings = listings.where("sold IS NULL")
     listings = listings.where("title LIKE ? or description LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%") if params[:search].present?
     listings = listings.where("media_file_name IS NOT NULL")
-    listings = listings.where(category_id: params[:category].to_i) if params[:category].present?
-    listings = listings.where(sub_category_id: params[:sub_category].to_i) if params[:sub_category].present?
-    listings = listings.near(params[:location], 100) if params[:location].present?
+    listings = listings.where(category_id: params[:category].to_i) if params[:category].present? and params[:category].to_s.strip.empty?
+    listings = listings.where(sub_category_id: params[:sub_category].to_i) if params[:sub_category].present? and params[:sub_category].to_s.strip.empty?
+    listings = listings.near(params[:location], 100) if params[:location].present? and params[:location].to_s.strip.empty?
     listings = listings.order("created_at DESC")
     listings
   end

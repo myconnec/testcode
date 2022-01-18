@@ -79,6 +79,10 @@ p {
   font-size: 14px;
 }
 
+.contact-footer {
+  list-style-type: none;
+}
+
 /* ul, ol {
   list-style: outside none none;
   margin: 0;
@@ -2748,6 +2752,7 @@ a.back-to-top:hover, a.back-to-top:focus {
 
 .page-sidebar .categories-list {
   padding: 20px;
+  list-style-type: none;
 }
 
 .page-sidebar .categories-list li {
@@ -5436,6 +5441,10 @@ footer .menu li a:hover {
 
 .head-faq {
   margin-bottom: 20px;
+}
+
+ul.no-bullet {
+  list-style-type: none;
 }
 
 .panel-group .panel {
