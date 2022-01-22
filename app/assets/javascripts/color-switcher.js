@@ -10,27 +10,27 @@ jQuery(document).ready(function($) {
 	"use strict"
 
 	$("ul.colors .color1" ).click(function(){
-		$("#colors").attr("href",  "//" + window.location.host + "/assets/css/colors/blue.css" );
+		$("#colors").attr("href",  "//" + window.location.host + "/assets/stylesheets/colors/blue.css" );
 		return false;
 	});
 	$("ul.colors .color2" ).click(function(){
-		$("#colors" ).attr("href", "//" + window.location.host + "/assets/css/colors/green.css" );
+		$("#colors" ).attr("href", "//" + window.location.host + "/assets/stylesheets/colors/green.css" );
 		return false;
 	});
 	$("ul.colors .color3" ).click(function(){
-		$("#colors" ).attr("href", "//" + window.location.host + "/assets/css/colors/cyan.css" );
+		$("#colors" ).attr("href", "//" + window.location.host + "/assets/stylesheets/colors/cyan.css" );
 		return false;
 	});
 	$("ul.colors .color4" ).click(function(){
-		$("#colors" ).attr("href", "//" + window.location.host + "/assets/css/colors/purple.css" );
+		$("#colors" ).attr("href", "//" + window.location.host + "/assets/stylesheets/colors/purple.css" );
 		return false;
 	});
 	$("ul.colors .color5" ).click(function(){
-		$("#colors" ).attr("href", "//" + window.location.host + "/assets/css/colors/pink.css" );
+		$("#colors" ).attr("href", "//" + window.location.host + "/assets/stylesheets/colors/pink.css" );
 		return false;
 	});
 	$("ul.colors .color6" ).click(function(){
-		$("#colors" ).attr("href", "//" + window.location.host + "/assets/css/colors/yellow.css" );
+		$("#colors" ).attr("href", "//" + window.location.host + "/assets/stylesheets/colors/yellow.css" );
 		return false;
 	});
 
@@ -58,8 +58,8 @@ jQuery(document).ready(function($) {
 
 
 //Inject Necessary Styles and HTML
-jQuery('head').append('<link rel="stylesheet" id="colors" href="//' + window.location.host + '/assets/css/colors/blue.css" type="text/css" />');
-jQuery('head').append('<link rel="stylesheet" href="//' + window.location.host + '/assets/css/color-switcher.css" type="text/css" />');
+jQuery('head').append('<link rel="stylesheet" id="colors" href="//' + window.location.host + '/assets/stylesheets/colors/blue.css" type="text/css" />');
+jQuery('head').append('<link rel="stylesheet" href="//' + window.location.host + '/assets/stylesheets/color-switcher.css" type="text/css" />');
 
 jQuery('body').append('' + 
 	'<div id="color-style-switcher">' +

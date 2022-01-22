@@ -14,7 +14,7 @@ The core web app of ConnecHub. This is the application logic, associated testing
 
 Respond to HTTP/S requests for ConnecHub web assets.
 
-### Disable Debug Hidding
+### Disable Debug Hiding
 
 In `./app/controllers/application_controller.rb` comment out the `around_filter` line. This will disable debug hiding site wide.
 
@@ -29,7 +29,7 @@ n/a
   - [Description](#description)
   - [Purpose](#purpose)
   - [Functionality](#functionality)
-    - [Disable Debug Hidding](#disable-debug-hidding)
+    - [Disable Debug Hiding](#disable-debug-hiding)
   - [Special Features](#special-features)
   - [Table of Contents](#table-of-contents)
   - [Contributing](#contributing)
@@ -41,7 +41,7 @@ n/a
     - [Obtain](#obtain)
   - [Versioning](#versioning)
   - [Contributors](#contributors)
-  - [Additonal Information](#additonal-information)
+  - [Additional Information](#additional-information)
 
 ## Contributing
 
@@ -89,7 +89,7 @@ Additional labels for pre-release and build metadata are available as extensions
 
 ## Contributors
 
-## Additonal Information
+## Additional Information
 
 - Adding visual aids to any / all the above sections above is recommended.
 - [Contributes](##Contributors) sources from [all-contributors](https://github.com/all-contributors/all-contributors).
