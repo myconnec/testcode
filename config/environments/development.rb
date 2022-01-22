@@ -61,6 +61,6 @@ Rails.application.configure do
 
     config.log_level = :debug
 
-    config.force_ssl = false
+    config.force_ssl = true
 
 end
