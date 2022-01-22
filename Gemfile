@@ -9,24 +9,18 @@ gem 'rails', ' ~>4.2.5'
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
-# Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.1.0'
-# bootstrap-sass is a Sass-powered version of Bootstrap 3, ready to drop right into your Sass powered applications.
-gem 'bootstrap-sass', '~> 3.3', '>= 3.3.7'
 # Flexible authentication solution for Rails with Warden
 gem 'devise', '~> 4.2.0'
 # Bower integration for your ruby projects.
 gem 'bower', '~> 0.0.5'
 # Forms made easy!
 gem 'simple_form', '~> 3.2', '>= 3.2.1'
-# Font-Awesome SASS gem for use in Ruby projects
-gem 'font-awesome-sass', '~> 4.7'
+# Font Awesome
+gem 'font-awesome-rails', '~> 4.7.0.8'
 # Rails gem to allowing records to be votable
 gem 'acts_as_votable', '~> 0.10.0'
 # Provides object geocoding (by street or IP address), reverse geocoding (coordinates to street address), distance queries for ActiveRecord and Mongoid, result caching, and more. Designed for Rails but works with Sinatra and other Rack frameworks too.
 gem 'geocoder', '~> 1.4', '>= 1.4.1'
-# Twitter-styled notifications for Rails Asset Pipeline
-gem 'slide-down-alerts-rails', '~> 0.0.2'
 
 # imagesLoaded.js Wrapper for Rails 3.1+ Asset Pipeline
 gem 'imagesLoaded_rails'
