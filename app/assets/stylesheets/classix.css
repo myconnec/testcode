@@ -914,7 +914,7 @@ a.back-to-top:hover, a.back-to-top:focus {
 3. Hero Area
 ========================================================================== */
 #hero-area {
-  background: url(../images/coffeecup.jpg) no-repeat;
+  background: url(../assets/images/coffeecup.jpg) no-repeat;
   background-size: cover;
   color: #fff;
   overflow: hidden;
@@ -1097,7 +1097,7 @@ a.back-to-top:hover, a.back-to-top:focus {
 }
 
 #hero-area-two {
-  background: url(../images/coffeecup.jpg) no-repeat;
+  background: url(../assets/images/coffeecup.jpg) no-repeat;
   background-size: cover;
   color: #fff;
   overflow: hidden;
