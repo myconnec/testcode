@@ -8,23 +8,6 @@
     <link rel="manifest" href="//manifest.json">
     <link rel="apple-touch-icon" href="//apple-touch-icon.png">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.css">
-    <!-- Icon -->
-    <link rel="stylesheet" type="text/css" href="/assets/fonts/line-icons.css">
-    <link rel="stylesheet" type="text/css" href="/assets/fonts/fontawesome.css">
-    <link rel="stylesheet" type="text/css" href="/assets/fonts/all.min.css">
-    <!-- Slicknav -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/slicknav.css">
-    <!-- Animate -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/animate.css">
-    <!-- Main Style -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/main.css">
-    <!-- Responsive Style -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/responsive.css">
-    <!-- Connechub Style -->
-    <link rel="stylesheet" type="text/css" href="/assets/css/ch.css">
-
     <%= render "partials/header_meta" %>
 
     <% if @listing and @listing.media_file_name %>
@@ -55,11 +38,6 @@
 
     <%= render "partials/google_analytics" %>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/assets/javascripts/jquery.js"></script>
-    <script src="/assets/javascripts/popper.js"></script>
-    <script src="/assets/javascripts/bootstrap.js"></script>
-
   </head>
   <body>
 
@@ -70,18 +48,6 @@
     <%= render "partials/footer" %>
 
     <%= javascript_include_tag 'application' %>
-
-    <script src="/assets/javascripts/jquery.counterup.js"></script>
-    <script src="/assets/javascripts/waypoints.js"></script>
-    <script src="/assets/javascripts/wow.js"></script>
-    <script src="/assets/javascripts/jquery.slicknav.js"></script>
-    <script src="/assets/javascripts/main.js"></script>
-    <script src="/assets/javascripts/form-validator.js"></script>
-    <script src="/assets/javascripts/ch-comment.js"></script>
-    <script src="/assets/javascripts/ch-listings.js"></script>
-    <script src="/assets/javascripts/inspectlet.js"></script>
-    <script src="/assets/javascripts/jquery.ui.widget.js"></script>
-    <script src="/assets/javascripts/jquery.fileupload.js"></script>
 
   </body>
 </html>

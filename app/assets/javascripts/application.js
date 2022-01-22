@@ -1,4 +1,4 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+// This is a manifest file that'll be compiled into application, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -13,7 +13,23 @@
 //= require jquery
 //= require jquery.bar.custom
 //= require jquery.ui.widget
+//= require  jquery.counterup
+//= require  jquery.slicknav
+//= require  jquery.ui.widget
+//= require  jquery.fileupload
+
 //= require bootstrap-sprockets
+//= require  bootstrap
+
+//= require  popper
+//= require  waypoints
+//= require  wow
+//= require  classix
+//= require  form-validator
+//= require  ch-comment
+//= require  ch-listings
+//= require  inspectlet
+
 //= require_tree .
 
 // register PWA service worker
