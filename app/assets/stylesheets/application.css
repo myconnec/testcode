@@ -16,6 +16,7 @@
 *= require ch
 *= require classix
 *= require color-switcher
+*= require font-awesome
 *= require responsive
 *= require slicknav
 *= require_self
