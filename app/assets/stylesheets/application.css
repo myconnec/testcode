@@ -18,5 +18,6 @@
 *= require fontawesome
 *= require responsive
 *= require slicknav
+*= require trix
 *= require_self
 */
