@@ -12,6 +12,10 @@ Rails.application.configure do
     # Rake tasks automatically ignore this option for performance.
     config.eager_load = true
 
+    # Configure static file server for tests with Cache-Control for performance.
+    config.serve_static_files   = true
+    config.static_cache_control = 'public, max-age=31556926'
+
     # Show full error reports and disable caching.
     config.consider_all_requests_local       = false
     config.action_controller.perform_caching = true
