@@ -5,7 +5,7 @@
     <%= stylesheet_link_tag 'application', media: 'all' %>
 
     <!-- Apple PWA -->
-    <link rel="apple-touch-icon" href="//assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
 
     <%= render "partials/header_meta" %>
 
@@ -47,6 +47,9 @@
     <%= render "partials/footer" %>
 
     <%= javascript_include_tag 'application' %>
+
+    <script src="//kit.fontawesome.com/5139b5ea4d.js" crossorigin="anonymous"></script>
+    <link href="https://<%= ( ENV["STAGE"] == 'prd' ? 'www' : ENV["STAGE"]) + '.' + ENV["NAME"] + '.com' %>/assets/stylesheets/line-icons.css" rel="stylesheet">
 
   </body>
 </html>
