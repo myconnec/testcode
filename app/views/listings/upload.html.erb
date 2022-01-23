@@ -67,7 +67,7 @@
 <%= render :partial => 'partials/processing_overlay' %>
 
 <script>
-$(function () {
+$(document).on('ready', function () {
     $("#listings_submit").on("click", function() {
         if (!$("#new_listing_upload")[0].checkValidity()) {
             $("#new_listing_upload").find("#submit-hidden").click();

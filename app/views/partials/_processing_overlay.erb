@@ -1,5 +1,5 @@
 <script>
-$(function () {
+$(document).on('ready', function () {
     $("form").submit(function () {
         console.log('Form submit detected.')
         $("#overlay").toggle()

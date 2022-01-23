@@ -24,7 +24,7 @@
                         "https://" + ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] + ".s3" + (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) + ".amazonaws.com/" +  URI::encode(listing.media_file_name) + "-2m-00001.png",
                         alt: current_user.username,
                         class: "img-fluid",
-                        onerror: "this.onerror=null;this.src='/assets/image_coming_soon.jpg';"
+                        onerror: "this.onerror=null;this.src='assets/images/image_coming_soon.png';"
                     ) %>
                 <% end %>
             </td>
