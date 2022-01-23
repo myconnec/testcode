@@ -23,7 +23,6 @@
 
 //= require  popper
 //= require  waypoints
-//= require  wow
 //= require  classix
 //= require  form-validator
 //= require  ch-comment
