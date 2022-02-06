@@ -6,57 +6,46 @@
             <div class="theme-header clearfix">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
-                        aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                        <span class="lni-menu"></span>
-                        <span class="lni-menu"></span>
-                        <span class="lni-menu"></span>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                    <span class="lni-menu"></span>
+                    <span class="lni-menu"></span>
+                    <span class="lni-menu"></span>
                     </button>
-                    <a href="/" class="navbar-brand">
-                        <img src="/assets/images/ch_small_grey.png" alt="Connechub">
-                    </a>
+                    <a href="index.html" class="navbar-brand"><img src="/assets/images/ch_small_grey.png" alt=""></a>
                 </div>
                 <div class="collapse navbar-collapse" id="main-navbar">
                     <ul class="navbar-nav mr-auto w-100 justify-content-left">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Categories <i class="lni-chevron-down"></i>
-                            </a>
+                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories <i class="lni-chevron-down"></i></a>
                             <ul class="dropdown-menu">
-                                <% @categories.each do |category| %>
-                                    <li><a class="dropdown-item" href="/categories/<%= category.id %>"><i
-                                                class="fas fa-<%= category.icon %>"></i>
-                                            <%= category.name %>
-                                        </a></li>
-                                    <% end %>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-car"></i> Automotive</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-heartbeat"></i> Beauty and Health</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-book-open"></i> Books, Music, Toys</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-tshirt"></i> Clothing and Accessories</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-laptop-house"></i> Electronics</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-couch"></i> Home and Garden</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-briefcase"></i> Jobs</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-paw"></i> Pets</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign"></i> Real Estate</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-tools"></i> Services</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-quidditch"></i> Sports and Outdoors</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-glass-cheers"></i> Weddings and Parties</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/contact"> Contact </a>
-                        </li>
-                        <% if user_signed_in? %>
-                        <li class="nav-item">
-                            <%= link_to(user_path(current_user.username), class: "nav-link" ) do %> <i class="lni-lock"></i> Your Profile<% end %>
-                        </li>
-                        <li class="nav-item">
-                            <%= link_to(destroy_user_session_path, class: "nav-link" ) do %> <i class="lni-exit"></i> Sign Out<% end %>
-                        </li>
-                        <% else %>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users/sign_up"> <i class="lni-pencil"></i> Sign Up</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/users/sign_in"> <i class="lni-lock"></i> Sign In</a>
-                        </li>
-                        <% end %>
-                        <li class="header-top-right float-right" style="padding: 20px 20px 20px 105px;">
-                            <a class="btn btn-common" href="/listings/new">
-                                <i class="lni-pencil-alt"></i> Post an Ad
+                            <a class="nav-link" href="contact.html">
+                            Contact
                             </a>
                         </li>
                     </ul>
+                    <div class="header-top-right float-right">
+                    <a href="login.html" class="header-top-button"><i class="lni-lock"></i> Log In</a> |
+                    <a href="register.html" class="header-top-button"><i class="lni-pencil"></i> Register</a>
+                    </div>
+                    <div class="post-btn">
+                    <a class="btn btn-common" href="post-ads.html"><i class="lni-pencil-alt"></i> Post an Ad</a>
+                    </div>
                 </div>
             </div>
         </div>

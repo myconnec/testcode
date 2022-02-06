@@ -13,26 +13,26 @@
 //= require jquery
 //= require jquery.bar.custom
 //= require jquery.ui.widget
-//= require  jquery.counterup
-//= require  jquery.slicknav
-//= require  jquery.ui.widget
-//= require  jquery.fileupload
+//= require jquery.counterup
+//= require jquery.slicknav
+//= require jquery.ui.widget
+//= require jquery.fileupload
 
 //= require bootstrap-sprockets
-//= require  bootstrap
+//= require bootstrap
 
-//= require  popper
-//= require  waypoints
-//= require  classix
-//= require  form-validator
-//= require  ch-comment
-//= require  ch-listings
-//= require  inspectlet
-
-//= require_tree .
+//= require popper
+//= require waypoints
+//= require classix
+//= require form-validator
+//= require ch-comment
+//= require ch-listings
+//= require inspectlet
 
 // register PWA service worker
 //= require serviceworker-companion
 
 // Trix rich text editor JS
 //= require trix
+
+//= require_tree .
