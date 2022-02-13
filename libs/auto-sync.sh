@@ -1,24 +1,18 @@
 #!/bin/bash
+
+# example ./libs/auto-sync.sh "~/.ssh/aws-connechub-deb.pem" 1.2.3.4
 # source https://unix.stackexchange.com/questions/33557/using-an-already-established-ssh-channel
 # source https://ldpreload.com/blog/ssh-control
 # source https://unix.stackexchange.com/questions/50508/reusing-ssh-session-for-repeated-rsync-commands
 
-# usage
-# ./libs/auto-sync.sh "~/.ssh/aws-connechub-deb.pem" 1.2.3.4
-
-# exmple single use:
-# rsync \
-#     -avz \
-#     --exclude=".git" \
-#     --exclude="node_modules" \
-#     -e "ssh -vvv -i ~/.ssh/aws-connechub-dev.pem -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@35.162.85.43:/home/ubuntu/connechub/app
-
 echo "INFO: Pre-flight setup..."
-export CONTROL_PATH="$HOME/.ssh/connechub/%L-%r@%h:%p"
-export REMOTE_HOST=$2 #"18.144.166.69"
 export SSH_KEY=$1     #"~/.ssh/aws-connechub-dev.pem"
 
-rm -rf "$HOME/.ssh/connechub/" || true
+export REMOTE_PATH="/home/ubuntu/connechub"
+export REMOTE_HOST=$2 #"18.144.166.69"
+export REMOTE_USER="ubuntu"
+
+rm -rf "$HOME/.ssh/connechub/" || true && mkdir -p "$HOME/.ssh/connechub/"
 
 echo "INFO: Confirm tooling installed..."
 if [[ "$OSTYPE" == "linux-gnu"* && ! $(which inotify-tools) ]]
@@ -33,47 +27,39 @@ then
     brew install -y fswatch
 fi
 
-echo "Starting persistance SSH connection..."
-ssh -i "${1}" -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/connechub/%L-%r@%h:%p" ubuntu@${2}
+echo "INFO: Starting persistance SSH connection..."
+ssh -i "${1}" -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/connechub/%L-%r@%h:%p" "${REMOTE_USER}"@"${REMOTE_HOST}"
 
-echo "Stating sync, waiting ControlPath..."
+echo "INFO: Stating sync, waiting ControlPath..."
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux distros
-    echo "$OSTYPE detected..."
+    echo "INFO: $OSTYPE detected..."
     while inotifywait -r -e modify,create,delete,move .; do
         rsync \
             -avz \
             --exclude=".git" \
             --exclude="node_modules" \
-            -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@"${2}":/home/ubuntu/connechub
+            -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" \
+            . \
+            "${REMOTE_USER}"@"${REMOTE_HOST}":"${REMOTE_PATH}"
         echo "...synce completed."
     done
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
-    echo "$OSTYPE detected..."
+    echo "INFO: $OSTYPE detected..."
     fswatch -o . | xargs \
         -n1 \
         -I{} \
         rsync -avz \
         --exclude=".git" \
         --exclude="node_modules" \
-        -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" . ubuntu@"${2}":/home/ubuntu/connechub
-    echo "...synce completed."
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-    # POSIX compatibility layer and Linux environment emulation for Windows
-    echo "$OSTYPE detected..."
-elif [[ "$OSTYPE" == "msys" ]]; then
-    # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-    echo "$OSTYPE detected..."
-elif [[ "$OSTYPE" == "win32" ]]; then
-    # I'm not sure this can happen.
-    echo "$OSTYPE detected..."
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-    # ...
-    echo "$OSTYPE detected..."
+        -e "ssh -i ${1} -o 'ControlPath=$HOME/.ssh/connechub/%L-%r@%h:%p'" \
+        . \
+        "${REMOTE_USER}"@"${REMOTE_HOST}":"${REMOTE_PATH}"
+    echo "INFO: Synce completed."
 else
-    # Unknown.
-    echo "$OSTYPE detected..."
+    echo "ERR: No supported OS detected, exiting."
+    exit 1
 fi
 
-echo "...done."
+echo "INFO: ...done."
