@@ -34,7 +34,7 @@ var select_sub_category = function () {
 
 $(document).on('ready', function () {
     if (location.host == 'dev.connechub.com') {
-        $('select#listing_category_id>option:eq(1)').attr('selected', true);
+        $('select#listing_category_id>option:eq(2)').attr('selected', true);
         $('#listing_price').val('10.00');
         $('#listing_condition_id').val('3');
         $('#listing_title').val('Test Title ' + Date.now());

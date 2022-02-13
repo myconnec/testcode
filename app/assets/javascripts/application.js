@@ -11,14 +11,12 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.bar.custom
 //= require jquery.ui.widget
 //= require jquery.counterup
 //= require jquery.slicknav
 //= require jquery.ui.widget
 //= require jquery.fileupload
 
-//= require bootstrap-sprockets
 //= require bootstrap
 
 //= require popper

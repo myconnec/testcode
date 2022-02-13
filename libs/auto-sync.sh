@@ -6,11 +6,11 @@
 # source https://unix.stackexchange.com/questions/50508/reusing-ssh-session-for-repeated-rsync-commands
 
 echo "INFO: Pre-flight setup..."
-export SSH_KEY=$1     #"~/.ssh/aws-connechub-dev.pem"
 
 export REMOTE_PATH="/home/ubuntu/connechub"
-export REMOTE_HOST=$2 #"18.144.166.69"
+export REMOTE_HOST="${2}" #"18.144.166.69"
 export REMOTE_USER="ubuntu"
+export SSH_KEY="${1}"     #"~/.ssh/aws-connechub-dev.pem"
 
 rm -rf "$HOME/.ssh/connechub/" || true && mkdir -p "$HOME/.ssh/connechub/"
 
