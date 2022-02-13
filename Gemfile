@@ -28,15 +28,6 @@ gem 'mysql2', '~> 0.4.0'
 gem 'jbuilder', '~> 2.0'
 # bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for safely handling passwords.
 gem 'bcrypt', '~> 3.1.12'
-
-# Easy upload management for ActiveRecord
-gem 'paperclip', '~> 5.1'
-# Audio/Video Transcoder for Paperclip using FFMPEG/Avconv
-gem 'paperclip-av-transcoder', '~> 0.6.4'
-# Process your attachments with FFMPEG
-gem 'paperclip-ffmpeg', '~> 1.2'
-# Process your Paperclip attachments in the background with ActiveJob
-gem 'delayed_paperclip', '~> 3.0.1'
 # Stripe payment processor
 gem 'stripe', '~> 4.17.0'
 # Meta data Title tags
