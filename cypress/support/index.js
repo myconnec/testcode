@@ -55,12 +55,6 @@ switch (Cypress.env('abort_strategy')) {
 
 // source https://docs.cypress.io/guides/references/best-practices#State-reset-should-go-before-each-test
 beforeEach(() => {
-    cy.task('queryDb', 'TRUNCATE `comments`;')
-    cy.task('queryDb', 'TRUNCATE `impressions`;')
-    cy.task('queryDb', 'TRUNCATE `listings`;')
-    cy.task('queryDb', 'TRUNCATE `users`;')
-    cy.task('queryDb', 'TRUNCATE `votes`;')
-
     /*
     unregister service workers before each test
     source https://github.com/cypress-io/cypress/issues/702
