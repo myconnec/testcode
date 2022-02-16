@@ -2,11 +2,15 @@
 
 # $1 string env
 # $2 string RND_STRING
-# $3 string SCOPE 'all', 'app', 'configs', 'cypress'
+# "${SCOPE}" string SCOPE 'all', 'app', 'configs', 'cypress'
+
+ENV="${1}"
+RND_STRING="${2}"
+SCOPE="${3}"
 
 echo 'INFO: Starting...'
 
-if [[ $3 == "" ]]
+if [[ ! "${SCOPE}" ]]
 then
     echo "ERR: Please provide sync scope"
     exit 1
@@ -14,21 +18,21 @@ fi
 
 echo "INFO: Sync'ing ConnecHub S3 buckets to localhost..."
 
-if [[ $3 == 'all' ||  $3 == 'configs' ]]
+if [[ "${SCOPE}" == 'all' ||  "${SCOPE}" == 'configs' ]]
 then
-    aws s3 sync --profile connechub_"${1}" s3://connechub-configs ../s3_backup/connechub-configs
+    aws s3 sync --profile connechub_"${ENV}" s3://connechub-configs ../s3_backup/connechub-configs
 fi
 
-if [[ $3 == 'all' ||  $3 == 'cypress' ]]
+if [[ "${SCOPE}" == 'all' ||  "${SCOPE}" == 'cypress' ]]
 then
-    aws s3 sync --profile connechub_"${1}" s3://connechub-configs/cypress ../s3_backup/connechub-configs/cypress
+    aws s3 sync --profile connechub_"${ENV}" s3://connechub-configs/cypress ../s3_backup/connechub-configs/cypress
 fi
 
-if [[ $3 == 'all' ||  $3 == 'app' ]]
+if [[ "${SCOPE}" == 'all' ||  "${SCOPE}" == 'app' ]]
 then
-    aws s3 sync --profile connechub_"${1}" s3://connechub-"${1}"-media-display-"${2}" ../s3_backup/connechub-"${1}"-media-display-"${2}"
-    aws s3 sync --profile connechub_"${1}" s3://connechub-"${1}"-media-source-"${2}" ../s3_backup/connechub-"${1}"-media-source-"${2}"
-    aws s3 sync --profile connechub_"${1}" s3://connechub-"${1}"-profile-display-"${2}" ../s3_backup/connechub-"${1}"-profile-display-"${2}"
+    aws s3 sync --profile connechub_"${ENV}" s3://connechub-"${ENV}"-media-display-"${RND_STRING}" ../s3_backup/connechub-"${ENV}"-media-display-"${RND_STRING}"
+    aws s3 sync --profile connechub_"${ENV}" s3://connechub-"${ENV}"-media-source-"${RND_STRING}" ../s3_backup/connechub-"${ENV}"-media-source-"${RND_STRING}"
+    aws s3 sync --profile connechub_"${ENV}" s3://connechub-"${ENV}"-profile-display-"${RND_STRING}" ../s3_backup/connechub-"${ENV}"-profile-display-"${RND_STRING}"
 fi
 
 echo 'INFO: ...done.'

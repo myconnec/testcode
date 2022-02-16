@@ -1,0 +1,61 @@
+[
+    {
+        "category": "Housing",
+        "sub_category": "Apartments",
+        "price": "123.00",
+        "condition": "Excellent",
+        "title": "Test Subcategory ad count 0",
+        "city": "Tampa",
+        "state": "FL",
+        "zipcode": "33612",
+        "description": "Test SubCategory count 0.",
+        "fileupload": "24fps.mp4"
+    },
+    {
+        "category": "Housing",
+        "sub_category": "Apartments",
+        "price": "456.00",
+        "condition": "Excellent",
+        "title": "Test Subcategory ad count 1",
+        "city": "Tampa",
+        "state": "FL",
+        "zipcode": "33612",
+        "description": "Test SubCategory count 1.",
+        "fileupload": "24fps.mp4"
+    },
+    {
+        "category": "Housing",
+        "sub_category": "Apartments",
+        "price": "789.00",
+        "condition": "Excellent",
+        "title": "Test Subcategory ad count 2",
+        "city": "Tampa",
+        "state": "FL",
+        "zipcode": "33612",
+        "description": "Test SubCategory count 2.",
+        "fileupload": "24fps.mp4"
+    },
+    {
+        "category": "Campus",
+        "sub_category": "Activities & Events",
+        "condition": "Average",
+        "price": "90.12",
+        "title": "Test Title Comment CRUD",
+        "city": "Tampa",
+        "state": "FL",
+        "zipcode": "33612",
+        "description": "Test Description Comment CRUD",
+        "fileupload": "24fps.mp4"
+    },
+    {
+        "category": "Campus",
+        "sub_category": "Activities & Events",
+        "price": "56.78",
+        "title": "Test Title trim MOV",
+        "city": "Tampa",
+        "state": "FL",
+        "zipcode": "33612",
+        "description": "Test Description - trim.*.mov.",
+        "fileupload": "trim.bf2f8a8c-e7ec-40ac-8df5-b7042edb5d9b.480p.mov"
+    }
+]

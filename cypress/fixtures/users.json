@@ -1,0 +1,20 @@
+[
+    {
+    "bio": "Testing user CRUD.",
+    "email": "testuser_0@connechub.com",
+    "name": "Test User 0",
+    "password": "2X3PFa@f8V!^vm3&XU4hrW3L$lKVhN$fZ5ap&lrirPH3BfBWNXg!Z1FQc7*y5DhDi0S1jkBoTRkEH*71a8SC$BS9GAd1d5yoyqZ"
+    },
+    {
+        "bio": "Testing 32 character password.",
+        "email": "testuser_1@connechub.com",
+        "name": "Test User 1",
+        "password": "GhsbId5OZxmII5gVCAr%txp34YsQ*!5@"
+    },
+    {
+        "bio": "Testing 16 character password.",
+        "email": "testuser_2@connechub.com",
+        "name": "Test User 2",
+        "password": "jzUExTVWo62&Oqvg"
+    }
+]
