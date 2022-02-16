@@ -7,5 +7,5 @@ $(document).on('ready', function () {
 })
 </script>
 <div id="overlay">
-    <%= image_tag("loading_spinner.gif", :alt => ENV['NAME']) %>
+    <img src="https://<%= ENV['STAGE'] %>.<%= ENV['NAME'] %>.com/assets/images/loading_spinner.gif" />
 </div>

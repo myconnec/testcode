@@ -12,6 +12,10 @@ echo '...removing ./tmp/cache/...'
 sudo rm -rf ./tmp/cache/
 
 echo '...restart Puma...'
-bundle exec puma --bind tcp://0.0.0.0:9293 --environment ${RAILS_ENV}
+bundle exec puma \
+    --bind tcp://0.0.0.0:9293 \
+    --daemon \
+    --debug \
+    --environment "${RAILS_ENV}"
 
 echo '...done.'

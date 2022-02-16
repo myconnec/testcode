@@ -12,10 +12,9 @@
 //
 //= require jquery
 //= require jquery.ui.widget
+//= require jquery.fileupload
 //= require jquery.counterup
 //= require jquery.slicknav
-//= require jquery.ui.widget
-//= require jquery.fileupload
 
 //= require bootstrap
 
