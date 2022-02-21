@@ -45,3 +45,7 @@ h6.section-sub-header {
 trix-editor#listing_description {
   overflow: auto;
 }
+
+aside > div > ul > li:nth-child(2) > ul {
+  list-style-type: none;
+}

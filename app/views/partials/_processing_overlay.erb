@@ -7,5 +7,5 @@ $(document).on('ready', function () {
 })
 </script>
 <div id="overlay">
-    <img src="https://<%= ENV['STAGE'] %>.<%= ENV['NAME'] %>.com/assets/images/loading_spinner.gif" />
+    <img src="https://<%= ENV['STAGE'] == 'prd' ? 'www' : ENV['STAGE'] %>.<%= ENV['NAME'] %>.com/assets/images/loading_spinner.gif" />
 </div>
