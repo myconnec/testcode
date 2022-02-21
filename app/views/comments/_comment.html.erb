@@ -18,7 +18,8 @@
                 <%= image_tag(
                     comment.user.avatar.url(:thumb),
                     alt: comment.user.username,
-                    onerror: "this.onerror=null;this.src='https://" + ENV['STAGE'] + "." + ENV['NAME'] + ".com/assets/images/no-photo-available.png';"
+                    
+                    onerror: "this.onerror=null;this.src='https://" + ENV['STAGE'] == 'prd' ? 'www' : ENV['STAGE'] + "." + ENV['NAME'] + ".com/assets/images/no-photo-available.png';"
                 ) %>
                 <%= link_to comment.user.username, user_path(comment.user.username) %>
             </div>
