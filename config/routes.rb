@@ -52,9 +52,7 @@ Rails.application.routes.draw do
   match '/search/show', to: 'search#show', via: :get
 
   # User (Device)
-  devise_for :users, :controllers => {
-    :registrations => "registrations"
-  }
+  devise_for :users
   get ':username' => 'users#show', as: 'user'
   match '/users/update', to: 'users#update', via: :put
 

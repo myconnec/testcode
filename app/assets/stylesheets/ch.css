@@ -46,6 +46,6 @@ trix-editor#listing_description {
   overflow: auto;
 }
 
-aside > div > ul > li:nth-child(2) > ul {
+aside > div > ul > li > ul {
   list-style-type: none;
 }
