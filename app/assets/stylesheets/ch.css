@@ -49,3 +49,7 @@ trix-editor#listing_description {
 aside > div > ul > li > ul {
   list-style-type: none;
 }
+
+aside > div > nav > ul > li {
+  list-style-type: none;
+}
