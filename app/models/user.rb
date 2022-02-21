@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, format: { with: /\A[a-zA-Z0-9\'\ \-_]*\z/ }
 
-  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "150x150>" }, default_url: "assets/images/no-photo-available.png"
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "150x150>" }, default_url: "/assets/images/no-photo-available.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
   def password_complexity
