@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # Admin area
+  match '/admin', to: 'admin#show', via: :get
+
   resources :categories do
     resources :subcategories
   end

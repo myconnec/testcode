@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :get_categories
+  before_action :authorize_admin, :get_categories 
 
   protected
 
@@ -19,6 +19,11 @@ class ApplicationController < ActionController::Base
 
   def get_categories
     @categories = Category.get_base_categories()
+  end
+
+  def authorize_admin
+    redirect_to :back, status: 401 unless current_user.admin
+    #redirects to previous page
   end
 
   def catch_not_found
