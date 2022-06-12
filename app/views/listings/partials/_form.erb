@@ -29,8 +29,9 @@
                                             <%= f.select :category_id,
                                                 Category.all.map {|f| [f.name, f.id]},
                                                 { include_blank: true },
-                                                required: true,
-                                                class: "form-control input-md"
+                                                class: "form-control input-md",
+                                                disabled: true,
+                                                required: true
                                             %>
                                         </div>
                                     </div>
@@ -44,8 +45,9 @@
                                                     include_blank: true,
                                                     name: "listing[subcategory_id]",
                                                 },
-                                                required: true,
-                                                class: "form-control input-md"
+                                                class: "form-control input-md",
+                                                disabled: true,
+                                                required: true
                                             %>
                                         </div>
                                     </div>

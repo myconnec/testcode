@@ -16,7 +16,22 @@ class ListingsController < ApplicationController
   end
 
   def create
-    @listing = Listing.new(listing_params)
+    @listing = Listing.new(
+      params.require(:listing).permit(
+        :ademail,
+        :category_id,
+        :city,
+        :condition_id,
+        :description,
+        :id,
+        :media_file_name,
+        :price,
+        :state,
+        :subcategory_id,
+        :title,
+        :zipcode,
+      )
+    )
     @listing.ademail = current_user.email
     @listing.ending_at = Time.now.to_i + 2592000
     @listing.user = current_user
@@ -187,7 +202,22 @@ class ListingsController < ApplicationController
 
   def update
     @listing = Listing.find(params[:id])
-    @listing.update(listing_params)
+    # allow editing of field but NOT *_category_id fields.
+    # this prevents users from submitting a free listing, then changing it to a paid category
+    @listing.update(
+      params.require(:listing).permit(
+        :ademail,
+        :city,
+        :condition_id,
+        :description,
+        :id,
+        :media_file_name,
+        :price,
+        :state,
+        :title,
+        :zipcode,
+      )
+    )
     redirect_to @listing, :flash => { :success => "Listing has been updated." }
   end
 
@@ -204,23 +234,6 @@ class ListingsController < ApplicationController
   end
 
   private
-
-  def listing_params
-    params.require(:listing).permit(
-      :ademail,
-      :category_id,
-      :city,
-      :condition_id,
-      :description,
-      :id,
-      :media_file_name,
-      :price,
-      :state,
-      :subcategory_id,
-      :title,
-      :zipcode,
-    )
-  end
 
   def is_user?
     @listing = Listing.find(params[:id])

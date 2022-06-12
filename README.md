@@ -1,37 +1,13 @@
 # Connechub - Web App
 
-## Badges
-
-n/a
-
-## Description
-
-The core web app of ConnecHub. This is the application logic, associated testing configurations, and web framework dependency definitions.
-
-## Purpose
-
-## Functionality
-
-Respond to HTTP/S requests for ConnecHub web assets.
-
-### Disable Debug Hiding
-
-In `./app/controllers/application_controller.rb` comment out the `around_filter` line. This will disable debug hiding site wide.
-
-## Special Features
-
-n/a
-
 ## Table of Contents
 
 - [Connechub - Web App](#connechub---web-app)
+  - [Table of Contents](#table-of-contents)
   - [Badges](#badges)
   - [Description](#description)
-  - [Purpose](#purpose)
-  - [Functionality](#functionality)
-    - [Disable Debug Hiding](#disable-debug-hiding)
-  - [Special Features](#special-features)
-  - [Table of Contents](#table-of-contents)
+  - [Policies and Patterns](#policies-and-patterns)
+  - [Project Structure](#project-structure)
   - [Contributing](#contributing)
     - [Code of Conduct](#code-of-conduct)
     - [Contributing Guidelines](#contributing-guidelines)
@@ -42,6 +18,31 @@ n/a
   - [Versioning](#versioning)
   - [Contributors](#contributors)
   - [Additional Information](#additional-information)
+
+## Badges
+
+n/a
+
+## Description
+
+The core web app of ConnecHub. This is the application logic, associated testing configurations, and web framework dependency definitions.
+
+## Policies and Patterns
+
+- [AWS Resource Tagging Policy](./POLICIES_AND_PATTERNS.md)
+
+## Project Structure
+
+```sh
+$ /path/to/projects/root/connechub
+$ tree -L 1
+.
+├── application
+├── **packer**
+└── terraform
+
+3 directories, 0 files
+```
 
 ## Contributing
 
