@@ -30,7 +30,7 @@
                                                 Category.all.map {|f| [f.name, f.id]},
                                                 { include_blank: true },
                                                 class: "form-control input-md",
-                                                disabled: true,
+                                                disabled: (action != 'Create' ? true : false),
                                                 required: true
                                             %>
                                         </div>
@@ -46,7 +46,7 @@
                                                     name: "listing[subcategory_id]",
                                                 },
                                                 class: "form-control input-md",
-                                                disabled: true,
+                                                disabled: (action != 'Create' ? true : false),
                                                 required: true
                                             %>
                                         </div>
