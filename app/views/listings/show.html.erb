@@ -22,11 +22,13 @@
                 <% # source https://stackoverflow.com/questions/18169473/video-js-size-to-fit-div %>
                 <% # source https://stackoverflow.com/questions/20051332/videojs-centered-play-button %>
                 <% # source https://stackoverflow.com/questions/5879209/how-to-center-html5-videos %>
+                <% # source https://stackoverflow.com/questions/2911379/html5-video-element-on-android-does-not-play %>
                 <video
                     class="center video-js vjs-default-skin vjs-big-play-centered"
                     controls=controls
                     data-setup='{}'
                     height="450"
+                    onclick="this.play();"
                     poster="https://<%= ENV['AWS_S3_MEDIA_DISPLAY_BUCKET'] %>.s3<%= (ENV['REGION'] == 'us-east-1' ? "" : "-" + ENV['REGION']) %>.amazonaws.com/<%= URI::encode(@listing.media_file_name) %>-2m-00001.png"
                     preload=preload
                     width="450"
