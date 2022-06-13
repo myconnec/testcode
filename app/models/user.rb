@@ -21,4 +21,16 @@ class User < ActiveRecord::Base
       errors.add :password, "Password complexity requirement not met. Length should be 8-128 characters and include: 1 uppercase (A-Z), 1 lowercase (a-z), 1 digit (0-9) and 1 special character (~!@#$%^&*()_+`-=)."
     end
   end
+
+  def self.count_total()
+    User.where("1 = 1").count()
+  end
+
+  def self.count_today()
+    User.where("created_at >= NOW() - INTERVAL 1 DAY").count()
+  end
+
+  def self.count_month()
+    User.where("created_at >= NOW() - INTERVAL 30 DAY").count()
+  end
 end
