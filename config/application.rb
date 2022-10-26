@@ -32,6 +32,11 @@ module Workspace
     instance_id    = `curl --silent --header "X-aws-ec2-metadata-token: $(curl --silent -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600")" http://instance-data/latest/meta-data/instance-id`
     ENV['REGION'] = JSON.parse(instance_ident)['region']
 
+    if ENV['REGION'] == ""
+      put "ERROR: Unable to get env REGION. Existing."
+      exit 1
+    end
+
     # request instance meta data and assign to env varsI
     config.before_configuration do
       tags = `aws ec2 describe-tags --filter 'Name=resource-id, Values=#{instance_id}' --output=json --region=#{ENV['REGION']}`

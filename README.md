@@ -60,6 +60,7 @@ Please see [CONTRIBUTING_GUIDELINES.md](./CONTRIBUTING_GUIDELINES.md).
 - [Cypress](https://cypress.io) UAT tool
 - [Puma](https://github.com/puma/puma) webserver
 - [Ruby on Rails](https://rubyonrails.org) Web app framework
+- [MySQL client][https://dev.mysql.com/downloads/installer/]
 
 ## Requirements
 
@@ -69,6 +70,9 @@ Please see [CONTRIBUTING_GUIDELINES.md](./CONTRIBUTING_GUIDELINES.md).
 - AWS CLI
 - Linux Terminal
 - Terraform
+  - Terragrunt
+  - tfsec
+  - terrascan
 
 ## How to
 
