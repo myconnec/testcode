@@ -23,7 +23,7 @@ then
 elif [[ "$OSTYPE" == "darwin"*  && ! $(which fswatch) ]]
 then
     # Mac OSX
-    echo "$OSTYPE detected, installing inotify-tools..."
+    echo "$OSTYPE detected, installing fswatch..."
     brew install -y fswatch
 fi
 
@@ -33,7 +33,7 @@ ssh -i "${1}" -nNf -o ControlMaster=yes -o ControlPath="$HOME/.ssh/connechub/%L-
 echo "INFO: Stating sync, waiting ControlPath..."
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux distros
-    echo "INFO: $OSTYPE detected..."
+    echo "INFO: Syncing from Linux host to target..."
     while inotifywait -r -e modify,create,delete,move .; do
         rsync \
             -avz \
@@ -46,7 +46,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     done
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     # Mac OSX
-    echo "INFO: $OSTYPE detected..."
+    echo "INFO: Syncing from Mac host to target..."
     fswatch -o . | xargs \
         -n1 \
         -I{} \

@@ -16,7 +16,6 @@
   - [How to](#how-to)
     - [Obtain](#obtain)
   - [Versioning](#versioning)
-  - [Contributors](#contributors)
   - [Additional Information](#additional-information)
 
 ## Badges
@@ -60,7 +59,7 @@ Please see [CONTRIBUTING_GUIDELINES.md](./CONTRIBUTING_GUIDELINES.md).
 - [Cypress](https://cypress.io) UAT tool
 - [Puma](https://github.com/puma/puma) webserver
 - [Ruby on Rails](https://rubyonrails.org) Web app framework
-- [MySQL client][https://dev.mysql.com/downloads/installer/]
+- [MySQL client](https://dev.mysql.com/downloads/installer/)
 
 ## Requirements
 
@@ -92,12 +91,10 @@ Given a version number MAJOR.MINOR.PATCH, increment the:
 Additional labels for pre-release and build metadata are available as extensions to the MAJOR.MINOR.PATCH format.
 ```
 
-## Contributors
-
 ## Additional Information
 
 - Adding visual aids to any / all the above sections above is recommended.
-- [Contributes](##Contributors) sources from [all-contributors](https://github.com/all-contributors/all-contributors).
+- Contributors sources from [all-contributors](https://github.com/all-contributors/all-contributors).
 - [ROADMAP](./ROADMAP.md) example from [all-contributors/all-contributors](https://github.com/all-contributors/all-contributors/blob/master/MAINTAINERS.md).
 - Based on [README Maturity Model](https://github.com/LappleApple/feedmereadmes/blob/master/README-maturity-model.md); strive for a Level 5 `Product-oriented README`.
 - This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.0, available at https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
