@@ -46,9 +46,14 @@ module Workspace
       end
     end
 
+    if ENV['RND'].empty?
+      put "ERROR: ENV VAR RND value empty. Existing."
+      exit 1
+    end
+
     # If unable to load SSM parameters, terminate instance
     # Load Ruby SSM client
-    ssm_client = Aws::SSM::Client.new(region:'us-west-2')
+    ssm_client = Aws::SSM::Client.new(region: ENV['REGION'])
 
     # Load run time values
     # TODO wrap this in a try/catch
