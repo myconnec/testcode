@@ -28,7 +28,9 @@
                                         <div>
                                             <%= f.select :category_id,
                                                 Category.all.map {|f| [f.name, f.id]},
-                                                { include_blank: true },
+                                                {
+                                                    include_blank: true
+                                                },
                                                 class: "form-control input-md",
                                                 disabled: (action != 'Create' ? true : false),
                                                 required: true
@@ -89,8 +91,21 @@
                                             required: true,
                                             type: "regexp",
                                             maxlength: "256",
+                                            minlength: "16",
                                             pattern: "[A-Za-z0-9 ]+",
                                             placeholder: "Name of the item you want to sell."
+                                        %>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <%= f.label :description %>
+                                        <%= f.trix_editor :description,
+                                            class: "form-control",
+                                            label: false,
+                                            maxlength: "2048",
+                                            minlength: "16",
+                                            placeholder: "exp. Describe the item for sale as detailed as possible. Text, numbers, and punctuation are allowed.",
+                                            required: true,
+                                            type: "text"
                                         %>
                                     </div>
                                     <div class="form-group mb-3">
@@ -100,6 +115,7 @@
                                             required: true,
                                             type: "text",
                                             maxlength: "32",
+                                            minlength: "4",
                                             pattern: "[A-Za-z ]+",
                                             placeholder: "exp. Sometown"
                                         %>
@@ -110,8 +126,9 @@
                                             class: "form-control input-md",
                                             required: true,
                                             type: "text",
-                                            maxlength: "2",
-                                            pattern: "[A-Za-z0-9 -]{32}"
+                                            maxlength: "32",
+                                            minlength: "2",
+                                            pattern: "[A-Za-z0-9 -]+",
                                             placeholder: "State / Provionce abbreviation. Exp: FL, NL, AN, AS"
                                         %>
                                     </div>
@@ -121,20 +138,10 @@
                                             class: "form-control input-md",
                                             required: true,
                                             type: "number",
-                                            maxlength: "5",
-                                            pattern: "[A-Za-z0-9 -]{32}",
--                                            placeholder: "exp. 12345, ABC-123"
-                                        %>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <%= f.label :description %>
-                                        <%= f.trix_editor :description,
-                                            class: "form-control",
-                                            label: false,
-                                            maxlength: "2048",
-                                            placeholder: "exp. Describe the item for sale as detailed as possible. Text, numbers, and punctuation are allowed.",
-                                            required: true,
-                                            type: "text"
+                                            maxlength: "32",
+                                            minlength: "4",
+                                            pattern: "[A-Za-z0-9 -]+",
+                                            placeholder: "12345, 1034BM"
                                         %>
                                     </div>
                                     <div class="form-group mb-3">
