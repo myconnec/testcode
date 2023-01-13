@@ -1,4 +1,4 @@
-class UpdateListingToAllowInternationalAddresses < ActiveRecord::Migration
+class UpdateListingsToAllowInternationalAddresses < ActiveRecord::Migration
   def up
     change_column :listings, :state, :string, :limit => 32
     change_column :listings, :zipcode, :string, :limit => 32
