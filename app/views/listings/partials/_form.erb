@@ -105,25 +105,25 @@
                                         %>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <%= f.label :state %>
+                                        <%= f.label :state %> (Province / State)
                                         <%= f.text_field :state,
                                             class: "form-control input-md",
                                             required: true,
                                             type: "text",
                                             maxlength: "2",
-                                            pattern: "[A-Z]{2}",
-                                            placeholder: "Two letter upper case state abbreviation. Exp: FL"
+                                            pattern: "[A-Za-z0-9 -]{32}"
+                                            placeholder: "State / Provionce abbreviation. Exp: FL, NL, AN, AS"
                                         %>
                                     </div>
                                     <div class="form-group mb-3">
-                                        <%= f.label :zipcode %>
+                                        <%= f.label :zipcode %> (Postal / ZIP Code)
                                         <%= f.text_field :zipcode,
                                             class: "form-control input-md",
                                             required: true,
                                             type: "number",
                                             maxlength: "5",
-                                            pattern: "[0-9]{5}",
-                                            placeholder: "exp. 12345"
+                                            pattern: "[A-Za-z0-9 -]{32}",
+-                                            placeholder: "exp. 12345, ABC-123"
                                         %>
                                     </div>
                                     <div class="form-group mb-3">
